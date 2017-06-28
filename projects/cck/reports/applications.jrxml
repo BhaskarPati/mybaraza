@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<parameter name="filterid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[
+select UPPER( TO_CHAR(applicationdate, 'Mon'))  as month, applicationdate,clientname,licensename, fullname, periodname , periodid
+from vwapplicantlist WHERE periodid  = '$P!{filterid}'
+group by TO_CHAR(applicationdate, 'Mon'),licensename, fullname, periodid,
+applicationdate, clientname,licensename, periodname 
+order by applicationdate desc
+]]>
+	</queryString>
+	<field name="MONTH" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="APPLICATIONDATE" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CLIENTNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LICENSENAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FULLNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PERIODNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PERIODID" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="YEAR GROUP">
+		<groupExpression><![CDATA[$F{PERIODNAME}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField>
+					<reportElement x="0" y="0" width="555" height="20"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14" isBold="true" pdfFontName="Courier" pdfEncoding="Cp1252"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{PERIODNAME}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50"/>
+		</groupFooter>
+	</group>
+	<group name="MONTH GROUPING">
+		<groupExpression><![CDATA[$F{MONTH}]]></groupExpression>
+		<groupHeader>
+			<band height="59">
+				<textField>
+					<reportElement x="0" y="2" width="555" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{MONTH}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="38" y="35" width="120" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[APPLICANT]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="158" y="35" width="160" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[SERVICE APPLIED FOR]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="318" y="35" width="115" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[APPLICATION DATE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="433" y="35" width="122" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[RECEIVED BY]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="30" width="555" height="1"/>
+				</line>
+				<line>
+					<reportElement x="0" y="30" width="1" height="29"/>
+				</line>
+				<line>
+					<reportElement x="157" y="30" width="1" height="29"/>
+				</line>
+				<line>
+					<reportElement x="316" y="30" width="1" height="29"/>
+				</line>
+				<line>
+					<reportElement x="432" y="30" width="1" height="29"/>
+				</line>
+				<line>
+					<reportElement x="554" y="30" width="1" height="29"/>
+				</line>
+				<line>
+					<reportElement x="36" y="30" width="1" height="29"/>
+				</line>
+				<staticText>
+					<reportElement x="0" y="34" width="35" height="21"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+					</textElement>
+					<text><![CDATA[NUM]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50">
+				<line>
+					<reportElement x="1" y="0" width="554" height="1"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="65" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="36" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LIST OF APPLICANTS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="38" y="6" width="120" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CLIENTNAME}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="318" y="6" width="115" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{APPLICATIONDATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="158" y="6" width="160" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{LICENSENAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="433" y="6" width="122" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{FULLNAME}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="1" height="26"/>
+			</line>
+			<line>
+				<reportElement x="157" y="0" width="1" height="26"/>
+			</line>
+			<line>
+				<reportElement x="316" y="0" width="1" height="26"/>
+			</line>
+			<line>
+				<reportElement x="432" y="0" width="1" height="26"/>
+			</line>
+			<line>
+				<reportElement x="554" y="0" width="1" height="26"/>
+			</line>
+			<line>
+				<reportElement x="36" y="0" width="1" height="26"/>
+			</line>
+			<textField>
+				<reportElement x="1" y="1" width="34" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="454" y="34" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

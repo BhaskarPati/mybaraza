@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="certificate" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="495" leftMargin="50" rightMargin="50" topMargin="36" bottomMargin="36" uuid="bde80f65-3883-4a11-bf6d-677cc05588fd">
+	<property name="ireport.zoom" value="1.2078825000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="681"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="filterid" class="java.lang.String">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="orgid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="orgwhere" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="organd" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="passenger_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[$P{filterid}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT vw_corporate_passengers.org_name, vw_corporate_passengers.corporate_rate_category_name, vw_corporate_passengers.rate_plan_name, vw_corporate_passengers.days_from, vw_corporate_passengers.days_to, vw_corporate_passengers.passenger_name, vw_corporate_passengers.passenger_mobile, vw_corporate_passengers.passenger_email, vw_corporate_passengers.passenger_id_no, vw_corporate_passengers.totalamount_covered, vw_corporate_passengers.entity_name, vw_corporate_passengers.sys_country_name,
+vw_corporate_passengers.policy_number,vw_corporate_passengers.countries,vw_corporate_passengers.destown
+FROM vw_corporate_passengers
+WHERE passenger_id = '$P!{passenger_id}']]>
+	</queryString>
+	<field name="org_name" class="java.lang.String"/>
+	<field name="corporate_rate_category_name" class="java.lang.String"/>
+	<field name="rate_plan_name" class="java.lang.String"/>
+	<field name="days_from" class="java.sql.Date"/>
+	<field name="days_to" class="java.sql.Date"/>
+	<field name="passenger_name" class="java.lang.String"/>
+	<field name="passenger_mobile" class="java.lang.String"/>
+	<field name="passenger_email" class="java.lang.String"/>
+	<field name="passenger_id_no" class="java.lang.String"/>
+	<field name="totalamount_covered" class="java.lang.Float"/>
+	<field name="entity_name" class="java.lang.String"/>
+	<field name="sys_country_name" class="java.lang.String"/>
+	<field name="policy_number" class="java.lang.String"/>
+	<field name="countries" class="java.lang.String"/>
+	<field name="destown" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="117" splitType="Stretch">
+			<image>
+				<reportElement x="3" y="0" width="247" height="113" uuid="d3e42f7b-44e3-4030-8682-06ef8bd84e51"/>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR} + "card-logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="595" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="5" width="495" height="25" uuid="93a65ea4-30f1-4544-acbb-817cb549a4e2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Insurer: The Heritage Insurance Co. Ltd]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="56" width="83" height="20" uuid="0ac88570-6ed7-4d05-8011-a1e20d122c07"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Policy Number:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="282" width="244" height="25" uuid="85d2a74e-b652-4e38-b5bc-05764fbcdee1"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SPECIALTY ASSIST]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="415" width="243" height="46" uuid="6360ca90-1789-414e-8d6f-9b539ee49c1d"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Philadelphia, USA
+Tel: +1215 489 3785 Tel: +662 645 3932
+Fax: +1215 489 8525]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="222" y="110" width="96" height="20" uuid="b8d93010-36d4-4576-8f80-278f1ad3229b"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Country of travel:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="201" width="495" height="29" uuid="3c45d9ba-373c-4354-8a2f-71f628b2e3bb"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[In the event of an emergency, please call the numbers below:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="222" y="56" width="72" height="20" forecolor="#000000" uuid="8b704241-efcc-4962-863c-250e0d543fd1"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<text><![CDATA[Cover From:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement style="Detail" x="294" y="56" width="73" height="20" uuid="961573de-9c96-4f18-86f7-3365b30811d4"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{days_from}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="367" y="56" width="60" height="20" forecolor="#000000" uuid="20b02b9f-5c9c-4f81-b8fb-43857434b135"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<text><![CDATA[Cover To:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement style="Detail" x="427" y="56" width="68" height="20" uuid="c56e7657-6004-4318-99af-61b6668e0ed1"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{days_to}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="0" y="110" width="38" height="20" forecolor="#000000" uuid="b2091842-96da-4404-99ca-acc5f4efc67c"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<text><![CDATA[Name:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="38" y="110" width="184" height="20" uuid="f3495b6e-85f2-4afe-ada0-bdb46a9c28c1"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{passenger_name}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="0" y="158" width="83" height="20" forecolor="#000000" uuid="9b3bf007-4b82-4251-b051-7f70aa5adb17"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<text><![CDATA[Type of Cover:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="83" y="158" width="412" height="20" uuid="fe773502-3d01-4d79-9389-87655b8bc2bb"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rate_plan_name}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="317" width="244" height="66" uuid="1cb73940-c278-4dcb-91c5-fd6898c4d062"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[London, UK
+Tel: +44(0) 20 7902 7405
+Fax:+44 (0) 20 7928 4748]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="461" width="243" height="23" uuid="1afbb73b-7fcd-42b3-bbf7-4805767a3a5b"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Email: assistance@specialty-group.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="384" width="243" height="20" uuid="4df7b0cb-8c0d-46f5-9715-5d1a21574084"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SPECIALTY ASSIST]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="294" y="415" width="189" height="46" uuid="931c28cd-78f1-4cdd-959b-bf3c36e35804"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Bangkok, Thailand
+Tel: +662 645 3932
+Fax: +662 645 3732]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="294" y="312" width="189" height="71" uuid="bf224ed2-cc4d-4861-8a60-d19168075fae"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Johannesburg, South Africa
+Tel: +27 10 209 8300
+Fax:+27 10 209 8405]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="294" y="282" width="189" height="20" uuid="b8a35209-9d27-4fc0-9876-3ff4bb27a641"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SPECIALTY ASSIST]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="294" y="384" width="189" height="20" uuid="3f332a2b-868a-4081-8906-301f4a974f2c"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SPECIALTY ASSIST]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="83" y="56" width="139" height="20" uuid="36cf9adc-bc29-4425-982d-5f6714de5176"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{policy_number}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="318" y="110" width="174" height="20" uuid="ab552b26-22a4-44d9-a7f2-c4adaaf49fd9"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{destown}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="245" width="495" height="20" uuid="42572b7d-b831-4770-a5bb-80506528f1be"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<text><![CDATA[For Assistance Worldwide, Contact]]></text>
+			</staticText>
+			<image>
+				<reportElement x="3" y="484" width="233" height="109" uuid="8482d6b3-12bc-4f89-b82a-c3c790c79945"/>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR} + "sign.png"]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="15" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="3" y="0" width="552" height="1" uuid="4f1bfcd0-a072-4d98-abb9-3705ae881583"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="1" width="495" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="c39500b0-9836-4b76-a8e3-d8e2a8624c0f"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="454" y="0" width="38" height="20" forecolor="#736343" uuid="197fcd49-fbc4-406f-bb48-ed8b65f49ea5"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE, d MMMMM yyyy HH:mm:ss Z">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="b0353f34-572e-4e6f-a01d-2b6c95320f9a"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+			<textField>
+				<reportElement style="Column header" x="375" y="1" width="78" height="20" forecolor="#736343" uuid="0887e48b-79aa-4dff-be03-cea9f7654577"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

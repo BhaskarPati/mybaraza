@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Projects" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7b2ff13d-75cd-4ea3-a384-26d59b4acc9a">
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="1119"/>
+	<property name="ireport.y" value="368"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="filterid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="orgid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="orgwhere" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="organd" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="project_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/opt/baraza.2.7/projects/acord/reports/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT vw_projects.project_id, vw_projects.project_name, vw_projects.project_start_date, vw_projects.project_ending_date, vw_projects.project_reference
+FROM vw_projects
+WHERE vw_projects.project_id = '$P!{project_id}'
+ORDER BY vw_projects.project_id]]>
+	</queryString>
+	<field name="project_id" class="java.lang.String"/>
+	<field name="project_name" class="java.lang.String"/>
+	<field name="project_start_date" class="java.sql.Date"/>
+	<field name="project_ending_date" class="java.sql.Date"/>
+	<field name="project_reference" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="1" y="14" width="86" height="15" forecolor="#000000" uuid="0a6ed733-4f84-40e8-a98c-b04996151fd3"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Project ]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="121" y="14" width="201" height="15" uuid="2d636787-b0bc-4bad-9575-f2e4796e7dab"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{project_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="1" y="29" width="106" height="15" forecolor="#000000" uuid="25f49fb8-ca59-492a-83c4-f9da0dae8829"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Project Start Date]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="121" y="30" width="106" height="15" uuid="afb62f6d-1fd9-411a-a779-223cbd634d20"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{project_start_date}.format("YYYY/MM/dd")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="322" y="29" width="120" height="15" forecolor="#000000" uuid="8e2ac718-cf78-4ae1-a514-fa49550ae16a"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Project Ending Date]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="442" y="30" width="110" height="15" uuid="ae220e2e-74d3-4e18-ab7c-41f70ffb3444"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{project_ending_date}.format("YYYY/MM/dd")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="121" y="0" width="100" height="14" uuid="302113d9-af32-40ff-b8c8-c69e00c96c00"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{project_id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="1" y="-1" width="101" height="15" forecolor="#000000" uuid="314ca765-6f97-4714-970f-f69fc9e55097"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Project ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="322" y="0" width="110" height="15" forecolor="#000000" uuid="a51fff25-d48b-47de-ab12-ec6254ceb703"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Project Reference]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="432" y="0" width="100" height="15" uuid="1b9b5825-eb5a-4bda-8fa9-422f5e2142c0"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{project_reference}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="ca175892-6218-484b-a359-3a8b36e67fd6"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="2" splitType="Stretch">
+			<subreport>
+				<reportElement x="122" y="0" width="175" height="0" uuid="a1bf8cca-9562-4934-a6cd-37cb2175c893"/>
+				<subreportParameter name="filterid"/>
+				<subreportParameter name="orgid"/>
+				<subreportParameter name="orgwhere"/>
+				<subreportParameter name="organd"/>
+				<subreportParameter name="project_id">
+					<subreportParameterExpression><![CDATA[$F{project_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "project_locations.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="4">
+			<subreport>
+				<reportElement x="122" y="3" width="200" height="0" uuid="04e1a56c-6636-4e37-a0dd-89f4252e8aa7"/>
+				<subreportParameter name="filterid"/>
+				<subreportParameter name="orgid"/>
+				<subreportParameter name="orgwhere"/>
+				<subreportParameter name="organd"/>
+				<subreportParameter name="project_id">
+					<subreportParameterExpression><![CDATA[$F{project_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "vw_final_outcomes.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="1">
+			<subreport>
+				<reportElement x="122" y="0" width="161" height="0" uuid="7d3c903c-fea1-415c-9832-6247ca205379"/>
+				<subreportParameter name="filterid"/>
+				<subreportParameter name="orgid"/>
+				<subreportParameter name="orgwhere"/>
+				<subreportParameter name="organd"/>
+				<subreportParameter name="strategy_name"/>
+				<subreportParameter name="SUBREPORT_DIR"/>
+				<subreportParameter name="project_id">
+					<subreportParameterExpression><![CDATA[$F{project_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Project_strategys.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="1">
+			<subreport>
+				<reportElement x="122" y="0" width="175" height="0" uuid="2ac6c73b-c9d0-4040-ac8d-c8546108f397"/>
+				<subreportParameter name="filterid"/>
+				<subreportParameter name="orgid"/>
+				<subreportParameter name="orgwhere"/>
+				<subreportParameter name="organd"/>
+				<subreportParameter name="project_name"/>
+				<subreportParameter name="SUBREPORT_DIR"/>
+				<subreportParameter name="project_id">
+					<subreportParameterExpression><![CDATA[$F{project_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Project_grants.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="14" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="32abf243-4b4a-4eb0-adb4-11e211b965fd"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="597" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="402330b6-1c47-422c-b5d6-55e63dcec42e"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="533" y="0" width="40" height="20" forecolor="#736343" uuid="8440ca22-22d2-49ee-9c38-2638d2134084"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="453" y="0" width="80" height="20" forecolor="#736343" uuid="1ec583a9-bf33-482f-9fb2-1f134fe30389"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE, d MMMMM yyyy HH:mm:ss Z">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="8e90b350-1acb-4973-b98d-cd3423c80d93"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

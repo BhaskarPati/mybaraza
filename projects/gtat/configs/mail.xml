@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<ESCALATION title="GTA Mail" processdelay="2" 
+	host="mail.travelport-kenya.com" mailuser="gta.finance" mailpassword="Ms@firiKE2017"
+	mailfrom="gta.finance@travelport-kenya.com"
+	inbox="INBOX" sentbox="Sent" smtppauth="true"
+	reportpath="/opt/baraza/projects/gtat/reports/">
+
+	<REPORT name="Invoice" keyfield="sys_emailed_id" action="Emailed" actioncount="1" 
+			table="sys_emails, sys_emailed, clients, vwinvoicelist"
+			where="((clients.clientid = vwinvoicelist.clientid) AND (vwinvoicelist.invoiceid = sys_emailed.table_id) AND(sys_emailed.emailed = false)  AND (sys_emails.sys_email_id = sys_emailed.sys_email_id) AND (sys_emailed.email_type = 1))">
+		<SUBJECT title="subject">sys_emails.title</SUBJECT>
+		<ADDRESS title="address">clients.email</ADDRESS>
+		<CCTO title="cc" fnct="'kenyafinance@travelport.com'::varchar">ccto</CCTO>
+		<PARAM basetable="vwinvoicelist" >invoiceid</PARAM>
+		<BODYFIELD reference="{{clientname}}" basetable="clients">clientname</BODYFIELD>
+		<BODYFIELD reference="{{contactperson}}" basetable="clients">contact_person</BODYFIELD>
+		<BODYFIELD fnct="to_char((vwinvoicelist.invoicedate - '1 Month'::Interval), 'Month YYYY')" reference="{{month_disp}}">month_display</BODYFIELD>
+		<FIELD title="Body" basetable="sys_emails">details</FIELD>
+ 		<REPORT fnct="'invoice_e.jasper'::varchar">invoice_file</REPORT>
+	</REPORT>
+
+	<REPORT name="Credit Note" keyfield="sys_emailed_id" action="Emailed" actioncount="1" 
+			table="sys_emails, sys_emailed, clients, vwcrnotelist"
+			where="((clients.clientid = vwcrnotelist.clientid) AND (vwcrnotelist.crnoteid = sys_emailed.table_id) AND (sys_emailed.emailed = false)  AND (sys_emails.sys_email_id = sys_emailed.sys_email_id) AND (sys_emailed.email_type = 2))">
+		<SUBJECT title="subject">sys_emails.title</SUBJECT>
+		<ADDRESS title="address">clients.email</ADDRESS>
+		<CCTO title="cc" fnct="'kenyafinance@travelport.com'::varchar">ccto</CCTO>
+		<PARAM basetable="vwcrnotelist" >crnoteid</PARAM>
+		<BODYFIELD reference="{{clientname}}" basetable="clients">clientname</BODYFIELD>
+		<BODYFIELD reference="{{contactperson}}" basetable="clients">contact_person</BODYFIELD>
+		<BODYFIELD fnct="to_char((vwcrnotelist.invoicedate - '1 Month'::Interval), 'Month YYYY')" reference="{{month_disp}}">month_display</BODYFIELD>
+		<FIELD title="Body" basetable="sys_emails">details</FIELD>
+		<REPORT fnct="'creditnote_e.jasper'::varchar">crnote_file</REPORT>
+	</REPORT>
+
+	<REPORT name="Statement" keyfield="sys_emailed_id" action="Emailed" actioncount="1" 
+			table="sys_emails, sys_emailed, clients, vw_statement"
+			where="((clients.clientid = vw_statement.clientid) AND (vwcrnotelist.crnoteid = sys_emailed.table_id) AND (sys_emailed.emailed = false)  AND (sys_emails.sys_email_id = sys_emailed.sys_email_id) AND (sys_emailed.email_type = 2))">
+		<SUBJECT title="subject">sys_emails.title</SUBJECT>
+		<ADDRESS title="address">clients.email</ADDRESS>
+		<CCTO title="cc" fnct="'kenyafinance@travelport.com'::varchar">ccto</CCTO>
+		<PARAM basetable="vwcrnotelist" >crnoteid</PARAM>
+		<BODYFIELD reference="{{clientname}}" basetable="clients">clientname</BODYFIELD>
+		<BODYFIELD reference="{{contactperson}}" basetable="clients">contact_person</BODYFIELD>
+		<BODYFIELD fnct="to_char((vwcrnotelist.invoicedate - '1 Month'::Interval), 'Month YYYY')" reference="{{month_disp}}">month_display</BODYFIELD>
+		<FIELD title="Body" basetable="sys_emails">details</FIELD>
+		<REPORT fnct="'creditnote_e.jasper'::varchar">crnote_file</REPORT>
+	</REPORT>
+	
+</ESCALATION>

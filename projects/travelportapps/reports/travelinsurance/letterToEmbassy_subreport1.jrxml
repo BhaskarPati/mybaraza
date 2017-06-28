@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="letterToEmbassy_subreport1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0529e38a-f10a-46f5-bbc8-88a122973561">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="51"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="filterid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="token" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT vw_policy_members.passenger_id,vw_policy_members.member_name,vw_policy_members.destown ||',' as destown,vw_policy_members.policy_number, passport_number,
+('The policy is valid from '|| vw_policy_members.days_from)as days_from,(vw_policy_members.days_to ||'.')as days_to,'The policy benefits includes Emergency Medical and Evacuation benefits of USD '||get_benefit_section_a(rate_type_id)||' and USD '||get_benefit_section_b(rate_type_id)|| ' respectively and is applicable worldwide including all Schengen States.' as benefit, approved_date
+
+FROM vw_policy_members
+
+WHERE vw_policy_members.passenger_id = '$P!{filterid}']]>
+	</queryString>
+	<field name="passenger_id" class="java.lang.Integer"/>
+	<field name="member_name" class="java.lang.String"/>
+	<field name="destown" class="java.lang.String"/>
+	<field name="policy_number" class="java.lang.String"/>
+	<field name="passport_number" class="java.lang.String"/>
+	<field name="days_from" class="java.lang.String"/>
+	<field name="days_to" class="java.lang.String"/>
+	<field name="benefit" class="java.lang.String"/>
+	<field name="approved_date" class="java.sql.Timestamp"/>
+	<variable name="token" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="102" splitType="Stretch">
+			<image>
+				<reportElement x="181" y="0" width="158" height="100" uuid="e8dbbc73-4b95-495c-8b99-6dbd1672aacd"/>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR}+"ICEA-LION-Travel-Insurance-Logo.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="448" y="22" width="106" height="78" uuid="f7d7e5bb-b197-4ae0-a0dc-4a444ea928f3"/>
+				<imageExpression class="net.sf.jasperreports.engine.JRRenderable"><![CDATA[new com.onbarcode.barcode.jasper.JasperRenderer(com.onbarcode.barcode.jasper.BarcodeGenerator.draw(102,"http://tp.dc.co.ke/travelportapps/letter.jsp?view=55:0:0&data="+$F{passenger_id}, "", "X=2&Y=60"))]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="448" y="0" width="36" height="20" uuid="074ba5e0-96a6-43f5-b342-b8326feb677a"/>
+				<textElement>
+					<font fontName="Garamond-Normal"/>
+				</textElement>
+				<text><![CDATA[S/NO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="485" y="0" width="70" height="20" uuid="c0d9fe05-f08b-4d7a-8169-62265991b361"/>
+				<textElement>
+					<font fontName="Garamond-Normal"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{passenger_id}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="463" splitType="Stretch">
+			<staticText>
+				<reportElement x="27" y="162" width="103" height="20" uuid="dfe31cec-41ae-4a88-b300-7e3534b3caa0"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[POLICY NUMBER:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="-1" y="372" width="145" height="57" uuid="e42c68fe-009e-4dbc-94da-99412fc44491"/>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR} + "file-page1.png"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="4" y="202" width="550" height="1" uuid="c483bb97-92f2-444f-b770-494b11d504d6"/>
+			</line>
+			<staticText>
+				<reportElement x="-1" y="332" width="256" height="20" uuid="efb1e743-d14a-458e-908b-af09f80fde45"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[For and on behalf of ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="312" width="256" height="20" uuid="f979b837-11ff-4ec5-ba8b-9c076e7343bc"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[Yours Faithfully,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="352" width="256" height="20" uuid="2a33ec94-5959-40c7-abd7-dca6392704ed"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[ICEALION General Insurance Co. Ltd]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="82" y="47" width="327" height="25" uuid="ec082065-6638-4f1a-bcb4-73bfc149eb3f"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{token}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="27" y="122" width="344" height="20" uuid="f9382bb9-8ec1-4623-b338-686acde3291c"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OVERSEAS TRAVEL INSURANCE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="100" width="100" height="22" uuid="ba1807cf-efd2-479f-b55b-6da576f54e47"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[Dear Sir/Madam,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="47" width="81" height="25" uuid="dc12f81d-ef31-4f8e-b07f-8fc5bc48f925"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[EMBASSY OF]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="122" width="27" height="20" uuid="931a7b9f-3fe5-450a-b432-164507360214"/>
+				<textElement>
+					<font fontName="Garamond-Normal" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RE: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="72" width="100" height="24" uuid="30a0361c-c2b7-4aa2-94c4-d9a96b24de88"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[NAIROBI.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="22" width="409" height="25" uuid="2ee294c5-118e-4bb6-91ca-60f1005a7926"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[The Visa Consular,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="182" width="117" height="20" uuid="2110dbec-66f7-45b9-a5e5-e17a2d2d9cb6"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PASSPORT NUMBER:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="130" y="162" width="240" height="20" uuid="ba7c6352-bef6-4ebb-ad6b-ba58580a4566"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{policy_number}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="409" height="22" uuid="57a5bbfe-3630-42ea-99d6-462cb09fb9c7"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{approved_date}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="145" y="182" width="226" height="20" uuid="3c37fc16-fd4b-4c94-a200-aacdee3f225a"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{passport_number}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="78" y="142" width="293" height="20" uuid="292831d4-9094-477c-a38d-bae0e5c90282"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{member_name}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="27" y="142" width="51" height="20" uuid="288d4bba-e64b-4bd5-b984-13dea468e682"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INSURED:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="-1" y="269" width="557" height="20" isPrintWhenDetailOverflows="true" uuid="0520f131-975c-4790-b146-80e7873423a2"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{days_from} + ' to '+$F{days_to}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="203" width="557" height="33" uuid="01832d65-a018-4ebc-92ad-e6ab534ca8d6"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[This is to confirm we have issued overseas travel insurance to the above named person who is scheduled to travel abroad.]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="236" width="557" height="33" isPrintWhenDetailOverflows="true" uuid="2698741b-bb35-41c8-84eb-066f83ca662b"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{benefit}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="289" width="555" height="20" uuid="9fc22d34-a1ae-4f72-bab7-98b99036c329"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[For any inquiries, please contact the undersigned.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="429" width="268" height="33" uuid="e85806a5-6ccf-440e-bd58-87d2a69f70e8"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[Jennifer Kamotho
+Manager, Business Development]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="15" splitType="Stretch"/>
+	</columnFooter>
+</jasperReport>

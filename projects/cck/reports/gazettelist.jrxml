@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<queryString>
+		<![CDATA[SELECT UPPER(vwclientlicenses.licensename) AS licensename, vwclientlicenses.clientname,'P.O.Box' || vwclientlicenses.address as address,initcap (vwclientlicenses.town) || '-' || vwclientlicenses.postalcode as code,vwclientlicenses.licensetypename , vwclientlicenses.town,vwclientlicenses.postalcode, vwclientlicenses.LICENSENAME,
+vwclientlicenses.categoryrecomm, vwclientlicenses.categoryapproved , vwclientlicenses.categoryappliedfor,
+clcnumber, clcdate,vwclientlicenses.ispostal
+FROM vwallchecklists INNER JOIN vwclientlicenses ON vwclientlicenses.clientlicenseid = vwallchecklists.clientlicenseid
+left outer JOIN clc ON clc.clcid = vwclientlicenses.clcid
+
+WHERE (vwclientlicenses.forlcs = '1') AND
+(vwallchecklists.approved = '0') AND (vwallchecklists.rejected = '0') 
+AND (vwallchecklists.ClientPhaseLNA = 0) AND (vwallchecklists.PENDING = '0')  
+AND (vwallchecklists.clientphasename = 'gazettement') 
+order by licensetypename]]>
+	</queryString>
+	<field name="LICENSENAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CLIENTNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ADDRESS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LICENSETYPENAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TOWN" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="POSTALCODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CATEGORYRECOMM" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CATEGORYAPPROVED" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CATEGORYAPPLIEDFOR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CLCNUMBER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CLCDATE" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ISPOSTAL" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="290" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-1" x="90" y="15" width="417" height="19"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMMUNICATIONS COMMISIONS OF KENYA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-2" x="214" y="34" width="134" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INTERNAL MEMO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-8" x="75" y="101" width="154" height="17"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[DIRECTOR GENERAL]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy" isBlankWhenNull="true">
+				<reportElement key="textField" x="75" y="126" width="414" height="18"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" pdfFontName="Times-Roman"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{CLCDATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-6" x="0" y="160" width="63" height="17"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[SUBJECT:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-7" x="75" y="81" width="115" height="17"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[D/LCS OFFICE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="0" y="81" width="56" height="17"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[FROM:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-9" x="75" y="160" width="446" height="34"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true" isUnderline="true" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[KENYA GAZETTE NOTIFICATION FOR COMMUNICATION LICENCE APPLICANTS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-5" x="0" y="126" width="56" height="17"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[DATE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-3" x="0" y="101" width="36" height="17"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[TO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="194" width="555" height="33"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Following the deliberations of the Communications Licensing Committee (CLC) meeting of                                                   , the following applications were recommended for gazette notification:]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy" isBlankWhenNull="true">
+				<reportElement x="416" y="194" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{CLCDATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="34" y="239" width="38" height="38"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[No:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="240" width="217" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[COMPANY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="355" y="240" width="166" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[BUSINESS]]></text>
+			</staticText>
+			<line>
+				<reportElement x="34" y="289" width="509" height="1"/>
+			</line>
+			<line>
+				<reportElement x="34" y="234" width="509" height="1"/>
+			</line>
+			<line>
+				<reportElement x="34" y="234" width="1" height="55"/>
+			</line>
+			<line>
+				<reportElement x="75" y="234" width="1" height="55"/>
+			</line>
+			<line>
+				<reportElement x="323" y="234" width="1" height="55"/>
+			</line>
+			<line>
+				<reportElement x="543" y="234" width="1" height="55"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="74" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="90" y="51" width="124" height="22"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" pdfFontName="Times-Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{POSTALCODE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="90" y="24" width="124" height="27"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" pdfFontName="Times-Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ADDRESS}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="90" y="0" width="219" height="24"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" pdfFontName="Times-Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CLIENTNAME}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="348" y="0" width="184" height="27"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" pdfFontName="Times-Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{LICENSENAME}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="34" y="73" width="509" height="1"/>
+			</line>
+			<line>
+				<reportElement x="323" y="-1" width="1" height="74"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="36" y="12" width="36" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="11" pdfFontName="Times-Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="34" y="-1" width="1" height="75"/>
+			</line>
+			<line>
+				<reportElement x="543" y="-1" width="1" height="75"/>
+			</line>
+			<line>
+				<reportElement x="75" y="-1" width="1" height="75"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="103" splitType="Stretch">
+			<staticText>
+				<reportElement x="17" y="83" width="170" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[cc: Commission Secretary]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="14" width="527" height="16"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[This is therefore to seek for your consideration and approval to proceed with the gazette notification.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="40" width="527" height="43"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[
+AD/L&C]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

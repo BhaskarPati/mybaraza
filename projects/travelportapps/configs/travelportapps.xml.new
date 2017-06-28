@@ -1,0 +1,75 @@
+<APP>
+	<MENU name="Travelport Apps">
+		<MENU name="Service Desk">
+			<MENU role="broker,admin,manager" name="New Insurance" page="bima">null</MENU>
+			<MENU role="individual" name="My Invoice" page="invoice">null</MENU>
+			<MENU role="individual" name="My Insurance">null</MENU>
+			<MENU role="manager,admin,agency,user,broker" name="My Certificate">null</MENU>
+		</MENU>
+		<MENU role="admin,manager,agency" name="Organisation">
+			<MENU role="admin,manager" icon="fa fa-sitemap" name="Travel Agencies">null</MENU>
+			<MENU role="agency,broker" icon="fa fa-sitemap" name="My Agency">null</MENU>
+			<MENU role="admin,manager" name="Corporate Clients">null</MENU>
+		</MENU>
+		<MENU role="admin,manager,agency" name="Transactions">
+			<MENU role="admin,manager" name="Insurance">null</MENU>
+			<MENU role="agency" name="Agency Insurance ">null</MENU>
+			<MENU role="admin,manager" name="Payments">null</MENU>
+			<MENU role="master" name="Insurance Sales">null</MENU>
+		</MENU>
+		<MENU role="individual,user,broker" name="Profile">
+			<MENU role="individual,user,broker" name="Entitys">null</MENU>
+		</MENU>
+		<MENU role="admin,agency,manager" name="Configurations">
+			<MENU role="manager,admin" name="Rates">null</MENU>
+			<MENU role="admin,manager,agency" name="Countrys">null</MENU>
+			<MENU role="admin,manager" name="Entitys">null</MENU>
+			<MENU role="admin,manager" name="Emails">null</MENU>
+			<MENU role="manager,admin" name="Exchange Rates">null</MENU>
+			<MENU role="admin" name="Travelport Apps" superuser="true">null</MENU>
+		</MENU>
+		<MENU role="admin,manager,agency,broker,user" name="Reports">
+			<MENU role="admin,manager" name="Rates">null</MENU>
+			<MENU name="Sales Report">null
+				<MENU role="user,agency,manager,broker" name="My Sales">203</MENU>
+				<MENU role="admin,manager,agency" name="Sales Report">91</MENU>
+				<MENU role="master" name="All Sales">102</MENU>
+			</MENU>
+		</MENU>
+	</MENU>
+	<DESK w="700" h="500" name="Dashboard">
+		<DASHBOARD w="650" name="Dashboard">
+			<TILE noorg.query="false" role="user,individual" w="60" h="25" name="Today Sales" where="(DATE(approved_date)=CURRENT_DATE AND is_valid is true AND approved is true)" user="entity_id" table="vw_allpassengers">
+				<TEXTFIELD w="75" fnct="COALESCE(count(passenger_id),0)" title="Total Sales">total_passengers</TEXTFIELD>
+			</TILE>
+			<TILE noorg.query="true" role="agency,broker" w="60" h="25" name="Today Sales" where="(DATE(approved_date)=CURRENT_DATE AND is_valid is true AND approved is true)" table="vw_allpassengers">
+				<TEXTFIELD w="75" fnct="COALESCE(count(passenger_id),0)" title="Total Sales">total_passengers</TEXTFIELD>
+			</TILE>
+			<TILE noorg.query="true" role="user" name="Total Amount" where="(approved is true AND is_valid is true)" user="entity_id" table="vw_allpassengers">
+				<TEXTFIELD w="75" fnct="ROUND(sum(totalamount_covered)::numeric,2)" title="Total Amount">Total_covered</TEXTFIELD>
+			</TILE>
+			<TILE noorg.query="true" role="agency" name="Total Amount" where="(approved is true AND is_valid is true)" table="vw_allpassengers">
+				<TEXTFIELD w="75" fnct="ROUND(sum(totalamount_covered)::numeric,2)" title="Total Amount">Total_covered</TEXTFIELD>
+			</TILE>
+			<TILE noorg="true" noorg.query="true" role="admin,manager" w="60" h="25" name="Today Sales" where="(DATE(approved_date)=CURRENT_DATE AND is_valid is true AND approved is true)" table="vw_allpassengers">
+				<TEXTFIELD w="75" fnct="COALESCE(count(passenger_id), 0)" title="Total Members">total_passengers</TEXTFIELD>
+			</TILE>
+			<TILE noorg="true" noorg.query="true" role="admin,manager" w="60" h="25" name="Monthly Sales" where="(extract(month from approved_date) = extract(month from CURRENT_DATE)  AND extract(year from approved_date) = extract(year from CURRENT_DATE) AND is_valid is true AND approved is true)" table="vw_allpassengers">
+				<TEXTFIELD w="75" fnct="COALESCE(count(passenger_id), 0)" title="Total Members">total_passengers</TEXTFIELD>
+			</TILE>
+			<TILE noorg="true" noorg.query="true" role="admin,manager" w="60" h="25" icon="fa icon-basket" name="Yearly Sales" where="(extract(year from approved_date) = extract(year from CURRENT_DATE) AND is_valid is true AND approved is true)" table="vw_allpassengers">
+				<TEXTFIELD w="75" fnct="COALESCE(count(passenger_id), 0)" title="Total Members">total_passengers</TEXTFIELD>
+			</TILE>
+			<TILE noorg="true" noorg.query="true" role="admin,manager" w="60" h="25" icon="fa icon-basket" name="Total Sales" where="(is_valid is true AND approved is true)" table="vw_allpassengers">
+				<TEXTFIELD w="75" fnct="COALESCE(count(passenger_id), 0)" title="Total Sales">total_passengers</TEXTFIELD>
+			</TILE>
+			<TILE noorg="true" noorg.query="true" role="admin,manager" name="Total Amount" where="(approved is true AND is_valid is true)" table="vw_allpassengers">
+				<TEXTFIELD w="75" fnct="ROUND(sum(totalamount_covered)::numeric,2)" title="Total Amount">Total_covered</TEXTFIELD>
+			</TILE>
+			<TILELIST noorg="true" noorg.query="true" role="admin,manager" name="Insurance Sales" orderby="(org_name)" where="(approved is true AND is_valid is true)" groupby="org_name" table="vw_allpassengers">
+				<TEXTFIELD w="75" title="Organisation">org_name</TEXTFIELD>
+				<TEXTFIELD w="75" fnct="ROUND(sum(totalamount_covered)::numeric, 2)" title="Total Amount">totalamount_covered</TEXTFIELD>
+			</TILELIST>
+		</DASHBOARD>
+	</DESK>
+</APP>

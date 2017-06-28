@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="licencepayments" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20">
+	<property name="ireport.scriptlethandling" value="2"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="filterid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT paymenttypename, paymenttypeid, fullname, amount,orcinvdate,licensename,invoicedate,clientname, postalcode ,
+address,town,country,licensepaymentid,clientlicenseid,
+applicationfee,initialfee,invmonths,proratedfee
+
+ FROM
+vwpaymentphases where licensepaymentid = '$P!{filterid}']]>
+	</queryString>
+	<field name="PAYMENTTYPENAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PAYMENTTYPEID" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FULLNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AMOUNT" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ORCINVDATE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LICENSENAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="INVOICEDATE" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CLIENTNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="POSTALCODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ADDRESS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TOWN" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COUNTRY" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LICENSEPAYMENTID" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CLIENTLICENSEID" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="APPLICATIONFEE" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="INITIALFEE" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="INVMONTHS" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PRORATEDFEE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="594" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-1" x="80" y="5" width="417" height="19"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMMUNICATIONS COMMISIONS OF KENYA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-2" x="204" y="24" width="134" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INTERNAL MEMO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-3" x="7" y="63" width="36" height="17"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="7" y="86" width="56" height="17"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FROM:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-5" x="7" y="108" width="56" height="17"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-6" x="7" y="130" width="63" height="17"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SUBJECT:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-7" x="97" y="63" width="115" height="17"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[THE CASHIER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-8" x="97" y="86" width="154" height="17"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIRECTOR/LCS OFFICE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-9" x="97" y="130" width="251" height="17"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PAYMENT INSTRUCTION SHEET]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-10" x="97" y="147" width="251" height="17"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FOR TELECOM LICENCE FEES]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-1" x="0" y="168" width="535" height="1"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-11" x="0" y="176" width="535" height="18"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[Please accept payment and issue a reciept in respect of payment as shown below:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-12" x="0" y="200" width="118" height="17"/>
+				<textElement>
+					<font fontName="Times New Roman" size="13"/>
+				</textElement>
+				<text><![CDATA[Payment made by:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-13" x="80" y="246" width="69" height="17"/>
+				<textElement>
+					<font fontName="Times New Roman" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[P.O. Box]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-14" x="7" y="299" width="197" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[For the following Licence (s)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-15" x="7" y="327" width="168" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Application Fee (Kshs.):]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-7" x="90" y="234" width="442" height="1"/>
+			</line>
+			<line>
+				<reportElement key="line-8" x="159" y="261" width="374" height="2"/>
+			</line>
+			<line>
+				<reportElement key="line-9" x="80" y="286" width="452" height="1"/>
+			</line>
+			<line>
+				<reportElement key="line-10" x="213" y="315" width="319" height="2"/>
+			</line>
+			<line>
+				<reportElement key="line-11" x="185" y="344" width="347" height="2"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-16" x="7" y="355" width="184" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Initial Licence Fee (Kshs.):]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-12" x="197" y="372" width="335" height="2"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-17" x="7" y="383" width="238" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pro-Rated Operating Period:]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-13" x="253" y="402" width="279" height="1"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-18" x="7" y="413" width="238" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pro-Rated Operating Fee (Kshs.):]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-14" x="253" y="432" width="279" height="1"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-19" x="7" y="438" width="168" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Amount (Kshs.):]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-15" x="191" y="457" width="341" height="1"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-20" x="7" y="467" width="111" height="18"/>
+				<textElement>
+					<font fontName="Times New Roman" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Issuing Officer:]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-16" x="0" y="521" width="188" height="1"/>
+			</line>
+			<line>
+				<reportElement key="line-17" x="204" y="521" width="183" height="1"/>
+			</line>
+			<line>
+				<reportElement key="line-18" x="413" y="521" width="115" height="1"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-21" x="7" y="528" width="135" height="16"/>
+				<textElement textAlignment="Left">
+					<font fontName="Times New Roman" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Served By:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-22" x="224" y="528" width="146" height="16"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Signature]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-23" x="429" y="528" width="84" height="16"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-24" x="0" y="561" width="470" height="26"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LICENCING, COMPLIANCE AND STANDARDS]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="97" y="105" width="100" height="18"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{INVOICEDATE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="213" y="294" width="257" height="18"/>
+				<textElement>
+					<font fontName="Times New Roman" size="13"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{LICENSENAME}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField" x="279" y="438" width="100" height="18"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="13"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{AMOUNT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="159" y="213" width="354" height="18"/>
+				<textElement>
+					<font fontName="Times New Roman" size="13"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CLIENTNAME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="7" y="499" width="100" height="18"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{FULLNAME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="191" y="243" width="257" height="18"/>
+				<textElement>
+					<font fontName="Times New Roman" size="13"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ADDRESS}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="97" y="268" width="78" height="18"/>
+				<textElement>
+					<font fontName="Times New Roman" size="13"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{TOWN}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="292" y="269" width="78" height="18"/>
+				<textElement>
+					<font fontName="Times New Roman" size="13"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{COUNTRY}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="182" y="268" width="110" height="18"/>
+				<textElement>
+					<font fontName="Times New Roman" size="13"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{POSTALCODE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="214" y="325" width="156" height="18"/>
+				<textElement>
+					<font fontName="Times New Roman" size="13"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{APPLICATIONFEE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="214" y="350" width="103" height="18"/>
+				<textElement>
+					<font fontName="Times New Roman" size="13"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{INITIALFEE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="256" y="379" width="114" height="18"/>
+				<textElement>
+					<font fontName="Times New Roman" size="13"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{INVMONTHS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="256" y="411" width="123" height="18"/>
+				<textElement>
+					<font fontName="Times New Roman" size="13"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{PRORATEDFEE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy" isBlankWhenNull="true">
+				<reportElement key="textField" x="413" y="499" width="100" height="18"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{INVOICEDATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="370" y="379" width="100" height="20"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[Months]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="323" width="100" height="19"/>
+				<textElement>
+					<font fontName="Times New Roman" size="13" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[KShs]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="317" y="350" width="100" height="18"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[KShs]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="379" y="413" width="100" height="16"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[KShs]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="379" y="438" width="100" height="18"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[KShs]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

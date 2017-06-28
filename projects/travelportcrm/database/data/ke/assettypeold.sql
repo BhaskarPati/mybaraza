@@ -1,0 +1,25 @@
+INSERT INTO assetsubtypes (assettypeid, assetsubtypename, clientcost, details) VALUES (8, 'Network Point', 84, NULL);
+INSERT INTO assetsubtypes (assettypeid, assetsubtypename, clientcost, details) VALUES (10, '9U Wall Unit (Network Reticulation)', 316, NULL);
+
+INSERT INTO assetsubtypes (assettypeid, assetsubtypename, clientcost, details) VALUES (1, 'PC -i3', 997, NULL);
+INSERT INTO assetsubtypes (assettypeid, assetsubtypename, clientcost, details) VALUES (1, 'PC (Higher Specs) - i5', 1090, NULL);
+INSERT INTO assetsubtypes (assettypeid, assetsubtypename, clientcost, details) VALUES (3, 'Laptops - i3', 1115, NULL);
+INSERT INTO assetsubtypes (assettypeid, assetsubtypename, clientcost, details) VALUES (3, 'Laptops (Higher specs) - i5', 1250, NULL);
+INSERT INTO assetsubtypes (assettypeid, assetsubtypename, clientcost, details) VALUES (4, 'HC Printers -DM', 295, NULL);
+INSERT INTO assetsubtypes (assettypeid, assetsubtypename, clientcost, details) VALUES (5, 'HC Printers - Laser', 565, NULL);
+INSERT INTO assetsubtypes (assettypeid, assetsubtypename, clientcost, details) VALUES (6, 'UPS (Expected life - 18 months)', 123, NULL);
+INSERT INTO assetsubtypes (assettypeid, assetsubtypename, clientcost, details) VALUES (11, 'Switch 16 Port ', 175, NULL);
+INSERT INTO assetsubtypes (assettypeid, assetsubtypename, clientcost, details) VALUES (14, 'Server HP DL380', 4456, NULL);
+INSERT INTO assetsubtypes (assettypeid, assetsubtypename, clientcost, details) VALUES (14, 'DEWCIS Mail Server', 1407, NULL);
+INSERT INTO assetsubtypes (assettypeid, assetsubtypename, clientcost, details) VALUES (15, 'Tab ', 500, NULL);
+INSERT INTO assetsubtypes (assettypeid, assetsubtypename, clientcost, details) VALUES (9, 'MS Office (Per Device)', 334, NULL);
+INSERT INTO assetsubtypes (assettypeid, assetsubtypename, clientcost, details) VALUES (9, 'Galileo Terminal (Galileo CEE)', 12, NULL);
+INSERT INTO assetsubtypes (assettypeid, assetsubtypename, clientcost, details) VALUES (9, 'Document Producer (Travelsoft)', 14, NULL);
+INSERT INTO assetsubtypes (assettypeid, assetsubtypename, clientcost, details) VALUES (9, 'TRAMs (Multiple Sites)', 73, NULL);
+INSERT INTO assetsubtypes (assettypeid, assetsubtypename, clientcost, details) VALUES (9, 'TRAMs (First Site)', 340, NULL);
+INSERT INTO assetsubtypes (assettypeid, assetsubtypename, clientcost, details) VALUES (9, 'TRAMs - Add Users (Front and Back office Users)', 67, NULL);
+INSERT INTO assetsubtypes (assettypeid, assetsubtypename, clientcost, details) VALUES (9, 'Travcom, Base clientcost', 144, NULL);
+INSERT INTO assetsubtypes (assettypeid, assetsubtypename, clientcost, details) VALUES (9, 'Travcom, Additional Users, Front Office', 7, NULL);
+INSERT INTO assetsubtypes (assettypeid, assetsubtypename, clientcost, details) VALUES (9, 'Travcom, Additional Users, Back Office', 11, NULL);
+INSERT INTO assetsubtypes (assettypeid, assetsubtypename, clientcost, details) VALUES (9, 'Travcom, Additional Branches', 18, NULL);
+INSERT INTO assetsubtypes (assettypeid, assetsubtypename, clientcost, details) VALUES (9, 'tma', 400, NULL);

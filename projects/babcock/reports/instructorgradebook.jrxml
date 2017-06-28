@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="instructorgradebook" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="BlankPage" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3a44257a-fe32-4e35-b456-5b0cb164330d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="filterid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="majorid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["none"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="studylevel" class="java.lang.String">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT qstudentmajorview.studentschoolid, qstudentmajorview.studentschoolname,
+qstudentmajorview.studentdepartmentid, qstudentmajorview.studentdepartmentname,
+qstudentmajorview.majorid, qstudentmajorview.majorname, qstudentmajorview.quarterid,
+qstudentmajorview.studylevel, qstudentmajorview.studentid, qstudentmajorview.studentname,
+qgradeview.courseid, qgradeview.coursetitle, qgradeview.finalmarks, qgradeview.credit,
+(substring(qgradeview.courseid from 1 for 4) || '  ' || trim(substring(qgradeview.courseid from 5 for 4)) || ' (' || trim(to_char(qgradeview.credit, '99')) || ')') as dispcourseid,
+to_char(getcurrcredit(qstudentmajorview.qstudentid), '999') as currcredit,
+to_char(getcurrgpa(qstudentmajorview.qstudentid),'999D00') as gpa,
+to_char(getcummgpa(qstudentmajorview.studentdegreeid, qstudentmajorview.quarterid), '9999D00') as cummgpa,
+(getgradeid(qgradeview.finalmarks, qgradeview.org_id) || ',' || to_char(qgradeview.finalmarks, '99')) as instructorgrade
+
+FROM qstudentmajorview INNER JOIN (qgradeview INNER JOIN qcourses ON qgradeview.qcourseid = qcourses.qcourseid) ON qstudentmajorview.qstudentid = qgradeview.qstudentid
+
+WHERE (qstudentmajorview.quarterid = '$P!{filterid}')
+AND (qstudentmajorview.majorid = '$P!{majorid}')
+AND (qstudentmajorview.studylevel = '$P!{studylevel}')
+AND (qstudentmajorview.finalised = true)
+AND (qstudentmajorview.approved = true)
+AND (qgradeview.finalmarks is not null)
+AND (qcourses.facultysubmit = true)
+
+ORDER BY qstudentmajorview.studentname;]]>
+	</queryString>
+	<field name="studentschoolid" class="java.lang.String"/>
+	<field name="studentschoolname" class="java.lang.String"/>
+	<field name="studentdepartmentid" class="java.lang.String"/>
+	<field name="studentdepartmentname" class="java.lang.String"/>
+	<field name="majorid" class="java.lang.String"/>
+	<field name="majorname" class="java.lang.String"/>
+	<field name="quarterid" class="java.lang.String"/>
+	<field name="studylevel" class="java.lang.Integer"/>
+	<field name="studentid" class="java.lang.String"/>
+	<field name="studentname" class="java.lang.String"/>
+	<field name="courseid" class="java.lang.String"/>
+	<field name="coursetitle" class="java.lang.String"/>
+	<field name="finalmarks" class="java.lang.Float"/>
+	<field name="credit" class="java.lang.Double"/>
+	<field name="dispcourseid" class="java.lang.String"/>
+	<field name="currcredit" class="java.lang.String"/>
+	<field name="gpa" class="java.lang.String"/>
+	<field name="cummgpa" class="java.lang.String"/>
+	<field name="instructorgrade" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="111" splitType="Stretch">
+			<textField>
+				<reportElement x="130" y="88" width="151" height="19" uuid="964a6410-ebe0-48ce-b35c-ba305c0fbff9"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{studentschoolname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="368" y="88" width="151" height="19" uuid="0cc23d97-6d52-4d39-aaea-1290d25a2131"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{studentdepartmentname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="69" width="151" height="19" uuid="c626c31b-015e-4dfa-ae42-6ab0720c4895"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{majorname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="600" y="69" width="100" height="19" uuid="9675bbe2-605d-406e-bb23-8bf002f8b6ab"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quarterid}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="element-92" x="35" y="69" width="95" height="19" forecolor="#000000" uuid="8291cea1-d8bd-482d-b2d0-e4c3c02a39c6"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Programme]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="element-92" x="35" y="88" width="95" height="19" forecolor="#000000" uuid="384b9361-08e5-4c69-990c-4c01ecb2740e"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[School Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="element-92" x="291" y="88" width="77" height="19" forecolor="#000000" uuid="e935ef13-ad60-4a3d-b062-c71f50880910"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Department]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="368" y="69" width="151" height="19" uuid="fd57e11d-8f8b-44e0-b56d-4cdd99deab2d"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{studylevel}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="element-92" x="291" y="69" width="77" height="19" forecolor="#000000" uuid="f594160d-2f03-44be-8aff-eddd4d59dd43"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[StudyLevel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="element-92" x="523" y="69" width="77" height="19" forecolor="#000000" uuid="86fdb3f2-ac9c-4cce-8abb-2082012b17d4"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Semester]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="element-92" x="155" y="13" width="335" height="53" forecolor="#000000" uuid="02694b39-f8b2-4c22-9db8-872b8fd1c211"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="16" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[	   Babcock University
+            Semester Grade & Score Summary
+]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="24" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField-8" mode="Transparent" x="5" y="4" width="150" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="9c945513-1455-4adb-a7e3-4a2a9657cf1c"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
+					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="CP1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="false">
+				<reportElement key="textField-10" mode="Transparent" x="756" y="4" width="36" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="3bc4f506-4821-4ab9-a1c9-9edebaa4bbba"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
+					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="CP1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField-9" mode="Transparent" x="669" y="4" width="87" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="ec711d0c-d27f-4821-8aed-34018356ae17"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
+					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="CP1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="802" height="1" uuid="d2e9ba34-cfca-4bfa-9397-dbf6a58243a7"/>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="77" splitType="Stretch">
+			<crosstab>
+				<reportElement x="0" y="0" width="802" height="77" uuid="7bd59721-ad03-42aa-86f3-59152ba89ef2"/>
+				<crosstabHeaderCell>
+					<cellContents>
+						<staticText>
+							<reportElement style="Crosstab Data Text" x="205" y="20" width="39" height="18" uuid="59af88fa-a6d5-48e5-9f80-7026798ecd23"/>
+							<textElement>
+								<font fontName="Times New Roman" isBold="true"/>
+							</textElement>
+							<text><![CDATA[Matric]]></text>
+						</staticText>
+						<staticText>
+							<reportElement style="Crosstab Data Text" x="0" y="20" width="205" height="18" uuid="f4224e78-ffb4-4970-9199-95f655362276"/>
+							<textElement>
+								<font fontName="Times New Roman" isBold="true"/>
+							</textElement>
+							<text><![CDATA[Student Name]]></text>
+						</staticText>
+						<staticText>
+							<reportElement style="Crosstab Data Text" x="243" y="20" width="39" height="18" uuid="1e9c1121-a302-4202-8ac3-4c5768e63326"/>
+							<textElement>
+								<font fontName="Times New Roman" isBold="true"/>
+							</textElement>
+							<text><![CDATA[Credit]]></text>
+						</staticText>
+						<staticText>
+							<reportElement style="Crosstab Data Text" x="282" y="20" width="37" height="18" uuid="c4487593-6870-4677-9823-4fadd21bce63"/>
+							<textElement>
+								<font fontName="Times New Roman" isBold="true"/>
+							</textElement>
+							<text><![CDATA[GPA]]></text>
+						</staticText>
+						<staticText>
+							<reportElement style="Crosstab Data Text" x="319" y="20" width="38" height="18" uuid="408ff8c8-fa4e-4cc4-a77c-aa602412be68"/>
+							<textElement>
+								<font fontName="Times New Roman" isBold="true"/>
+							</textElement>
+							<text><![CDATA[C. GPA]]></text>
+						</staticText>
+					</cellContents>
+				</crosstabHeaderCell>
+				<rowGroup name="studentname" width="205" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{studentname}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="26" height="20" uuid="1b21669b-e0cd-4d92-862f-1dcc15bc34fe"/>
+								<box leftPadding="1" rightPadding="1">
+									<pen lineWidth="0.25"/>
+									<topPen lineWidth="0.25"/>
+									<leftPen lineWidth="0.25"/>
+									<bottomPen lineWidth="0.25"/>
+									<rightPen lineWidth="0.25"/>
+								</box>
+								<textElement textAlignment="Left">
+									<font fontName="Times New Roman" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{ROW_COUNT}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="26" y="0" width="179" height="20" uuid="303b8255-111d-4add-89eb-27bd2c2ed9f8"/>
+								<box leftPadding="1" rightPadding="1"/>
+								<textElement textAlignment="Left">
+									<font fontName="Times New Roman" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{studentname}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<rowGroup name="group1" width="39">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{studentid}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents>
+							<box>
+								<pen lineWidth="0.25"/>
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textField isBlankWhenNull="true">
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="39" height="20" uuid="5343ad59-20ee-4347-bf7a-4f572061a8d9"/>
+								<textElement>
+									<font fontName="Times New Roman" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{group1}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents/>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<rowGroup name="group2" width="38">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{currcredit}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents>
+							<box>
+								<pen lineWidth="0.25"/>
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textField isBlankWhenNull="true">
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="38" height="20" uuid="36dfe51f-e0e3-4345-b91c-fa34b34b7b86"/>
+								<textElement>
+									<font fontName="Times New Roman" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{group2}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents/>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<rowGroup name="group3" width="38">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{gpa}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents>
+							<box>
+								<pen lineWidth="0.25"/>
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textField isBlankWhenNull="true">
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="38" height="20" uuid="2f960f82-0f97-45a5-9f9a-5b90967ff74d"/>
+								<box>
+									<pen lineWidth="0.0"/>
+									<topPen lineWidth="0.0"/>
+									<leftPen lineWidth="0.0"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.0"/>
+								</box>
+								<textElement>
+									<font fontName="Times New Roman" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{group3}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents/>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<rowGroup name="group4" width="38">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{cummgpa}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents>
+							<box>
+								<pen lineWidth="0.25"/>
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textField isBlankWhenNull="true">
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="38" height="20" uuid="256d366c-26ff-4fab-9ec7-71a910d5f533"/>
+								<textElement>
+									<font fontName="Times New Roman" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{group4}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents/>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="dispcourseid" height="38" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{dispcourseid}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="24" height="38" uuid="744ac1e5-845b-418e-b0f6-46f5ce6ac386"/>
+								<box leftPadding="1"/>
+								<textElement>
+									<font fontName="Times New Roman" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{dispcourseid}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="instructorgradeMeasure" class="java.lang.String">
+					<measureExpression><![CDATA[$F{instructorgrade}]]></measureExpression>
+				</measure>
+				<crosstabCell width="24" height="20">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField isBlankWhenNull="true">
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="24" height="20" uuid="f7806e3e-6ff9-4908-99e0-65ddeb4a7fd6"/>
+							<textElement>
+								<font fontName="Times New Roman" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{instructorgradeMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="24" height="9" rowTotalGroup="studentname">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="8" height="20" columnTotalGroup="dispcourseid">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="8" height="9" rowTotalGroup="studentname" columnTotalGroup="dispcourseid">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="group1">
+					<cellContents/>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="group1" columnTotalGroup="dispcourseid">
+					<cellContents/>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="group2">
+					<cellContents/>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="group2" columnTotalGroup="dispcourseid">
+					<cellContents/>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="group3">
+					<cellContents/>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="group3" columnTotalGroup="dispcourseid">
+					<cellContents/>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="group4">
+					<cellContents/>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="group4" columnTotalGroup="dispcourseid">
+					<cellContents/>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+</jasperReport>

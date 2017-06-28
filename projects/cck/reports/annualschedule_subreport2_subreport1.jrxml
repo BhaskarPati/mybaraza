@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="annualschedule_subreport2_subreport1" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="dataset1">
+		<parameter name="compliancescheduleid" class="java.math.BigDecimal" isForPrompting="false"/>
+		<queryString>
+			<![CDATA[select * from compliance where compliancescheduleid =   $P!{compliancescheduleid}]]>
+		</queryString>
+	</subDataset>
+	<parameter name="compliancescheduleid" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reportpath" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from compliance where compliancescheduleid =   $P!{compliancescheduleid}]]>
+	</queryString>
+	<field name="COMPLIANCEID" class="java.math.BigDecimal"/>
+	<field name="COMPLIANCESCHEDULEID" class="java.math.BigDecimal"/>
+	<field name="USERID" class="java.math.BigDecimal"/>
+	<field name="ADHOC" class="java.lang.String"/>
+	<field name="NONCOMPLIANT" class="java.lang.String"/>
+	<field name="COMPLIANT" class="java.lang.String"/>
+	<field name="CLIENTID" class="java.math.BigDecimal"/>
+	<field name="VISITDATE" class="oracle.sql.TIMESTAMP"/>
+	<field name="HOURSSPENT" class="java.math.BigDecimal"/>
+	<field name="PARTICIPANTS" class="java.lang.String"/>
+	<field name="COSTPERDIEM" class="java.lang.Double"/>
+	<field name="ISDONE" class="java.lang.String"/>
+	<field name="ISDROP" class="java.lang.String"/>
+	<field name="ISFORACTION" class="java.lang.String"/>
+	<field name="ACTIONDONE" class="java.lang.String"/>
+	<field name="FORFSM" class="java.lang.String"/>
+	<field name="FORLCS" class="java.lang.String"/>
+	<field name="FREQUENCYFROM" class="java.lang.Double"/>
+	<field name="FREQUENCYTO" class="java.lang.Double"/>
+	<field name="DATEOFVIOLATION" class="java.sql.Timestamp"/>
+	<field name="VIOLATION" class="oracle.sql.CLOB"/>
+	<field name="DETAILS" class="oracle.sql.CLOB"/>
+	<field name="PURPOSE" class="oracle.sql.CLOB"/>
+	<field name="FINDINGS" class="oracle.sql.CLOB"/>
+	<field name="REMARKS" class="oracle.sql.CLOB"/>
+	<field name="CONCLUSIONS" class="oracle.sql.CLOB"/>
+	<field name="RECOMMENDATION" class="oracle.sql.CLOB"/>
+	<field name="PERIODNAME" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="178" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PARTICIPANTS}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

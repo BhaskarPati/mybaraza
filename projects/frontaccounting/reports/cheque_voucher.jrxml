@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cheque_voucher" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="40" bottomMargin="20">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="595"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="filterid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["14"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/root/baraza/projects/frontaccounting/reports/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT supp_trans.trans_no, supp_trans.tran_date, -(supp_trans.ov_amount) as amount, supp_trans.paid_to, supp_trans.cheque_number,
+ bank_trans.document_number, suppliers.supp_name, comments.memo_
+FROM ((supp_trans INNER JOIN bank_trans ON (supp_trans.type = bank_trans.type) AND (supp_trans.trans_no = bank_trans.trans_no))
+INNER JOIN suppliers ON supp_trans.supplier_id = suppliers.supplier_id)
+	LEFT JOIN comments ON (supp_trans.type = comments.type) AND (supp_trans.trans_no = comments.id)
+WHERE (supp_trans.type = 22) AND (supp_trans.trans_no = '$P!{filterid}')]]>
+	</queryString>
+	<field name="trans_no" class="java.lang.Long"/>
+	<field name="tran_date" class="java.sql.Date"/>
+	<field name="amount" class="java.lang.Double"/>
+	<field name="paid_to" class="java.lang.String"/>
+	<field name="cheque_number" class="java.lang.String"/>
+	<field name="document_number" class="java.lang.Integer"/>
+	<field name="supp_name" class="java.lang.String"/>
+	<field name="memo_" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="569" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="155" y="11" width="252" height="28"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="16" isBold="true" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[CHEQUE VOUCHER - CBA BANK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="333" y="84" width="120" height="15" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TRANSACTION DATE :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="dd MMMMM yyyy" isBlankWhenNull="true">
+				<reportElement style="Detail" x="457" y="84" width="94" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{tran_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="6" y="176" width="64" height="15" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[AMOUNT :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+				<reportElement style="Detail" x="105" y="176" width="129" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="6" y="155" width="64" height="15" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[PAID TO :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="105" y="155" width="447" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{supp_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="6" y="215" width="99" height="15" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[PARTICULARS :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="105" y="215" width="446" height="46"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{memo_}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="333" y="104" width="120" height="15" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VOUCHER NO :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="457" y="104" width="94" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["CQ/" + $F{document_number}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="6" y="356" width="82" height="15" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[PREPARED BY :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="229" y="356" width="40" height="15" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[DATE :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="383" y="356" width="70" height="15" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[SIGNATURE:]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="95" y="371" width="127" height="1"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="274" y="372" width="97" height="1"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="457" y="373" width="94" height="1"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="95" y="406" width="127" height="1"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="274" y="407" width="97" height="1"/>
+			</line>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="383" y="391" width="70" height="15" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[SIGNATURE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="229" y="391" width="40" height="15" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[DATE :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="6" y="391" width="82" height="15" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[CHECKED BY :]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="457" y="408" width="94" height="1"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="95" y="444" width="127" height="1"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="274" y="445" width="97" height="1"/>
+			</line>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="383" y="429" width="70" height="15" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[SIGNATURE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="229" y="429" width="40" height="15" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[DATE :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="6" y="429" width="82" height="15" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[RECEIVED BY :]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="457" y="446" width="94" height="1"/>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="333" y="124" width="120" height="15" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[CHEQUE NO :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="457" y="124" width="94" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cheque_number}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+				<reportElement style="Detail" x="105" y="192" width="447" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[org.baraza.utils.BNumberToWords.convert($F{amount}.longValue()).toUpperCase()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="6" y="503" width="131" height="19" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[Chief Excecutive Officer :]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="155" y="522" width="119" height="1"/>
+			</line>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="6" y="545" width="131" height="17" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[Authorised Signatories :]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="155" y="562" width="119" height="1"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="358" y="561" width="119" height="1"/>
+			</line>
+			<image>
+				<reportElement x="4" y="3" width="91" height="46"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "startbg.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="Column header" x="1" y="49" width="197" height="96" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[P.O. Box 1416 - 00606
+CCK Complex, Waiyaki Way
+Nairobi, Kenya
+Phone :  	+254 20 8155477 / 4450057
+Fax :	+254 20 4450087
+EMail :	accounts@kenic.or.ke
+VAT No. :	0127158M]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="147" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="0" y="489" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<frame>
+				<reportElement x="1" y="270" width="554" height="48"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<subreport>
+					<reportElement x="5" y="10" width="545" height="25"/>
+					<subreportParameter name="filterid"/>
+					<subreportParameter name="trans_no">
+						<subreportParameterExpression><![CDATA[$F{trans_no}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "supp_allocations.jasper"]]></subreportExpression>
+				</subreport>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="597" height="24" forecolor="#D0B48E" backcolor="#F2EBDF"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="533" y="0" width="40" height="20" forecolor="#010101"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="453" y="0" width="80" height="20" forecolor="#010101"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#010101"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

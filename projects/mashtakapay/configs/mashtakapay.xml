@@ -1,0 +1,49 @@
+<APP name="Mashtaka pay">
+	<MENU name="Mashtaka Pay">
+		<MENU name="Price List">5</MENU>
+		<MENU name="Payments">10</MENU>
+		<MENU name="Services">15</MENU>
+	</MENU>
+	<DESK w="700" name="Price List" key="5" h="550">
+		<GRID name="Price List" keyfield="price_list_id" table="price_list">
+			<TEXTFIELD w="75" title="Price List ID">price_list_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Price List Name">price_list_name</TEXTFIELD>
+			<TEXTDECIMAL w="75" title="Amount">amount</TEXTDECIMAL>
+			<FORM name="Price List" keyfield="price_list_id" table="price_list">
+				<TEXTFIELD w="430" title="Price List Name" h="20" y="10" x="10">price_list_name</TEXTFIELD>
+				<TEXTDECIMAL w="150" title="Amount" h="20" y="30" x="10">amount</TEXTDECIMAL>
+				<TEXTAREA w="430" title="Details" h="70" y="50" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Payments" key="10" h="550">
+		<GRID name="Payments" keyfield="payment_id" table="vw_payments">
+			<TEXTFIELD w="75" title="Price List ID">price_list_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Price List Name">price_list_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Payment ID">payment_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Payment Name">payment_name</TEXTFIELD>
+			<TEXTDATE w="75" title="Payment Date">payment_date</TEXTDATE>
+			<FORM name="Payments" keyfield="payment_id" table="payments">
+				<COMBOBOX w="430" title="Price List ID" lptable="price_list" h="20" y="10" lpfield="price_list_name" x="10">price_list_id</COMBOBOX>
+				<TEXTFIELD w="430" title="Payment Name" h="20" y="30" x="10">payment_name</TEXTFIELD>
+				<TEXTDATE w="150" title="Payment Date" h="20" y="50" x="10">payment_date</TEXTDATE>
+				<TEXTAREA w="430" title="Details" h="70" y="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Services" key="15" h="550">
+		<GRID name="Services" keyfield="service_id" table="vw_services">
+			<TEXTFIELD w="75" title="Price List ID">price_list_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Price List Name">price_list_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Service ID">service_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Service Name">service_name</TEXTFIELD>
+			<TEXTDATE w="75" title="Service Date">service_date</TEXTDATE>
+			<FORM name="Services" keyfield="service_id" table="services">
+				<COMBOBOX w="430" title="Price List ID" lptable="price_list" h="20" y="10" lpfield="price_list_name" x="10">price_list_id</COMBOBOX>
+				<TEXTFIELD w="430" title="Service Name" h="20" y="30" x="10">service_name</TEXTFIELD>
+				<TEXTDATE w="150" title="Service Date" h="20" y="50" x="10">service_date</TEXTDATE>
+				<TEXTAREA w="430" title="Details" h="70" y="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+</APP>

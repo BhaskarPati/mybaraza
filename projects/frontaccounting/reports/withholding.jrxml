@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="withholding" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="40" bottomMargin="20">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="264"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="filterid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["14"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/root/baraza/projects/frontaccounting/reports/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT bank_trans.trans_date, -(bank_trans.amount) as pd_amount, st.ov_amount, suppliers.supp_name, suppliers.address
+FROM bank_trans
+	INNER JOIN supp_trans ON (bank_trans.type = supp_trans.type) AND (bank_trans.trans_no = supp_trans.trans_no)
+	INNER JOIN supp_allocations ON (bank_trans.type = supp_allocations.trans_type_from) AND (bank_trans.trans_no = supp_allocations.trans_no_from)
+	INNER JOIN supp_trans as st ON (st.type = supp_allocations.trans_type_to) AND (st.trans_no = supp_allocations.trans_no_to)
+	INNER JOIN suppliers ON (supp_trans.supplier_id = suppliers.supplier_id)
+WHERE (bank_trans.type = 22) AND (bank_trans.trans_no = '$P!{filterid}')]]>
+	</queryString>
+	<field name="trans_date" class="java.sql.Date"/>
+	<field name="pd_amount" class="java.lang.Double"/>
+	<field name="ov_amount" class="java.lang.Double"/>
+	<field name="supp_name" class="java.lang.String"/>
+	<field name="address" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="535" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="198" y="77" width="143" height="18"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Income Tax Department]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="6" y="196" width="120" height="15" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ADDRESS OF PAYEE]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="dd MMMMM yyyy" isBlankWhenNull="true">
+				<reportElement style="Detail" x="383" y="370" width="123" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{trans_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="6" y="176" width="120" height="15" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[NAME OF PAYEE]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+				<reportElement style="Detail" x="129" y="268" width="149" height="15"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{ov_amount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="6" y="155" width="120" height="15" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[NAME OF PAYER]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="129" y="155" width="309" height="15"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Kenya Network Information Center"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="6" y="268" width="120" height="15" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[GROSS AMOUNT KSHS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="6" y="297" width="120" height="15" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[TAX DEDUCTED KSHS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="6" y="323" width="535" height="15" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<text><![CDATA[I Certify that the tax as indicated abive has been paid to the commissioner of income Tax, Nairobi.]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="371" y="387" width="135" height="1"/>
+			</line>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="47" y="370" width="70" height="15" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<text><![CDATA[SIGNATURE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="326" y="370" width="40" height="15" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<text><![CDATA[DATE :]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="121" y="388" width="172" height="1"/>
+			</line>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="211" y="411" width="115" height="79" forecolor="#010101"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[PAYERS
+STAMP]]></text>
+			</staticText>
+			<image>
+				<reportElement x="145" y="1" width="266" height="74"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "kralogo.jpg"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="0" y="147" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Title" x="27" y="99" width="495" height="18"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[CERTIFICATE OF CONSULTANCY AGENCY OR CONTRACTUAL FEES PAID AND TAX DEDUCTED]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="234" y="119" width="40" height="15" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[YEAR]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="yyyy" isBlankWhenNull="true">
+				<reportElement style="Detail" x="278" y="119" width="94" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{trans_date}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="129" y="176" width="309" height="15"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{supp_name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="129" y="196" width="423" height="68"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{address}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+				<reportElement style="Detail" x="129" y="297" width="149" height="15"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{pd_amount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="143" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="7" y="100" width="70" height="15" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[W9F]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="6" y="47" width="534" height="28" forecolor="#010101"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[This certificate must be forwared to the Income Tax Department with and Annula Return of Income in order to obtain credit for tax which has been deducted.]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

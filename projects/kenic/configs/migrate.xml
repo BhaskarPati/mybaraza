@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<INTERFACE dbclass="com.mysql.jdbc.Driver" dbpath="jdbc:mysql://localhost/kenic" username="root" password="">
+	<GRID key="1" name="Clients" table="usuario" rtable="client" linkfield="handle_usuario" rlinkfield="roid">
+		<TEXTFIELD fieldname="roid">handle_usuario</TEXTFIELD>
+		<TEXTFIELD fieldname="clid">handle_usuario</TEXTFIELD>
+		<TEXTFIELD fieldname="name">nome</TEXTFIELD>
+		<TEXTFUNCT fieldname="pw" function="lower(senha)">senha</TEXTFUNCT>
+		<TEXTFUNCT fieldname="web_pw" function="lower(senha)">senha</TEXTFUNCT>
+		<TEXTFUNCT fieldname="email" function="lower(email)">email</TEXTFUNCT>
+		<TEXTFIELD fieldname="admin_email">email</TEXTFIELD>
+		<TEXTFIELD fieldname="billing_email">email</TEXTFIELD>
+		<TEXTFIELD fieldname="tech_email">email</TEXTFIELD>
+		<TEXTFUNCT fieldname="phone" function="CONCAT('+', tel_ddi, ' ' , tel_ddd, ' ', tel_numero)">telphone</TEXTFUNCT>
+		<TEXTFUNCT fieldname="address" function="CONCAT(end_logradouro, '\nP.O. Box ', end_numero, ' - ', end_cep, '\n', end_cidade)">address</TEXTFUNCT>
+		<TEXTDATA fieldname="country">KE</TEXTDATA>
+		<TEXTDATA fieldname="timezone">Africa/Nairobi</TEXTDATA>
+		<TEXTFIELD fieldname="oldstatus">propriedades</TEXTFIELD>
+	</GRID>
+	<GRID key="2" name="Contacts" table="entidade" rtable="contact" linkfield="id_documento" rlinkfield="id">
+		<TEXTFIELD fieldname="id">id_documento</TEXTFIELD>
+		<TEXTFIELD fieldname="intpostalname">nome</TEXTFIELD>
+		<TEXTFIELD fieldname="intpostalstreet1">end_logradouro</TEXTFIELD>
+		<TEXTFIELD fieldname="intpostalstreet2">end_complemento</TEXTFIELD>
+		<TEXTFUNCT fieldname="intpostalstreet3" function="CONCAT('P.O. Box ', end_numero)">address</TEXTFUNCT>		
+		<TEXTFIELD fieldname="intpostalcity">end_cidade</TEXTFIELD>
+		<TEXTFIELD fieldname="intpostalpc">end_cep</TEXTFIELD>
+		<TEXTDATA fieldname="intpostalcc">KE</TEXTDATA>
+		<TEXTDATA fieldname="st_ok">No changes pending</TEXTDATA>
+		<TEXTFUNCT fieldname="voice" function="CONCAT('+', tel_ddi, ' ' , tel_ddd, ' ', tel_numero)">telphone</TEXTFUNCT>
+		<TEXTFUNCT fieldname="authinfopw" function="substring(sha(rand()), 2, 8)">authinfopw</TEXTFUNCT>
+		<TEXTFIELD fieldname="clid">adm_handle</TEXTFIELD>
+		<TEXTFIELD fieldname="crid">adm_handle</TEXTFIELD>
+	</GRID>
+	<GRID key="3" name="Contacts" table="usuario" rtable="contact" linkfield="handle_usuario" rlinkfield="id">
+		<TEXTFIELD fieldname="id">handle_usuario</TEXTFIELD>
+		<TEXTFIELD fieldname="intpostalname">nome</TEXTFIELD>
+		<TEXTFIELD fieldname="intpostalstreet1">end_logradouro</TEXTFIELD>
+		<TEXTFIELD fieldname="intpostalstreet2">end_complemento</TEXTFIELD>
+		<TEXTFUNCT fieldname="intpostalstreet3" function="CONCAT('P.O. Box ', end_numero)">address</TEXTFUNCT>
+		<TEXTFIELD fieldname="intpostalpc">end_cep</TEXTFIELD>
+		<TEXTDATA fieldname="intpostalcc">KE</TEXTDATA>
+		<TEXTDATA fieldname="st_ok">No changes pending</TEXTDATA>		
+		<TEXTFIELD fieldname="intpostalcity">end_cidade</TEXTFIELD>
+		<TEXTFUNCT fieldname="voice" function="CONCAT('+', tel_ddi, ' ' , tel_ddd, ' ', tel_numero)">telphone</TEXTFUNCT>
+		<TEXTFIELD fieldname="email">email</TEXTFIELD>
+		<TEXTFUNCT fieldname="authinfopw" function="substring(sha(rand()), 2, 8)">authinfopw</TEXTFUNCT>
+		<TEXTFIELD fieldname="clid">handle_usuario</TEXTFIELD>
+		<TEXTFIELD fieldname="crid">handle_usuario</TEXTFIELD>
+	</GRID>
+	<GRID key="4" name="Domains" table="vwdomains" rtable="domain" linkfield="kenicid" rlinkfield="roid">
+		<TEXTFIELD fieldname="roid">kenicid</TEXTFIELD>
+		<TEXTFIELD fieldname="name">domainname</TEXTFIELD>
+		<TEXTFIELD fieldname="exdate">renewed_until</TEXTFIELD>
+		<TEXTFIELD fieldname="zone">sld</TEXTFIELD>
+		<TEXTFIELD fieldname="registrant">id_documento</TEXTFIELD>
+		<TEXTFUNCT fieldname="authinfopw" function="substring(sha(rand()), 2, 8)">authinfopw</TEXTFUNCT>
+		<TEXTFIELD fieldname="clid">adm_handle</TEXTFIELD>
+		<TEXTFIELD fieldname="crid">adm_handle</TEXTFIELD>
+	</GRID>
+	<GRID key="5" name="domain admin contact" table="vwdomains" rtable="domain_contact">
+		<TEXTFIELD fieldname="domain_name">domainname</TEXTFIELD>
+		<TEXTFIELD fieldname="contact_id">adm_handle</TEXTFIELD>
+		<TEXTDATA fieldname="type">admin</TEXTDATA>
+	</GRID>
+	<GRID key="6" name="domain billing contact" table="vwdomains" rtable="domain_contact">
+		<TEXTFIELD fieldname="domain_name">domainname</TEXTFIELD>
+		<TEXTFIELD fieldname="contact_id">cob_handle</TEXTFIELD>
+		<TEXTDATA fieldname="type">billing</TEXTDATA>
+	</GRID>
+	<GRID key="7" name="domain tech contact" table="vwdomains" rtable="domain_contact">
+		<TEXTFIELD fieldname="domain_name">domainname</TEXTFIELD>
+		<TEXTFIELD fieldname="contact_id">tec_handle</TEXTFIELD>
+		<TEXTDATA fieldname="type">tech</TEXTDATA>
+	</GRID>
+	<GRID key="8" name="host" table="vwhost" rtable="host" linkfield="hostname" rlinkfield="name">
+		<TEXTFIELD fieldname="name">hostname</TEXTFIELD>
+		<TEXTFIELD fieldname="clid">adm_handle</TEXTFIELD>
+		<TEXTFIELD fieldname="crid">adm_handle</TEXTFIELD>
+	</GRID>
+	<GRID key="9" name="domain host" table="vwhost" rtable="domain_host">
+		<TEXTFIELD fieldname="domain_name">domainname</TEXTFIELD>
+		<TEXTFIELD fieldname="host_name">hostname</TEXTFIELD>
+		<TEXTFIELD fieldname="sort_order">hostorder</TEXTFIELD>
+	</GRID>
+	<GRID key="10" name="domain address" table="vwhost" rtable="host_address" wheresql="(ip_addr != '')">
+		<TEXTFIELD fieldname="host_name">hostname</TEXTFIELD>
+		<TEXTDATA fieldname="ip">v4</TEXTDATA>
+		<TEXTFIELD fieldname="address">ip_addr</TEXTFIELD>
+	</GRID>
+	<GRID key="11" name="ledger" table="vwcharges" rtable="ledger" linkfield="id_pendencia" rlinkfield="id" ordersql="transdate">
+		<TEXTFIELD fieldname="id">id_pendencia</TEXTFIELD>
+		<TEXTFIELD fieldname="client_roid">adm_handle</TEXTFIELD>
+		<TEXTFIELD fieldname="description">description</TEXTFIELD>
+		<TEXTDATA fieldname="currency">KES</TEXTDATA>
+		<TEXTFIELD fieldname="tax">vat</TEXTFIELD>
+		<TEXTFIELD fieldname="tax_label">tax_label</TEXTFIELD>
+		<TEXTFIELD fieldname="total">amount</TEXTFIELD>
+		<TEXTFIELD fieldname="created">tempo_criacao</TEXTFIELD>
+		<TEXTFIELD fieldname="trans_type">trans_type</TEXTFIELD>
+		<TEXTFIELD fieldname="domain_name">domainname</TEXTFIELD>
+		<TEXTDATA fieldname="tld">ke</TEXTDATA>
+		<TEXTFIELD fieldname="refund_roid">kenicid</TEXTFIELD>
+		<TEXTDATA fieldname="processor_account_history_id">2</TEXTDATA>
+		<TEXTFUNCT fieldname="refund_expiry" function="now()">refund_expiry</TEXTFUNCT>
+		<TEXTFUNCT fieldname="refund_grace" function="now()">refund_grace</TEXTFUNCT>
+		<TEXTDATA fieldname="refund_amount">0</TEXTDATA>
+	</GRID>
+
+
+</INTERFACE>

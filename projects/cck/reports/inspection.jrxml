@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vwcompliancea" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="BlankPage" columnWidth="782" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="reportpath" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="filterid" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT vwlicensecompliance.clientname, vwlicensecompliance.forfsm, 
+vwlicensecompliance.forlcs, vwlicensecompliance.frequencyfrom, vwlicensecompliance.frequencyto, vwlicensecompliance.visitdate, vwlicensecompliance.reason,
+ vwlicensecompliance.isdone, vwlicensecompliance.isforaction,vwlicensecompliance.licensename,vwlicensecompliance.address, vwlicensecompliance.street,vwlicensecompliance.town,vwlicensecompliance.mobilenum,vwlicensecompliance.telno,vwlicensecompliance.email,
+vwlicensecompliance.premises,vwlicensecompliance.buildingfloor,vwlicensecompliance.fax
+FROM vwlicensecompliance
+ORDER BY vwlicensecompliance.visitdate]]>
+	</queryString>
+	<field name="CLIENTNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FORFSM" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FORLCS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FREQUENCYFROM" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FREQUENCYTO" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VISITDATE" class="oracle.sql.TIMESTAMP">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="REASON" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ISDONE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ISFORACTION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LICENSENAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ADDRESS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="STREET" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TOWN" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MOBILENUM" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TELNO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="EMAIL" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PREMISES" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BUILDINGFLOOR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FAX" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="55">
+			<staticText>
+				<reportElement key="staticText" x="2" y="5" width="292" height="46"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="28" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[ INSPECTION FORM]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="54">
+			<rectangle>
+				<reportElement x="5" y="64" width="772" height="161"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="5" y="96" width="100" height="32"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="5" y="64" width="100" height="32"/>
+			</rectangle>
+			<textField isBlankWhenNull="true">
+				<reportElement x="696" y="136" width="76" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{EMAIL}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="331" y="134" width="38" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{MOBILENUM}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="327" y="103" width="50" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{STREET}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="134" y="103" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{TOWN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="134" y="134" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{TELNO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="134" y="167" width="235" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ADDRESS}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="594" y="199" width="147" height="20"/>
+				<textElement/>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="481" y="136" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{FAX}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="486" y="103" width="95" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PREMISES}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="709" y="103" width="57" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{BUILDINGFLOOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="499" y="70" width="273" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{LICENSENAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="399" y="198" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Date of Inspection]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="399" y="167" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Contact Person]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="385" y="191" width="174" height="34"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="385" y="160" width="174" height="31"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="599" y="134" width="71" height="20"/>
+				<textElement/>
+				<text><![CDATA[EMail]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="586" y="128" width="100" height="32"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="399" y="134" width="53" height="20"/>
+				<textElement/>
+				<text><![CDATA[Fax]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="385" y="128" width="88" height="32"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="599" y="103" width="71" height="20"/>
+				<textElement/>
+				<text><![CDATA[Floor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="399" y="101" width="74" height="20"/>
+				<textElement/>
+				<text><![CDATA[Building]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="586" y="96" width="116" height="32"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="385" y="96" width="100" height="32"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="227" y="191" width="158" height="34"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="385" y="160" width="392" height="31"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="385" y="128" width="392" height="32"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="385" y="96" width="392" height="32"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="399" y="72" width="74" height="18"/>
+				<textElement/>
+				<text><![CDATA[License Type]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="385" y="64" width="100" height="32"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="385" y="64" width="392" height="32"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="15" y="200" width="199" height="20"/>
+				<textElement/>
+				<text><![CDATA[Inspection ordered By:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="5" y="191" width="222" height="34"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="259" y="136" width="54" height="20"/>
+				<textElement/>
+				<text><![CDATA[Mobile]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="252" y="128" width="65" height="32"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="259" y="101" width="54" height="20"/>
+				<textElement/>
+				<text><![CDATA[Street]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="252" y="96" width="65" height="32"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="105" y="160" width="280" height="31"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="15" y="167" width="80" height="20"/>
+				<textElement/>
+				<text><![CDATA[ADDRESS]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="5" y="160" width="100" height="31"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="105" y="128" width="280" height="32"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="15" y="136" width="80" height="18"/>
+				<textElement/>
+				<text><![CDATA[TEL]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="5" y="128" width="100" height="32"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="105" y="96" width="280" height="32"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="15" y="101" width="80" height="20"/>
+				<textElement/>
+				<text><![CDATA[TOWN]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="105" y="64" width="280" height="32"/>
+			</rectangle>
+			<textField>
+				<reportElement x="178" y="75" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CLIENTNAME}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band height="240">
+			<rectangle>
+				<reportElement x="312" y="599" width="100" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement key="element-90" x="15" y="15" width="80" height="20" forecolor="#000000"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[COMPANY]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="59">
+			<line>
+				<reportElement key="line" positionType="FixRelativeToBottom" x="0" y="3" width="782" height="1" forecolor="#808080"/>
+				<graphicElement>
+					<pen lineWidth="0.25" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="596" y="5" width="139" height="19"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="738" y="5" width="36" height="19" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+					<font fontName="Times New Roman" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="CP1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss" isBlankWhenNull="false">
+				<reportElement key="textField" x="2" y="5" width="209" height="19"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

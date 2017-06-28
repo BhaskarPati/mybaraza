@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<ESCALATION functable="dual" title="Finance Mail" processdelay="2"
+	host="localhost" mailuser="sysadmin" mailpassword="invent" mailfrom="imisadmin@cck.go.ke"
+	inbox="INBOX" sentbox="INBOX.Sent" testemail="sysadmin@localhost">
+	
+	<REPORT name="Requisation" keyfield="M_REQUISITION_ID" action="updateemailsent"
+			actioncount="1" table="HT_M_REQUISITION, emailtemplate" 
+			where="(HT_M_REQUISITION.EM_HT_ISEMAILED = 'N') AND (emailtemplate.emailtemplateid = 1) AND (emailtemplate.isenabled='1')">	
+		<SUBJECT title="subject" basetable="emailtemplate">emailsubject</SUBJECT>
+		<ADDRESS title="address" basetable="HT_M_REQUISITION">EMAIL</ADDRESS>	
+		
+		<BODYFIELD reference="{{username}}" basetable="HT_M_REQUISITION">NAME</BODYFIELD>
+		
+		<FIELD title="Notification" basetable="emailtemplate">emailbody</FIELD>
+	</REPORT>
+		
+</ESCALATION>

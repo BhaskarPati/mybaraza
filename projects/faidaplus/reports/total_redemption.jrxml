@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="total_redemption" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d98c0d71-ba48-4258-8258-b87066f5a8db">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="minDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2016-01-01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="maxDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2016-01-30"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT  batch_date::date, sum(order_total_amount)as order_total_amount, batch_no,
+        sum(shipping_cost)as shipping_cost, sum(orders.order_total_amount + orders.shipping_cost)as grand_total
+FROM  orders
+WHERE batch_date::date >= '$P!{minDate}' AND  batch_date::date <= '$P!{maxDate}'
+GROUP BY batch_no,batch_date
+ORDER BY batch_date DESC;]]>
+	</queryString>
+	<field name="batch_date" class="java.sql.Date"/>
+	<field name="order_total_amount" class="java.lang.Float"/>
+	<field name="batch_no" class="java.lang.Integer"/>
+	<field name="shipping_cost" class="java.lang.Float"/>
+	<field name="grand_total" class="java.lang.Float"/>
+	<variable name="v_shipping" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{shipping_cost}]]></variableExpression>
+	</variable>
+	<variable name="v_total" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{order_total_amount}]]></variableExpression>
+	</variable>
+	<variable name="v_grand_total" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{grand_total}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="52" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="15" width="555" height="31" uuid="9ba8791e-4175-4b7b-aa90-a88c74236a50"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL REDEMPTIONS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="19" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="72" height="15" uuid="54f19769-20dd-4e64-b883-9256ac77063f"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="72" y="0" width="78" height="15" uuid="682bcc66-8667-44f2-a33d-56aa098b77f9"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Batch Id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="0" width="145" height="15" uuid="0601bf5c-c983-4a30-8f34-4f189ddc858b"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Shipping Cost]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="422" y="0" width="133" height="15" uuid="9cc51794-5db7-4489-b233-aec66891d251"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Grand Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="295" y="1" width="127" height="15" uuid="947aed55-24ec-4a79-8d34-0108b51d165b"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Cost]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="16" width="555" height="1" uuid="469403a0-64d9-4f62-a5e8-4379be8ad8aa"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="72" y="0" width="78" height="15" isPrintWhenDetailOverflows="true" uuid="ccae46b5-41ef-47ce-bc77-c47a36452772"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{batch_no}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="150" y="0" width="145" height="15" isPrintWhenDetailOverflows="true" uuid="a5dd58a5-6375-48e2-b89c-5a6d0a60351d"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{shipping_cost}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="295" y="0" width="127" height="15" isPrintWhenDetailOverflows="true" uuid="80210cb7-d7da-42b8-915f-f921173dc44a"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{order_total_amount}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="422" y="0" width="133" height="15" isPrintWhenDetailOverflows="true" uuid="1f5f2032-4832-4363-b418-5c4528bef7ad"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{grand_total}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="72" height="15" isPrintWhenDetailOverflows="true" uuid="7f15931c-bf70-4afb-9262-1d6507d94c51"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{batch_date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="10" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="14" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="422" y="1" width="133" height="16" isPrintWhenDetailOverflows="true" uuid="4c4daa97-ac2d-4ff4-a025-a5e05e8752e2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{v_grand_total}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="295" y="1" width="127" height="16" isPrintWhenDetailOverflows="true" uuid="6a70b5f0-fd8e-41b9-9e7d-e1e22022f47e"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{v_total}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="150" y="1" width="145" height="16" isPrintWhenDetailOverflows="true" uuid="4ce5d620-8c4a-49de-acd0-ab094669140d"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{v_shipping}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="72" y="1" width="78" height="16" isPrintWhenDetailOverflows="true" uuid="0b00c386-c3df-42eb-8474-1c0f6cd3090b"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<line>
+				<reportElement x="52" y="0" width="503" height="1" uuid="c051281f-8a80-4c88-92b1-7dcde8db4635"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

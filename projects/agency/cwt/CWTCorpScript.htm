@@ -1,0 +1,100 @@
+<html>
+<head>
+	<title>CWT Corporate Script</title>
+	<script src ="script.js" ></script> 
+</head>
+<body onload="fillDropDownValuesFromXml()">
+	<form name="frmCwtCorpScrpt">
+		<P>
+			<strong><u><FONT face="Verdana" size="4" color="teal">CWT CORPORATE SCRIPT</FONT></u></strong>
+		</P>
+		<table id="tblInput" style="FONT-SIZE: 10px; FONT-FAMILY: verdana; HEIGHT: 192px" border="0" width="100%">
+			<tr>
+				<td>Supplier Code</td>
+				<td><select id="cboSupplierCode" name="cboSupplierCode" style="WIDTH: 120px"></select></td>
+			</tr>
+			
+			<tr>
+				<td>Customer Hierarchy Level</td>
+				<td><select id="cboCustomerHierarchy" name="cboCustomerHierarchy" style="WIDTH: 120px"></select>
+				<input type="text" id="txtHierachyID" name="txtHierachyID" maxLength="6" size="8"></td>
+				<td>Ticket Number</td>
+				<td><select id="cboTicketNumber" name="cboTicketNumber" style="WIDTH: 120px"></select></td>
+				
+			<tr>
+				<td>Traveller ID</td>
+				<td><input type="text" id="txtTravellerID" name="txtTravellerID" maxLength="6" size="8" onpropertychange="upperCaseOnly(this)"></td>
+				<td>LPO/Travel Authorisation</td>
+				<td><input type="text" id="txtLpoAuthorization" name="txtLpoAuthorization" maxLength="15" size="17" onpropertychange="upperCaseOnly(this)"></td>
+			</tr>
+			<tr>
+				<td>Predominant Class Code</td>
+				<td><select id="cboPredominantClass" name="cboPredominantClass" style="WIDTH: 350px"></select></td>
+			</tr>
+			<tr>
+				<td>Reference Fare</td>
+				<td><input type="text" id="txtReferenceFare" name="txtReferenceFare" maxLength="10" size="12" onpropertychange="upperCaseOnly(this)"></td>
+				<td>Realised Saving Code</td>
+				<td><select id="cboRealisedSavingCode" name="cboRealisedSavingCode" style="WIDTH: 266px"></select></td>
+			</tr>
+			<tr>
+				<td>Low Fare</td>
+				<td><input type="text" id="txtLowFare" name="txtLowFare" maxLength="10" size="12" onpropertychange="upperCaseOnly(this)"></td>
+				<td>Missed Saving Code</td>
+				<td><select id="cboMissedSavingCode" name="cboMissedSavingCode" style="WIDTH: 266px"></select></td>
+			</tr>
+			<tr>
+				<td></td>
+			</tr>
+			<tr>
+				<td><strong><u><FONT face="Verdana" size="1" color="teal">CLIENT DEFINED REFERENCES</FONT></u></strong></td>
+			</tr>
+			<tr>
+				<td></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" id="chkRef13" name="chkRef13" onclick="setPrefTextStatus(this)">&nbsp;CDR 01</td>
+				<td><input type="text" id="txtRef13" name="txtRef13" disabled type="text" maxLength="20" size="22" onpropertychange="upperCaseOnly(this)"></td>
+				<td><input type="checkbox" id="chkRef14" name="chkRef14" onclick="setPrefTextStatus(this)">&nbsp;CDR 02</td>
+				<td><input type="text" id="txtRef14" name="txtRef14" disabled type="text" maxLength="20" size="22" onpropertychange="upperCaseOnly(this)"></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" id="chkRef15" name="chkRef15" onclick="setPrefTextStatus(this)">&nbsp;CDR 03</td>
+				<td><input type="text" id="txtRef15" name="txtRef15" disabled type="text" maxLength="20" size="22" onpropertychange="upperCaseOnly(this)"></td>
+				<td><input type="checkbox" id="chkRef16" name="chkRef16" onclick="setPrefTextStatus(this)">&nbsp;CDR 04</td>
+				<td><input type="text" id="txtRef16" name="txtRef16" disabled type="text" maxLength="20" size="22" onpropertychange="upperCaseOnly(this)"></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" id="chkRef17" name="chkRef17" onclick="setPrefTextStatus(this)">&nbsp;CDR 05</td>
+				<td><input type="text" id="txtRef17" name="txtRef17" disabled type="text" maxLength="20" size="22" onpropertychange="upperCaseOnly(this)"></td>
+				<td><input type="checkbox" id="chkRef18" name="chkRef18" onclick="setPrefTextStatus(this)">&nbsp;CDR 06</td>
+				<td><input type="text" id="txtRef18" name="txtRef18" disabled type="text" maxLength="20" size="22" onpropertychange="upperCaseOnly(this)"></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" id="chkRef19" name="chkRef19" onclick="setPrefTextStatus(this)">&nbsp;CDR 07</td>
+				<td><input type="text" id="txtRef19" name="txtRef19" disabled type="text" maxLength="20" size="22" onpropertychange="upperCaseOnly(this)"></td>
+				<td><input type="checkbox" id="chkRef20" name="chkRef20" onclick="setPrefTextStatus(this)">&nbsp;CDR 08</td>
+				<td><input type="text" id="txtRef20" name="txtRef20" disabled type="text" maxLength="20" size="22" onpropertychange="upperCaseOnly(this)"></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" id="chkRef21" name="chkRef21" onclick="setPrefTextStatus(this)">&nbsp;CDR 09</td>
+				<td><input type="text" id="txtRef21" name="txtRef21" disabled type="text" maxLength="20" size="22" onpropertychange="upperCaseOnly(this)"></td>
+				<td><input type="checkbox" id="chkRef23" name="chkRef23" onclick="setPrefTextStatus(this)">&nbsp;CDR 10</td>
+				<td><input type="text" id="txtRef23" name="txtRef23" disabled type="text" maxLength="20" size="22" onpropertychange="upperCaseOnly(this)"></td>
+			</tr>
+			<tr>
+				<td height="20"></td>
+			</tr>
+			<tr>
+				<td>Results</td>
+				<td colspan="3"><textarea name="resultarea" COLS=80 ROWS=4></textarea></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="button" id="btnExecute" name="btnExecute" value="Execute Script" onclick="ExecuteScript()"></td>
+				<td><input type="reset" id="btnReset" name="btnReset" value="Clear All"></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="invoice_a" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="BlankPage" columnWidth="812" leftMargin="15" rightMargin="15" topMargin="20" bottomMargin="20" uuid="b2d4357f-7977-4012-9a06-7cf11d26f682">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="filterid" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reportpath" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/root/baraza/projects/gatf/reports/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="periodid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT vwinvoice.clientid, vwinvoice.clientname, vwinvoice.clientbranchid, vwinvoice.branchname, vwinvoice.address, vwinvoice.periodid, vwinvoice.startdate, vwinvoice.postalcode, vwinvoice.town, vwinvoice.countryname, vwinvoice.bookingid, vwinvoice.agentreference, vwinvoice.item, vwinvoice.servicedate, vwinvoice.city, vwinvoice.name, vwinvoice.nights, vwinvoice.commission, vwinvoice.netremits, vwinvoice.totalprice, vwinvoice.amount, vwinvoice.creditnote, vwinvoice.grossearning, vwinvoice.invoicedate, vwinvoice.duedate, vwinvoice.invoicenumber, vwinvoice.invoiceid, vwinvoice.issued, vwinvoice.galileo_vat, substring(vwinvoice.gkref from 1 for 7) as gkref
+FROM vwinvoice
+
+WHERE (invoiceid = '$P!{filterid}')
+
+AND ((totalprice > 0) OR (to_char(StartDate, 'MMYYYY') = to_char(servicedate, 'MMYYYY')));]]>
+	</queryString>
+	<field name="clientid" class="java.lang.Integer"/>
+	<field name="clientname" class="java.lang.String"/>
+	<field name="clientbranchid" class="java.lang.Integer"/>
+	<field name="branchname" class="java.lang.String"/>
+	<field name="address" class="java.lang.String"/>
+	<field name="periodid" class="java.lang.Integer"/>
+	<field name="startdate" class="java.sql.Date"/>
+	<field name="postalcode" class="java.lang.String"/>
+	<field name="town" class="java.lang.String"/>
+	<field name="countryname" class="java.lang.String"/>
+	<field name="bookingid" class="java.lang.Integer"/>
+	<field name="agentreference" class="java.lang.String"/>
+	<field name="item" class="java.lang.String"/>
+	<field name="servicedate" class="java.sql.Date"/>
+	<field name="city" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="nights" class="java.lang.Integer"/>
+	<field name="commission" class="java.lang.Float"/>
+	<field name="netremits" class="java.lang.Float"/>
+	<field name="totalprice" class="java.lang.Float"/>
+	<field name="amount" class="java.lang.Float"/>
+	<field name="creditnote" class="java.lang.Boolean"/>
+	<field name="grossearning" class="java.lang.Float"/>
+	<field name="invoicedate" class="java.sql.Date"/>
+	<field name="duedate" class="java.sql.Date"/>
+	<field name="invoicenumber" class="java.lang.String"/>
+	<field name="invoiceid" class="java.lang.Integer"/>
+	<field name="issued" class="java.lang.Boolean"/>
+	<field name="galileo_vat" class="java.lang.Double"/>
+	<field name="gkref" class="java.lang.String"/>
+	<variable name="sumtotalprice" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{totalprice}]]></variableExpression>
+	</variable>
+	<variable name="sumcommission" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{commission}]]></variableExpression>
+	</variable>
+	<variable name="sumamount" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{amount}]]></variableExpression>
+	</variable>
+	<variable name="galileo_vat_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{galileo_vat}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="169" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="10" y="112" width="195" height="18" uuid="28c52cfc-e340-44a5-b790-99fb4c6a6aef"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{clientname}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="10" y="130" width="195" height="18" uuid="b53a96c0-181a-46b7-acbd-8d42b8ace364"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["P.O. Box " + $F{address} + " - " + $F{postalcode}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="10" y="148" width="195" height="18" uuid="20dcbb47-78e6-475d-83c5-8b01705b73bb"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{town} + ", " + $F{countryname}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-13" x="336" y="122" width="100" height="30" uuid="70dd42f6-c026-4c9d-a342-136785f7e698"/>
+				<textElement>
+					<font fontName="Times New Roman" size="18" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[INVOICE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-25" x="562" y="137" width="63" height="15" uuid="8fcc4921-9cf2-4d28-a7af-dda5d5b60663"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-26" x="562" y="124" width="63" height="14" uuid="086262a7-b14c-4b99-85f4-5c2dc31fef1c"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Invoice No. :]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy" isBlankWhenNull="false">
+				<reportElement key="textField-11" x="630" y="138" width="100" height="14" uuid="c2a5f6e5-9d83-4e30-8a85-d3ac3ae955b8"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{invoicedate}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-12" x="630" y="123" width="100" height="14" uuid="aaf40133-5296-4be6-bb61-546a6b9ab85e"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{invoicenumber}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame">
+				<reportElement key="image-1" x="1" y="0" width="781" height="110" uuid="bcf2e998-24e1-40e4-9cf1-435b4a634175"/>
+				<imageExpression><![CDATA[$P{reportpath} + "gklogo.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-1" x="0" y="8" width="135" height="29" uuid="01596f8d-7a74-4bea-a769-73b6ff54a4db"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Agency]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-3" x="197" y="8" width="53" height="29" uuid="d79abdc2-5ce9-41ba-a095-848b4758fe74"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Booking
+ ID.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="250" y="8" width="59" height="29" uuid="a4efc1b3-dd76-431a-b183-505c2e81a315"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Agent
+ Ref.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-5" x="309" y="8" width="30" height="29" uuid="ea4aebc1-996a-4fc5-a41f-e2a86ac2e879"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Item]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-6" x="339" y="8" width="73" height="30" uuid="ee5781ae-cda3-4e50-833c-7d998ce1e9d4"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Service
+Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-7" x="412" y="8" width="72" height="30" uuid="15e0af00-6436-4888-9320-b8ffa9191c57"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[City]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-8" x="484" y="8" width="100" height="30" uuid="225e816b-af1a-46cc-b4a8-2e87856e20e1"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-9" x="584" y="8" width="32" height="29" uuid="7404d33b-85f5-409f-a6e9-c5786074954b"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Nights]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-1" x="0" y="37" width="812" height="1" uuid="a2485eb0-e08a-4739-b2a3-5b60280f1f58"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-28" x="666" y="8" width="62" height="29" uuid="b86e3bd2-45d8-4ff2-8c60-d9d250f10e85"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Agent Comm.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-29" x="616" y="8" width="50" height="29" uuid="919d36e3-3148-488b-89a7-a50da5183031"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-30" x="728" y="8" width="51" height="29" uuid="a57c1222-788e-48cf-907f-4d6d6b807886"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-3" x="135" y="8" width="62" height="29" uuid="521b435f-d5bb-45cf-a9fe-984cfddd7eee"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[GK
+REF]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="0" y="0" width="135" height="18" uuid="bb50c68b-ce70-4312-b437-f68a5a01e5bb"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{branchname}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="197" y="0" width="53" height="18" uuid="7b7adef8-643e-4f24-b51d-52fddeaeb029"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bookingid}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="250" y="0" width="59" height="18" uuid="668536a9-9779-4ed8-b685-602dc7b854ea"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{agentreference}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="309" y="0" width="30" height="18" uuid="7f2f04a7-e898-4f89-9710-be90a062c7fa"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{item}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MMM-yyyy" isBlankWhenNull="true">
+				<reportElement key="textField" x="339" y="0" width="73" height="18" uuid="63c8d1db-c7ff-47f2-934d-6bec4a06a740"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{servicedate}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="412" y="0" width="72" height="18" uuid="7eaf8e8f-66a4-4e41-8e0a-b09d058eb7fe"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{city}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="484" y="0" width="100" height="18" uuid="c11d1074-c882-4fcb-bd7e-07a0eefa849c"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="584" y="0" width="32" height="18" uuid="1c5438e3-3016-4fa7-8585-f75f13d317ba"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nights}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-15" x="666" y="0" width="62" height="18" uuid="9d4037f9-8332-4fa6-9a72-78a98cab23a7"/>
+				<box leftPadding="1" rightPadding="1"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{commission}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-16" x="616" y="0" width="50" height="18" uuid="1c57e8a9-a825-41cb-a600-0db2b21f19a4"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalprice}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-17" x="728" y="0" width="51" height="18" uuid="b01dc78d-dca6-4870-b253-163ee0b9f9ee"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="135" y="0" width="62" height="18" uuid="83c6eb0d-91f8-4959-9fa4-12b7a1da86ce"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gkref}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="116" splitType="Stretch">
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss" isBlankWhenNull="false">
+				<reportElement key="textField-1" x="1" y="94" width="110" height="19" uuid="067dcd00-e35c-4825-b566-66cd3af0cbb8"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField-2" x="599" y="94" width="139" height="19" uuid="93d53245-e33d-44d9-80ef-728f6ff2c939"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="false">
+				<reportElement key="textField-3" x="741" y="94" width="36" height="19" forecolor="#000000" backcolor="#FFFFFF" uuid="8d092830-d8c4-4650-ac86-c07283304fe4"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
+					<font fontName="Times New Roman" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="CP1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-15" x="0" y="5" width="590" height="23" uuid="8231d502-3afb-42cb-979a-66b9e5f332f8"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Where applicable: Agent commission for commissionable sales as per contract is deducted from invoice amount and deemed to be paid]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-16" x="0" y="31" width="311" height="20" uuid="a63f4ea0-d0c3-493f-bfcd-6ba0ae97b13a"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Cheques should be payable to: Travelport Services (Kenya) Ltd]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-17" x="172" y="55" width="164" height="20" uuid="affbe87f-1c52-4755-bace-3b8222d97cce"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="false" isUnderline="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[WIRE TRANSFER DETAILS:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-20" x="522" y="55" width="220" height="37" uuid="b36b2efa-2416-4bb3-919d-7fc2aca6840a"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Beneficiary: Travelport Services (Kenya) Ltd
+USD Account No. 0104551012]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-22" x="336" y="55" width="186" height="37" uuid="c2081a88-6777-49b1-bcfa-3ee0e48f70f1"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Bank: Citibank N.A, Nairobi
+Swift Code: CITIKENA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-24" x="1" y="55" width="154" height="32" uuid="30634136-2c3d-4d12-9a05-0227896dbb4c"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[CERT No.: CPR/2013/107955
+PIN: P051428262K]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-14" x="584" y="6" width="32" height="17" uuid="db88dbd7-a06f-43b0-8238-ccc7e0eb215f"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[USD]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-2" x="0" y="23" width="812" height="1" uuid="120f848f-d39d-44ca-979f-6747ac9bf30d"/>
+			</line>
+			<line>
+				<reportElement key="line-3" x="0" y="0" width="782" height="1" uuid="23d13ed3-ebae-49c8-82d3-b20fcca6b4ed"/>
+			</line>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-18" x="616" y="6" width="52" height="17" uuid="0450fc49-a7bb-48c2-85a3-e0e78ae431f7"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumtotalprice}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-19" x="668" y="6" width="62" height="17" uuid="66b6c17d-6cba-4d12-9620-bac73c312397"/>
+				<box leftPadding="1" rightPadding="1"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumcommission}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-20" x="730" y="6" width="51" height="17" uuid="4b6804fd-9817-45c4-8ee7-8e213a2bb3fb"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumamount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

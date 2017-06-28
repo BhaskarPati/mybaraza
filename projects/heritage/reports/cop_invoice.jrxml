@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="invoice" language="groovy" pageWidth="595" pageHeight="842" columnWidth="523" leftMargin="36" rightMargin="36" topMargin="50" bottomMargin="36" uuid="d38d45e8-3145-4bcd-856b-92309d755928">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="110"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="passenger_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT vw_corporate_passengers.org_name, vw_corporate_passengers.corporate_rate_category_name, vw_corporate_passengers.rate_plan_name, vw_corporate_passengers.days_from, vw_corporate_passengers.days_to, vw_corporate_passengers.passenger_name, vw_corporate_passengers.passenger_mobile, vw_corporate_passengers.passenger_email, vw_corporate_passengers.passenger_id_no, vw_corporate_passengers.totalamount_covered, vw_corporate_passengers.entity_name, vw_corporate_passengers.sys_country_name,
+vw_corporate_passengers.policy_number,vw_corporate_passengers.countries,vw_corporate_passengers.destown,
+vw_corporate_passengers.pnrno,vw_corporate_passengers.cover_amount,
+vw_corporate_passengers.approved_date,policy_holder_fund, stamp_duty, training_levy
+FROM vw_corporate_passengers
+WHERE passenger_id = '$P!{passenger_id}']]>
+	</queryString>
+	<field name="org_name" class="java.lang.String"/>
+	<field name="corporate_rate_category_name" class="java.lang.String"/>
+	<field name="rate_plan_name" class="java.lang.String"/>
+	<field name="days_from" class="java.sql.Date"/>
+	<field name="days_to" class="java.sql.Date"/>
+	<field name="passenger_name" class="java.lang.String"/>
+	<field name="passenger_mobile" class="java.lang.String"/>
+	<field name="passenger_email" class="java.lang.String"/>
+	<field name="passenger_id_no" class="java.lang.String"/>
+	<field name="totalamount_covered" class="java.lang.Float"/>
+	<field name="entity_name" class="java.lang.String"/>
+	<field name="sys_country_name" class="java.lang.String"/>
+	<field name="policy_number" class="java.lang.String"/>
+	<field name="countries" class="java.lang.String"/>
+	<field name="destown" class="java.lang.String"/>
+	<field name="pnrno" class="java.lang.String"/>
+	<field name="cover_amount" class="java.lang.Float"/>
+	<field name="approved_date" class="java.sql.Timestamp"/>
+	<field name="policy_holder_fund" class="java.lang.Float"/>
+	<field name="stamp_duty" class="java.lang.Float"/>
+	<field name="training_levy" class="java.lang.Float"/>
+	<variable name="policyholders" class="java.lang.Float">
+		<variableExpression><![CDATA[( ($F{approved_date}) < (new SimpleDateFormat("yyyy-mm-dd")).parse("2016-11-01")  ? (0.25/100)*$F{cover_amount} : 0.0 )]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="stamp_duty" class="java.lang.Float">
+		<variableExpression><![CDATA[( ($F{approved_date}) > (new SimpleDateFormat("yy-mm-dd")).parse("2016-11-01")  ? 0.5 : 0.39 )]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="levy" class="java.lang.Float">
+		<variableExpression><![CDATA[( ($F{approved_date}) < (new SimpleDateFormat("yy-mm-dd")).parse("2016-11-01")  ? (0.2/100*$F{cover_amount}) : ((($F{cover_amount}+0.45)/100)+0.5) )]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="109" splitType="Stretch">
+			<staticText>
+				<reportElement x="154" y="0" width="369" height="20" uuid="919f6943-8628-4ccb-b00d-466b20bd9ac4"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[THE HERITAGE INSURANCE COMPANY KENYA LTD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="154" y="20" width="369" height="20" uuid="11c12667-ab71-47ce-aca2-72e8aac0bde7"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[P.O.BOX 30390 - 00100, NAIROBI, KENYA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="154" y="40" width="369" height="20" uuid="9b6555c6-7808-4090-a511-f72aa52e9d6c"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[LIBERTY HOUSE, MAMLAKA ROAD.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="154" y="60" width="369" height="20" uuid="b15d07cc-4836-4e87-ae5e-bbccf2d5630f"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[254 20 2783000; 254 711039000; 254 734101000]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="137" height="91" uuid="4afa19ed-03b6-46a3-baaf-dcb7c97c134f"/>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR} + "card-logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="154" y="80" width="369" height="20" uuid="591342a8-2bf9-49a1-8899-ce96a5321e0e"/>
+				<text><![CDATA[info@heritage.co.ke]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="10" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="389" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="156" height="20" uuid="7a737dc8-cf76-4f5d-b6df-f273741e533c"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PREMIUM NOTE:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="20" width="156" height="20" uuid="0fa04610-671a-449e-a26a-30f262b8e77f"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pnrno}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="343" y="0" width="100" height="20" uuid="9e106e41-7c52-4c44-b35a-691ffecb52ce"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{approved_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="309" y="0" width="34" height="20" uuid="59fd89e0-dd7e-4e14-b307-6c70da8f42b7"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="52" width="40" height="20" uuid="deaa84fd-36d2-4093-853a-57cd45048a34"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Insured:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="40" y="52" width="160" height="20" uuid="4040116b-f075-4ae4-81f2-38b8b0a586dd"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{passenger_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="58" y="72" width="142" height="20" uuid="615bf75b-ca54-4166-bf8b-846918fc05a9"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{passenger_mobile}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="72" width="58" height="20" uuid="ed497b32-c823-4a11-8f69-21082848e2fb"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tel. Number:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="128" width="200" height="20" uuid="dc0d93fa-3179-4ba7-9764-4e4da24e5e9a"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[YOUR REF : GALILEO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="148" width="100" height="20" uuid="e4186a27-7f9c-45a7-b8a7-72f045da9cf3"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[POLICY NUMBER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="278" y="129" width="65" height="20" uuid="5cddb12e-76a3-453b-beae-7304153730a2"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cover From :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="278" y="149" width="65" height="20" uuid="ab7f7452-9dc6-4313-bdcd-da4d0b8d2547"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cover To:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="343" y="129" width="100" height="20" uuid="e310b670-c950-4b98-828e-d9cf2833e8b1"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{days_from}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="343" y="149" width="100" height="20" uuid="e8ecde75-ae7d-4c28-942f-6f21dae2fda6"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{days_to}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="198" width="100" height="30" uuid="82135423-7c87-47ec-8fb5-c80b4f7f0fcc"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Country of Travel:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="228" width="245" height="20" uuid="25feaff5-d31e-43e7-bdbe-accb9313bfe1"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CLASS OF INSURANCE : TRAVEL INSURANCE]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="100" y="148" width="100" height="20" uuid="6a1ac18c-a023-4561-b474-68c505a4e6d5"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{policy_number}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="287" y="239" width="100" height="20" uuid="cbaa2698-b29f-41eb-ad59-c715b90e0006"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Currency :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="422" y="239" width="100" height="20" uuid="2cfcbcdd-deaf-46d4-aa14-6bb8b27cb390"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[USD]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="100" y="198" width="322" height="30" uuid="5ec0f01b-49ad-488b-b91e-5c4e3a9b86f6"/>
+				<textFieldExpression><![CDATA[$F{countries}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="401" y="341" width="121" height="1" uuid="9b9602c9-539c-4093-8d4e-c4af3f99c295"/>
+			</line>
+			<staticText>
+				<reportElement x="287" y="343" width="100" height="20" uuid="e292b9dd-0f46-4cd2-8a02-a752f13221fd"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Net Premium:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="287" y="321" width="100" height="20" uuid="14d0bee7-08f0-4232-950c-1b0ba802c93a"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Training Levy:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="422" y="343" width="100" height="20" uuid="c203aabc-68a9-4c4f-a974-e7a8c3168e10"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalamount_covered}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="422" y="279" width="100" height="20" uuid="a6fc1139-4e94-4928-be2f-8f9db15a902e"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{policy_holder_fund}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="422" y="321" width="100" height="20" uuid="38359921-e530-4e69-ace3-5dc402ba6412"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{training_levy}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="278" y="279" width="109" height="20" uuid="181a8737-6718-4984-981b-319a1c551900"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Policy Holder Fund:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="422" y="301" width="100" height="20" uuid="43ff25dd-9e2f-49dd-a28e-c01fa904b98e"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{stamp_duty}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="401" y="363" width="121" height="1" uuid="1d1ce5a3-1272-42b4-8d91-1fdb8f836ed6"/>
+			</line>
+			<staticText>
+				<reportElement x="287" y="301" width="100" height="20" uuid="df52847f-f245-4055-bfd5-e01e3f11ba01"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Stamp Duty:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="422" y="259" width="100" height="20" uuid="f4b85dbe-34c6-4c89-b228-35fc16537bb6"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cover_amount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="287" y="259" width="100" height="20" uuid="bd7414d2-9616-4c5c-b966-9b32f4669817"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gross Premium:]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="27" splitType="Stretch">
+			<textField>
+				<reportElement x="174" y="2" width="80" height="20" uuid="1d823196-4c10-4cbd-abc9-b0f8f4a996f9"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="254" y="2" width="40" height="20" uuid="037dbf73-103e-455f-9aa4-34d1bd8a1bcb"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MMM-yyyy">
+				<reportElement x="58" y="0" width="100" height="20" uuid="e6507401-c68c-4739-a611-c285f57aea78"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="58" height="20" uuid="2b79d62f-ec6d-4dc1-9978-a8afae1de759"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Printed on]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="323" y="2" width="54" height="20" uuid="90753936-f0a0-4a80-9ee4-73b5939e740b"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Prepared By]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="377" y="2" width="146" height="20" uuid="c1c9ef38-9665-4718-aa2d-1e7fe7ffd6d5"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entity_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

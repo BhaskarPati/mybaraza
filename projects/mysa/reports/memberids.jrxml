@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="memberids" language="groovy" columnCount="2" pageWidth="595" pageHeight="842" columnWidth="277" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<parameter name="parameter1" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/opt/alfresco/tomcat/webapps/mysa/reports/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT vwmembers.memberid, vwmembers.membername, vwmembers.countryname, vwmembers.dateofbirth, vwteams.branchname, members.gender 
+FROM vwmembers
+INNER JOIN members ON vwmembers.memberid = members.memberid
+INNER JOIN vwteammembers ON vwmembers.memberid = vwteammembers.memberid
+INNER JOIN vwteams ON vwteammembers.teamid = vwteams.teamid
+WHERE members.hasphoto = true]]>
+	</queryString>
+	<field name="memberid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="membername" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="countryname" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dateofbirth" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="branchname" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="gender" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="7" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="4" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="5" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="131" splitType="Stretch">
+			<staticText>
+				<reportElement x="25" y="88" width="68" height="10"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Zone/Branch:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="42" width="68" height="10"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="94" y="42" width="139" height="10"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{membername}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="25" y="64" width="68" height="10"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Birth Date:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="75" width="68" height="10"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nationality:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="185" y="52" width="49" height="56"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{parameter1} + "mysaids/" + $F{memberid} + ".jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="94" y="75" width="91" height="10"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{countryname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="93" y="87" width="91" height="10"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{branchname}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="80" y="5" width="153" height="37"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MATHARE YOUTH SPORTS ASSOCIATION]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="93" y="52" width="91" height="10"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{memberid}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="25" y="53" width="68" height="10"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mysa ID #:]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="93" y="64" width="91" height="10"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{dateofbirth}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="25" y="112" width="68" height="10"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Holder's Sign:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="94" y="122" width="139" height="1"/>
+			</line>
+			<line>
+				<reportElement x="19" y="2" width="223" height="1"/>
+			</line>
+			<line>
+				<reportElement x="19" y="126" width="222" height="1"/>
+			</line>
+			<line>
+				<reportElement x="241" y="4" width="1" height="122"/>
+			</line>
+			<line>
+				<reportElement x="18" y="2" width="1" height="124"/>
+			</line>
+			<staticText>
+				<reportElement x="25" y="100" width="68" height="10"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gender:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="94" y="99" width="91" height="10"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{gender}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="4" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="5" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="6" splitType="Stretch"/>
+	</summary>
+</jasperReport>

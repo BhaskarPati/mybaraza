@@ -1,0 +1,884 @@
+<APP name="UMIS" org="org_id" password="change_password">
+	<MENU title="Students" changepasswd="changeGuardianPasswd">
+		<MENU name="Student Details">
+			<MENU name="Personal Details">18</MENU>
+			<MENU name="School">1</MENU>
+			<MENU name="Semester Result">19</MENU>
+			<MENU name="Unofficial Transcript">21</MENU>
+			<MENU name="Check Listing">26</MENU>
+		</MENU>
+		<MENU name="Financial Registration">
+			<MENU name="Current Charges">33</MENU>
+		</MENU>
+		<MENU name="Course Selection">
+			<MENU name="Outstanding Courses">103</MENU>
+			<MENU name="Current Timetable">11</MENU>
+			<MENU name="Selected Course List">27</MENU>
+			<MENU name="Selected Timetable">28</MENU>
+			<MENU name="Select Courses">24</MENU>
+			<MENU name="Registration Status">30</MENU>
+		</MENU>
+	</MENU>
+	<DESK w="700" name="School" key="1" h="500">
+		<GRID name="School" keyfield="schoolid" orderby="schoolid" table="schools">
+			<TEXTFIELD w="75" title="School Code">schoolid</TEXTFIELD>
+			<TEXTFIELD w="350" title="School">schoolname</TEXTFIELD>
+			<GRID w="550" name="School Details" lw="120" keyfield="schoolid" display="form" linkfield="schoolid" table="schools">
+				<TEXTFIELD title="School Code">schoolid</TEXTFIELD>
+				<TEXTFIELD title="School Name">schoolname</TEXTFIELD>
+				<TEXTFIELD title="Philosopy">philosopy</TEXTFIELD>
+				<TEXTFIELD title="Vision">vision</TEXTFIELD>
+				<TEXTFIELD title="Mission">mission</TEXTFIELD>
+				<TEXTFIELD title="Objectives">objectives</TEXTFIELD>
+				<TEXTFIELD title="Details">details</TEXTFIELD>
+				<GRID name="Department" keyfield="departmentid" orderby="departmentid" linkfield="schoolid" table="departmentview" reporttitle="schoolname">
+					<TEXTFIELD w="100" title="Department Code">departmentid</TEXTFIELD>
+					<TEXTFIELD w="300" title="Department">departmentname</TEXTFIELD>
+					<GRID w="550" name="Department Details" lw="120" keyfield="departmentid" display="form" linkfield="departmentid" table="departmentview">
+						<TEXTFIELD title="School Code">schoolid</TEXTFIELD>
+						<TEXTFIELD title="School Name">schoolname</TEXTFIELD>
+						<TEXTFIELD title="Department Code">Departmentid</TEXTFIELD>
+						<TEXTFIELD title="Department Name">Departmentname</TEXTFIELD>
+						<TEXTFIELD title="Philosopy">philosopy</TEXTFIELD>
+						<TEXTFIELD title="Vision">vision</TEXTFIELD>
+						<TEXTFIELD title="Mission">mission</TEXTFIELD>
+						<TEXTFIELD title="Objectives">objectives</TEXTFIELD>
+						<TEXTFIELD title="Exposures">exposures</TEXTFIELD>
+						<TEXTFIELD title="Oppotunities">oppotunities</TEXTFIELD>
+						<TEXTFIELD title="Details">details</TEXTFIELD>
+						<GRID name="Programmes" keyfield="majorid" linkfield="departmentid" table="majorview" reporttitle="departmentname">
+							<TEXTFIELD w="100" title="Programmes Code">majorid</TEXTFIELD>
+							<TEXTFIELD w="300" title="Programmes Name">majorname</TEXTFIELD>
+							<CHECKBOX w="75" title="Core" format="boolean" ischar="true">major</CHECKBOX>
+							<GRID name="Programmes Contents" keyfield="courseid" orderby="yeartaken, courseid" linkfield="majorid" table="majorcontentview" where="(iscurrent = true)" reporttitle="majorname">
+								<TEXTFIELD w="50" title="Year Taken">yeartaken</TEXTFIELD>
+								<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+								<TEXTFIELD w="250" title="Course Title">coursetitle</TEXTFIELD>
+								<TEXTFIELD w="50" title="Credit Hours">credithours</TEXTFIELD>
+								<TEXTFIELD w="75" title="Content Type">contenttypename</TEXTFIELD>
+								<CHECKBOX w="50" title="No GPA" format="boolean" ischar="true">nogpa</CHECKBOX>
+								<GRID w="600" tw="700" name="Courses Details" lw="100" keyfield="courseid" display="form" linkfield="courseid" table="courses">
+									<TEXTFIELD w="40" title="Course ID">courseid</TEXTFIELD>
+									<TEXTFIELD w="70" title="Course Title">coursetitle</TEXTFIELD>
+									<TEXTFIELD w="70" title="Hours">credithours</TEXTFIELD>
+									<TEXTFIELD w="70" title="Year Taken">yeartaken</TEXTFIELD>
+									<TEXTFIELD w="70" title="Details">details</TEXTFIELD>
+									<GRID name="Prerequisite" linkfield="courseid" table="prereqview" where="(iscurrent=true)">
+										<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+										<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+										<TEXTFIELD w="75" title="Level">optionlevel</TEXTFIELD>
+										<TEXTFIELD w="75" title="Grade">gradeid</TEXTFIELD>
+									</GRID>
+								</GRID>
+							</GRID>
+						</GRID>
+						<GRID name="Courses Listing" keyfield="courseid" orderby="courseid" linkfield="departmentid" table="courses" where="(iscurrent = true)">
+							<TEXTFIELD w="75" title="Course Code">courseid</TEXTFIELD>
+							<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+							<TEXTFIELD w="75" title="Hours">credithours</TEXTFIELD>
+							<CHECKBOX w="50" title="No GPA" format="boolean" ischar="true">nogpa</CHECKBOX>
+							<TEXTFIELD w="75" title="Year Taken">yeartaken</TEXTFIELD>
+							<GRID w="600" tw="700" name="Courses Details" lw="100" keyfield="courseid" display="form" linkfield="courseid" table="courses">
+								<TEXTFIELD w="40" title="Course ID">courseid</TEXTFIELD>
+								<TEXTFIELD w="70" title="Course Title">coursetitle</TEXTFIELD>
+								<TEXTFIELD w="70" title="Hours">credithours</TEXTFIELD>
+								<TEXTFIELD w="70" title="Year Taken">yeartaken</TEXTFIELD>
+								<TEXTFIELD w="70" title="Details">details</TEXTFIELD>
+								<GRID name="Prerequisite" linkfield="courseid" table="prereqview" where="(iscurrent=true)">
+									<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+									<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+									<TEXTFIELD w="75" title="Level">optionlevel</TEXTFIELD>
+									<TEXTFIELD w="75" title="Grade">gradeid</TEXTFIELD>
+								</GRID>
+							</GRID>
+						</GRID>
+					</GRID>
+					<GRID name="Programmes" keyfield="majorid" linkfield="departmentid" table="majorview" reporttitle="departmentname">
+						<TEXTFIELD w="100" title="Programmes Code">majorid</TEXTFIELD>
+						<TEXTFIELD w="300" title="Programmes Name">majorname</TEXTFIELD>
+						<CHECKBOX w="75" title="Core" format="boolean" ischar="true">major</CHECKBOX>
+						<GRID name="Programmes Contents" keyfield="courseid" orderby="yeartaken, courseid" linkfield="majorid" table="majorcontentview" where="(iscurrent = true)" reporttitle="majorname">
+							<TEXTFIELD w="50" title="Year Taken">yeartaken</TEXTFIELD>
+							<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+							<TEXTFIELD w="250" title="Course Title">coursetitle</TEXTFIELD>
+							<TEXTFIELD w="50" title="Credit Hours">credithours</TEXTFIELD>
+							<TEXTFIELD w="75" title="Content Type">contenttypename</TEXTFIELD>
+							<CHECKBOX w="50" title="No GPA" format="boolean" ischar="true">nogpa</CHECKBOX>
+							<GRID w="600" tw="700" name="Courses Details" lw="100" keyfield="courseid" display="form" linkfield="courseid" table="courses">
+								<TEXTFIELD w="40" title="Course ID">courseid</TEXTFIELD>
+								<TEXTFIELD w="70" title="Course Title">coursetitle</TEXTFIELD>
+								<TEXTFIELD w="70" title="Hours">credithours</TEXTFIELD>
+								<TEXTFIELD w="70" title="Year Taken">yeartaken</TEXTFIELD>
+								<TEXTFIELD w="70" title="Details">details</TEXTFIELD>
+								<GRID name="Prerequisite" linkfield="courseid" table="prereqview" where="(iscurrent=true)">
+									<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+									<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+									<TEXTFIELD w="75" title="Level">optionlevel</TEXTFIELD>
+									<TEXTFIELD w="75" title="Grade">gradeid</TEXTFIELD>
+								</GRID>
+							</GRID>
+						</GRID>
+					</GRID>
+					<GRID name="Courses Listing" keyfield="courseid" orderby="courseid" linkfield="departmentid" table="courses" where="(iscurrent = true)">
+						<TEXTFIELD w="75" title="Course Code">courseid</TEXTFIELD>
+						<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+						<TEXTFIELD w="75" title="Hours">credithours</TEXTFIELD>
+						<CHECKBOX w="50" title="No GPA" format="boolean" ischar="true">nogpa</CHECKBOX>
+						<TEXTFIELD w="75" title="Year Taken">yeartaken</TEXTFIELD>
+						<GRID w="600" tw="700" name="Courses Details" lw="100" keyfield="courseid" display="form" linkfield="courseid" table="courses">
+							<TEXTFIELD w="40" title="Course ID">courseid</TEXTFIELD>
+							<TEXTFIELD w="70" title="Course Title">coursetitle</TEXTFIELD>
+							<TEXTFIELD w="70" title="Hours">credithours</TEXTFIELD>
+							<TEXTFIELD w="70" title="Year Taken">yeartaken</TEXTFIELD>
+							<TEXTFIELD w="70" title="Details">details</TEXTFIELD>
+							<GRID name="Prerequisite" linkfield="courseid" table="prereqview" where="(iscurrent=true)">
+								<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+								<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+								<TEXTFIELD w="75" title="Level">optionlevel</TEXTFIELD>
+								<TEXTFIELD w="75" title="Grade">gradeid</TEXTFIELD>
+							</GRID>
+						</GRID>
+					</GRID>
+				</GRID>
+			</GRID>
+			<GRID name="Department" keyfield="departmentid" orderby="departmentid" linkfield="schoolid" table="departmentview" reporttitle="schoolname">
+				<TEXTFIELD w="100" title="Department Code">departmentid</TEXTFIELD>
+				<TEXTFIELD w="300" title="Department">departmentname</TEXTFIELD>
+				<GRID w="550" name="Department Details" lw="120" keyfield="departmentid" display="form" linkfield="departmentid" table="departmentview">
+					<TEXTFIELD title="School Code">schoolid</TEXTFIELD>
+					<TEXTFIELD title="School Name">schoolname</TEXTFIELD>
+					<TEXTFIELD title="Department Code">Departmentid</TEXTFIELD>
+					<TEXTFIELD title="Department Name">Departmentname</TEXTFIELD>
+					<TEXTFIELD title="Philosopy">philosopy</TEXTFIELD>
+					<TEXTFIELD title="Vision">vision</TEXTFIELD>
+					<TEXTFIELD title="Mission">mission</TEXTFIELD>
+					<TEXTFIELD title="Objectives">objectives</TEXTFIELD>
+					<TEXTFIELD title="Exposures">exposures</TEXTFIELD>
+					<TEXTFIELD title="Oppotunities">oppotunities</TEXTFIELD>
+					<TEXTFIELD title="Details">details</TEXTFIELD>
+					<GRID name="Programmes" keyfield="majorid" linkfield="departmentid" table="majorview" reporttitle="departmentname">
+						<TEXTFIELD w="100" title="Programmes Code">majorid</TEXTFIELD>
+						<TEXTFIELD w="300" title="Programmes Name">majorname</TEXTFIELD>
+						<CHECKBOX w="75" title="Core" format="boolean" ischar="true">major</CHECKBOX>
+						<GRID name="Programmes Contents" keyfield="courseid" orderby="yeartaken, courseid" linkfield="majorid" table="majorcontentview" where="(iscurrent = true)" reporttitle="majorname">
+							<TEXTFIELD w="50" title="Year Taken">yeartaken</TEXTFIELD>
+							<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+							<TEXTFIELD w="250" title="Course Title">coursetitle</TEXTFIELD>
+							<TEXTFIELD w="50" title="Credit Hours">credithours</TEXTFIELD>
+							<TEXTFIELD w="75" title="Content Type">contenttypename</TEXTFIELD>
+							<CHECKBOX w="50" title="No GPA" format="boolean" ischar="true">nogpa</CHECKBOX>
+							<GRID w="600" tw="700" name="Courses Details" lw="100" keyfield="courseid" display="form" linkfield="courseid" table="courses">
+								<TEXTFIELD w="40" title="Course ID">courseid</TEXTFIELD>
+								<TEXTFIELD w="70" title="Course Title">coursetitle</TEXTFIELD>
+								<TEXTFIELD w="70" title="Hours">credithours</TEXTFIELD>
+								<TEXTFIELD w="70" title="Year Taken">yeartaken</TEXTFIELD>
+								<TEXTFIELD w="70" title="Details">details</TEXTFIELD>
+								<GRID name="Prerequisite" linkfield="courseid" table="prereqview" where="(iscurrent=true)">
+									<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+									<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+									<TEXTFIELD w="75" title="Level">optionlevel</TEXTFIELD>
+									<TEXTFIELD w="75" title="Grade">gradeid</TEXTFIELD>
+								</GRID>
+							</GRID>
+						</GRID>
+					</GRID>
+					<GRID name="Courses Listing" keyfield="courseid" orderby="courseid" linkfield="departmentid" table="courses" where="(iscurrent = true)">
+						<TEXTFIELD w="75" title="Course Code">courseid</TEXTFIELD>
+						<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+						<TEXTFIELD w="75" title="Hours">credithours</TEXTFIELD>
+						<CHECKBOX w="50" title="No GPA" format="boolean" ischar="true">nogpa</CHECKBOX>
+						<TEXTFIELD w="75" title="Year Taken">yeartaken</TEXTFIELD>
+						<GRID w="600" tw="700" name="Courses Details" lw="100" keyfield="courseid" display="form" linkfield="courseid" table="courses">
+							<TEXTFIELD w="40" title="Course ID">courseid</TEXTFIELD>
+							<TEXTFIELD w="70" title="Course Title">coursetitle</TEXTFIELD>
+							<TEXTFIELD w="70" title="Hours">credithours</TEXTFIELD>
+							<TEXTFIELD w="70" title="Year Taken">yeartaken</TEXTFIELD>
+							<TEXTFIELD w="70" title="Details">details</TEXTFIELD>
+							<GRID name="Prerequisite" linkfield="courseid" table="prereqview" where="(iscurrent=true)">
+								<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+								<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+								<TEXTFIELD w="75" title="Level">optionlevel</TEXTFIELD>
+								<TEXTFIELD w="75" title="Grade">gradeid</TEXTFIELD>
+							</GRID>
+						</GRID>
+					</GRID>
+				</GRID>
+				<GRID name="Programmes" keyfield="majorid" linkfield="departmentid" table="majorview" reporttitle="departmentname">
+					<TEXTFIELD w="100" title="Programmes Code">majorid</TEXTFIELD>
+					<TEXTFIELD w="300" title="Programmes Name">majorname</TEXTFIELD>
+					<CHECKBOX w="75" title="Core" format="boolean" ischar="true">major</CHECKBOX>
+					<GRID name="Programmes Contents" keyfield="courseid" orderby="yeartaken, courseid" linkfield="majorid" table="majorcontentview" where="(iscurrent = true)" reporttitle="majorname">
+						<TEXTFIELD w="50" title="Year Taken">yeartaken</TEXTFIELD>
+						<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+						<TEXTFIELD w="250" title="Course Title">coursetitle</TEXTFIELD>
+						<TEXTFIELD w="50" title="Credit Hours">credithours</TEXTFIELD>
+						<TEXTFIELD w="75" title="Content Type">contenttypename</TEXTFIELD>
+						<CHECKBOX w="50" title="No GPA" format="boolean" ischar="true">nogpa</CHECKBOX>
+						<GRID w="600" tw="700" name="Courses Details" lw="100" keyfield="courseid" display="form" linkfield="courseid" table="courses">
+							<TEXTFIELD w="40" title="Course ID">courseid</TEXTFIELD>
+							<TEXTFIELD w="70" title="Course Title">coursetitle</TEXTFIELD>
+							<TEXTFIELD w="70" title="Hours">credithours</TEXTFIELD>
+							<TEXTFIELD w="70" title="Year Taken">yeartaken</TEXTFIELD>
+							<TEXTFIELD w="70" title="Details">details</TEXTFIELD>
+							<GRID name="Prerequisite" linkfield="courseid" table="prereqview" where="(iscurrent=true)">
+								<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+								<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+								<TEXTFIELD w="75" title="Level">optionlevel</TEXTFIELD>
+								<TEXTFIELD w="75" title="Grade">gradeid</TEXTFIELD>
+							</GRID>
+						</GRID>
+					</GRID>
+				</GRID>
+				<GRID name="Courses Listing" keyfield="courseid" orderby="courseid" linkfield="departmentid" table="courses" where="(iscurrent = true)">
+					<TEXTFIELD w="75" title="Course Code">courseid</TEXTFIELD>
+					<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+					<TEXTFIELD w="75" title="Hours">credithours</TEXTFIELD>
+					<CHECKBOX w="50" title="No GPA" format="boolean" ischar="true">nogpa</CHECKBOX>
+					<TEXTFIELD w="75" title="Year Taken">yeartaken</TEXTFIELD>
+					<GRID w="600" tw="700" name="Courses Details" lw="100" keyfield="courseid" display="form" linkfield="courseid" table="courses">
+						<TEXTFIELD w="40" title="Course ID">courseid</TEXTFIELD>
+						<TEXTFIELD w="70" title="Course Title">coursetitle</TEXTFIELD>
+						<TEXTFIELD w="70" title="Hours">credithours</TEXTFIELD>
+						<TEXTFIELD w="70" title="Year Taken">yeartaken</TEXTFIELD>
+						<TEXTFIELD w="70" title="Details">details</TEXTFIELD>
+						<GRID name="Prerequisite" linkfield="courseid" table="prereqview" where="(iscurrent=true)">
+							<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+							<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+							<TEXTFIELD w="75" title="Level">optionlevel</TEXTFIELD>
+							<TEXTFIELD w="75" title="Grade">gradeid</TEXTFIELD>
+						</GRID>
+					</GRID>
+				</GRID>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="School Details" key="2" h="500">
+		<GRID w="550" name="School Details" lw="120" keyfield="schoolid" display="form" linkfield="schoolid" table="schools">
+			<TEXTFIELD title="School Code">schoolid</TEXTFIELD>
+			<TEXTFIELD title="School Name">schoolname</TEXTFIELD>
+			<TEXTFIELD title="Philosopy">philosopy</TEXTFIELD>
+			<TEXTFIELD title="Vision">vision</TEXTFIELD>
+			<TEXTFIELD title="Mission">mission</TEXTFIELD>
+			<TEXTFIELD title="Objectives">objectives</TEXTFIELD>
+			<TEXTFIELD title="Details">details</TEXTFIELD>
+			<GRID name="Department" keyfield="departmentid" orderby="departmentid" linkfield="schoolid" table="departmentview" reporttitle="schoolname">
+				<TEXTFIELD w="100" title="Department Code">departmentid</TEXTFIELD>
+				<TEXTFIELD w="300" title="Department">departmentname</TEXTFIELD>
+				<GRID w="550" name="Department Details" lw="120" keyfield="departmentid" display="form" linkfield="departmentid" table="departmentview">
+					<TEXTFIELD title="School Code">schoolid</TEXTFIELD>
+					<TEXTFIELD title="School Name">schoolname</TEXTFIELD>
+					<TEXTFIELD title="Department Code">Departmentid</TEXTFIELD>
+					<TEXTFIELD title="Department Name">Departmentname</TEXTFIELD>
+					<TEXTFIELD title="Philosopy">philosopy</TEXTFIELD>
+					<TEXTFIELD title="Vision">vision</TEXTFIELD>
+					<TEXTFIELD title="Mission">mission</TEXTFIELD>
+					<TEXTFIELD title="Objectives">objectives</TEXTFIELD>
+					<TEXTFIELD title="Exposures">exposures</TEXTFIELD>
+					<TEXTFIELD title="Oppotunities">oppotunities</TEXTFIELD>
+					<TEXTFIELD title="Details">details</TEXTFIELD>
+					<GRID name="Programmes" keyfield="majorid" linkfield="departmentid" table="majorview" reporttitle="departmentname">
+						<TEXTFIELD w="100" title="Programmes Code">majorid</TEXTFIELD>
+						<TEXTFIELD w="300" title="Programmes Name">majorname</TEXTFIELD>
+						<CHECKBOX w="75" title="Core" format="boolean" ischar="true">major</CHECKBOX>
+						<GRID name="Programmes Contents" keyfield="courseid" orderby="yeartaken, courseid" linkfield="majorid" table="majorcontentview" where="(iscurrent = true)" reporttitle="majorname">
+							<TEXTFIELD w="50" title="Year Taken">yeartaken</TEXTFIELD>
+							<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+							<TEXTFIELD w="250" title="Course Title">coursetitle</TEXTFIELD>
+							<TEXTFIELD w="50" title="Credit Hours">credithours</TEXTFIELD>
+							<TEXTFIELD w="75" title="Content Type">contenttypename</TEXTFIELD>
+							<CHECKBOX w="50" title="No GPA" format="boolean" ischar="true">nogpa</CHECKBOX>
+							<GRID w="600" tw="700" name="Courses Details" lw="100" keyfield="courseid" display="form" linkfield="courseid" table="courses">
+								<TEXTFIELD w="40" title="Course ID">courseid</TEXTFIELD>
+								<TEXTFIELD w="70" title="Course Title">coursetitle</TEXTFIELD>
+								<TEXTFIELD w="70" title="Hours">credithours</TEXTFIELD>
+								<TEXTFIELD w="70" title="Year Taken">yeartaken</TEXTFIELD>
+								<TEXTFIELD w="70" title="Details">details</TEXTFIELD>
+								<GRID name="Prerequisite" linkfield="courseid" table="prereqview" where="(iscurrent=true)">
+									<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+									<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+									<TEXTFIELD w="75" title="Level">optionlevel</TEXTFIELD>
+									<TEXTFIELD w="75" title="Grade">gradeid</TEXTFIELD>
+								</GRID>
+							</GRID>
+						</GRID>
+					</GRID>
+					<GRID name="Courses Listing" keyfield="courseid" orderby="courseid" linkfield="departmentid" table="courses" where="(iscurrent = true)">
+						<TEXTFIELD w="75" title="Course Code">courseid</TEXTFIELD>
+						<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+						<TEXTFIELD w="75" title="Hours">credithours</TEXTFIELD>
+						<CHECKBOX w="50" title="No GPA" format="boolean" ischar="true">nogpa</CHECKBOX>
+						<TEXTFIELD w="75" title="Year Taken">yeartaken</TEXTFIELD>
+						<GRID w="600" tw="700" name="Courses Details" lw="100" keyfield="courseid" display="form" linkfield="courseid" table="courses">
+							<TEXTFIELD w="40" title="Course ID">courseid</TEXTFIELD>
+							<TEXTFIELD w="70" title="Course Title">coursetitle</TEXTFIELD>
+							<TEXTFIELD w="70" title="Hours">credithours</TEXTFIELD>
+							<TEXTFIELD w="70" title="Year Taken">yeartaken</TEXTFIELD>
+							<TEXTFIELD w="70" title="Details">details</TEXTFIELD>
+							<GRID name="Prerequisite" linkfield="courseid" table="prereqview" where="(iscurrent=true)">
+								<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+								<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+								<TEXTFIELD w="75" title="Level">optionlevel</TEXTFIELD>
+								<TEXTFIELD w="75" title="Grade">gradeid</TEXTFIELD>
+							</GRID>
+						</GRID>
+					</GRID>
+				</GRID>
+				<GRID name="Programmes" keyfield="majorid" linkfield="departmentid" table="majorview" reporttitle="departmentname">
+					<TEXTFIELD w="100" title="Programmes Code">majorid</TEXTFIELD>
+					<TEXTFIELD w="300" title="Programmes Name">majorname</TEXTFIELD>
+					<CHECKBOX w="75" title="Core" format="boolean" ischar="true">major</CHECKBOX>
+					<GRID name="Programmes Contents" keyfield="courseid" orderby="yeartaken, courseid" linkfield="majorid" table="majorcontentview" where="(iscurrent = true)" reporttitle="majorname">
+						<TEXTFIELD w="50" title="Year Taken">yeartaken</TEXTFIELD>
+						<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+						<TEXTFIELD w="250" title="Course Title">coursetitle</TEXTFIELD>
+						<TEXTFIELD w="50" title="Credit Hours">credithours</TEXTFIELD>
+						<TEXTFIELD w="75" title="Content Type">contenttypename</TEXTFIELD>
+						<CHECKBOX w="50" title="No GPA" format="boolean" ischar="true">nogpa</CHECKBOX>
+						<GRID w="600" tw="700" name="Courses Details" lw="100" keyfield="courseid" display="form" linkfield="courseid" table="courses">
+							<TEXTFIELD w="40" title="Course ID">courseid</TEXTFIELD>
+							<TEXTFIELD w="70" title="Course Title">coursetitle</TEXTFIELD>
+							<TEXTFIELD w="70" title="Hours">credithours</TEXTFIELD>
+							<TEXTFIELD w="70" title="Year Taken">yeartaken</TEXTFIELD>
+							<TEXTFIELD w="70" title="Details">details</TEXTFIELD>
+							<GRID name="Prerequisite" linkfield="courseid" table="prereqview" where="(iscurrent=true)">
+								<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+								<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+								<TEXTFIELD w="75" title="Level">optionlevel</TEXTFIELD>
+								<TEXTFIELD w="75" title="Grade">gradeid</TEXTFIELD>
+							</GRID>
+						</GRID>
+					</GRID>
+				</GRID>
+				<GRID name="Courses Listing" keyfield="courseid" orderby="courseid" linkfield="departmentid" table="courses" where="(iscurrent = true)">
+					<TEXTFIELD w="75" title="Course Code">courseid</TEXTFIELD>
+					<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+					<TEXTFIELD w="75" title="Hours">credithours</TEXTFIELD>
+					<CHECKBOX w="50" title="No GPA" format="boolean" ischar="true">nogpa</CHECKBOX>
+					<TEXTFIELD w="75" title="Year Taken">yeartaken</TEXTFIELD>
+					<GRID w="600" tw="700" name="Courses Details" lw="100" keyfield="courseid" display="form" linkfield="courseid" table="courses">
+						<TEXTFIELD w="40" title="Course ID">courseid</TEXTFIELD>
+						<TEXTFIELD w="70" title="Course Title">coursetitle</TEXTFIELD>
+						<TEXTFIELD w="70" title="Hours">credithours</TEXTFIELD>
+						<TEXTFIELD w="70" title="Year Taken">yeartaken</TEXTFIELD>
+						<TEXTFIELD w="70" title="Details">details</TEXTFIELD>
+						<GRID name="Prerequisite" linkfield="courseid" table="prereqview" where="(iscurrent=true)">
+							<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+							<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+							<TEXTFIELD w="75" title="Level">optionlevel</TEXTFIELD>
+							<TEXTFIELD w="75" title="Grade">gradeid</TEXTFIELD>
+						</GRID>
+					</GRID>
+				</GRID>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Department" key="3" h="500">
+		<GRID name="Department" keyfield="departmentid" orderby="departmentid" linkfield="schoolid" table="departmentview" reporttitle="schoolname">
+			<TEXTFIELD w="100" title="Department Code">departmentid</TEXTFIELD>
+			<TEXTFIELD w="300" title="Department">departmentname</TEXTFIELD>
+			<GRID w="550" name="Department Details" lw="120" keyfield="departmentid" display="form" linkfield="departmentid" table="departmentview">
+				<TEXTFIELD title="School Code">schoolid</TEXTFIELD>
+				<TEXTFIELD title="School Name">schoolname</TEXTFIELD>
+				<TEXTFIELD title="Department Code">Departmentid</TEXTFIELD>
+				<TEXTFIELD title="Department Name">Departmentname</TEXTFIELD>
+				<TEXTFIELD title="Philosopy">philosopy</TEXTFIELD>
+				<TEXTFIELD title="Vision">vision</TEXTFIELD>
+				<TEXTFIELD title="Mission">mission</TEXTFIELD>
+				<TEXTFIELD title="Objectives">objectives</TEXTFIELD>
+				<TEXTFIELD title="Exposures">exposures</TEXTFIELD>
+				<TEXTFIELD title="Oppotunities">oppotunities</TEXTFIELD>
+				<TEXTFIELD title="Details">details</TEXTFIELD>
+				<GRID name="Programmes" keyfield="majorid" linkfield="departmentid" table="majorview" reporttitle="departmentname">
+					<TEXTFIELD w="100" title="Programmes Code">majorid</TEXTFIELD>
+					<TEXTFIELD w="300" title="Programmes Name">majorname</TEXTFIELD>
+					<CHECKBOX w="75" title="Core" format="boolean" ischar="true">major</CHECKBOX>
+					<GRID name="Programmes Contents" keyfield="courseid" orderby="yeartaken, courseid" linkfield="majorid" table="majorcontentview" where="(iscurrent = true)" reporttitle="majorname">
+						<TEXTFIELD w="50" title="Year Taken">yeartaken</TEXTFIELD>
+						<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+						<TEXTFIELD w="250" title="Course Title">coursetitle</TEXTFIELD>
+						<TEXTFIELD w="50" title="Credit Hours">credithours</TEXTFIELD>
+						<TEXTFIELD w="75" title="Content Type">contenttypename</TEXTFIELD>
+						<CHECKBOX w="50" title="No GPA" format="boolean" ischar="true">nogpa</CHECKBOX>
+						<GRID w="600" tw="700" name="Courses Details" lw="100" keyfield="courseid" display="form" linkfield="courseid" table="courses">
+							<TEXTFIELD w="40" title="Course ID">courseid</TEXTFIELD>
+							<TEXTFIELD w="70" title="Course Title">coursetitle</TEXTFIELD>
+							<TEXTFIELD w="70" title="Hours">credithours</TEXTFIELD>
+							<TEXTFIELD w="70" title="Year Taken">yeartaken</TEXTFIELD>
+							<TEXTFIELD w="70" title="Details">details</TEXTFIELD>
+							<GRID name="Prerequisite" linkfield="courseid" table="prereqview" where="(iscurrent=true)">
+								<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+								<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+								<TEXTFIELD w="75" title="Level">optionlevel</TEXTFIELD>
+								<TEXTFIELD w="75" title="Grade">gradeid</TEXTFIELD>
+							</GRID>
+						</GRID>
+					</GRID>
+				</GRID>
+				<GRID name="Courses Listing" keyfield="courseid" orderby="courseid" linkfield="departmentid" table="courses" where="(iscurrent = true)">
+					<TEXTFIELD w="75" title="Course Code">courseid</TEXTFIELD>
+					<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+					<TEXTFIELD w="75" title="Hours">credithours</TEXTFIELD>
+					<CHECKBOX w="50" title="No GPA" format="boolean" ischar="true">nogpa</CHECKBOX>
+					<TEXTFIELD w="75" title="Year Taken">yeartaken</TEXTFIELD>
+					<GRID w="600" tw="700" name="Courses Details" lw="100" keyfield="courseid" display="form" linkfield="courseid" table="courses">
+						<TEXTFIELD w="40" title="Course ID">courseid</TEXTFIELD>
+						<TEXTFIELD w="70" title="Course Title">coursetitle</TEXTFIELD>
+						<TEXTFIELD w="70" title="Hours">credithours</TEXTFIELD>
+						<TEXTFIELD w="70" title="Year Taken">yeartaken</TEXTFIELD>
+						<TEXTFIELD w="70" title="Details">details</TEXTFIELD>
+						<GRID name="Prerequisite" linkfield="courseid" table="prereqview" where="(iscurrent=true)">
+							<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+							<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+							<TEXTFIELD w="75" title="Level">optionlevel</TEXTFIELD>
+							<TEXTFIELD w="75" title="Grade">gradeid</TEXTFIELD>
+						</GRID>
+					</GRID>
+				</GRID>
+			</GRID>
+			<GRID name="Programmes" keyfield="majorid" linkfield="departmentid" table="majorview" reporttitle="departmentname">
+				<TEXTFIELD w="100" title="Programmes Code">majorid</TEXTFIELD>
+				<TEXTFIELD w="300" title="Programmes Name">majorname</TEXTFIELD>
+				<CHECKBOX w="75" title="Core" format="boolean" ischar="true">major</CHECKBOX>
+				<GRID name="Programmes Contents" keyfield="courseid" orderby="yeartaken, courseid" linkfield="majorid" table="majorcontentview" where="(iscurrent = true)" reporttitle="majorname">
+					<TEXTFIELD w="50" title="Year Taken">yeartaken</TEXTFIELD>
+					<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+					<TEXTFIELD w="250" title="Course Title">coursetitle</TEXTFIELD>
+					<TEXTFIELD w="50" title="Credit Hours">credithours</TEXTFIELD>
+					<TEXTFIELD w="75" title="Content Type">contenttypename</TEXTFIELD>
+					<CHECKBOX w="50" title="No GPA" format="boolean" ischar="true">nogpa</CHECKBOX>
+					<GRID w="600" tw="700" name="Courses Details" lw="100" keyfield="courseid" display="form" linkfield="courseid" table="courses">
+						<TEXTFIELD w="40" title="Course ID">courseid</TEXTFIELD>
+						<TEXTFIELD w="70" title="Course Title">coursetitle</TEXTFIELD>
+						<TEXTFIELD w="70" title="Hours">credithours</TEXTFIELD>
+						<TEXTFIELD w="70" title="Year Taken">yeartaken</TEXTFIELD>
+						<TEXTFIELD w="70" title="Details">details</TEXTFIELD>
+						<GRID name="Prerequisite" linkfield="courseid" table="prereqview" where="(iscurrent=true)">
+							<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+							<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+							<TEXTFIELD w="75" title="Level">optionlevel</TEXTFIELD>
+							<TEXTFIELD w="75" title="Grade">gradeid</TEXTFIELD>
+						</GRID>
+					</GRID>
+				</GRID>
+			</GRID>
+			<GRID name="Courses Listing" keyfield="courseid" orderby="courseid" linkfield="departmentid" table="courses" where="(iscurrent = true)">
+				<TEXTFIELD w="75" title="Course Code">courseid</TEXTFIELD>
+				<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+				<TEXTFIELD w="75" title="Hours">credithours</TEXTFIELD>
+				<CHECKBOX w="50" title="No GPA" format="boolean" ischar="true">nogpa</CHECKBOX>
+				<TEXTFIELD w="75" title="Year Taken">yeartaken</TEXTFIELD>
+				<GRID w="600" tw="700" name="Courses Details" lw="100" keyfield="courseid" display="form" linkfield="courseid" table="courses">
+					<TEXTFIELD w="40" title="Course ID">courseid</TEXTFIELD>
+					<TEXTFIELD w="70" title="Course Title">coursetitle</TEXTFIELD>
+					<TEXTFIELD w="70" title="Hours">credithours</TEXTFIELD>
+					<TEXTFIELD w="70" title="Year Taken">yeartaken</TEXTFIELD>
+					<TEXTFIELD w="70" title="Details">details</TEXTFIELD>
+					<GRID name="Prerequisite" linkfield="courseid" table="prereqview" where="(iscurrent=true)">
+						<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+						<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+						<TEXTFIELD w="75" title="Level">optionlevel</TEXTFIELD>
+						<TEXTFIELD w="75" title="Grade">gradeid</TEXTFIELD>
+					</GRID>
+				</GRID>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Department Details" key="4" h="500">
+		<GRID w="550" name="Department Details" lw="120" keyfield="departmentid" display="form" linkfield="departmentid" table="departmentview">
+			<TEXTFIELD title="School Code">schoolid</TEXTFIELD>
+			<TEXTFIELD title="School Name">schoolname</TEXTFIELD>
+			<TEXTFIELD title="Department Code">Departmentid</TEXTFIELD>
+			<TEXTFIELD title="Department Name">Departmentname</TEXTFIELD>
+			<TEXTFIELD title="Philosopy">philosopy</TEXTFIELD>
+			<TEXTFIELD title="Vision">vision</TEXTFIELD>
+			<TEXTFIELD title="Mission">mission</TEXTFIELD>
+			<TEXTFIELD title="Objectives">objectives</TEXTFIELD>
+			<TEXTFIELD title="Exposures">exposures</TEXTFIELD>
+			<TEXTFIELD title="Oppotunities">oppotunities</TEXTFIELD>
+			<TEXTFIELD title="Details">details</TEXTFIELD>
+			<GRID name="Programmes" keyfield="majorid" linkfield="departmentid" table="majorview" reporttitle="departmentname">
+				<TEXTFIELD w="100" title="Programmes Code">majorid</TEXTFIELD>
+				<TEXTFIELD w="300" title="Programmes Name">majorname</TEXTFIELD>
+				<CHECKBOX w="75" title="Core" format="boolean" ischar="true">major</CHECKBOX>
+				<GRID name="Programmes Contents" keyfield="courseid" orderby="yeartaken, courseid" linkfield="majorid" table="majorcontentview" where="(iscurrent = true)" reporttitle="majorname">
+					<TEXTFIELD w="50" title="Year Taken">yeartaken</TEXTFIELD>
+					<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+					<TEXTFIELD w="250" title="Course Title">coursetitle</TEXTFIELD>
+					<TEXTFIELD w="50" title="Credit Hours">credithours</TEXTFIELD>
+					<TEXTFIELD w="75" title="Content Type">contenttypename</TEXTFIELD>
+					<CHECKBOX w="50" title="No GPA" format="boolean" ischar="true">nogpa</CHECKBOX>
+					<GRID w="600" tw="700" name="Courses Details" lw="100" keyfield="courseid" display="form" linkfield="courseid" table="courses">
+						<TEXTFIELD w="40" title="Course ID">courseid</TEXTFIELD>
+						<TEXTFIELD w="70" title="Course Title">coursetitle</TEXTFIELD>
+						<TEXTFIELD w="70" title="Hours">credithours</TEXTFIELD>
+						<TEXTFIELD w="70" title="Year Taken">yeartaken</TEXTFIELD>
+						<TEXTFIELD w="70" title="Details">details</TEXTFIELD>
+						<GRID name="Prerequisite" linkfield="courseid" table="prereqview" where="(iscurrent=true)">
+							<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+							<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+							<TEXTFIELD w="75" title="Level">optionlevel</TEXTFIELD>
+							<TEXTFIELD w="75" title="Grade">gradeid</TEXTFIELD>
+						</GRID>
+					</GRID>
+				</GRID>
+			</GRID>
+			<GRID name="Courses Listing" keyfield="courseid" orderby="courseid" linkfield="departmentid" table="courses" where="(iscurrent = true)">
+				<TEXTFIELD w="75" title="Course Code">courseid</TEXTFIELD>
+				<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+				<TEXTFIELD w="75" title="Hours">credithours</TEXTFIELD>
+				<CHECKBOX w="50" title="No GPA" format="boolean" ischar="true">nogpa</CHECKBOX>
+				<TEXTFIELD w="75" title="Year Taken">yeartaken</TEXTFIELD>
+				<GRID w="600" tw="700" name="Courses Details" lw="100" keyfield="courseid" display="form" linkfield="courseid" table="courses">
+					<TEXTFIELD w="40" title="Course ID">courseid</TEXTFIELD>
+					<TEXTFIELD w="70" title="Course Title">coursetitle</TEXTFIELD>
+					<TEXTFIELD w="70" title="Hours">credithours</TEXTFIELD>
+					<TEXTFIELD w="70" title="Year Taken">yeartaken</TEXTFIELD>
+					<TEXTFIELD w="70" title="Details">details</TEXTFIELD>
+					<GRID name="Prerequisite" linkfield="courseid" table="prereqview" where="(iscurrent=true)">
+						<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+						<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+						<TEXTFIELD w="75" title="Level">optionlevel</TEXTFIELD>
+						<TEXTFIELD w="75" title="Grade">gradeid</TEXTFIELD>
+					</GRID>
+				</GRID>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Courses Listing" key="5" h="500">
+		<GRID name="Courses Listing" keyfield="courseid" orderby="courseid" linkfield="departmentid" table="courses" where="(iscurrent = true)">
+			<TEXTFIELD w="75" title="Course Code">courseid</TEXTFIELD>
+			<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+			<TEXTFIELD w="75" title="Hours">credithours</TEXTFIELD>
+			<CHECKBOX w="50" title="No GPA" format="boolean" ischar="true">nogpa</CHECKBOX>
+			<TEXTFIELD w="75" title="Year Taken">yeartaken</TEXTFIELD>
+			<GRID w="600" tw="700" name="Courses Details" lw="100" keyfield="courseid" display="form" linkfield="courseid" table="courses">
+				<TEXTFIELD w="40" title="Course ID">courseid</TEXTFIELD>
+				<TEXTFIELD w="70" title="Course Title">coursetitle</TEXTFIELD>
+				<TEXTFIELD w="70" title="Hours">credithours</TEXTFIELD>
+				<TEXTFIELD w="70" title="Year Taken">yeartaken</TEXTFIELD>
+				<TEXTFIELD w="70" title="Details">details</TEXTFIELD>
+				<GRID name="Prerequisite" linkfield="courseid" table="prereqview" where="(iscurrent=true)">
+					<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+					<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+					<TEXTFIELD w="75" title="Level">optionlevel</TEXTFIELD>
+					<TEXTFIELD w="75" title="Grade">gradeid</TEXTFIELD>
+				</GRID>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Programmes" key="6" h="500">
+		<GRID name="Programmes" keyfield="majorid" linkfield="departmentid" table="majorview" reporttitle="departmentname">
+			<TEXTFIELD w="100" title="Programmes Code">majorid</TEXTFIELD>
+			<TEXTFIELD w="300" title="Programmes Name">majorname</TEXTFIELD>
+			<CHECKBOX w="75" title="Core" format="boolean" ischar="true">major</CHECKBOX>
+			<GRID name="Programmes Contents" keyfield="courseid" orderby="yeartaken, courseid" linkfield="majorid" table="majorcontentview" where="(iscurrent = true)" reporttitle="majorname">
+				<TEXTFIELD w="50" title="Year Taken">yeartaken</TEXTFIELD>
+				<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+				<TEXTFIELD w="250" title="Course Title">coursetitle</TEXTFIELD>
+				<TEXTFIELD w="50" title="Credit Hours">credithours</TEXTFIELD>
+				<TEXTFIELD w="75" title="Content Type">contenttypename</TEXTFIELD>
+				<CHECKBOX w="50" title="No GPA" format="boolean" ischar="true">nogpa</CHECKBOX>
+				<GRID w="600" tw="700" name="Courses Details" lw="100" keyfield="courseid" display="form" linkfield="courseid" table="courses">
+					<TEXTFIELD w="40" title="Course ID">courseid</TEXTFIELD>
+					<TEXTFIELD w="70" title="Course Title">coursetitle</TEXTFIELD>
+					<TEXTFIELD w="70" title="Hours">credithours</TEXTFIELD>
+					<TEXTFIELD w="70" title="Year Taken">yeartaken</TEXTFIELD>
+					<TEXTFIELD w="70" title="Details">details</TEXTFIELD>
+					<GRID name="Prerequisite" linkfield="courseid" table="prereqview" where="(iscurrent=true)">
+						<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+						<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+						<TEXTFIELD w="75" title="Level">optionlevel</TEXTFIELD>
+						<TEXTFIELD w="75" title="Grade">gradeid</TEXTFIELD>
+					</GRID>
+				</GRID>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Programmes Contents" key="7" h="500">
+		<GRID name="Programmes Contents" keyfield="courseid" orderby="yeartaken, courseid" linkfield="majorid" table="majorcontentview" where="(iscurrent = true)" reporttitle="majorname">
+			<TEXTFIELD w="50" title="Year Taken">yeartaken</TEXTFIELD>
+			<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+			<TEXTFIELD w="250" title="Course Title">coursetitle</TEXTFIELD>
+			<TEXTFIELD w="50" title="Credit Hours">credithours</TEXTFIELD>
+			<TEXTFIELD w="75" title="Content Type">contenttypename</TEXTFIELD>
+			<CHECKBOX w="50" title="No GPA" format="boolean" ischar="true">nogpa</CHECKBOX>
+			<GRID w="600" tw="700" name="Courses Details" lw="100" keyfield="courseid" display="form" linkfield="courseid" table="courses">
+				<TEXTFIELD w="40" title="Course ID">courseid</TEXTFIELD>
+				<TEXTFIELD w="70" title="Course Title">coursetitle</TEXTFIELD>
+				<TEXTFIELD w="70" title="Hours">credithours</TEXTFIELD>
+				<TEXTFIELD w="70" title="Year Taken">yeartaken</TEXTFIELD>
+				<TEXTFIELD w="70" title="Details">details</TEXTFIELD>
+				<GRID name="Prerequisite" linkfield="courseid" table="prereqview" where="(iscurrent=true)">
+					<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+					<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+					<TEXTFIELD w="75" title="Level">optionlevel</TEXTFIELD>
+					<TEXTFIELD w="75" title="Grade">gradeid</TEXTFIELD>
+				</GRID>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Courses Details" key="8" h="500">
+		<GRID w="600" tw="700" name="Courses Details" lw="100" keyfield="courseid" display="form" linkfield="courseid" table="courses">
+			<TEXTFIELD w="40" title="Course ID">courseid</TEXTFIELD>
+			<TEXTFIELD w="70" title="Course Title">coursetitle</TEXTFIELD>
+			<TEXTFIELD w="70" title="Hours">credithours</TEXTFIELD>
+			<TEXTFIELD w="70" title="Year Taken">yeartaken</TEXTFIELD>
+			<TEXTFIELD w="70" title="Details">details</TEXTFIELD>
+			<GRID name="Prerequisite" linkfield="courseid" table="prereqview" where="(iscurrent=true)">
+				<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+				<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+				<TEXTFIELD w="75" title="Level">optionlevel</TEXTFIELD>
+				<TEXTFIELD w="75" title="Grade">gradeid</TEXTFIELD>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Prerequisite" key="9" h="500">
+		<GRID name="Prerequisite" linkfield="courseid" table="prereqview" where="(iscurrent=true)">
+			<TEXTFIELD w="75" title="Course ID">courseid</TEXTFIELD>
+			<TEXTFIELD w="300" title="Course Title">coursetitle</TEXTFIELD>
+			<TEXTFIELD w="75" title="Level">optionlevel</TEXTFIELD>
+			<TEXTFIELD w="75" title="Grade">gradeid</TEXTFIELD>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Current Timetable" key="11" h="500">
+		<GRID name="Current Timetable" table="currtimetableview">
+			<TEXTFIELD w="40" title="Start" format="time">starttime</TEXTFIELD>
+			<TEXTFIELD w="40" title="End" format="time">endtime</TEXTFIELD>
+			<TEXTFIELD w="40" title="Mo" format="boolcolor">cmonday</TEXTFIELD>
+			<TEXTFIELD w="40" title="Tu" format="boolcolor">ctuesday</TEXTFIELD>
+			<TEXTFIELD w="40" title="We" format="boolcolor">cwednesday</TEXTFIELD>
+			<TEXTFIELD w="40" title="Th" format="boolcolor">cthursday</TEXTFIELD>
+			<TEXTFIELD w="40" title="Fr" format="boolcolor">cfriday</TEXTFIELD>
+			<TEXTFIELD w="40" title="Su" format="boolcolor">csunday</TEXTFIELD>
+			<CHECKBOX w="40" title="Lab" format="boolean" ischar="true">lab</CHECKBOX>
+			<TEXTFIELD w="40" title="Course Code">courseid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Course Title">coursetitle</TEXTFIELD>
+			<TEXTFIELD w="40" title="Instructor">instructorname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Option">classoption</TEXTFIELD>
+			<TEXTFIELD w="40" title="Venue">assetname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Location">location</TEXTFIELD>
+			<TEXTFIELD w="40" title="Building">building</TEXTFIELD>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Student Details" key="18" h="500">
+		<GRID name="Student Details" keyfield="studentid" display="form" table="studentview" user="studentid">
+			<TEXTFIELD w="40" title="Matric No.">studentid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Student Name">studentname</TEXTFIELD>
+			<TEXTFIELD w="40" title="School">schoolname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Religion">religionname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Denomination">denominationname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Sex">sex</TEXTFIELD>
+			<TEXTFIELD w="40" title="Marital Status">maritalstatus</TEXTFIELD>
+			<TEXTFIELD w="40" title="Nationality">nationalitycountry</TEXTFIELD>
+			<TEXTFIELD w="40" title="Address">address</TEXTFIELD>
+			<TEXTFIELD w="40" title="Town">town</TEXTFIELD>
+			<TEXTFIELD w="40" title="Country">addresscountry</TEXTFIELD>
+			<CHECKBOX w="40" title="On Probation" format="boolean" ischar="true">onprobation</CHECKBOX>
+			<CHECKBOX w="40" title="Off Campus" format="boolean" ischar="true">offcampus</CHECKBOX>
+			<TEXTFIELD title="School Details" subreport="2">schoolid</TEXTFIELD>
+			<TEXTFIELD title="Department Details" subreport="4">departmentid</TEXTFIELD>
+			<GRID name="Degree" display="form" linkfield="studentid" table="studentmajorview">
+				<TEXTFIELD w="40" title="Level">degreelevelname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Sub">sublevelname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Degree">degreename</TEXTFIELD>
+				<TEXTFIELD w="40" title="Department">departmentname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Programme">majorname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Programme Option">majoroptionname</TEXTFIELD>
+				<CHECKBOX w="40" title="Core Area" format="boolean" ischar="true">major</CHECKBOX>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Degree" key="46" h="500">
+		<GRID name="Degree" display="form" linkfield="studentid" table="studentmajorview">
+			<TEXTFIELD w="40" title="Level">degreelevelname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Sub">sublevelname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Degree">degreename</TEXTFIELD>
+			<TEXTFIELD w="40" title="Department">departmentname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Programme">majorname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Programme Option">majoroptionname</TEXTFIELD>
+			<CHECKBOX w="40" title="Core Area" format="boolean" ischar="true">major</CHECKBOX>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Semester List" key="19" h="500">
+		<GRID name="Semester List" keyfield="qstudentid" orderby="quarterid" table="qstudentsummary" where="(publishgrades = true)" user="studentid" reporttitle="studentname">
+			<TEXTFIELD w="80" title="Semester">quarterid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Study Level">StudyLevel</TEXTFIELD>
+			<TEXTFIELD w="75" title="Hours">credit</TEXTFIELD>
+			<TEXTFIELD w="75" title="GPA" format="double">gpa</TEXTFIELD>
+			<TEXTFIELD w="75" title="C. Hours">cummcredit</TEXTFIELD>
+			<TEXTFIELD w="75" title="C. GPA" format="double">cummgpa</TEXTFIELD>
+			<GRID name="Semester Course List" linkfield="qstudentid" table="vwstudentgrades" where="(publishgrades = true)" user="studentid" reporttitle="quarterid">
+				<TEXTFIELD w="70" title="Course ID">courseid</TEXTFIELD>
+				<TEXTFIELD w="240" title="Course Title">coursetitle</TEXTFIELD>
+				<TEXTFIELD w="50" title="Score">finalmarks</TEXTFIELD>
+				<TEXTFIELD w="50" title="Credit">credit</TEXTFIELD>
+				<TEXTFIELD w="50" title="Grade">gradeid</TEXTFIELD>
+				<TEXTFIELD w="70" title="GP">gpa</TEXTFIELD>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Semester Course List" key="20" h="500">
+		<GRID name="Semester Course List" linkfield="qstudentid" table="vwstudentgrades" where="(publishgrades = true)" user="studentid" reporttitle="quarterid">
+			<TEXTFIELD w="70" title="Course ID">courseid</TEXTFIELD>
+			<TEXTFIELD w="240" title="Course Title">coursetitle</TEXTFIELD>
+			<TEXTFIELD w="50" title="Score">finalmarks</TEXTFIELD>
+			<TEXTFIELD w="50" title="Credit">credit</TEXTFIELD>
+			<TEXTFIELD w="50" title="Grade">gradeid</TEXTFIELD>
+			<TEXTFIELD w="70" title="GP">gpa</TEXTFIELD>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Course List" key="21" h="500">
+		<GRID name="Course List" orderby="quarterid, courseid" table="vwstudentgrades" where="(publishgrades = true)" user="studentid" reporttitle="quarterid">
+			<TEXTFIELD w="50" title="Semester">quarterid</TEXTFIELD>
+			<TEXTFIELD w="50" title="Course ID">courseid</TEXTFIELD>
+			<TEXTFIELD w="250" title="Course Title">coursetitle</TEXTFIELD>
+			<TEXTFIELD w="50" title="Score">finalmarks</TEXTFIELD>
+			<TEXTFIELD w="50" title="Credit">credit</TEXTFIELD>
+			<TEXTFIELD w="50" title="Grade">gradeid</TEXTFIELD>
+			<TEXTFIELD w="50" title="Points">gpa</TEXTFIELD>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Check Listing" key="26" h="500">
+		<GRID name="Check Listing" orderby="yeartaken, courseid" table="coursechecklist" user="studentid">
+			<TEXTFIELD w="70" title="Year Taken">yeartaken</TEXTFIELD>
+			<TEXTFIELD w="50" title="Course ID">courseid</TEXTFIELD>
+			<TEXTFIELD w="240" title="Course Title">coursetitle</TEXTFIELD>
+			<TEXTFIELD w="70" title="Hours">credithours</TEXTFIELD>
+			<CHECKBOX w="50" title="Course Passed" format="boolean" ischar="true">coursepased</CHECKBOX>
+			<CHECKBOX w="50" title="Elective" format="boolean" ischar="true">elective</CHECKBOX>
+			<TEXTFIELD w="70" title="Details" subreport="6">courseid</TEXTFIELD>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Selected Course List" key="27" h="500">
+		<GRID name="Selected Course List" keyfield="qgradeid" table="qselectedgradeview" user="studentid" reporttitle="quarterid">
+			<TEXTFIELD w="50" title="Year Taken">yeartaken</TEXTFIELD>
+			<TEXTFIELD w="50" title="Course ID">courseid</TEXTFIELD>
+			<TEXTFIELD w="200" title="Course Title">coursetitle</TEXTFIELD>
+			<TEXTFIELD w="80" title="Instuctor">instructorname</TEXTFIELD>
+			<TEXTFIELD w="50" title="Credit">credit</TEXTFIELD>
+			<CHECKBOX w="50" title="No GPA" format="boolean" ischar="true">nogpa</CHECKBOX>
+			<ACTIONS>
+				<ACTION fnct="dropQCourse">Apply to Drop</ACTION>
+			</ACTIONS>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Selected Timetable" key="28" h="500">
+		<GRID name="Selected Timetable" table="studenttimetableview" user="studentid">
+			<TEXTFIELD w="40" title="Start" format="time">starttime</TEXTFIELD>
+			<TEXTFIELD w="40" title="End" format="time">endtime</TEXTFIELD>
+			<TEXTFIELD w="40" title="Mo" format="boolcolor">cmonday</TEXTFIELD>
+			<TEXTFIELD w="40" title="Tu" format="boolcolor">ctuesday</TEXTFIELD>
+			<TEXTFIELD w="40" title="We" format="boolcolor">cwednesday</TEXTFIELD>
+			<TEXTFIELD w="40" title="Th" format="boolcolor">cthursday</TEXTFIELD>
+			<TEXTFIELD w="40" title="Fr" format="boolcolor">cfriday</TEXTFIELD>
+			<TEXTFIELD w="40" title="Su" format="boolcolor">csunday</TEXTFIELD>
+			<TEXTFIELD w="40" title="Lab" format="boolcolor">lab</TEXTFIELD>
+			<CHECKBOX w="40" title="Lab" format="boolean" ischar="true">lab</CHECKBOX>
+			<TEXTFIELD w="40" title="Course Code">courseid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Course Title">coursetitle</TEXTFIELD>
+			<TEXTFIELD w="40" title="Instructor">instructorname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Option">classoption</TEXTFIELD>
+			<TEXTFIELD w="40" title="Venue">assetname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Location">location</TEXTFIELD>
+			<TEXTFIELD w="40" title="Building">building</TEXTFIELD>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Registration Status" key="30" h="500">
+		<GRID name="Registration Status" table="qcurrstudentdegreeview" user="studentid">
+			<TEXTFIELD w="40" title="Semester">quarterid</TEXTFIELD>
+			<CHECKBOX w="40" title="Submited Registration" format="boolean" ischar="true">finalised</CHECKBOX>
+			<CHECKBOX w="40" title="Finance" format="boolean" ischar="true">finaceapproval</CHECKBOX>
+			<CHECKBOX w="40" title="Overload" format="boolean" ischar="true">overloadapproval</CHECKBOX>
+			<CHECKBOX w="40" title="Major Advisor" format="boolean" ischar="true">majorapproval</CHECKBOX>
+			<CHECKBOX w="40" title="Student Affairs" format="boolean" ischar="true">studentdeanapproval</CHECKBOX>
+			<CHECKBOX w="40" title="Registar" format="boolean" ischar="true">approved</CHECKBOX>
+			<CHECKBOX w="40" title="Registration Printed" format="boolean" ischar="true">printed</CHECKBOX>
+			<TEXTFIELD w="200" title="Reason For No Approved">noapproval</TEXTFIELD>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Post Reply" key="101" h="500">
+		<GRID name="Post Reply" display="form" table="studentrequestview" filterkey="studentrequestid">
+			<TEXTFIELD w="40" title="Post ID" link="Post">studentrequestid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Narrative">narrative</TEXTFIELD>
+			<CHECKBOX w="70" title="Actioned" format="boolean" ischar="true">actioned</CHECKBOX>
+			<TEXTFIELD w="50" title="Date Sent" format="timestamp">datesent</TEXTFIELD>
+			<TEXTFIELD w="70" title="Details">details</TEXTFIELD>
+			<TEXTFIELD w="50" title="Reply">reply</TEXTFIELD>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Student Charges" key="33" h="500">
+		<GRID name="Student Charges" keyfield="qstudentid" display="form" table="vwqstudentbalances" where="(active = true)" user="studentid">
+			<TEXTFIELD w="15" title="Programme Name">majorname</TEXTFIELD>
+			<TEXTFIELD w="15" title="Account Number">accountnumber</TEXTFIELD>
+			<TEXTFIELD w="15" title="Semester">quarterid</TEXTFIELD>
+			<CHECKBOX w="15" title="Off Campus" format="boolean" ischar="true">offcampus</CHECKBOX>
+			<TEXTFIELD w="15" title="Study Level">studylevel</TEXTFIELD>
+			<TEXTFIELD w="15" title="Meal Type">mealtype</TEXTFIELD>
+			<CHECKBOX w="15" title="Premium Hall Resident" format="boolean" ischar="true">premiumhall</CHECKBOX>
+			<TEXTFIELD w="15" title="Miscellaneous Charges" format="double">charges</TEXTFIELD>
+			<TEXTFIELD w="15" title="Financial Narrative">financenarrative</TEXTFIELD>
+			<TEXTFIELD w="15" title="Opening Balance" format="double">currbalance</TEXTFIELD>
+			<TEXTFIELD w="15" title="Session Fees" format="double">fullfees</TEXTFIELD>
+			<TEXTFIELD w="15" title="Semester Fees" format="double">fees</TEXTFIELD>
+			<TEXTFIELD w="15" title="Scholarship" format="double">scholarship</TEXTFIELD>
+			<TEXTFIELD w="15" title="Student Payments" format="double">studentpayment</TEXTFIELD>
+			<TEXTFIELD w="15" title="Session Final Balance" format="double">fullfinalbalance</TEXTFIELD>
+			<TEXTFIELD w="15" title="Semester Final Balance" format="double">finalbalance</TEXTFIELD>
+			<ACTIONS>
+				<ACTION fnct="insQPayment">Apply to Make Payment</ACTION>
+			</ACTIONS>
+			<CHECKBOX w="15" title="Dean of Student Approval" format="boolean" ischar="true">studentdeanapproval</CHECKBOX>
+			<CHECKBOX w="15" title="Closed Finace" format="boolean" ischar="true">financeclosed</CHECKBOX>
+			<CHECKBOX w="15" title="Finance Approval" format="boolean" ischar="true">finaceapproval</CHECKBOX>
+			<GRID name="Make Payments" display="form" linkfield="qstudentid" table="vwstudentpayments" where="(financeclosed = true)">
+				<TEXTFIELD w="50" title="Transaction ID">studentpaymentid</TEXTFIELD>
+				<TEXTFIELD w="50" title="Matric No.">studentid</TEXTFIELD>
+				<TEXTFIELD w="140" title="Application Date" format="timestamp">applydate</TEXTFIELD>
+				<TEXTFIELD w="70" title="Amount" format="double">amount</TEXTFIELD>
+				<CHECKBOX w="50" title="Approved" format="boolean" ischar="true">approved</CHECKBOX>
+				<TEXTFIELD w="100" title="Narrative">narrative</TEXTFIELD>
+				<TEXTFIELD w="120" title="Make Payment">makepayment</TEXTFIELD>
+				<TEXTFIELD w="120" title="Query Transaction">querypayment</TEXTFIELD>
+				<TEXTFIELD w="120" title="Transaction Status">PHistoryName</TEXTFIELD>
+			</GRID>
+			<JASPER name="Receipt" showpdf="false" linkfield="filterid" reportfile="studentreceipt.jasper"></JASPER>
+			<FORM name="Studentpayments" keyfield="studentpaymentid" table="studentpayments" inputfield="qstudentid">
+				<TEXTFIELD w="15" title="Amount">amount</TEXTFIELD>
+				<TEXTFIELD w="15" title="Narrative">narrative</TEXTFIELD>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Outstanding Courses" key="103" h="500">
+		<GRID name="Outstanding Courses" orderby="yeartaken, courseid" table="coursechecklist" where="(coursepased = false)" user="studentid">
+			<TEXTFIELD w="50" title="Year Taken">yeartaken</TEXTFIELD>
+			<TEXTFIELD w="50" title="Course ID">courseid</TEXTFIELD>
+			<TEXTFIELD w="240" title="Course Title">coursetitle</TEXTFIELD>
+			<TEXTFIELD w="70" title="Hours">credithours</TEXTFIELD>
+			<CHECKBOX w="50" title="Prereq. Passed" format="boolean" ischar="true">prereqpassed</CHECKBOX>
+			<CHECKBOX w="50" title="Elective" format="boolean" ischar="true">elective</CHECKBOX>
+			<TEXTFIELD w="50" title="Details" subreport="6">courseid</TEXTFIELD>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Make Payments" key="105" h="500">
+		<GRID name="Make Payments" display="form" linkfield="qstudentid" table="vwstudentpayments" where="(financeclosed = true)">
+			<TEXTFIELD w="50" title="Transaction ID">studentpaymentid</TEXTFIELD>
+			<TEXTFIELD w="50" title="Matric No.">studentid</TEXTFIELD>
+			<TEXTFIELD w="140" title="Application Date" format="timestamp">applydate</TEXTFIELD>
+			<TEXTFIELD w="70" title="Amount" format="double">amount</TEXTFIELD>
+			<CHECKBOX w="50" title="Approved" format="boolean" ischar="true">approved</CHECKBOX>
+			<TEXTFIELD w="100" title="Narrative">narrative</TEXTFIELD>
+			<TEXTFIELD w="120" title="Make Payment">makepayment</TEXTFIELD>
+			<TEXTFIELD w="120" title="Query Transaction">querypayment</TEXTFIELD>
+			<TEXTFIELD w="120" title="Transaction Status">PHistoryName</TEXTFIELD>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Studentpayments" key="202" h="500">
+		<FORM name="Studentpayments" keyfield="studentpaymentid" table="studentpayments" inputfield="qstudentid">
+			<TEXTFIELD w="15" title="Amount">amount</TEXTFIELD>
+			<TEXTFIELD w="15" title="Narrative">narrative</TEXTFIELD>
+		</FORM>
+	</DESK>
+	<DESK w="700" name="Receipt" key="108" h="500">
+		<JASPER name="Receipt" showpdf="false" linkfield="filterid" reportfile="studentreceipt.jasper"></JASPER>
+	</DESK>
+</APP>

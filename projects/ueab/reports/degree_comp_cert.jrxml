@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="degree_comp_letter" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" whenResourceMissingType="Empty" isIgnorePagination="true" uuid="51496e27-3492-4761-b5e2-d96941b5f404">
+	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="120"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="DS1" whenResourceMissingType="Empty" uuid="e8586906-1212-481a-b6de-1ae5722e155c">
+		<parameter name="filterid" class="java.lang.String">
+			<defaultValueExpression><![CDATA["16571"]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT majors.majorname,
+(CASE WHEN majors.major = true THEN 'Major' ELSE 'Minor' END)::varchar as major_type
+FROM studentmajors INNER JOIN majors ON studentmajors.majorid = majors.majorid
+WHERE (studentmajors.studentdegreeid = '$P!{filterid}')
+ORDER BY majors.major desc;]]>
+		</queryString>
+		<field name="majorname" class="java.lang.String"/>
+		<field name="major_type" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="filterid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["16571"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT studentid, studentname, degreelevelid, degreelevelname,
+	sublevelid, sublevelname, degreeid, degreename, studentdegreeid,
+	completed, started, cleared, clearedate, graduated, graduatedate,
+	(CASE WHEN degreeid = 'CERT' THEN 'Certificate in '
+	WHEN degreeid = 'DIPL' THEN 'Diploma In '
+	ELSE '<b>The degree of</b> <br/><b><i>' ||  (Degreename) || '</i></b>' END)::varchar as degree_type
+
+FROM studentdegreeview
+WHERE studentdegreeid = '$P!{filterid}';]]>
+	</queryString>
+	<field name="studentid" class="java.lang.String"/>
+	<field name="studentname" class="java.lang.String"/>
+	<field name="degreelevelid" class="java.lang.String"/>
+	<field name="degreelevelname" class="java.lang.String"/>
+	<field name="sublevelid" class="java.lang.String"/>
+	<field name="sublevelname" class="java.lang.String"/>
+	<field name="degreeid" class="java.lang.String"/>
+	<field name="degreename" class="java.lang.String"/>
+	<field name="studentdegreeid" class="java.lang.Integer"/>
+	<field name="completed" class="java.lang.Boolean"/>
+	<field name="started" class="java.sql.Date"/>
+	<field name="cleared" class="java.lang.Boolean"/>
+	<field name="clearedate" class="java.sql.Date"/>
+	<field name="graduated" class="java.lang.Boolean"/>
+	<field name="graduatedate" class="java.sql.Date"/>
+	<field name="degree_type" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="144" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="372">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="195" width="802" height="31" uuid="2b98eaff-a352-44cf-8c5d-332c2441bfaf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">
+					<font fontName="Utopia" size="21" isBold="true" isItalic="true" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{studentname}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement key="table" stretchType="RelativeToBandHeight" mode="Transparent" x="304" y="256" width="452" height="38" isPrintWhenDetailOverflows="true" uuid="74f4f9d5-08e2-49aa-a588-239ee1ca9f32"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="DS1" uuid="a412a06b-3232-4d9c-8921-e19612df4515">
+						<datasetParameter name="filterid">
+							<datasetParameterExpression><![CDATA[$P{filterid}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="802eb229-953f-43b8-b18c-d706d4da2885">
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
+							<box>
+								<topPen lineWidth="0.0"/>
+								<bottomPen lineWidth="0.0"/>
+							</box>
+							<textField isStretchWithOverflow="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="1" width="90" height="20" uuid="a185cb9d-6a34-47ac-b93d-99d64e00c73a"/>
+								<textElement textAlignment="Right" verticalAlignment="Bottom">
+									<font fontName="Utopia" size="15" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic" isPdfEmbedded="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{major_type}  +  ':']]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="339" uuid="12080b8a-4cfd-420c-b914-a859a2fab5ca">
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
+							<box>
+								<topPen lineWidth="0.0"/>
+								<bottomPen lineWidth="0.0"/>
+							</box>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="0" y="0" width="336" height="20" uuid="3f7d43d7-89f1-4a4d-8665-65be0711b2ac"/>
+								<textElement verticalAlignment="Bottom">
+									<font fontName="Utopia" size="15" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic" isPdfEmbedded="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{majorname}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="224" width="802" height="32" uuid="46387d4c-7d82-4110-9982-57b459e223b1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">
+					<font fontName="Utopia" size="15" isBold="true" isItalic="true" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{degree_type}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="181" y="151" width="440" height="44" uuid="518583b8-989e-4301-9bf9-0f25781193d2"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" markup="html">
+					<font fontName="Utopia" size="11" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[The University Council, by virtue of the authority granted by the Charter from the Government of the Republic of Kenya  and on the recommendation of the Senate, has conferred on]]></text>
+			</staticText>
+			<textField pattern="MMM-yy">
+				<reportElement x="200" y="294" width="460" height="48" uuid="d69c185c-d1f4-4d75-9c0b-509964669c39"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="Utopia" size="11" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["  With all the rights, privileges, and honors thereto appertaining.                                                      Given under the seal of the University at Baraton in the Republic of Kenya                                                         on this "  + $F{graduatedate} ]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+</jasperReport>

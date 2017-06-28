@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cv_members" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="30dfb00a-c93d-412b-9f59-52bd1d84321d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="entity_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from vw_entitys
+where entity_id = $P!{entity_id}
+order by entity_id
+]]>
+	</queryString>
+	<field name="org_id" class="java.lang.Integer"/>
+	<field name="org_name" class="java.lang.String"/>
+	<field name="org_is_default" class="java.lang.Boolean"/>
+	<field name="org_is_active" class="java.lang.Boolean"/>
+	<field name="org_logo" class="java.lang.String"/>
+	<field name="org_sys_country_id" class="java.lang.String"/>
+	<field name="org_sys_country_name" class="java.lang.String"/>
+	<field name="org_address_id" class="java.lang.Integer"/>
+	<field name="org_table_name" class="java.lang.String"/>
+	<field name="org_post_office_box" class="java.lang.String"/>
+	<field name="org_postal_code" class="java.lang.String"/>
+	<field name="org_premises" class="java.lang.String"/>
+	<field name="org_street" class="java.lang.String"/>
+	<field name="org_town" class="java.lang.String"/>
+	<field name="org_phone_number" class="java.lang.String"/>
+	<field name="org_extension" class="java.lang.String"/>
+	<field name="org_mobile" class="java.lang.String"/>
+	<field name="org_fax" class="java.lang.String"/>
+	<field name="org_email" class="java.lang.String"/>
+	<field name="org_website" class="java.lang.String"/>
+	<field name="address_id" class="java.lang.Integer"/>
+	<field name="address_name" class="java.lang.String"/>
+	<field name="sys_country_id" class="java.lang.String"/>
+	<field name="sys_country_name" class="java.lang.String"/>
+	<field name="table_name" class="java.lang.String"/>
+	<field name="is_default" class="java.lang.Boolean"/>
+	<field name="post_office_box" class="java.lang.String"/>
+	<field name="postal_code" class="java.lang.String"/>
+	<field name="premises" class="java.lang.String"/>
+	<field name="street" class="java.lang.String"/>
+	<field name="town" class="java.lang.String"/>
+	<field name="phone_number" class="java.lang.String"/>
+	<field name="extension" class="java.lang.String"/>
+	<field name="mobile" class="java.lang.String"/>
+	<field name="fax" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="website" class="java.lang.String"/>
+	<field name="entity_id" class="java.lang.Integer"/>
+	<field name="entity_name" class="java.lang.String"/>
+	<field name="user_name" class="java.lang.String"/>
+	<field name="super_user" class="java.lang.Boolean"/>
+	<field name="entity_leader" class="java.lang.Boolean"/>
+	<field name="date_enroled" class="java.sql.Timestamp"/>
+	<field name="is_active" class="java.lang.Boolean"/>
+	<field name="entity_password" class="java.lang.String"/>
+	<field name="first_password" class="java.lang.String"/>
+	<field name="function_role" class="java.lang.String"/>
+	<field name="primary_email" class="java.lang.String"/>
+	<field name="primary_telephone" class="java.lang.String"/>
+	<field name="entity_type_id" class="java.lang.Integer"/>
+	<field name="entity_type_name" class="java.lang.String"/>
+	<field name="entity_role" class="java.lang.String"/>
+	<field name="use_key" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement x="195" y="11" width="250" height="30" uuid="33d7353a-dfa6-4706-976b-9124c3662271"/>
+				<textElement>
+					<font fontName="Times New Roman" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CURRICULUM VITAE]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="2" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="204" splitType="Stretch">
+			<textField>
+				<reportElement x="144" y="29" width="100" height="20" uuid="aea32b5c-881d-414d-b9c1-77b2ccfad24c"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entity_id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="16" y="29" width="21" height="20" uuid="1528766c-22f7-4027-af06-ef3a6f2bf605"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="144" y="49" width="250" height="20" uuid="50526b50-ffad-4027-926f-efeb8bae9963"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entity_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="16" y="49" width="100" height="20" uuid="08397b40-53c9-4675-8c88-0775eb41f648"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Member Name]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="144" y="69" width="100" height="20" uuid="d78e2224-88bc-4fad-9fc9-9832addfe30f"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{post_office_box}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="16" y="69" width="100" height="20" uuid="13ad8717-db54-42c4-af01-dc38a7b80ad8"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[P.o Box]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="89" width="100" height="20" uuid="4c33b5b8-e5e4-4d1a-98e7-683a7a73c2c7"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[User name]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="144" y="89" width="100" height="20" uuid="d31195af-7dfa-48c9-82d9-9799e4aef6c5"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{user_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="144" y="109" width="100" height="20" uuid="6dd0121c-f96c-4a7e-a54b-0b8d2b1df702"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="16" y="109" width="100" height="20" uuid="8170c07f-d76e-4ac4-b83c-6b927c74cd11"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Email]]></text>
+			</staticText>
+			<textField pattern="MM/dd/yyyy">
+				<reportElement x="144" y="129" width="100" height="20" uuid="e6a562a3-8f70-4946-8da3-602b057a3519"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{date_enroled}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="16" y="129" width="100" height="20" uuid="798d0537-ec36-4395-be23-377404e09ac6"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date Joined]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="272" y="69" width="69" height="20" uuid="2734ea6b-eda3-498e-bb48-6056b343166f"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Postal Code]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="400" y="69" width="69" height="20" uuid="173e7001-a1b8-445f-9524-bb728afa8b34"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{postal_code}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="16" y="149" width="100" height="20" uuid="2ee946d8-94f4-4640-ae6e-a465de36579b"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sacco]]></text>
+			</staticText>
+			<textField pattern="MM/dd/yyyy">
+				<reportElement x="144" y="149" width="100" height="20" uuid="58c0ed1c-8a55-4381-b1d0-b9d6109e98c8"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{org_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss Z">
+				<reportElement x="16" y="14" width="197" height="20" forecolor="#736343" uuid="c0137b77-ac74-483d-91a2-99335a47d898"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="442" y="14" width="80" height="20" forecolor="#736343" uuid="3aa5af54-07b9-453f-b1cd-34c9ba55f76c"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="522" y="14" width="40" height="20" forecolor="#736343" uuid="e50563fa-e554-41ec-acaa-8592fc79c349"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

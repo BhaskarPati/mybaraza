@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<ESCALATION title="Tamshi Mails" processdelay="2"
+	host="mail.dewcis.com" mailuser="hr" mailpassword="invent2k" mailfrom="domains@dewcis.com"
+	inbox="INBOX" sentbox="Sent" smtppauth="true">
+	
+	<REPORT name="Domain Registration" keyfield="sys_emailed_id" action="Emailed" actioncount="1" 
+			table="sys_emails, sys_emailed, vw_domains"
+			where="(vw_domains.domain_id = sys_emailed.table_id) AND (sys_emails.sys_email_id = sys_emailed.sys_email_id) AND (sys_emailed.emailed = false) AND (sys_emails.sys_email_id = 1)">
+		<SUBJECT title="subject">sys_emails.title</SUBJECT>
+		<ADDRESS title="address">vw_domains.user_name</ADDRESS>
+		<BODYFIELD reference="{{domainname}}" basetable="vw_domains">domain_name</BODYFIELD>
+		<BODYFIELD reference="{{domainpassword}}" basetable="vw_domains">first_password</BODYFIELD>
+		<BODYFIELD reference="{{siteuser}}" basetable="vw_domains">site_user</BODYFIELD>
+		<FIELD title="Body" basetable="sys_emails">details</FIELD>
+	</REPORT>
+	
+	<REPORT name="Domain Registration" keyfield="sys_emailed_id" action="Emailed" actioncount="1" 
+			table="sys_emails, sys_emailed, vw_domains"
+			where="(vw_domains.domain_id = sys_emailed.table_id) AND (sys_emails.sys_email_id = sys_emailed.sys_email_id) AND (sys_emailed.emailed = false) AND (sys_emails.sys_email_id = 2)">
+		<SUBJECT title="subject">sys_emails.title</SUBJECT>
+		<ADDRESS title="address">vw_domains.user_name</ADDRESS>
+		<BODYFIELD reference="{{domainname}}" basetable="vw_domains">domain_name</BODYFIELD>
+		<BODYFIELD reference="{{domainpassword}}" basetable="vw_domains">first_password</BODYFIELD>
+		<BODYFIELD reference="{{siteuser}}" basetable="vw_domains">site_user</BODYFIELD>
+		<FIELD title="Body" basetable="sys_emails">details</FIELD>
+	</REPORT>	
+
+</ESCALATION>

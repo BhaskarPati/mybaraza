@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="guardianpsswd" language="groovy" pageWidth="792" pageHeight="712" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="07d5dc35-ffbd-464d-8217-cf3a1e29d6d8">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="filterid" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT entitys.first_password,entitys.user_name,qstudentview.studentname,
+initcap(qstudentview.guardianname) AS guardianname,qstudentview.quarterid,qstudentview.residencename,
+qstudentview.studentid,qstudentview.gtelno,qstudentview.gtelno,qstudentview.gemail
+FROM qstudentview
+INNER JOIN entitys ON 'G' || qstudentview.studentid = entitys.user_name
+WHERE qstudentview.quarterid ='$P!{filterid}'
+AND entitys.entity_type_id ='22'
+ORDER BY qstudentview.studentname]]>
+	</queryString>
+	<field name="first_password" class="java.lang.String"/>
+	<field name="user_name" class="java.lang.String"/>
+	<field name="studentname" class="java.lang.String"/>
+	<field name="guardianname" class="java.lang.String"/>
+	<field name="quarterid" class="java.lang.String"/>
+	<field name="residencename" class="java.lang.String"/>
+	<field name="studentid" class="java.lang.String"/>
+	<field name="gtelno" class="java.lang.String"/>
+	<field name="gemail" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="82" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="d3cdc46c-f377-4a5b-b3e5-1c51f98eae73" x="0" y="69" width="45" height="12"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="41b916f2-82d5-477d-8fb6-53890c900021" x="62" y="69" width="80" height="12"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Guardian]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c740f04b-350c-4670-872a-a9a65d98d799" x="198" y="69" width="54" height="12"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Login]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8d47b8ea-6735-4359-bc57-d77d340f3f40" x="453" y="69" width="68" height="12"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Telephone]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="406e8271-35df-4cf1-a047-f05788966e33" x="353" y="69" width="43" height="12"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Student]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f27d8691-286a-40db-bbac-6f7b18d41c18" x="252" y="69" width="79" height="12"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[password]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="56f2d4ba-8252-4d1b-af69-e09f136109c5" x="613" y="69" width="52" height="12"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Email]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="08f7ef33-d006-422d-9757-82176a9272cc" x="0" y="81" width="752" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="a3297d8e-2759-41bf-abd4-eb65b2a5558d" key="staticText" x="71" y="15" width="678" height="48"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="28" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Babcock University Guardian Password List]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="7c0aa49f-af87-450d-af83-41158bd89e34" positionType="Float" x="46" y="0" width="154" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{guardianname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0c5a6375-aefe-4ee3-9a48-bb0dca7d6f28" x="199" y="0" width="54" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{user_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="982bdbe3-3e19-4c1d-985a-464489c7623b" x="253" y="0" width="79" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{first_password}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9cce7ceb-2d16-4bab-9c5c-a492d8d5f1f7" x="1" y="0" width="45" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{studentid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b2e80fb6-fae1-44a9-8006-a4e660e849ec" positionType="Float" x="332" y="0" width="110" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{studentname}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="0efecfc6-012f-4920-a6c0-6feb71a68652" x="442" y="0" width="132" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gtelno}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="a95de212-0d92-4086-a7f8-921ca4542bd0" x="574" y="0" width="179" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gemail}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

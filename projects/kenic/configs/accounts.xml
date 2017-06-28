@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<DATA dbclass="com.mysql.jdbc.Driver" dbpath="jdbc:mysql://localhost/accounts" dbusername="root" dbpassword="invent2k" noaudit="true"
+	  processdelay="3">
+	<EXPORT name="Clients" table="client" keyfield="clid" marker="(ispicked=false)" marked="ispicked = true" psql="INSERT INTO audit.master (audit_user, audit_login) VALUES ('automation', 'automation');">
+		<TEXTFIELD w="75" title="Clid">clid</TEXTFIELD>
+		<TEXTFIELD w="75" fnct="trim(substr(name, 1, 99))" title="Name">fv_name</TEXTFIELD>
+		<TEXTFIELD w="75" fnct="trim(substr(address, 1, 254))" title="Address">fv_address</TEXTFIELD>
+		<TEXTFIELD w="75" fnct="CAST('KES' as varchar(16))" title="curr_code">curr_code</TEXTFIELD>
+		<TEXTFIELD w="75" fnct="CAST(1 as int)" title="payment_terms">payment_terms</TEXTFIELD>
+		<TEXTFIELD w="75" fnct="CAST(1 as int)" title="credit_status">credit_status</TEXTFIELD>
+		<TEXTFIELD w="75" fnct="CAST('Imported' as varchar(16))" title="Notes">notes</TEXTFIELD>
+		<INTO table="debtors_master" keyfield="debtor_no" noaudit="true">
+			<TEXTFIELD w="75" title="Debtor Ref">debtor_ref</TEXTFIELD>
+			<TEXTFIELD w="75" title="Name">name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Address">address</TEXTFIELD>
+			<TEXTFIELD w="75" title="curr_code">curr_code</TEXTFIELD>
+			<TEXTFIELD w="75" title="payment_terms">payment_terms</TEXTFIELD>
+			<TEXTFIELD w="75" title="credit_status">credit_status</TEXTFIELD>			
+			<TEXTFIELD w="75" title="Notes">notes</TEXTFIELD>
+		</INTO>
+	</EXPORT>
+
+	<EXPORT name="ledger" table="ledger" keyfield="id" marker="(ispicked=false)" marked="ispicked = true" psql="INSERT INTO audit.master (audit_user, audit_login) VALUES ('automation', 'automation');">
+		<TEXTFIELD w="75" title="ID">id</TEXTFIELD>
+		<TEXTFIELD w="75" title="Client Roid">client_roid</TEXTFIELD>
+		<TEXTFIELD w="75" title="Description">description</TEXTFIELD>
+		<TEXTFIELD w="75" title="Currency">currency</TEXTFIELD>
+		<TEXTFIELD w="75" fnct="round((tax / 100), 4)" title="Tax">calctax</TEXTFIELD>
+		<TEXTFIELD w="75" title="Total">total</TEXTFIELD>
+		<TEXTFIELD w="75" fnct="cast(created as date)" title="Created">created_date</TEXTFIELD>
+		<TEXTFIELD w="75" fnct="get_exdate(id)" title="expiry">expiry_date</TEXTFIELD>
+		<TEXTFIELD w="75" fnct="CASE WHEN previous_expiry_date is null THEN cast(created as date) ELSE cast(previous_expiry_date as date) END" title="previous_expiry">previous_expiry</TEXTFIELD>
+		<TEXTFIELD w="75" title="Trans Type">trans_type</TEXTFIELD>
+		<TEXTFIELD w="75" title="Refund For">refund_for_id</TEXTFIELD>
+		<TEXTFIELD w="75" title="Document Number">documentnumber</TEXTFIELD>
+		<TEXTFIELD w="75" fnct="get_ChequeNo(id)" title="Cheque Number">ChequeNo</TEXTFIELD>
+		<INTO table="ledger" keyfield="id" noaudit="true">
+			<TEXTFIELD w="75" title="ID">id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Client Roid">client_roid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Description">description</TEXTFIELD>
+			<TEXTFIELD w="75" title="Currency">currency</TEXTFIELD>
+			<TEXTFIELD w="75" title="Tax">tax</TEXTFIELD>
+			<TEXTFIELD w="75" title="Total">total</TEXTFIELD>
+			<TEXTFIELD w="75" title="Created">created</TEXTFIELD>
+			<TEXTFIELD w="75" title="expiry Date">exdate</TEXTFIELD>
+			<TEXTFIELD w="75" title="previous expiry date">previous_expiry_date</TEXTFIELD>			
+			<TEXTFIELD w="75" title="Trans Type">trans_type</TEXTFIELD>
+			<TEXTFIELD w="75" title="Refund For">refund_for_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Document Number">documentnumber</TEXTFIELD>
+			<TEXTFIELD w="75" title="Cheque Number">ChequeNo</TEXTFIELD>
+		</INTO>
+	</EXPORT>
+	
+	<FUNCTION rsql="SELECT set_allocation();" noaudit="true"></FUNCTION>
+
+</DATA>

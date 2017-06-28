@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vw_final_outcomes" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="BlankPage" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="3fb89161-c915-4d1f-9b20-906059291057">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="filterid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="orgid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="orgwhere" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="organd" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="project_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT vw_projects.project_id, vw_problems.narrative, vw_final_outcomes.final_outcome_name, vw_final_outcome_indicators.final_outcome_indicator_name, vw_final_outcome_indicators.target_value
+FROM vw_projects, vw_problems, vw_final_outcomes, vw_final_outcome_indicators
+WHERE vw_problems.project_id = vw_projects.project_id AND vw_final_outcomes.problem_id = vw_problems.problem_id AND vw_final_outcome_indicators.final_outcome_id = vw_final_outcomes.final_outcome_id AND vw_projects.project_id = $P{project_id}
+ORDER BY vw_projects.project_id, vw_problems.narrative, vw_final_outcomes.final_outcome_name]]>
+	</queryString>
+	<field name="project_id" class="java.lang.String"/>
+	<field name="narrative" class="java.lang.String"/>
+	<field name="final_outcome_name" class="java.lang.String"/>
+	<field name="final_outcome_indicator_name" class="java.lang.String"/>
+	<field name="target_value" class="java.lang.Float"/>
+	<group name="Final outcomes">
+		<groupExpression><![CDATA[$F{final_outcome_name}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement style="Detail" isPrintRepeatedValues="false" x="0" y="18" width="166" height="15" uuid="3e0ffce5-9963-41b5-8041-e4a9982a2106"/>
+					<textElement>
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{narrative}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement style="Detail" isPrintRepeatedValues="false" x="187" y="15" width="256" height="15" uuid="687631f7-fc0c-49ea-9401-c7177597c3c0"/>
+					<textElement>
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{final_outcome_name}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="Column header" x="1" y="0" width="165" height="15" forecolor="#000000" uuid="e0df641a-4f15-4180-88a0-ff6a274b3b05"/>
+					<textElement>
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<text><![CDATA[Narrative]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="187" y="0" width="121" height="15" forecolor="#000000" uuid="f656d854-5eef-415c-afd7-28e71ae902fe"/>
+					<textElement>
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<text><![CDATA[Final Outcome ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="33" width="187" height="14" uuid="85fb5bad-40ea-4960-86ec-3c66abcbb39e"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Final Outcome Indicator ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="187" y="33" width="100" height="15" uuid="ca1b92fe-09f0-4ec0-a7a2-d1666942c816"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Target Value]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="32" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="1" y="3" width="446" height="29" uuid="a42f984b-6471-486e-82b6-52fb7e094359"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Final Outcomes ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="3" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<textField>
+				<reportElement x="187" y="0" width="100" height="15" uuid="c380886d-47cb-48ea-ac38-9905083de5e9"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{target_value}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="187" height="15" uuid="4d572482-b3bd-45a2-999f-5134ee066f68"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{final_outcome_indicator_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="4" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

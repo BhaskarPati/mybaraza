@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pm_system" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2dfcfbe4-7f27-4901-bbd3-947650d426ce">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="filterid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["956"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT aa.checklistid, aa.pm_schedule_id, aa.date_done,
+    aa.asset_type_name,  aa.pm_serial_number,
+    aa.client_id, aa.client_name,
+    bb.asset_type_name, bb.asset_serial,
+    bb.model_name
+FROM
+(SELECT a.asset_type_id, a.asset_type_name,
+    a.checklistid, a.pm_schedule_id, a.pm_serial_number,
+    a.pm_quarter_id, a.client_id, a.date_done, cl.client_name
+FROM vw_pms_assets a INNER JOIN clients cl ON a.client_id = cl.client_id) as aa
+LEFT JOIN
+(SELECT b.client_id, b.client_name, b.asset_type_id, b.asset_type_name, b.asset_serial,
+b.model_name,
+c.pm_schedule_id
+FROM vw_client_assets as b INNER JOIN pm_schedule c ON b.client_id = c.client_id
+WHERE (b.is_issued = true) AND (b.retrived is null)) as bb
+
+    ON (aa.pm_schedule_id = bb.pm_schedule_id) AND (aa.asset_type_id = bb.asset_type_id)
+        AND (trim(upper(aa.pm_serial_number)) = trim(upper(bb.asset_serial)))
+
+
+WHERE aa.pm_schedule_id = '$P!{filterid}'
+ORDER BY aa.asset_type_id;]]>
+	</queryString>
+	<field name="checklistid" class="java.lang.Integer"/>
+	<field name="pm_schedule_id" class="java.lang.Integer"/>
+	<field name="date_done" class="java.sql.Date"/>
+	<field name="asset_type_name" class="java.lang.String"/>
+	<field name="pm_serial_number" class="java.lang.String"/>
+	<field name="client_id" class="java.lang.Integer"/>
+	<field name="client_name" class="java.lang.String"/>
+	<field name="asset_serial" class="java.lang.String"/>
+	<field name="model_name" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="89" splitType="Stretch">
+			<staticText>
+				<reportElement style="SubTitle" x="219" y="62" width="182" height="22" uuid="82e0b385-212d-4c18-8eaf-4b8e5981b278"/>
+				<textElement>
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[ASSETS REPORT]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="24" width="555" height="38" uuid="73aaf6ed-9a1d-420b-ae93-a1d10b0e81c5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="18" isBold="true" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{client_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="4fcf1a49-3a69-46f0-8473-27f79ff15b7f"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="1" y="1" width="125" height="15" forecolor="#161513" backcolor="#985B5B" uuid="4c9f2eee-16a8-404e-9906-869e0330d96f"/>
+				<textElement>
+					<font fontName="Times New Roman" size="13"/>
+				</textElement>
+				<text><![CDATA[Asset Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="243" y="1" width="156" height="15" forecolor="#161513" backcolor="#985B5B" uuid="edf25f8b-4338-4b87-ba94-00b2be2dbe83"/>
+				<textElement>
+					<font fontName="Times New Roman" size="13"/>
+				</textElement>
+				<text><![CDATA[PM  serial ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="399" y="1" width="150" height="15" forecolor="#161513" backcolor="#985B5B" uuid="79b35971-25bd-4fc6-bc75-74ecf67ffb5f"/>
+				<textElement>
+					<font fontName="Times New Roman" size="13"/>
+				</textElement>
+				<text><![CDATA[System serial]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="126" y="1" width="117" height="15" forecolor="#161513" backcolor="#985B5B" uuid="c05ecbfb-32ef-477f-a430-6db8115e8a03"/>
+				<textElement>
+					<font fontName="Times New Roman" size="13"/>
+				</textElement>
+				<text><![CDATA[Asset Model]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="19" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="1" y="2" width="555" height="15" uuid="825cd9fe-e5d6-437f-aa1b-a767fc5f8d3c"/>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement style="Detail" x="126" y="0" width="117" height="15" uuid="7e9eefec-2ce4-4add-9270-3fdb3c37c21e"/>
+					<textElement>
+						<font fontName="Times New Roman" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{model_name}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement style="Detail" x="243" y="0" width="156" height="15" uuid="1c11a722-07a7-4a26-a341-cbf02ac82106"/>
+					<textElement>
+						<font fontName="Times New Roman" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{pm_serial_number}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement style="Detail" x="399" y="0" width="150" height="15" uuid="872fb51b-e37d-4939-949c-f4bc96e613b1"/>
+					<textElement>
+						<font fontName="Times New Roman" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{asset_serial}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement style="Detail" x="1" y="0" width="125" height="15" uuid="c154f193-33fd-46be-a986-d75de4e6cf32"/>
+					<textElement>
+						<font fontName="Times New Roman" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{asset_type_name}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="13" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="75de5ee0-c974-4c34-b82d-4af698d4e2e6"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="597" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="494dab6e-0791-418f-bfa4-94dde798da4b"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="533" y="0" width="40" height="20" forecolor="#736343" uuid="7b57d811-cc64-4324-a752-3f63ed376a96"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="453" y="0" width="80" height="20" forecolor="#736343" uuid="db30b6f2-1dee-49ec-a6f2-e18f53ff2b30"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="fbdb4cda-14dc-4b4e-88d7-8fff8a440b0c"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,10 @@
+#/bin/sh
+
+cd $(dirname $0)
+
+javac *.java
+jar cmf manifest tvtoap.jar *.class
+
+jarsigner -keystore ./lib/barazasign -storepass invent -keypass invent tvtoap.jar SignDewCis
+
+

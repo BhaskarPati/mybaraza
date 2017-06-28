@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="statisticsdenomination" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4b6b3921-1e4e-46ed-ac05-3d3569e9be60">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="filterid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT aa.studentid, aa.schoolname, aa.denominationname, count(aa.studentid) as count,
+substring(aa.quarterid from 1 for 9) as quarteryear
+
+FROM
+(SELECT vwqstudentcharges.schoolname, vwqstudentcharges.denominationname, vwqstudentcharges.studentid,
+vwqstudentcharges.quarterid
+FROM vwqstudentcharges
+WHERE (substring(vwqstudentcharges.quarterid from 1 for 9) = ('$P!{filterid}')
+AND (vwqstudentcharges.approved = true))
+GROUP BY vwqstudentcharges.quarterid,vwqstudentcharges.denominationname, vwqstudentcharges.schoolname,
+vwqstudentcharges.studentid) as aa
+GROUP BY aa.denominationname, aa.schoolname,aa.studentid,substring(aa.quarterid from 1 for 9);]]>
+	</queryString>
+	<field name="studentid" class="java.lang.String"/>
+	<field name="schoolname" class="java.lang.String"/>
+	<field name="denominationname" class="java.lang.String"/>
+	<field name="count" class="java.lang.Long"/>
+	<field name="quarteryear" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="34" y="47" width="75" height="30" uuid="4aac36b3-05ec-497c-bf87-acc4f04884b1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Academic Year  :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="109" y="47" width="122" height="30" uuid="eecc2f9a-c77e-405d-a0b7-543303250424"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quarteryear}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="249" y="18" width="428" height="59" uuid="7b3dd77c-1f7b-4d3f-bacb-b4a093d2282d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="17" isBold="true"/>
+				</textElement>
+				<text><![CDATA[STATISTICAL BREAKDOWN BY DENOMINATION]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="218" splitType="Stretch">
+			<crosstab>
+				<reportElement x="0" y="0" width="802" height="218" uuid="cc966836-b592-482d-a365-2c5a8ab33ea5"/>
+				<rowGroup name="schoolname" width="69" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{schoolname}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="69" height="15" uuid="1bd35635-2dc9-4247-a7b9-a29810eac3fb"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{schoolname}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="69" height="15" uuid="fb253d88-b02e-4c4e-b965-3ee1853ef677"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="8"/>
+								</textElement>
+								<text><![CDATA[Total ]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="denominationname" height="18" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{denominationname}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="35" height="18" uuid="12ae2fc6-ec8b-4776-a7b9-f35993d34e55"/>
+								<textElement textAlignment="Justified">
+									<font fontName="Times New Roman" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{denominationname}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="23" height="18" uuid="2cdef80e-4cfa-4150-8722-354b01a34b12"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="8"/>
+								</textElement>
+								<text><![CDATA[Total denominationname]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="studentidMeasure" class="java.lang.Integer" calculation="Count">
+					<measureExpression><![CDATA[$F{studentid}]]></measureExpression>
+				</measure>
+				<crosstabCell width="35" height="15">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="35" height="15" uuid="edf52e97-7508-4aa7-93a9-7f2ebea9ad57"/>
+							<textElement textAlignment="Center">
+								<font fontName="Times New Roman" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{studentidMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="35" height="15" rowTotalGroup="schoolname">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="35" height="15" uuid="44f5e664-e310-44d1-bc08-af553ea1dacc"/>
+							<textElement textAlignment="Center">
+								<font fontName="Times New Roman" size="8" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{studentidMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="23" height="15" columnTotalGroup="denominationname">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="23" height="15" uuid="25d80285-efdf-4149-a74d-9ca36752ba4d"/>
+							<textElement textAlignment="Center">
+								<font fontName="Times New Roman" size="8" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{studentidMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="23" height="15" rowTotalGroup="schoolname" columnTotalGroup="denominationname">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="23" height="15" uuid="e5624f44-482f-4a0e-9728-f2349a616d70"/>
+							<textElement textAlignment="Center">
+								<font fontName="Times New Roman" size="8" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{studentidMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+</jasperReport>

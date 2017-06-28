@@ -1,0 +1,14 @@
+#/bin/sh
+
+
+cd $(dirname $0)
+
+CLASSPATH=".:./lib/plugin.jar:"
+
+javac -classpath $CLASSPATH *.java
+
+jar cmf manifest tickets.jar *.class
+
+jarsigner -tsa https://timestamp.geotrust.com/tsa -keystore ./lib/dewciskeystore.jks -storepass Baraza9NBO -keypass Baraza9NBO tickets.jar dewciskeystore
+
+#mv tickets.jar /opt/tomcat/webapps/tickets/tickets.jar -f

@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="regform" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="filterid" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/root/baraza/projects/babcock/reports/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reportpath" class="java.lang.String">
+		<defaultValueExpression><![CDATA["/root/baraza/projects/babcock/reports/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select registrations.registrationid,registrations.firstchoiceid,registrations.secondchoiceid,
+registrations.applicationid,registrations.surname,registrations.firstname,registrations.othernames,
+registrations.maidenname,registrations.formernames,registrations.homeaddress,registrations.phonenumber,
+registrations.email,registrations.address,registrations.zipcode,registrations.town,registrations.birthdate,
+registrations.Sex,registrations.birthstateid,registrations.nationalityid,getcountryname(registrations.origincountryid) as country,
+registrations.denominationid,registrations.MaritalStatus,registrations.nextofknin,registrations.homenumber,
+registrations.kinrelationship,registrations.existingid,registrations.applicationdate,
+registrations.originstateid,registrations.previousapplications,
+registrations.submitapplication,registrations.guardian,registrationview.nationality,
+registrationview.secondchoise,registrationview.firstchoice
+FROM registrations
+INNER JOIN registrationview ON registrationview.registrationid = registrations.registrationid
+WHERE (registrations.registrationid = '$P!{filterid}');]]>
+	</queryString>
+	<field name="registrationid" class="java.lang.Integer"/>
+	<field name="firstchoiceid" class="java.lang.String"/>
+	<field name="secondchoiceid" class="java.lang.String"/>
+	<field name="applicationid" class="java.lang.Integer"/>
+	<field name="surname" class="java.lang.String"/>
+	<field name="firstname" class="java.lang.String"/>
+	<field name="othernames" class="java.lang.String"/>
+	<field name="maidenname" class="java.lang.String"/>
+	<field name="formernames" class="java.lang.String"/>
+	<field name="homeaddress" class="java.lang.String"/>
+	<field name="phonenumber" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="address" class="java.lang.String"/>
+	<field name="zipcode" class="java.lang.String"/>
+	<field name="town" class="java.lang.String"/>
+	<field name="birthdate" class="java.sql.Date"/>
+	<field name="sex" class="java.lang.String"/>
+	<field name="birthstateid" class="java.lang.Integer"/>
+	<field name="nationalityid" class="java.lang.String"/>
+	<field name="country" class="java.lang.String"/>
+	<field name="denominationid" class="java.lang.String"/>
+	<field name="maritalstatus" class="java.lang.String"/>
+	<field name="nextofknin" class="java.lang.String"/>
+	<field name="homenumber" class="java.lang.String"/>
+	<field name="kinrelationship" class="java.lang.String"/>
+	<field name="existingid" class="java.lang.String"/>
+	<field name="applicationdate" class="java.sql.Date"/>
+	<field name="originstateid" class="java.lang.Integer"/>
+	<field name="previousapplications" class="java.lang.Boolean"/>
+	<field name="submitapplication" class="java.lang.Boolean"/>
+	<field name="guardian" class="java.lang.String"/>
+	<field name="nationality" class="java.lang.String"/>
+	<field name="secondchoise" class="java.lang.String"/>
+	<field name="firstchoice" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="104" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-4" x="89" y="57" width="105" height="15"/>
+				<textElement verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{applicationid}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-5" x="9" y="57" width="81" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Applicationum]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-5" x="9" y="72" width="74" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Email Add:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-4" x="83" y="72" width="222" height="15"/>
+				<textElement verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="7" y="-46" width="470" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="9" y="98" width="522" height="1"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-4" x="303" y="72" width="115" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Second Course  Choice]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="416" y="70" width="154" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{secondchoise}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="416" y="58" width="154" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{firstchoice}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-4" x="303" y="57" width="115" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[First   Course Choice]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="254" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-1" x="3" y="8" width="75" height="15"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Legal Name :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-1" x="98" y="8" width="87" height="15"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{surname}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-2" x="178" y="8" width="73" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[First Name :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-2" x="249" y="8" width="104" height="15"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{firstname}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-3" x="353" y="8" width="69" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[First Name :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-3" x="421" y="8" width="82" height="15"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{othernames}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="98" y="28" width="140" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{homenumber}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-5" x="3" y="28" width="99" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HomeNumber:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-5" x="344" y="28" width="228" height="15"/>
+				<textElement verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{address}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-5" x="245" y="28" width="99" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mailing Address :]]></text>
+			</staticText>
+			<textField pattern="dd-MMM-yyyy" isBlankWhenNull="false">
+				<reportElement key="textField-4" x="109" y="42" width="195" height="15"/>
+				<textElement verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{birthdate}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-5" x="385" y="61" width="118" height="15"/>
+				<textElement verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{birthstateid}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-4" x="3" y="42" width="107" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date Of birth]]></text>
+			</staticText>
+			<textField pattern="MMMMM-yy" isBlankWhenNull="false">
+				<reportElement key="textField-4" x="385" y="42" width="34" height="15"/>
+				<textElement verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="10" isItalic="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{sex}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-5" x="5" y="62" width="106" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Stae of origin]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="304" y="42" width="41" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sex ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="5" y="79" width="106" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Country Of Origin]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-5" x="109" y="62" width="165" height="15"/>
+				<textElement verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{originstateid}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM-yy" isBlankWhenNull="false">
+				<reportElement key="textField-4" x="109" y="79" width="131" height="15"/>
+				<textElement verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{country}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-5" x="304" y="61" width="81" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Place of birth]]></text>
+			</staticText>
+			<textField pattern="MMMMM-yy" isBlankWhenNull="false">
+				<reportElement key="textField-4" x="139" y="127" width="188" height="15"/>
+				<textElement verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{formernames}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM-yy" isBlankWhenNull="false">
+				<reportElement key="textField-4" x="418" y="127" width="89" height="15"/>
+				<textElement verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{denominationid}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-4" x="327" y="127" width="94" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Denomination]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-5" x="90" y="92" width="87" height="15"/>
+				<textElement verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{maidenname}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-4" x="6" y="127" width="133" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Former Names]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="5" y="112" width="173" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Name and Addres of Parents]]></text>
+			</staticText>
+			<textField pattern="MMMMM-yy" isBlankWhenNull="false">
+				<reportElement key="textField-4" x="278" y="92" width="159" height="15"/>
+				<textElement verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nextofknin}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-4" x="177" y="92" width="100" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Next Of Kin]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-5" x="5" y="92" width="88" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Maiden Name]]></text>
+			</staticText>
+			<textField pattern="MMMMM-yy" isBlankWhenNull="false">
+				<reportElement key="textField-4" x="173" y="112" width="304" height="15"/>
+				<textElement verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Boolean"><![CDATA[$F{previousapplications}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="8" y="146" width="391" height="53"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{JASPER_REPORT}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{reportpath} + "registration2.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<CaseType>
+  <name>Civil Case</name>
+  <ActivityTypes>
+    <ActivityType>
+      <name>Register Case</name>
+      <max_instances>1</max_instances>
+    </ActivityType>
+    <ActivityType>
+      <name>File Civil Case</name>
+      <max_instances>1</max_instances>
+    </ActivityType>
+    <ActivityType>
+      <name>Filing of Pleadings</name>
+    </ActivityType>
+    <ActivityType>
+      <name>Issuance and Service of Summons</name>
+    </ActivityType>
+    <ActivityType>
+      <name>Return of Service</name>
+    </ActivityType>
+    <ActivityType>
+      <name>Appearance of Parties</name>
+    </ActivityType>
+    <ActivityType>
+      <name>Mention</name>
+    </ActivityType>
+    <ActivityType>
+      <name>Hearing</name>
+    </ActivityType>
+    <ActivityType>
+      <name>Admission</name>
+    </ActivityType>
+    <ActivityType>
+      <name>Interlocutory Application</name>
+    </ActivityType>
+    <ActivityType>
+      <name>Filing of Motion</name>
+    </ActivityType>
+    <ActivityType>
+      <name>Ruling</name>
+    </ActivityType>
+    <ActivityType>
+      <name>Judgement</name>
+    </ActivityType>  
+    <ActivityType>
+      <name>Follow up</name>
+    </ActivityType>
+	<ActivityType>
+      <name>Change Case Type</name>
+    </ActivityType>
+    <ActivityType>
+      <name>Change Case Status</name>
+    </ActivityType> 
+    <ActivityType>
+      <name>Change Case Start Date</name>
+    </ActivityType>
+    <ActivityType>
+      <name>Link Cases</name>
+    </ActivityType>
+  </ActivityTypes>
+  <ActivitySets>
+    <ActivitySet>
+      <name>standard_timeline</name>
+      <label>Standard Timeline</label>
+      <timeline>true</timeline>
+      <ActivityTypes>
+        <ActivityType>
+          <name>Open Case</name>
+          <status>Completed</status>
+        </ActivityType>
+         <ActivityType>
+          <name>File Civil Case</name>
+          <reference_activity>Open Case</reference_activity>
+          <reference_select>newest</reference_select>
+        </ActivityType>
+        <ActivityType>
+          <name>Filing of Pleadings</name>
+          <reference_activity>Open Case</reference_activity>
+          <reference_offset>1</reference_offset>
+          <reference_select>newest</reference_select>
+        </ActivityType>
+        <ActivityType>
+          <name>Issuance and Service of Summons</name>
+          <reference_activity>Filing of Pleadings</reference_activity>
+          <reference_offset>30</reference_offset>
+          <reference_select>newest</reference_select>
+  	</ActivityType>
+  	<ActivityType>
+          <name>Return of Service</name>
+          <reference_activity>Issuance and Service of Summons</reference_activity>
+          <reference_offset>30</reference_offset>
+          <reference_select>newest</reference_select>
+        </ActivityType>
+        <ActivityType>
+          <name>Appearance of Parties</name>
+          <reference_activity>Issuance and Service of Summons</reference_activity>
+          <reference_offset>7</reference_offset>
+          <reference_select>newest</reference_select>
+        </ActivityType>
+        <ActivityType>
+          <name>Mention</name>
+          <reference_activity>Appearance of Parties</reference_activity>
+          <reference_select>newest</reference_select>
+        </ActivityType>
+        <ActivityType>
+          <name>Hearing</name>
+          <reference_activity>Mention</reference_activity>          
+          <reference_select>newest</reference_select>
+ 	</ActivityType>
+	<ActivityType>
+          <name>Interlocutory Application</name>
+          <reference_activity>Hearing</reference_activity>          
+          <reference_select>newest</reference_select>
+ 	</ActivityType>
+	<ActivityType>
+          <name>Filing of Motion</name>
+          <reference_activity>Interlocutory Application</reference_activity>          
+          <reference_select>newest</reference_select>
+  	</ActivityType>
+  	<ActivityType>
+          <name>Ruling</name>
+          <reference_activity>Filing of Motion</reference_activity>
+          <reference_select>newest</reference_select>
+   	</ActivityType>
+  	<ActivityType>
+          <name>Judgement</name>
+          <reference_activity>Ruling</reference_activity>
+          <reference_select>newest</reference_select>
+  	</ActivityType>
+      </ActivityTypes>
+    </ActivitySet>
+  </ActivitySets>
+  <CaseRoles>
+    <RelationshipType>
+        <name>Registry Clerk</name>
+        <creator>1</creator>
+        <manager>1</manager>
+    </RelationshipType>
+    <RelationshipType>
+        <name>Judge</name>
+        <manager>1</manager>
+    </RelationshipType>
+    <RelationshipType>
+        <name>Applicant</name>
+    </RelationshipType>
+    <RelationshipType>
+        <name>Corporate Applicant</name>
+    </RelationshipType>
+    <RelationshipType>
+        <name>Applicant Attorney</name>
+    </RelationshipType>
+    <RelationshipType>
+        <name>Plaintiff</name>
+    </RelationshipType>
+    <RelationshipType>
+        <name>Corporate Plaintiff</name>
+    </RelationshipType>
+    <RelationshipType>
+        <name>Plaintiff Attorney</name>
+    </RelationshipType>
+    <RelationshipType>
+        <name>Defendant</name>
+    </RelationshipType>
+    <RelationshipType>
+        <name>Corporate Defendant</name>
+    </RelationshipType>
+    <RelationshipType>
+        <name>Defendant Attorney</name>
+    </RelationshipType>
+    <RelationshipType>
+        <name>Respondent</name>
+    </RelationshipType>
+    <RelationshipType>
+        <name>Corporate Respondent</name>
+    </RelationshipType>
+    <RelationshipType>
+        <name>Respondent Attorney</name>
+    </RelationshipType>
+    <RelationshipType>
+        <name>Petitioner</name>
+    </RelationshipType>
+    <RelationshipType>
+        <name>Corporate Petitioner</name>
+    </RelationshipType>
+    <RelationshipType>
+        <name>Petitioner Attorney</name>
+    </RelationshipType>        
+    <RelationshipType>
+        <name>Prosecution Witness</name>
+    </RelationshipType>    	  
+ </CaseRoles>
+</CaseType>

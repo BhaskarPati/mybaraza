@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<ESCALATION title="Baraza Mail" processdelay="2" functable="dual" reportpath="/opt/tomcat7/webapps/fsm/reports/"
+        host="172.100.3.12" mailuser="syncimis" mailpassword="cck123" mailfrom="imisadmin@cck.co.ke"
+        inbox="INBOX" sentbox="Sent" smtppauth="true" ntlm="true">
+
+	<REPORT name="Alert" keyfield="ad_alert_id" action="dc_emailed" actioncount="1" 
+			table="dc_alerts_v"
+			where="(status = 'NEW') AND (em_dc2_is_sent = 'N')">
+		<ADDRESS title="address">dc_get_alert_email(dc_alerts_v.ad_alertrule_id)</ADDRESS>
+		<SUBJECT title="subject">dc_alerts_v.name</SUBJECT>
+		<FIELD title="Body" basetable="dc_alerts_v">description</FIELD>
+	</REPORT>
+
+</ESCALATION>

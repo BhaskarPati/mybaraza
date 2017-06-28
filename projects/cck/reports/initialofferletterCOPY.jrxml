@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="licencepayments" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20">
+	<property name="ireport.scriptlethandling" value="2"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="filterid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT paymenttypename, paymenttypeid, fullname, amount,orcinvdate,UPPER(licensename) AS upperlicensename,invoicedate,clientname, postalcode ,SYSDATE,licenseabbrev,licensename,
+address,town,country,licensepaymentid,clientlicenseid,applicationfee,initialfee,invmonths,proratedfee,
+applicationdate,baseannualfee
+
+ FROM
+vwpaymentphases
+ where licensepaymentid = '$P!{filterid}']]>
+	</queryString>
+	<field name="PAYMENTTYPENAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PAYMENTTYPEID" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FULLNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AMOUNT" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ORCINVDATE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="UPPERLICENSENAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="INVOICEDATE" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CLIENTNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="POSTALCODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SYSDATE" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LICENSEABBREV" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LICENSENAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ADDRESS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TOWN" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COUNTRY" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LICENSEPAYMENTID" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CLIENTLICENSEID" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="APPLICATIONFEE" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="INITIALFEE" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="INVMONTHS" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PRORATEDFEE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="APPLICATIONDATE" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BASEANNUALFEE" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="802" splitType="Stretch">
+			<staticText>
+				<reportElement x="7" y="18" width="110" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[CCK/LCS/]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="7" y="48" width="135" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="7" y="88" width="354" height="18"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CLIENTNAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-13" x="7" y="106" width="56" height="18"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[P.O. Box]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="63" y="106" width="257" height="18"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ADDRESS}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="7" y="123" width="68" height="18"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{TOWN}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="78" y="123" width="139" height="18"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{POSTALCODE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="7" y="176" width="160" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Dear Sir / Madam]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="210" width="71" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[RE : OFFER OF]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="267" y="283" width="236" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="13"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{LICENSENAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="7" y="253" width="217" height="20"/>
+				<textElement/>
+				<text><![CDATA[This has reference to your application dated]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="224" y="253" width="120" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{APPLICATIONDATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="344" y="253" width="159" height="20"/>
+				<textElement/>
+				<text><![CDATA[ for the above licence.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="283" width="260" height="20"/>
+				<textElement/>
+				<text><![CDATA[The Commission will be happy to issue you with the]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="315" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[ licence]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="315" width="282" height="20"/>
+				<textElement/>
+				<text><![CDATA[once you pay the requisite fees as tabulated below:- ]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="392" width="535" height="142"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="392" width="107" height="122"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="7" y="392" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[License]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="8" y="516" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{LICENSEABBREV}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="117" y="392" width="100" height="35"/>
+				<textElement/>
+				<text><![CDATA[Initial licence fees
+(Kshs)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="108" y="515" width="100" height="18"/>
+				<textElement>
+					<font fontName="Times New Roman" size="13"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{INITIALFEE}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="224" y="392" width="93" height="122"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="224" y="392" width="93" height="35"/>
+				<textElement/>
+				<text><![CDATA[Annual operating fees
+(Kshs)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="225" y="513" width="92" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{BASEANNUALFEE}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="317" y="392" width="118" height="122"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="317" y="392" width="118" height="47"/>
+				<textElement/>
+				<text><![CDATA[Prorated operating fees]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="317" y="516" width="118" height="18"/>
+				<textElement>
+					<font fontName="Times New Roman" size="13"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{PRORATEDFEE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="435" y="392" width="100" height="71"/>
+				<textElement/>
+				<text><![CDATA[Total amount payable before issuance of licence 
+(Kshs)]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField" x="436" y="513" width="99" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="13"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{AMOUNT}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="107" y="514" width="117" height="1"/>
+			</line>
+			<line>
+				<reportElement x="435" y="514" width="100" height="1"/>
+			</line>
+			<line>
+				<reportElement x="107" y="513" width="1" height="21"/>
+			</line>
+			<line>
+				<reportElement x="224" y="514" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement x="317" y="514" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement x="435" y="513" width="1" height="21"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="578" width="535" height="137"/>
+				<textElement/>
+				<text><![CDATA[Our financial year runs from 1st July of the current year to 30th June of the subsequent year and operating fees are prorated on a monthly basis. Payment can be made by company/bankers cheque at our Cashier’s office which is open between 9am to 12pm and 2pm to 4pm on weekdays. When you are ready to make payments, kindly present this letter at the front desk on 1st floor, CCK Centre on Waiyaki Way Nairobi, where you will be presented with a payment instruction sheet.
+
+Please note that this licence offer is valid for six (6) months from the date of this letter after which you will be required to apply afresh.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="731" width="278" height="38"/>
+				<textElement/>
+				<text><![CDATA[Yours faithfully,
+Communications Commission of Kenya]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="782" width="142" height="20"/>
+				<textElement/>
+				<text><![CDATA[For: Director General]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="77" y="210" width="427" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="13"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{UPPERLICENSENAME}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

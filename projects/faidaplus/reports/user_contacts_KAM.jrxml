@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="user_contacts_KAM" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="260a982a-851a-4305-b6b2-56538cfe77f3">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="entity_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT vw_orgs.org_id,
+    vw_orgs.org_name,
+    vw_orgs.is_default AS org_is_default,
+    vw_orgs.is_active AS org_is_active,
+    vw_orgs.logo AS org_logo,
+    vw_orgs.org_sys_country_id,
+    vw_orgs.org_sys_country_name,
+    vw_orgs.org_address_id,
+    vw_orgs.org_table_name,
+    vw_orgs.org_post_office_box,
+    vw_orgs.org_postal_code,
+    vw_orgs.org_premises,
+    vw_orgs.org_street,
+    vw_orgs.org_town,
+    vw_orgs.org_phone_number,
+    vw_orgs.org_extension,
+    vw_orgs.org_mobile,
+    vw_orgs.org_fax,
+    vw_orgs.pcc,
+    vw_orgs.org_email,
+    vw_orgs.org_website,
+    vw_entity_address.address_id,
+    vw_entity_address.address_name,
+    vw_entity_address.sys_country_id,
+    vw_entity_address.sys_country_name,
+    vw_entity_address.table_name,
+    vw_entity_address.is_default,
+    vw_entity_address.post_office_box,
+    vw_entity_address.postal_code,
+    vw_entity_address.premises,
+    vw_entity_address.street,
+    vw_entity_address.town,
+    vw_entity_address.phone_number,
+    vw_entity_address.extension,
+    vw_entity_address.mobile,
+    vw_entity_address.fax,
+    vw_entity_address.email,
+    vw_entity_address.website,
+    entity_id,
+entity_name,user_name,son,super_user,entity_leader,date_enroled,
+    vw_entitys.is_active,entity_password,first_password,function_role,primary_email,primary_telephone,
+    entity_types.entity_type_name
+   FROM vw_entitys
+     LEFT JOIN vw_entity_address ON vw_entitys.entity_id = vw_entity_address.table_id
+     JOIN vw_orgs ON vw_entitys.org_id = vw_orgs.org_id
+     JOIN entity_types ON vw_entitys.entity_type_id = entity_types.entity_type_id
+WHERE vw_entitys.account_manager_id = '$P!{entity_id}'
+	ORDER BY vw_entitys.entity_name ASC;]]>
+	</queryString>
+	<field name="org_id" class="java.lang.Integer"/>
+	<field name="org_name" class="java.lang.String"/>
+	<field name="org_is_default" class="java.lang.Boolean"/>
+	<field name="org_is_active" class="java.lang.Boolean"/>
+	<field name="org_logo" class="java.lang.String"/>
+	<field name="org_sys_country_id" class="java.lang.String"/>
+	<field name="org_sys_country_name" class="java.lang.String"/>
+	<field name="org_address_id" class="java.lang.Integer"/>
+	<field name="org_table_name" class="java.lang.String"/>
+	<field name="org_post_office_box" class="java.lang.String"/>
+	<field name="org_postal_code" class="java.lang.String"/>
+	<field name="org_premises" class="java.lang.String"/>
+	<field name="org_street" class="java.lang.String"/>
+	<field name="org_town" class="java.lang.String"/>
+	<field name="org_phone_number" class="java.lang.String"/>
+	<field name="org_extension" class="java.lang.String"/>
+	<field name="org_mobile" class="java.lang.String"/>
+	<field name="org_fax" class="java.lang.String"/>
+	<field name="pcc" class="java.lang.String"/>
+	<field name="org_email" class="java.lang.String"/>
+	<field name="org_website" class="java.lang.String"/>
+	<field name="address_id" class="java.lang.Integer"/>
+	<field name="address_name" class="java.lang.String"/>
+	<field name="sys_country_id" class="java.lang.String"/>
+	<field name="sys_country_name" class="java.lang.String"/>
+	<field name="table_name" class="java.lang.String"/>
+	<field name="is_default" class="java.lang.Boolean"/>
+	<field name="post_office_box" class="java.lang.String"/>
+	<field name="postal_code" class="java.lang.String"/>
+	<field name="premises" class="java.lang.String"/>
+	<field name="street" class="java.lang.String"/>
+	<field name="town" class="java.lang.String"/>
+	<field name="phone_number" class="java.lang.String"/>
+	<field name="extension" class="java.lang.String"/>
+	<field name="mobile" class="java.lang.String"/>
+	<field name="fax" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="website" class="java.lang.String"/>
+	<field name="entity_id" class="java.lang.Integer"/>
+	<field name="entity_name" class="java.lang.String"/>
+	<field name="user_name" class="java.lang.String"/>
+	<field name="son" class="java.lang.String"/>
+	<field name="super_user" class="java.lang.Boolean"/>
+	<field name="entity_leader" class="java.lang.Boolean"/>
+	<field name="date_enroled" class="java.sql.Timestamp"/>
+	<field name="is_active" class="java.lang.Boolean"/>
+	<field name="entity_password" class="java.lang.String"/>
+	<field name="first_password" class="java.lang.String"/>
+	<field name="function_role" class="java.lang.String"/>
+	<field name="primary_email" class="java.lang.String"/>
+	<field name="primary_telephone" class="java.lang.String"/>
+	<field name="entity_type_name" class="java.lang.String"/>
+	<variable name="count" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{entity_id}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="5" width="555" height="30" uuid="ad0f6138-f34d-4494-a647-6be64670bd15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[USERS CONTACTS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="19" splitType="Stretch">
+			<staticText>
+				<reportElement x="678" y="0" width="124" height="15" uuid="3cb362e2-76b1-4139-8d5e-e5903ec431c6"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Phone]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="16" width="800" height="1" uuid="3e5c4d42-b36f-4f6f-9198-9ba21c885dfb"/>
+			</line>
+			<staticText>
+				<reportElement x="40" y="0" width="193" height="15" uuid="9d6e5df7-7b8f-4c05-92ca-17e7cbfe3e7e"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="409" y="0" width="269" height="15" uuid="eac39423-17ef-4136-9c7e-c7f1a93193bc"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Email	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="39" height="15" uuid="af658494-4ec3-4ba4-896d-e60fa8b6c138"/>
+				<text><![CDATA[#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="233" y="0" width="176" height="15" uuid="6bd71e32-dc2c-4605-a76e-7bdc05358e58"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Username]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="40" y="0" width="193" height="15" uuid="52d0bd0d-7b8d-4128-b80f-90b9b3698e63"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entity_name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="678" y="0" width="124" height="15" uuid="d6b1a15e-ea97-4e8b-a14e-098d120ae142"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{primary_telephone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="0" width="39" height="15" uuid="62553401-7e07-4833-ba1c-fc792e60f0e9"/>
+				<textFieldExpression><![CDATA[$V{count}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="233" y="0" width="176" height="15" uuid="68d8be65-dcb0-46c0-8861-821cfb1b9a2d"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{user_name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="409" y="0" width="269" height="15" uuid="cb0bdf2c-79f7-4c03-9cfd-3269bb5a6a32"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{primary_email}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="21" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

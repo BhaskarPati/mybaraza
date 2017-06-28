@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreport_1" language="groovy" pageWidth="652" pageHeight="270" orientation="Landscape" columnWidth="652" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="8d2d0640-cd03-4041-8f3e-8df3cc6ef682">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="style1">
+		<conditionalStyle>
+			<style/>
+		</conditionalStyle>
+	</style>
+	<parameter name="project_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT vw_projects.project_id, vw_projects.project_name, vw_problems.narrative, vw_final_outcomes.final_outcome_name, vw_strategys.strategy_name, vw_budgets.budget_item_name, vw_budgets.currency_name, vw_budgets.global_amount, vw_budgets.field_amount, vw_budgets.get_by_date, vw_budgets.spend_by_date, vw_expenditures.amount, vw_expenditures.pr_date
+FROM vw_projects, vw_budgets, vw_strategys, vw_problems, vw_final_outcomes, vw_expenditures
+WHERE vw_problems.project_id = vw_projects.project_id AND vw_final_outcomes.problem_id = vw_problems.problem_id AND vw_strategys.final_outcome_id = vw_final_outcomes.final_outcome_id AND vw_budgets.strategy_id = vw_strategys.strategy_id AND vw_expenditures.budget_id = vw_budgets.budget_id AND vw_projects.project_id = $P{project_id}
+ORDER BY vw_projects.project_name, vw_problems.narrative, vw_final_outcomes.final_outcome_name, vw_strategys.strategy_name, vw_budgets.budget_item_name, vw_expenditures.pr_date]]>
+	</queryString>
+	<field name="project_id" class="java.lang.String"/>
+	<field name="project_name" class="java.lang.String"/>
+	<field name="narrative" class="java.lang.String"/>
+	<field name="final_outcome_name" class="java.lang.String"/>
+	<field name="strategy_name" class="java.lang.String"/>
+	<field name="budget_item_name" class="java.lang.String"/>
+	<field name="currency_name" class="java.lang.String"/>
+	<field name="global_amount" class="java.lang.Float"/>
+	<field name="field_amount" class="java.lang.Float"/>
+	<field name="get_by_date" class="java.sql.Date"/>
+	<field name="spend_by_date" class="java.sql.Date"/>
+	<field name="amount" class="java.lang.Float"/>
+	<field name="pr_date" class="java.sql.Date"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="33" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="19" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="17" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="62" splitType="Stretch">
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="0" y="20" width="100" height="20" uuid="13537245-68d5-45d6-8d56-48253b176018"/>
+				<textFieldExpression><![CDATA[$F{strategy_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="100" y="20" width="100" height="20" uuid="0ac061eb-5118-430a-8c2a-ffbec2f2a33f"/>
+				<textFieldExpression><![CDATA[$F{budget_item_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="200" y="20" width="49" height="20" uuid="01e50473-4e9b-4758-8939-d17eb122f075"/>
+				<textFieldExpression><![CDATA[$F{currency_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="249" y="20" width="100" height="20" uuid="f4b7ed71-9bac-4e1c-aff7-c727bb392252"/>
+				<textFieldExpression><![CDATA[$F{global_amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="349" y="20" width="100" height="20" uuid="9a5d0711-413e-403a-a625-4a9aaf8b27b5"/>
+				<textFieldExpression><![CDATA[$F{field_amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="449" y="20" width="100" height="20" uuid="9e5afa7b-0f5e-451f-8599-d52cd73ba73b"/>
+				<textFieldExpression><![CDATA[$F{get_by_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="549" y="20" width="76" height="20" uuid="9ff85109-c5f2-4240-a268-40e34f0e44d5"/>
+				<textFieldExpression><![CDATA[$F{spend_by_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="349" y="40" width="100" height="20" uuid="79938fcb-a9d9-4ddc-9b2e-f0303f3ee2f1"/>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="449" y="40" width="81" height="20" uuid="b4af749e-040e-43fa-9185-35c68db3b618"/>
+				<textFieldExpression><![CDATA[$F{pr_date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="26" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="21" splitType="Stretch"/>
+	</summary>
+</jasperReport>

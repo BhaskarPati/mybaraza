@@ -1,0 +1,553 @@
+<?xml version="1.0"?>
+<ESCALATION dbclass="org.postgresql.Driver" dbpath="jdbc:postgresql://localhost/epp" 
+	username="root" password="invent" title="KENIC Registry" processdelay="5"
+	host="localhost" mailuser="sysadmin" mailpassword="Dew20!3NBO" mailfrom="registry@kenic.or.ke"
+	inbox="INBOX" sentbox="Sent">
+	
+	<REPORT name="Application Confirmation" keyfield="applicantid" action="ApplicantEmailed"
+			actioncount="1" table="applicants, webshow"
+			where="(applicants.emailed[1] = false) AND (webshow.webshowid = 1)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="applicants">Email</ADDRESS>
+		<BODYFIELD reference="{{applicantname}}" basetable="applicants">companyname</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+	
+	<REPORT name="Application Approval" keyfield="applicantid" action="ApplicantEmailed"
+			actioncount="2" table="applicants, webshow"
+			where="(applicants.emailed[2] = false) AND (applicants.Approve = true) AND (webshow.webshowid = 2)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="applicants">Email</ADDRESS>
+		<BODYFIELD reference="{{applicantname}}" basetable="applicants">companyname</BODYFIELD>
+		<BODYFIELD reference="{{clid}}" basetable="applicants">clid</BODYFIELD>
+		<BODYFIELD reference="{{firstpasswd}}" basetable="applicants">firstpasswd</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+	
+	<REPORT name="Application Processing" keyfield="applicantid" action="ApplicantEmailed"
+			actioncount="3" table="applicants, webshow"
+			where="(applicants.emailed[3] = false) AND (applicants.Processing = true) AND (webshow.webshowid = 3)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="applicants">Email</ADDRESS>
+		<BODYFIELD reference="{{applicantname}}" basetable="applicants">companyname</BODYFIELD>
+		<BODYFIELD reference="{{details}}" function="applicants.details">issuesDetails</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+	
+	<REPORT name="Application Rejected" keyfield="applicantid" action="ApplicantEmailed"
+			actioncount="4" table="applicants, webshow"
+			where="(applicants.emailed[4] = false) AND (applicants.Reject = true) AND (webshow.webshowid = 4)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="applicants">Email</ADDRESS>
+		<BODYFIELD reference="{{applicantname}}" basetable="applicants">companyname</BODYFIELD>
+		<BODYFIELD reference="{{details}}" function="applicants.details">issuesDetails</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+	
+	<REPORT name="Registar New Domain notice" keyfield="roid" action="DomainEmailed"
+			actioncount="1" table="vwnewdomains, webshow"
+			where="(vwnewdomains.sendnotice[1] = false) AND (vwnewdomains.st_sv_hold is null) AND (webshow.webshowid = 5)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwnewdomains">admin_email</ADDRESS>
+		<BODYFIELD reference="{{roid}}" basetable="vwnewdomains">domainage</BODYFIELD>
+		<BODYFIELD reference="{{name}}" basetable="vwnewdomains">name</BODYFIELD>
+		<BODYFIELD reference="{{clid}}" basetable="vwnewdomains">clid</BODYFIELD>
+		<BODYFIELD reference="{{createdate}}" basetable="vwnewdomains">createdate</BODYFIELD>
+		<BODYFIELD reference="{{exdate}}" basetable="vwnewdomains">exdate</BODYFIELD>
+		<BODYFIELD reference="{{id}}" basetable="vwnewdomains">id</BODYFIELD>
+		<BODYFIELD reference="{{intpostalname}}" basetable="vwnewdomains">intpostalname</BODYFIELD>
+		<BODYFIELD reference="{{intpostalorg}}" basetable="vwnewdomains">intpostalorg</BODYFIELD>
+		<BODYFIELD reference="{{intpostalstreet1}}" basetable="vwnewdomains">intpostalstreet1</BODYFIELD>
+		<BODYFIELD reference="{{intpostalstreet2}}" basetable="vwnewdomains">intpostalstreet2</BODYFIELD>
+		<BODYFIELD reference="{{intpostalstreet3}}" basetable="vwnewdomains">intpostalstreet3</BODYFIELD>
+		<BODYFIELD reference="{{intpostalcity}}" basetable="vwnewdomains">intpostalcity</BODYFIELD>
+		<BODYFIELD reference="{{intpostalsp}}" basetable="vwnewdomains">intpostalsp</BODYFIELD>
+		<BODYFIELD reference="{{intpostalpc}}" basetable="vwnewdomains">intpostalpc</BODYFIELD>
+		<BODYFIELD reference="{{intpostalcc}}" basetable="vwnewdomains">intpostalcc</BODYFIELD>
+		<BODYFIELD reference="{{voice}}" basetable="vwnewdomains">voice</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+	
+	<REPORT name="Registrant New Domain notice" keyfield="roid" action="DomainEmailed"
+			actioncount="2" table="vwnewdomains, webshow"
+			where="(vwnewdomains.sendnotice[2] = false) AND (vwnewdomains.st_sv_hold is null) AND (webshow.webshowid = 6)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwnewdomains">email</ADDRESS>
+		<BODYFIELD reference="{{roid}}" basetable="vwnewdomains">domainage</BODYFIELD>
+		<BODYFIELD reference="{{name}}" basetable="vwnewdomains">name</BODYFIELD>
+		<BODYFIELD reference="{{clid}}" basetable="vwnewdomains">clid</BODYFIELD>
+		<BODYFIELD reference="{{createdate}}" basetable="vwnewdomains">createdate</BODYFIELD>
+		<BODYFIELD reference="{{exdate}}" basetable="vwnewdomains">exdate</BODYFIELD>
+		<BODYFIELD reference="{{id}}" basetable="vwnewdomains">id</BODYFIELD>
+		<BODYFIELD reference="{{intpostalname}}" basetable="vwnewdomains">intpostalname</BODYFIELD>
+		<BODYFIELD reference="{{intpostalorg}}" basetable="vwnewdomains">intpostalorg</BODYFIELD>
+		<BODYFIELD reference="{{intpostalstreet1}}" basetable="vwnewdomains">intpostalstreet1</BODYFIELD>
+		<BODYFIELD reference="{{intpostalstreet2}}" basetable="vwnewdomains">intpostalstreet2</BODYFIELD>
+		<BODYFIELD reference="{{intpostalstreet3}}" basetable="vwnewdomains">intpostalstreet3</BODYFIELD>
+		<BODYFIELD reference="{{intpostalcity}}" basetable="vwnewdomains">intpostalcity</BODYFIELD>
+		<BODYFIELD reference="{{intpostalsp}}" basetable="vwnewdomains">intpostalsp</BODYFIELD>
+		<BODYFIELD reference="{{intpostalpc}}" basetable="vwnewdomains">intpostalpc</BODYFIELD>
+		<BODYFIELD reference="{{intpostalcc}}" basetable="vwnewdomains">intpostalcc</BODYFIELD>
+		<BODYFIELD reference="{{voice}}" basetable="vwnewdomains">voice</BODYFIELD>
+		<BODYFIELD reference="{{clientname}}" basetable="vwnewdomains">clientname</BODYFIELD>
+		<BODYFIELD reference="{{admin_email}}" basetable="vwnewdomains">admin_email</BODYFIELD>
+		<BODYFIELD reference="{{registar_phone}}" basetable="vwnewdomains">registar_phone</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+	
+	<REPORT name="New Academic Domain Registar notice" keyfield="roid" action="DomainEmailed"
+			actioncount="3" table="vwnewdomains, webshow"
+			where="((vwnewdomains.zone = 'ac.ke') or (vwnewdomains.zone = 'sc.ke')) AND (vwnewdomains.st_sv_hold is not null) AND (vwnewdomains.sendnotice[3] = false) AND (webshow.webshowid = 7)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwnewdomains">admin_email</ADDRESS>
+		<BODYFIELD reference="{{roid}}" basetable="vwnewdomains">domainage</BODYFIELD>
+		<BODYFIELD reference="{{name}}" basetable="vwnewdomains">name</BODYFIELD>
+		<BODYFIELD reference="{{clid}}" basetable="vwnewdomains">clid</BODYFIELD>
+		<BODYFIELD reference="{{createdate}}" basetable="vwnewdomains">createdate</BODYFIELD>
+		<BODYFIELD reference="{{exdate}}" basetable="vwnewdomains">exdate</BODYFIELD>
+		<BODYFIELD reference="{{id}}" basetable="vwnewdomains">id</BODYFIELD>
+		<BODYFIELD reference="{{intpostalname}}" basetable="vwnewdomains">intpostalname</BODYFIELD>
+		<BODYFIELD reference="{{intpostalorg}}" basetable="vwnewdomains">intpostalorg</BODYFIELD>
+		<BODYFIELD reference="{{intpostalstreet1}}" basetable="vwnewdomains">intpostalstreet1</BODYFIELD>
+		<BODYFIELD reference="{{intpostalstreet2}}" basetable="vwnewdomains">intpostalstreet2</BODYFIELD>
+		<BODYFIELD reference="{{intpostalstreet3}}" basetable="vwnewdomains">intpostalstreet3</BODYFIELD>
+		<BODYFIELD reference="{{intpostalcity}}" basetable="vwnewdomains">intpostalcity</BODYFIELD>
+		<BODYFIELD reference="{{intpostalsp}}" basetable="vwnewdomains">intpostalsp</BODYFIELD>
+		<BODYFIELD reference="{{intpostalpc}}" basetable="vwnewdomains">intpostalpc</BODYFIELD>
+		<BODYFIELD reference="{{intpostalcc}}" basetable="vwnewdomains">intpostalcc</BODYFIELD>
+		<BODYFIELD reference="{{voice}}" basetable="vwnewdomains">voice</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+
+	<REPORT name="New Goverment Domain Registar notice" keyfield="roid" action="DomainEmailed"
+			actioncount="4" table="vwnewdomains, webshow"
+			where="(vwnewdomains.zone = 'go.ke') AND (vwnewdomains.st_sv_hold is not null) AND (vwnewdomains.sendnotice[4] = false) AND (webshow.webshowid = 8)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwnewdomains">admin_email</ADDRESS>
+		<BODYFIELD reference="{{roid}}" basetable="vwnewdomains">domainage</BODYFIELD>
+		<BODYFIELD reference="{{name}}" basetable="vwnewdomains">name</BODYFIELD>
+		<BODYFIELD reference="{{clid}}" basetable="vwnewdomains">clid</BODYFIELD>
+		<BODYFIELD reference="{{createdate}}" basetable="vwnewdomains">createdate</BODYFIELD>
+		<BODYFIELD reference="{{exdate}}" basetable="vwnewdomains">exdate</BODYFIELD>
+		<BODYFIELD reference="{{id}}" basetable="vwnewdomains">id</BODYFIELD>
+		<BODYFIELD reference="{{intpostalname}}" basetable="vwnewdomains">intpostalname</BODYFIELD>
+		<BODYFIELD reference="{{intpostalorg}}" basetable="vwnewdomains">intpostalorg</BODYFIELD>
+		<BODYFIELD reference="{{intpostalstreet1}}" basetable="vwnewdomains">intpostalstreet1</BODYFIELD>
+		<BODYFIELD reference="{{intpostalstreet2}}" basetable="vwnewdomains">intpostalstreet2</BODYFIELD>
+		<BODYFIELD reference="{{intpostalstreet3}}" basetable="vwnewdomains">intpostalstreet3</BODYFIELD>
+		<BODYFIELD reference="{{intpostalcity}}" basetable="vwnewdomains">intpostalcity</BODYFIELD>
+		<BODYFIELD reference="{{intpostalsp}}" basetable="vwnewdomains">intpostalsp</BODYFIELD>
+		<BODYFIELD reference="{{intpostalpc}}" basetable="vwnewdomains">intpostalpc</BODYFIELD>
+		<BODYFIELD reference="{{intpostalcc}}" basetable="vwnewdomains">intpostalcc</BODYFIELD>
+		<BODYFIELD reference="{{voice}}" basetable="vwnewdomains">voice</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+	
+	<REPORT name="Registar Domain Renewal notice" keyfield="roid" action="DomainEmailed"
+			actioncount="5" table="vwnewdomains, webshow"
+			where="(vwnewdomains.sendnotice[5] = false) AND (vwnewdomains.st_sv_hold is null) AND (webshow.webshowid = 9)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwnewdomains">admin_email</ADDRESS>
+		<BODYFIELD reference="{{roid}}" basetable="vwnewdomains">domainage</BODYFIELD>
+		<BODYFIELD reference="{{name}}" basetable="vwnewdomains">name</BODYFIELD>
+		<BODYFIELD reference="{{clid}}" basetable="vwnewdomains">clid</BODYFIELD>
+		<BODYFIELD reference="{{createdate}}" basetable="vwnewdomains">createdate</BODYFIELD>
+		<BODYFIELD reference="{{updatedate}}" basetable="vwnewdomains">updatedate</BODYFIELD>
+		<BODYFIELD reference="{{exdate}}" basetable="vwnewdomains">exdate</BODYFIELD>
+		<BODYFIELD reference="{{id}}" basetable="vwnewdomains">id</BODYFIELD>
+		<BODYFIELD reference="{{intpostalname}}" basetable="vwnewdomains">intpostalname</BODYFIELD>
+		<BODYFIELD reference="{{intpostalorg}}" basetable="vwnewdomains">intpostalorg</BODYFIELD>
+		<BODYFIELD reference="{{intpostalstreet1}}" basetable="vwnewdomains">intpostalstreet1</BODYFIELD>
+		<BODYFIELD reference="{{intpostalstreet2}}" basetable="vwnewdomains">intpostalstreet2</BODYFIELD>
+		<BODYFIELD reference="{{intpostalstreet3}}" basetable="vwnewdomains">intpostalstreet3</BODYFIELD>
+		<BODYFIELD reference="{{intpostalcity}}" basetable="vwnewdomains">intpostalcity</BODYFIELD>
+		<BODYFIELD reference="{{intpostalsp}}" basetable="vwnewdomains">intpostalsp</BODYFIELD>
+		<BODYFIELD reference="{{intpostalpc}}" basetable="vwnewdomains">intpostalpc</BODYFIELD>
+		<BODYFIELD reference="{{intpostalcc}}" basetable="vwnewdomains">intpostalcc</BODYFIELD>
+		<BODYFIELD reference="{{voice}}" basetable="vwnewdomains">voice</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+	
+	<REPORT name="Registrant Domain Renewal notice" keyfield="roid" action="DomainEmailed"
+			actioncount="6" table="vwnewdomains, webshow"
+			where="(vwnewdomains.sendnotice[6] = false) AND (vwnewdomains.st_sv_hold is null) AND (webshow.webshowid = 10)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwnewdomains">email</ADDRESS>
+		<BODYFIELD reference="{{roid}}" basetable="vwnewdomains">domainage</BODYFIELD>
+		<BODYFIELD reference="{{name}}" basetable="vwnewdomains">name</BODYFIELD>
+		<BODYFIELD reference="{{clid}}" basetable="vwnewdomains">clid</BODYFIELD>
+		<BODYFIELD reference="{{createdate}}" basetable="vwnewdomains">createdate</BODYFIELD>
+		<BODYFIELD reference="{{updatedate}}" basetable="vwnewdomains">updatedate</BODYFIELD>
+		<BODYFIELD reference="{{exdate}}" basetable="vwnewdomains">exdate</BODYFIELD>
+		<BODYFIELD reference="{{id}}" basetable="vwnewdomains">id</BODYFIELD>
+		<BODYFIELD reference="{{intpostalname}}" basetable="vwnewdomains">intpostalname</BODYFIELD>
+		<BODYFIELD reference="{{intpostalorg}}" basetable="vwnewdomains">intpostalorg</BODYFIELD>
+		<BODYFIELD reference="{{intpostalstreet1}}" basetable="vwnewdomains">intpostalstreet1</BODYFIELD>
+		<BODYFIELD reference="{{intpostalstreet2}}" basetable="vwnewdomains">intpostalstreet2</BODYFIELD>
+		<BODYFIELD reference="{{intpostalstreet3}}" basetable="vwnewdomains">intpostalstreet3</BODYFIELD>
+		<BODYFIELD reference="{{intpostalcity}}" basetable="vwnewdomains">intpostalcity</BODYFIELD>
+		<BODYFIELD reference="{{intpostalsp}}" basetable="vwnewdomains">intpostalsp</BODYFIELD>
+		<BODYFIELD reference="{{intpostalpc}}" basetable="vwnewdomains">intpostalpc</BODYFIELD>
+		<BODYFIELD reference="{{intpostalcc}}" basetable="vwnewdomains">intpostalcc</BODYFIELD>
+		<BODYFIELD reference="{{voice}}" basetable="vwnewdomains">voice</BODYFIELD>
+		<BODYFIELD reference="{{clientname}}" basetable="vwnewdomains">clientname</BODYFIELD>
+		<BODYFIELD reference="{{admin_email}}" basetable="vwnewdomains">admin_email</BODYFIELD>
+		<BODYFIELD reference="{{registar_phone}}" basetable="vwnewdomains">registar_phone</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+	
+	<REPORT name="Domain 60 day notice" keyfield="roid" action="DomainEmailed"
+			actioncount="7" table="vwexdomains, webshow"
+			where="(vwexdomains.domainage &lt; 60) AND (vwexdomains.domainage > 30) AND (vwexdomains.sendnotice[7] = false) AND (webshow.webshowid = 11)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwexdomains">emailaddress</ADDRESS>
+		<BODYFIELD reference="{{domainage}}" basetable="vwexdomains">domainage</BODYFIELD>
+		<BODYFIELD reference="{{domainname}}" basetable="vwexdomains">name</BODYFIELD>
+		<BODYFIELD reference="{{registerdate}}" basetable="vwexdomains">createdate</BODYFIELD>
+		<BODYFIELD reference="{{exdate}}" basetable="vwexdomains">exdate</BODYFIELD>
+		<BODYFIELD reference="{{next_expdate}}" basetable="vwexdomains">next_expdate</BODYFIELD>
+		<BODYFIELD reference="{{renew_price}}" basetable="vwexdomains">renew_price</BODYFIELD>
+		<BODYFIELD reference="{{renew_vat}}" basetable="vwexdomains">renew_vat</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+
+	<REPORT name="Domain 30 day notice" keyfield="roid" action="DomainEmailed"
+			actioncount="8" table="vwexdomains, webshow"
+			where="(vwexdomains.domainage &lt; 30) AND (vwexdomains.domainage > 7) AND (vwexdomains.sendnotice[8] = false) AND (webshow.webshowid = 11)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwexdomains">emailaddress</ADDRESS>
+		<BODYFIELD reference="{{domainage}}" basetable="vwexdomains">domainage</BODYFIELD>
+		<BODYFIELD reference="{{domainname}}" basetable="vwexdomains">name</BODYFIELD>
+		<BODYFIELD reference="{{registerdate}}" basetable="vwexdomains">createdate</BODYFIELD>
+		<BODYFIELD reference="{{exdate}}" basetable="vwexdomains">exdate</BODYFIELD>
+		<BODYFIELD reference="{{next_expdate}}" basetable="vwexdomains">next_expdate</BODYFIELD>
+		<BODYFIELD reference="{{renew_price}}" basetable="vwexdomains">renew_price</BODYFIELD>
+		<BODYFIELD reference="{{renew_vat}}" basetable="vwexdomains">renew_vat</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+	
+	<REPORT name="Domain 7 day notice" keyfield="roid" action="DomainEmailed"
+			actioncount="9" table="vwexdomains, webshow"
+			where="(vwexdomains.domainage &lt; 7) AND (vwexdomains.domainage > 3) AND (vwexdomains.sendnotice[9] = false) AND (webshow.webshowid = 11)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwexdomains">emailaddress</ADDRESS>
+		<BODYFIELD reference="{{domainage}}" basetable="vwexdomains">domainage</BODYFIELD>
+		<BODYFIELD reference="{{domainname}}" basetable="vwexdomains">name</BODYFIELD>
+		<BODYFIELD reference="{{registerdate}}" basetable="vwexdomains">createdate</BODYFIELD>
+		<BODYFIELD reference="{{exdate}}" basetable="vwexdomains">exdate</BODYFIELD>
+		<BODYFIELD reference="{{next_expdate}}" basetable="vwexdomains">next_expdate</BODYFIELD>
+		<BODYFIELD reference="{{renew_price}}" basetable="vwexdomains">renew_price</BODYFIELD>
+		<BODYFIELD reference="{{renew_vat}}" basetable="vwexdomains">renew_vat</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+	
+	<REPORT name="Domain 3 day notice" keyfield="roid" action="DomainEmailed"
+			actioncount="10" table="vwexdomains, webshow"
+			where="(vwexdomains.domainage &lt; 3) AND (vwexdomains.domainage > 0) AND (vwexdomains.sendnotice[10] = false) AND (webshow.webshowid = 11)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwexdomains">emailaddress</ADDRESS>
+		<BODYFIELD reference="{{domainage}}" basetable="vwexdomains">domainage</BODYFIELD>
+		<BODYFIELD reference="{{domainname}}" basetable="vwexdomains">name</BODYFIELD>
+		<BODYFIELD reference="{{registerdate}}" basetable="vwexdomains">createdate</BODYFIELD>
+		<BODYFIELD reference="{{exdate}}" basetable="vwexdomains">exdate</BODYFIELD>
+		<BODYFIELD reference="{{next_expdate}}" basetable="vwexdomains">next_expdate</BODYFIELD>
+		<BODYFIELD reference="{{renew_price}}" basetable="vwexdomains">renew_price</BODYFIELD>
+		<BODYFIELD reference="{{renew_vat}}" basetable="vwexdomains">renew_vat</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+		
+	<REPORT name="Domain 60 day Registant notice" keyfield="roid" action="DomainEmailed"
+			actioncount="11" table="vwregexdomains, webshow"
+			where="(vwregexdomains.domainage &lt; 60) AND (vwregexdomains.domainage > 30) AND (vwregexdomains.sendnotice[11] = false) AND (webshow.webshowid = 12)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwregexdomains">email</ADDRESS>
+		<BODYFIELD reference="{{domainage}}" basetable="vwregexdomains">domainage</BODYFIELD>
+		<BODYFIELD reference="{{domainname}}" basetable="vwregexdomains">name</BODYFIELD>
+		<BODYFIELD reference="{{registerdate}}" basetable="vwregexdomains">createdate</BODYFIELD>
+		<BODYFIELD reference="{{exdate}}" basetable="vwregexdomains">exdate</BODYFIELD>
+		<BODYFIELD reference="{{clientname}}" basetable="vwregexdomains">clientname</BODYFIELD>
+		<BODYFIELD reference="{{admin_email}}" basetable="vwregexdomains">admin_email</BODYFIELD>
+		<BODYFIELD reference="{{registar_phone}}" basetable="vwregexdomains">registar_phone</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+	
+	<REPORT name="Domain 30 day Registant notice" keyfield="roid" action="DomainEmailed"
+			actioncount="12" table="vwregexdomains, webshow"
+			where="(vwregexdomains.domainage &lt; 30) AND (vwregexdomains.domainage > 7) AND (vwregexdomains.sendnotice[12] = false) AND (webshow.webshowid = 12)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwregexdomains">email</ADDRESS>
+		<BODYFIELD reference="{{domainage}}" basetable="vwregexdomains">domainage</BODYFIELD>
+		<BODYFIELD reference="{{domainname}}" basetable="vwregexdomains">name</BODYFIELD>
+		<BODYFIELD reference="{{registerdate}}" basetable="vwregexdomains">createdate</BODYFIELD>
+		<BODYFIELD reference="{{exdate}}" basetable="vwregexdomains">exdate</BODYFIELD>
+		<BODYFIELD reference="{{clientname}}" basetable="vwregexdomains">clientname</BODYFIELD>
+		<BODYFIELD reference="{{admin_email}}" basetable="vwregexdomains">admin_email</BODYFIELD>
+		<BODYFIELD reference="{{registar_phone}}" basetable="vwregexdomains">registar_phone</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+	
+	<REPORT name="Domain 7 day Registant notice" keyfield="roid" action="DomainEmailed"
+			actioncount="13" table="vwregexdomains, webshow"
+			where="(vwregexdomains.domainage &lt; 7) AND (vwregexdomains.domainage > 3) AND (vwregexdomains.sendnotice[13] = false) AND (webshow.webshowid = 12)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwregexdomains">email</ADDRESS>
+		<BODYFIELD reference="{{domainage}}" basetable="vwregexdomains">domainage</BODYFIELD>
+		<BODYFIELD reference="{{domainname}}" basetable="vwregexdomains">name</BODYFIELD>
+		<BODYFIELD reference="{{registerdate}}" basetable="vwregexdomains">createdate</BODYFIELD>
+		<BODYFIELD reference="{{exdate}}" basetable="vwregexdomains">exdate</BODYFIELD>
+		<BODYFIELD reference="{{clientname}}" basetable="vwregexdomains">clientname</BODYFIELD>
+		<BODYFIELD reference="{{admin_email}}" basetable="vwregexdomains">admin_email</BODYFIELD>
+		<BODYFIELD reference="{{registar_phone}}" basetable="vwregexdomains">registar_phone</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+
+	<REPORT name="Domain 3 day Registant notice" keyfield="roid" action="DomainEmailed"
+			actioncount="14" table="vwregexdomains, webshow"
+			where="(vwregexdomains.domainage &lt; 3) AND (vwregexdomains.domainage > 0) AND (vwregexdomains.sendnotice[14] = false) AND (webshow.webshowid = 12)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwregexdomains">email</ADDRESS>
+		<BODYFIELD reference="{{domainage}}" basetable="vwregexdomains">domainage</BODYFIELD>
+		<BODYFIELD reference="{{domainname}}" basetable="vwregexdomains">name</BODYFIELD>
+		<BODYFIELD reference="{{registerdate}}" basetable="vwregexdomains">createdate</BODYFIELD>
+		<BODYFIELD reference="{{exdate}}" basetable="vwregexdomains">exdate</BODYFIELD>
+		<BODYFIELD reference="{{clientname}}" basetable="vwregexdomains">clientname</BODYFIELD>
+		<BODYFIELD reference="{{admin_email}}" basetable="vwregexdomains">admin_email</BODYFIELD>
+		<BODYFIELD reference="{{registar_phone}}" basetable="vwregexdomains">registar_phone</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+
+	<REPORT name="Domain 0 day notice" keyfield="roid" action="DomainEmailed"
+			actioncount="15" table="vwexdomains, webshow"
+			where="(vwexdomains.domainage = 0) AND (vwexdomains.sendnotice[15] = false) AND (webshow.webshowid = 13)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwexdomains">emailaddress</ADDRESS>
+		<BODYFIELD reference="{{domainage}}" basetable="vwexdomains">domainage</BODYFIELD>
+		<BODYFIELD reference="{{domainname}}" basetable="vwexdomains">name</BODYFIELD>
+		<BODYFIELD reference="{{registerdate}}" basetable="vwexdomains">createdate</BODYFIELD>
+		<BODYFIELD reference="{{exdate}}" basetable="vwexdomains">exdate</BODYFIELD>
+		<BODYFIELD reference="{{next_expdate}}" basetable="vwexdomains">next_expdate</BODYFIELD>
+		<BODYFIELD reference="{{renew_price}}" basetable="vwexdomains">renew_price</BODYFIELD>
+		<BODYFIELD reference="{{renew_vat}}" basetable="vwexdomains">renew_vat</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+
+	<REPORT name="Domain 0 day Registant notice" keyfield="roid" action="DomainEmailed"
+			actioncount="16" table="vwregexdomains, webshow"
+			where="(vwregexdomains.domainage = 0) AND (vwregexdomains.sendnotice[16] = false) AND (webshow.webshowid = 14)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwregexdomains">email</ADDRESS>
+		<BODYFIELD reference="{{domainage}}" basetable="vwregexdomains">domainage</BODYFIELD>
+		<BODYFIELD reference="{{domainname}}" basetable="vwregexdomains">name</BODYFIELD>
+		<BODYFIELD reference="{{registerdate}}" basetable="vwregexdomains">createdate</BODYFIELD>
+		<BODYFIELD reference="{{exdate}}" basetable="vwregexdomains">exdate</BODYFIELD>
+		<BODYFIELD reference="{{clientname}}" basetable="vwregexdomains">clientname</BODYFIELD>
+		<BODYFIELD reference="{{admin_email}}" basetable="vwregexdomains">admin_email</BODYFIELD>
+		<BODYFIELD reference="{{registar_phone}}" basetable="vwregexdomains">registar_phone</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+
+	<REPORT name="Domain Deletion 60 day notice" keyfield="roid" action="DomainEmailed"
+			actioncount="17" table="vwexdomains, webshow"
+			where="(vwexdomains.delage &lt; 60) AND (vwexdomains.delage > 30) AND (vwexdomains.sendnotice[17] = false) AND (webshow.webshowid = 15)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwexdomains">emailaddress</ADDRESS>
+		<BODYFIELD reference="{{domainage}}" basetable="vwexdomains">delage</BODYFIELD>
+		<BODYFIELD reference="{{domainname}}" basetable="vwexdomains">name</BODYFIELD>
+		<BODYFIELD reference="{{registerdate}}" basetable="vwexdomains">createdate</BODYFIELD>
+		<BODYFIELD reference="{{exdate}}" basetable="vwexdomains">exdate</BODYFIELD>
+		<BODYFIELD reference="{{deldate}}" basetable="vwexdomains">deldate</BODYFIELD>
+		<BODYFIELD reference="{{next_expdate}}" basetable="vwexdomains">next_expdate</BODYFIELD>
+		<BODYFIELD reference="{{renew_price}}" basetable="vwexdomains">renew_price</BODYFIELD>
+		<BODYFIELD reference="{{renew_vat}}" basetable="vwexdomains">renew_vat</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+
+	<REPORT name="Domain Deletion 30 day notice" keyfield="roid" action="DomainEmailed"
+			actioncount="18" table="vwexdomains, webshow"
+			where="(vwexdomains.delage &lt; 30) AND (vwexdomains.delage > 7) AND (vwexdomains.sendnotice[18] = false) AND (webshow.webshowid = 15)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwexdomains">emailaddress</ADDRESS>
+		<BODYFIELD reference="{{domainage}}" basetable="vwexdomains">delage</BODYFIELD>
+		<BODYFIELD reference="{{domainname}}" basetable="vwexdomains">name</BODYFIELD>
+		<BODYFIELD reference="{{registerdate}}" basetable="vwexdomains">createdate</BODYFIELD>
+		<BODYFIELD reference="{{exdate}}" basetable="vwexdomains">exdate</BODYFIELD>
+		<BODYFIELD reference="{{deldate}}" basetable="vwexdomains">deldate</BODYFIELD>
+		<BODYFIELD reference="{{next_expdate}}" basetable="vwexdomains">next_expdate</BODYFIELD>
+		<BODYFIELD reference="{{renew_price}}" basetable="vwexdomains">renew_price</BODYFIELD>
+		<BODYFIELD reference="{{renew_vat}}" basetable="vwexdomains">renew_vat</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+	
+	<REPORT name="Domain Deletion 7 day notice" keyfield="roid" action="DomainEmailed"
+			actioncount="19" table="vwexdomains, webshow"
+			where="(vwexdomains.delage &lt; 7) AND (vwexdomains.delage > 0) AND (vwexdomains.sendnotice[19] = false) AND (webshow.webshowid = 15)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwexdomains">emailaddress</ADDRESS>
+		<BODYFIELD reference="{{domainage}}" basetable="vwexdomains">delage</BODYFIELD>
+		<BODYFIELD reference="{{domainname}}" basetable="vwexdomains">name</BODYFIELD>
+		<BODYFIELD reference="{{registerdate}}" basetable="vwexdomains">createdate</BODYFIELD>
+		<BODYFIELD reference="{{exdate}}" basetable="vwexdomains">exdate</BODYFIELD>
+		<BODYFIELD reference="{{deldate}}" basetable="vwexdomains">deldate</BODYFIELD>
+		<BODYFIELD reference="{{next_expdate}}" basetable="vwexdomains">next_expdate</BODYFIELD>
+		<BODYFIELD reference="{{renew_price}}" basetable="vwexdomains">renew_price</BODYFIELD>
+		<BODYFIELD reference="{{renew_vat}}" basetable="vwexdomains">renew_vat</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+
+	<REPORT name="Domain Deletion 60 day Registant notice" keyfield="roid" action="DomainEmailed"
+			actioncount="20" table="vwregexdomains, webshow"
+			where="(vwregexdomains.delage &lt; 60) AND (vwregexdomains.delage > 30) AND (vwregexdomains.sendnotice[20] = false) AND (webshow.webshowid = 16)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwregexdomains">email</ADDRESS>
+		<BODYFIELD reference="{{domainage}}" basetable="vwregexdomains">delage</BODYFIELD>
+		<BODYFIELD reference="{{domainname}}" basetable="vwregexdomains">name</BODYFIELD>
+		<BODYFIELD reference="{{registerdate}}" basetable="vwregexdomains">createdate</BODYFIELD>
+		<BODYFIELD reference="{{exdate}}" basetable="vwregexdomains">exdate</BODYFIELD>
+		<BODYFIELD reference="{{deldate}}" basetable="vwregexdomains">deldate</BODYFIELD>
+		<BODYFIELD reference="{{clientname}}" basetable="vwregexdomains">clientname</BODYFIELD>
+		<BODYFIELD reference="{{admin_email}}" basetable="vwregexdomains">admin_email</BODYFIELD>
+		<BODYFIELD reference="{{registar_phone}}" basetable="vwregexdomains">registar_phone</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+	
+	<REPORT name="Domain Deletion 30 day Registant notice" keyfield="roid" action="DomainEmailed"
+			actioncount="21" table="vwregexdomains, webshow"
+			where="(vwregexdomains.delage &lt; 30) AND (vwregexdomains.delage > 7) AND (vwregexdomains.sendnotice[21] = false) AND (webshow.webshowid = 16)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwregexdomains">email</ADDRESS>
+		<BODYFIELD reference="{{domainage}}" basetable="vwregexdomains">delage</BODYFIELD>
+		<BODYFIELD reference="{{domainname}}" basetable="vwregexdomains">name</BODYFIELD>
+		<BODYFIELD reference="{{registerdate}}" basetable="vwregexdomains">createdate</BODYFIELD>
+		<BODYFIELD reference="{{exdate}}" basetable="vwregexdomains">exdate</BODYFIELD>
+		<BODYFIELD reference="{{deldate}}" basetable="vwregexdomains">deldate</BODYFIELD>
+		<BODYFIELD reference="{{clientname}}" basetable="vwregexdomains">clientname</BODYFIELD>
+		<BODYFIELD reference="{{admin_email}}" basetable="vwregexdomains">admin_email</BODYFIELD>
+		<BODYFIELD reference="{{registar_phone}}" basetable="vwregexdomains">registar_phone</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+	
+	<REPORT name="Domain Deletion 7 day Registant notice" keyfield="roid" action="DomainEmailed"
+			actioncount="22" table="vwregexdomains, webshow"
+			where="(vwregexdomains.delage &lt; 7) AND (vwregexdomains.delage > 0) AND (vwregexdomains.sendnotice[22] = false) AND (webshow.webshowid = 16)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwregexdomains">email</ADDRESS>
+		<BODYFIELD reference="{{domainage}}" basetable="vwregexdomains">delage</BODYFIELD>
+		<BODYFIELD reference="{{domainname}}" basetable="vwregexdomains">name</BODYFIELD>
+		<BODYFIELD reference="{{registerdate}}" basetable="vwregexdomains">createdate</BODYFIELD>
+		<BODYFIELD reference="{{exdate}}" basetable="vwregexdomains">exdate</BODYFIELD>
+		<BODYFIELD reference="{{deldate}}" basetable="vwregexdomains">deldate</BODYFIELD>
+		<BODYFIELD reference="{{clientname}}" basetable="vwregexdomains">clientname</BODYFIELD>
+		<BODYFIELD reference="{{admin_email}}" basetable="vwregexdomains">admin_email</BODYFIELD>
+		<BODYFIELD reference="{{registar_phone}}" basetable="vwregexdomains">registar_phone</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+	
+	<REPORT name="Domain Transfer Request" keyfield="id" action="TransferEmailed"
+			actioncount="1" table="vwtransfer, webshow"
+			where="(vwtransfer.response is null) AND (vwtransfer.emailed[1] = false) AND (webshow.webshowid = 17)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwtransfer">request_email</ADDRESS>
+		<BODYFIELD reference="{{domainname}}" basetable="vwtransfer">domainname</BODYFIELD>
+		<BODYFIELD reference="{{requester}}" basetable="vwtransfer">request_name</BODYFIELD>
+		<BODYFIELD reference="{{requester_email}}" basetable="vwtransfer">request_email</BODYFIELD>
+		<BODYFIELD reference="{{requester_phone}}" basetable="vwtransfer">request_phone</BODYFIELD>
+		<BODYFIELD reference="{{owner}}" basetable="vwtransfer">owner_name</BODYFIELD>
+		<BODYFIELD reference="{{owner_email}}" basetable="vwtransfer">owner_email</BODYFIELD>
+		<BODYFIELD reference="{{owner_phone}}" basetable="vwtransfer">owner_phone</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+	
+	<REPORT name="Domain Transfer Request" keyfield="id" action="TransferEmailed"
+			actioncount="2" table="vwtransfer, webshow"
+			where="(vwtransfer.response is null) AND (vwtransfer.emailed[2] = false) AND (webshow.webshowid = 18)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwtransfer">owner_email</ADDRESS>
+		<BODYFIELD reference="{{domainname}}" basetable="vwtransfer">domainname</BODYFIELD>
+		<BODYFIELD reference="{{requester}}" basetable="vwtransfer">request_name</BODYFIELD>
+		<BODYFIELD reference="{{requester_email}}" basetable="vwtransfer">request_email</BODYFIELD>
+		<BODYFIELD reference="{{requester_phone}}" basetable="vwtransfer">request_phone</BODYFIELD>
+		<BODYFIELD reference="{{owner}}" basetable="vwtransfer">owner_name</BODYFIELD>
+		<BODYFIELD reference="{{owner_email}}" basetable="vwtransfer">owner_email</BODYFIELD>
+		<BODYFIELD reference="{{owner_phone}}" basetable="vwtransfer">owner_phone</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+	
+	<REPORT name="Domain Transfer Decline" keyfield="id" action="TransferEmailed"
+			actioncount="3" table="vwtransfer, webshow"
+			where="(vwtransfer.response = 'clientRejected') AND (vwtransfer.emailed[3] = false) AND (webshow.webshowid = 20)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwtransfer">request_email</ADDRESS>
+		<BODYFIELD reference="{{domainname}}" basetable="vwtransfer">domainname</BODYFIELD>
+		<BODYFIELD reference="{{requester}}" basetable="vwtransfer">request_name</BODYFIELD>
+		<BODYFIELD reference="{{requester_email}}" basetable="vwtransfer">request_email</BODYFIELD>
+		<BODYFIELD reference="{{requester_phone}}" basetable="vwtransfer">request_phone</BODYFIELD>
+		<BODYFIELD reference="{{owner}}" basetable="vwtransfer">owner_name</BODYFIELD>
+		<BODYFIELD reference="{{owner_email}}" basetable="vwtransfer">owner_email</BODYFIELD>
+		<BODYFIELD reference="{{owner_phone}}" basetable="vwtransfer">owner_phone</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+	
+	<REPORT name="Domain Transfer Decline" keyfield="id" action="TransferEmailed"
+			actioncount="4" table="vwtransfer, webshow"
+			where="(vwtransfer.response = 'clientRejected') AND (vwtransfer.emailed[4] = false) AND (webshow.webshowid = 20)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwtransfer">owner_email</ADDRESS>
+		<BODYFIELD reference="{{domainname}}" basetable="vwtransfer">domainname</BODYFIELD>
+		<BODYFIELD reference="{{requester}}" basetable="vwtransfer">request_name</BODYFIELD>
+		<BODYFIELD reference="{{requester_email}}" basetable="vwtransfer">request_email</BODYFIELD>
+		<BODYFIELD reference="{{requester_phone}}" basetable="vwtransfer">request_phone</BODYFIELD>
+		<BODYFIELD reference="{{owner}}" basetable="vwtransfer">owner_name</BODYFIELD>
+		<BODYFIELD reference="{{owner_email}}" basetable="vwtransfer">owner_email</BODYFIELD>
+		<BODYFIELD reference="{{owner_phone}}" basetable="vwtransfer">owner_phone</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+	
+	<REPORT name="Domain Messaging" keyfield="messageid" action="MessageEmailed"
+			actioncount="1" table="vwmessages, webshow"
+			where="(vwmessages.emailed[1] = false) AND (webshow.webshowid = vwmessages.messagetype)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwmessages">admin_email</ADDRESS>
+		<BODYFIELD reference="{{domainname}}" basetable="vwmessages">domainname</BODYFIELD>
+		<BODYFIELD reference="{{requester}}" basetable="vwmessages">request_name</BODYFIELD>
+		<BODYFIELD reference="{{requester_email}}" basetable="vwmessages">request_email</BODYFIELD>
+		<BODYFIELD reference="{{requester_phone}}" basetable="vwmessages">request_phone</BODYFIELD>
+		<BODYFIELD reference="{{owner}}" basetable="vwmessages">owner_name</BODYFIELD>
+		<BODYFIELD reference="{{owner_email}}" basetable="vwmessages">owner_email</BODYFIELD>
+		<BODYFIELD reference="{{owner_phone}}" basetable="vwmessages">owner_phone</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+	
+	<REPORT name="Domain Transfer Accepted" keyfield="messageid" action="MessageEmailed"
+			actioncount="2" table="vwmessages, webshow"
+			where="(vwmessages.emailed[2] = false) AND (vwmessages.messagetype = 19) AND (webshow.webshowid = 19)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwmessages">owner_email</ADDRESS>
+		<BODYFIELD reference="{{domainname}}" basetable="vwmessages">domainname</BODYFIELD>
+		<BODYFIELD reference="{{requester}}" basetable="vwmessages">request_name</BODYFIELD>
+		<BODYFIELD reference="{{requester_email}}" basetable="vwmessages">request_email</BODYFIELD>
+		<BODYFIELD reference="{{requester_phone}}" basetable="vwmessages">request_phone</BODYFIELD>
+		<BODYFIELD reference="{{owner}}" basetable="vwmessages">owner_name</BODYFIELD>
+		<BODYFIELD reference="{{owner_email}}" basetable="vwmessages">owner_email</BODYFIELD>
+		<BODYFIELD reference="{{owner_phone}}" basetable="vwmessages">owner_phone</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+	
+	<REPORT name="Membership Expiry" keyfield="roid" action="ClientEmailed"
+			actioncount="1" table="vwclientsum, webshow"
+			where="(vwclientsum.emailed[1] = false) AND (vwclientsum.expiredays &lt; 30) AND (webshow.webshowid = 23)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwclientsum">email</ADDRESS>
+		<BODYFIELD reference="{{expiredays}}" basetable="vwclientsum">expiredays</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+
+	<REPORT name="MPESA Receipt" keyfield="sms_trans_id" action="MPesaEmailed"
+			actioncount="1" table="vwsmstrans, webshow"
+			where="(vwsmstrans.emailed[1] = false) AND (vwsmstrans.origin = 'D48617A140') AND (webshow.webshowid = 24)">
+		<SUBJECT title="subject" basetable="webshow">narrative</SUBJECT>
+		<ADDRESS title="address" basetable="vwsmstrans">emailaddress</ADDRESS>
+		<BODYFIELD reference="{{amount}}" basetable="vwsmstrans">amount</BODYFIELD>
+		<FIELD title="Notification" basetable="webshow">details</FIELD>
+	</REPORT>
+
+</ESCALATION>

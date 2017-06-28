@@ -1,0 +1,238 @@
+<APP name="SG" org="org_id" password="change_password">
+	<MENU name="Standard Group">
+		<MENU name="Regions" role="admin">1</MENU>
+		<MENU name="Orgs" role="admin">5</MENU>
+		<MENU name="Distributor Sales" role="manager">10</MENU>
+		<MENU name="Distributor Reports" role="manager">
+			<MENU name="Daily Sales">20</MENU>
+			<MENU name="Sales Range">25</MENU>
+		</MENU>
+		<MENU name="Distributor Administration" role="manager">
+			<MENU name="Entitys">30</MENU>
+		</MENU>
+		<MENU name="Sales" role="supermarket,vendor,subscriber">15</MENU>
+		<MENU name="General Reports" role="admin">
+			<MENU name="Regional">40</MENU>
+			<MENU name="Sub Regional">35</MENU>
+		</MENU>
+	</MENU>
+	<DESK w="700" name="Regions" key="1" h="550">
+		<GRID name="Regions" keyfield="region_id" table="regions" noorg="true">
+			<TEXTFIELD w="75" title="Region ID">region_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Org ID">org_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Region Name">region_name</TEXTFIELD>
+			<GRID name="Sub Regions" keyfield="sub_region_id" linkfield="region_id" table="vw_sub_regions">
+				<TEXTFIELD w="75" title="Org ID">org_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Org Name">org_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Region ID">region_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Region Name">region_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Sub Region ID">sub_region_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Sub Region Name">sub_region_name</TEXTFIELD>
+				<GRID name="Distributors" keyfield="distributor_id" linkfield="sub_region_id" table="vw_distributors">
+					<TEXTFIELD w="75" title="Org ID">org_id</TEXTFIELD>
+					<TEXTFIELD w="75" title="Org Name">org_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Sub Region ID">sub_region_id</TEXTFIELD>
+					<TEXTFIELD w="75" title="Sub Region Name">sub_region_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Distributor ID">distributor_id</TEXTFIELD>
+					<TEXTFIELD w="75" title="Distributor Name">distributor_name</TEXTFIELD>
+					<GRID name="Entitys" keyfield="entity_id" linkfield="distributor_id" table="vw_entitys">
+						<TEXTFIELD w="75" title="Entity ID">entity_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Entity Name">entity_name</TEXTFIELD>
+						<TEXTFIELD w="75" title="User Name">user_name</TEXTFIELD>
+						<TEXTFIELD w="75" title="Org Name">org_name</TEXTFIELD>
+						<TEXTFIELD w="75" title="Entity Type Name">entity_type_name</TEXTFIELD>
+						<TEXTFIELD w="75" title="Mobile">primary_telephone</TEXTFIELD>
+						<CHECKBOX w="75" title="Active">is_active</CHECKBOX>
+						<FORM name="Entitys" keyfield="entity_id" linkfield="distributor_id" table="entitys">
+							<COMBOBOX w="430" title="Entity Type" lptable="entity_types" noorg="true" where="(use_key = 1)" y="10" h="20" x="10" lpfield="entity_type_name">entity_type_id</COMBOBOX>
+							<TEXTFIELD w="430" title="Entity Name" y="30" h="20" x="10">entity_name</TEXTFIELD>
+							<TEXTFIELD w="430" title="User Name" y="50" h="20" x="10">user_name</TEXTFIELD>
+							<TEXTFIELD w="430" title="Primary Email" y="70" h="20" x="10">primary_email</TEXTFIELD>
+							<TEXTFIELD w="150" title="Mobile" y="90" h="20" x="10">primary_telephone</TEXTFIELD>
+							<CHECKBOX w="150" title="Active" y="150" h="20" x="290">is_active</CHECKBOX>
+							<TEXTFIELD w="150" title="First Password" y="170" h="20" x="290">first_password</TEXTFIELD>
+						</FORM>
+					</GRID>
+					<GRID name="Entity Types" keyfield="entity_type_id" table="entity_types" noorg="true">
+						<TEXTFIELD w="75" title="Entity Type ID">entity_type_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Org ID">org_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Entity Type Name">entity_type_name</TEXTFIELD>
+						<TEXTFIELD w="75" title="Entity Role">entity_role</TEXTFIELD>
+						<TEXTFIELD w="75" title="Use Key">use_key</TEXTFIELD>
+						<TEXTFIELD w="75" title="Start View">start_view</TEXTFIELD>
+						<TEXTFIELD w="75" title="Group Email">group_email</TEXTFIELD>
+						<FORM name="Entity Types" keyfield="entity_type_id" table="entity_types" noorg="true">
+							<TEXTFIELD w="150" title="Entity Type Name" y="10" h="20" x="10">entity_type_name</TEXTFIELD>
+							<TEXTFIELD w="430" title="Entity Role" y="30" h="20" x="10">entity_role</TEXTFIELD>
+							<TEXTFIELD w="150" title="Use Key" y="50" h="20" x="10">use_key</TEXTFIELD>
+							<TEXTFIELD w="430" title="Start View" y="70" h="20" x="10">start_view</TEXTFIELD>
+							<TEXTFIELD w="430" title="Group Email" y="90" h="20" x="10">group_email</TEXTFIELD>
+							<TEXTAREA w="430" title="Description" y="110" h="70" x="10">description</TEXTAREA>
+							<TEXTAREA w="430" title="Details" y="180" h="70" x="10">details</TEXTAREA>
+						</FORM>
+					</GRID>
+					<FORM name="Distributors" keyfield="distributor_id" linkfield="sub_region_id" table="distributors">
+						<TEXTFIELD w="150" title="Distributor Name" y="10" h="20" x="10">distributor_name</TEXTFIELD>
+						<TEXTAREA w="430" title="Details" y="30" h="70" x="10">details</TEXTAREA>
+					</FORM>
+				</GRID>
+				<FORM name="Sub Regions" keyfield="sub_region_id" linkfield="region_id" table="sub_regions">
+					<TEXTFIELD w="150" title="Sub Region Name" y="30" h="20" x="10">sub_region_name</TEXTFIELD>
+					<TEXTAREA w="430" title="Details" y="50" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<FORM name="Regions" keyfield="region_id" table="regions">
+				<TEXTFIELD w="150" title="Region Name" y="10" h="20" x="10">region_name</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="30" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Orgs" key="5" h="550">
+		<FORM foredit="true" new="false" name="Select Organisation" keyfield="entity_id" delete="false" table="entitys" noorg="true" user="entity_id">
+			<COMBOBOX w="150" title="Org" lptable="orgs" noorg="true" where="(is_active = true)" y="10" h="20" x="10" lpfield="org_name">org_id</COMBOBOX>
+		</FORM>
+		<GRID name="Organisation" keyfield="org_id" table="orgs" noorg="true">
+			<TEXTFIELD w="75" title="Org ID">org_id</TEXTFIELD>
+			<TEXTFIELD w="275" title="Org Name">org_name</TEXTFIELD>
+			<CHECKBOX w="75" title="Default">is_default</CHECKBOX>
+			<CHECKBOX w="75" title="Active">is_active</CHECKBOX>
+			<FORM name="Organisation" keyfield="org_id" table="orgs" noorg="true">
+				<TEXTFIELD w="350" title="Organisation" y="10" h="20" x="10">org_name</TEXTFIELD>
+				<CHECKBOX w="150" title="Default" y="30" h="20" x="10">is_default</CHECKBOX>
+				<CHECKBOX w="150" title="Active" y="30" h="20" x="290">is_active</CHECKBOX>
+				<TEXTFIELD w="350" title="Logo" y="50" h="20" x="10">logo</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="70" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Distributor Sales" key="10" h="550">
+		<GRID name="Entitys" keyfield="entity_id" table="vw_entitys">
+			<TEXTFIELD w="75" title="Entity ID">entity_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Entity Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="User Name">user_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Org Name">org_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Entity Type Name">entity_type_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Mobile">primary_telephone</TEXTFIELD>
+			<CHECKBOX w="75" title="Active">is_active</CHECKBOX>
+			<GRID name="Sales" keyfield="sale_id" linkfield="entity_id" table="vw_sales">
+				<TEXTFIELD w="75" title="Sale ID">sale_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Distributor Name">distributor_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Entity ID">entity_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Entity Name">entity_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Org ID">org_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Org Name">org_name</TEXTFIELD>
+				<TEXTDATE w="75" title="Sale Date">sale_date</TEXTDATE>
+				<TEXTFIELD w="75" title="Ordered">ordered</TEXTFIELD>
+				<TEXTFIELD w="75" title="Supplied">supplied</TEXTFIELD>
+				<TEXTFIELD w="75" title="Delivered">delivered</TEXTFIELD>
+				<TEXTFIELD w="75" title="Vendor Confirmed">vendor_confirmed</TEXTFIELD>
+				<TEXTFIELD w="75" title="Vendor Sold">vendor_sold</TEXTFIELD>
+				<TEXTFIELD w="75" title="Vendor Returns">vendor_returns</TEXTFIELD>
+				<TEXTDECIMAL w="75" title="Unit Price">unit_price</TEXTDECIMAL>
+				<FORM name="Sales" keyfield="sale_id" linkfield="entity_id" table="sales">
+					<TEXTDATE w="150" title="Sale Date" y="50" h="20" x="10">sale_date</TEXTDATE>
+					<TEXTFIELD w="150" title="Ordered" y="50" h="20" x="290">ordered</TEXTFIELD>
+					<TEXTFIELD w="150" title="Supplied" y="70" h="20" x="10">supplied</TEXTFIELD>
+					<TEXTFIELD w="150" title="Delivered" y="70" h="20" x="290">delivered</TEXTFIELD>
+					<TEXTFIELD w="150" title="Vendor Confirmed" y="90" h="20" x="10">vendor_confirmed</TEXTFIELD>
+					<TEXTFIELD w="150" title="Vendor Sold" y="90" h="20" x="290">vendor_sold</TEXTFIELD>
+					<TEXTFIELD w="150" title="Vendor Returns" y="110" h="20" x="10">vendor_returns</TEXTFIELD>
+					<TEXTDECIMAL w="150" title="Unit Price" y="110" h="20" x="290">unit_price</TEXTDECIMAL>
+					<TEXTAREA w="430" title="Details" y="130" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<JASPER name="Sale Report" reportfile="vw_sales.jasper"></JASPER>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Sales" key="15" h="550">
+		<GRID name="Sales" keyfield="sale_id" table="vw_sales" user="entity_id">
+			<TEXTFIELD w="75" title="Distributor ID">distributor_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Distributor Name">distributor_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Entity ID">entity_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Entity Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Org ID">org_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Org Name">org_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Sale ID">sale_id</TEXTFIELD>
+			<TEXTDATE w="75" title="Sale Date">sale_date</TEXTDATE>
+			<TEXTFIELD w="75" title="Ordered">ordered</TEXTFIELD>
+			<TEXTFIELD w="75" title="Supplied">supplied</TEXTFIELD>
+			<TEXTFIELD w="75" title="Delivered">delivered</TEXTFIELD>
+			<TEXTFIELD w="75" title="Vendor Confirmed">vendor_confirmed</TEXTFIELD>
+			<TEXTFIELD w="75" title="Vendor Sold">vendor_sold</TEXTFIELD>
+			<TEXTFIELD w="75" title="Vendor Returns">vendor_returns</TEXTFIELD>
+			<TEXTDECIMAL w="75" title="Unit Price">unit_price</TEXTDECIMAL>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Distributor Daily Reports" key="20" h="550">
+		<FILTER w="700" name="Daily Sales Report" split="150" type="vert" h="550">
+			<FILTERFORM name="Select Date">
+				<TEXTDATE w="150" title="Select Date" y="10" h="20" x="10">sale_date</TEXTDATE>
+			</FILTERFORM>
+			<JASPER name="Distributor Daily Reports" reportfile="vw_distributor_daily_sales.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Distributor Sales Range" key="25" h="550">
+		<FILTER w="700" name="Distributor Sales Range" split="150" type="vert" h="550">
+			<FILTERFORM name="Date Range">
+				<TEXTDATE w="150" title="Starting From" y="10" h="20" x="10">start_date</TEXTDATE>
+				<TEXTDATE w="150" title="Ending At" y="10" h="20" x="290">end_date</TEXTDATE>
+			</FILTERFORM>
+			<JASPER name="Distributor Daily Reports" reportfile="vw_distributor_sales_range.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Distributor Entitys" key="30" h="550">
+		<GRID name="Entitys" keyfield="entity_id" linkfield="distributor_id" table="vw_entitys">
+			<TEXTFIELD w="75" title="Entity ID">entity_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Entity Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="User Name">user_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Org Name">org_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Entity Type Name">entity_type_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Mobile">primary_telephone</TEXTFIELD>
+			<CHECKBOX w="75" title="Active">is_active</CHECKBOX>
+			<FORM name="Entitys" keyfield="entity_id" linkfield="distributor_id" table="entitys">
+				<COMBOBOX w="430" title="Distributor ID" lptable="distributors" y="320" h="20" x="10" lpfield="distributor_name">distributor_id</COMBOBOX>
+				<COMBOBOX w="430" title="Entity Type" lptable="entity_types" noorg="true" where="(use_key = 1)" y="10" h="20" x="10" lpfield="entity_type_name">entity_type_id</COMBOBOX>
+				<TEXTFIELD w="430" title="Entity Name" y="30" h="20" x="10">entity_name</TEXTFIELD>
+				<TEXTFIELD w="430" title="User Name" y="50" h="20" x="10">user_name</TEXTFIELD>
+				<TEXTFIELD w="430" title="Primary Email" y="70" h="20" x="10">primary_email</TEXTFIELD>
+				<TEXTFIELD w="150" title="Mobile" y="90" h="20" x="10">primary_telephone</TEXTFIELD>
+				<CHECKBOX w="150" title="Active" y="150" h="20" x="290">is_active</CHECKBOX>
+				<TEXTFIELD w="150" title="First Password" y="170" h="20" x="290">first_password</TEXTFIELD>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Sub Regional Reports" key="35" h="550">
+		<FILTER w="700" name="Sub Region Daily Reports" split="150" type="vert" h="550">
+			<FILTERFORM name="Select Date">
+				<COMBOBOX w="430" title="Sub Region ID" lptable="sub_regions" noorg="true" lpkey="org_id" y="10" h="20" x="10" lpfield="sub_region_name">sub_region_org_id</COMBOBOX>
+				<TEXTDATE w="150" title="Select Date" y="10" h="20" x="10">sale_date</TEXTDATE>
+			</FILTERFORM>
+			<JASPER name="Sub Regional Daily Sale" reportfile="vw_sub_regional_daily_sales.jasper"></JASPER>
+		</FILTER>
+		<FILTER w="700" name="Sub Region  Date Range" split="150" type="vert" h="550">
+			<FILTERFORM name="Date Range">
+				<COMBOBOX w="430" title="Sub Region ID" lptable="sub_regions" noorg="true" lpkey="org_id" y="10" h="20" x="10" lpfield="sub_region_name">sub_region_org_id</COMBOBOX>
+				<TEXTDATE w="150" title="Starting From" y="10" h="20" x="10">start_date</TEXTDATE>
+				<TEXTDATE w="150" title="Ending At" y="10" h="20" x="290">end_date</TEXTDATE>
+			</FILTERFORM>
+			<JASPER name="Distributor Daily Reports" reportfile="vw_sub_regional_sales_range.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Regional Reports" key="40" h="550">
+		<FILTER w="700" name="Daily Reports" split="150" type="vert" h="550">
+			<FILTERFORM name="Select Date">
+				<COMBOBOX w="430" title="Region ID" lptable="regions" noorg="true" lpkey="region_id" y="10" h="20" x="10" lpfield="region_name">region_id</COMBOBOX>
+				<TEXTDATE w="150" title="Select Date" y="10" h="20" x="10">sale_date</TEXTDATE>
+			</FILTERFORM>
+			<JASPER name="Regional Daily Sale" reportfile="vw_regional_daily_sales.jasper"></JASPER>
+		</FILTER>
+		<FILTER w="700" name="Date Range" split="150" type="vert" h="550">
+			<FILTERFORM name="Date Range">
+				<COMBOBOX w="430" title="Region ID" lptable="regions" noorg="true" lpkey="region_id" y="10" h="20" x="10" lpfield="region_name">region_id</COMBOBOX>
+				<TEXTDATE w="150" title="Starting From" y="10" h="20" x="10">start_date</TEXTDATE>
+				<TEXTDATE w="150" title="Ending At" y="10" h="20" x="290">end_date</TEXTDATE>
+			</FILTERFORM>
+			<JASPER name="Distributor Daily Reports" reportfile="vw_distributor_sales_range.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+</APP>

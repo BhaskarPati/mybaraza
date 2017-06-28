@@ -1,0 +1,98 @@
+<APP>
+	<MENU background="red" name="School">
+		<MENU name="Students">1</MENU>
+		<MENU name="Staff">20</MENU>
+		<MENU name="Control Panel">15</MENU>
+		<MENU name="Subjects">25</MENU>
+		<MENU name="Applicant">30</MENU>
+		<MENU name="School Events">40</MENU>
+		<MENU name="Guardians">45</MENU>
+	</MENU>
+	<DESK w="700" name="Sessions" h="500">
+		<GRID name="Sessions" keyfield="session_id" linkfield="org_id" table="vw_sessions">
+			<TEXTFIELD w="75" title="Session ID">session_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Session Name">session_name</TEXTFIELD>
+			<TEXTDATE w="75" title="Session Start Date">session_start_date</TEXTDATE>
+			<TEXTDATE w="75" title="Session End Date">session_end_date</TEXTDATE>
+			<FORM name="Sessions" keyfield="session_id" linkfield="org_id" table="sessions">
+				<TEXTFIELD w="150" title="Session Name" h="20" y="10" x="10">session_name</TEXTFIELD>
+				<TEXTDATE w="150" title="Session Start Date" h="20" y="10" x="290">session_start_date</TEXTDATE>
+				<TEXTDATE w="150" title="Session End Date" h="20" y="30" x="10">session_end_date</TEXTDATE>
+				<TEXTAREA w="430" title="Details" h="70" y="50" x="10">details</TEXTAREA>
+			</FORM>
+			<GRID name="Timetable" keyfield="timetable_id" linkfield="session_id" table="vw_timetable">
+				<TEXTFIELD w="75" title="Session ID">session_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Session Name">session_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Staff ID">staff_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Surname">surname</TEXTFIELD>
+				<TEXTFIELD w="75" title="Stream Class ID">stream_class_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Stream">stream</TEXTFIELD>
+				<TEXTFIELD w="75" title="Subject Name">subject_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Timetable ID">timetable_id</TEXTFIELD>
+				<CHECKBOX w="75" title="Monday">monday</CHECKBOX>
+				<CHECKBOX w="75" title="Tuesday">tuesday</CHECKBOX>
+				<CHECKBOX w="75" title="Wednesday">wednesday</CHECKBOX>
+				<CHECKBOX w="75" title="Thursday">thursday</CHECKBOX>
+				<CHECKBOX w="75" title="Friday">friday</CHECKBOX>
+				<CHECKBOX w="75" title="Saturday">saturday</CHECKBOX>
+				<SPINTIME w="75" title="Start Time">start_time</SPINTIME>
+				<SPINTIME w="75" title="End Time">end_time</SPINTIME>
+				<FORM name="Timetable" keyfield="timetable_id" linkfield="session_id" table="timetable">
+					<COMBOBOX w="430" title="Subject ID" lptable="subjects" h="20" y="10" lpfield="subject_name" x="10">subject_id</COMBOBOX>
+					<COMBOBOX w="430" title="Staff ID" lptable="staff" h="20" y="30" lpfield="full_name" x="10">staff_id</COMBOBOX>
+					<CHECKBOX w="150" title="Monday" h="20" y="50" x="10">monday</CHECKBOX>
+					<CHECKBOX w="150" title="Tuesday" h="20" y="50" x="290">tuesday</CHECKBOX>
+					<CHECKBOX w="150" title="Wednesday" h="20" y="70" x="10">wednesday</CHECKBOX>
+					<CHECKBOX w="150" title="Thursday" h="20" y="70" x="290">thursday</CHECKBOX>
+					<CHECKBOX w="150" title="Friday" h="20" y="90" x="10">friday</CHECKBOX>
+					<CHECKBOX w="150" title="Saturday" h="20" y="90" x="290">saturday</CHECKBOX>
+					<SPINTIME w="150" title="Start Time" h="20" y="110" x="10">start_time</SPINTIME>
+					<SPINTIME w="150" title="End Time" h="20" y="110" x="290">end_time</SPINTIME>
+					<TEXTAREA w="430" title="Narrative" h="70" y="130" x="10">narrative</TEXTAREA>
+					<COMBOBOX w="430" title="Stream Class ID" lptable="stream_classes" h="20" y="200" lpfield="stream_class_id" x="10">stream_class_id</COMBOBOX>
+				</FORM>
+			</GRID>
+			<GRID name="Exams" keyfield="exam_id" linkfield="session_id" table="vw_exams">
+				<TEXTFIELD w="75" title="Session ID">session_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Session Name">session_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Stream Class ID">stream_class_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Stream">stream</TEXTFIELD>
+				<TEXTFIELD w="75" title="Org ID">org_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Exam ID">exam_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Class Level">class_level</TEXTFIELD>
+				<TEXTFIELD w="75" title="Exam File">exam_file</TEXTFIELD>
+				<FORM name="Exams" keyfield="exam_id" linkfield="session_id" table="exams">
+					<COMBOBOX w="430" title="Subject ID" lptable="subjects" h="20" y="10" lpfield="subject_name" x="10">subject_id</COMBOBOX>
+					<COMBOBOX w="430" title="Class Level" lptable="stream_classes" lpkey="stream_class_id" h="20" y="30" lpfield="stream_class_id" x="10">class_level</COMBOBOX>
+					<TEXTFIELD w="150" title="Exam File" h="20" y="50" x="10">exam_file</TEXTFIELD>
+					<TEXTAREA w="430" title="Exam Narrative" h="70" y="70" x="10">exam_narrative</TEXTAREA>
+				</FORM>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Stream Classes" h="500">
+		<GRID name="Stream Classes" keyfield="stream_class_id" table="vw_stream_classes">
+			<TEXTFIELD w="75" title="Stream Class ID">stream_class_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Class Level">class_level</TEXTFIELD>
+			<TEXTFIELD w="75" title="Stream">stream</TEXTFIELD>
+			<TEXTFIELD w="75" title="Narrative">narrative</TEXTFIELD>
+			<FORM name="Stream Classes" keyfield="stream_class_id" table="stream_classes">
+				<TEXTFIELD w="150" title="Class Level" h="20" y="10" x="10">class_level</TEXTFIELD>
+				<TEXTFIELD w="150" title="Stream" h="20" y="10" x="290">stream</TEXTFIELD>
+				<TEXTFIELD w="430" title="Narrative" h="20" y="30" x="10">narrative</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" h="70" y="50" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Grades" h="500">
+		<GRID name="Grades" keyfield="grade_id" table="vw_grades">
+			<TEXTFIELD w="75" title="Grade ID">grade_id</TEXTFIELD>
+			<TEXTDECIMAL w="75" title="Grade Range">grade_range</TEXTDECIMAL>
+			<FORM name="Grades" keyfield="grade_id" table="grades">
+				<TEXTFIELD w="150" title="Grade ID" h="20" y="10" x="10">grade_id</TEXTFIELD>
+				<TEXTDECIMAL w="150" title="Grade Range" h="20" y="10" x="290">grade_range</TEXTDECIMAL>
+				<TEXTAREA w="430" title="Details" h="70" y="30" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+</APP>

@@ -1,0 +1,761 @@
+<APP name="Mobile Health">
+	<MENU name="Mobile Health">
+		<MENU name="Patients" role="admin">
+			<MENU name="Patients" role="admin">1</MENU>
+			<MENU name="Patients Forms">2</MENU>
+		</MENU>
+		<MENU name="SMS Admin" role="admin">
+			<MENU name="SMS Language" role="admin">20</MENU>
+			<MENU name="SMS Messages" role="admin">21</MENU>
+			<MENU name="Ad Hoc SMS" role="admin">33</MENU>
+			<MENU name="SMS Schedule" role="admin">23</MENU>
+			<MENU name="SMS Log" role="admin">34</MENU>
+		</MENU>
+		<MENU name="Phone Calls" role="admin">
+			<MENU name="Call Log" role="admin">32</MENU>
+			<MENU name="Call Settings" role="admin">31</MENU>
+		</MENU>
+		<MENU name="Admin" role="admin">
+			<MENU name="Sites" role="admin">22</MENU>
+			<MENU name="Health Worker" role="admin">24</MENU>
+			<MENU name="Forms" role="admin">13</MENU>
+			<MENU name="Form Approvals" role="admin">14</MENU>
+			<MENU name="SMS">30</MENU>
+		</MENU>
+	</MENU>
+	<DESK w="700" name="Patients" key="1" h="500">
+		<GRID name="Patients" keyfield="entity_id" table="vw_patients">
+			<TITLEFIELD w="75" title="Site ID">site_name</TITLEFIELD>
+			<TEXTFIELD w="75" title="Entity ID">entity_id</TEXTFIELD>
+			<TEXTFIELD w="140" title="Entity Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="140" title="Patients Language">patient_lang_name</TEXTFIELD>
+			<TEXTFIELD w="140" title="Mobile No">mobile_number</TEXTFIELD>
+			<TEXTFIELD w="140" title="Partner Mobile">partner_mobile_no</TEXTFIELD>
+			<TEXTFIELD w="80" title="Pregnancy Week">pregnancy_week</TEXTFIELD>
+			<TEXTDATE w="140" title="LMP Date">conception_date</TEXTDATE>
+			<TEXTDATE w="140" title="Expected Delivery Date">expected_delivery_date</TEXTDATE>
+			<CHECKBOX w="75" title="Active" format="boolean">is_active</CHECKBOX>
+			<FORM name="Patients" keyfield="entity_id" table="entitys">
+				<DEFAULT default="0">org_id</DEFAULT>
+				<DEFAULT default="2">entity_type_id</DEFAULT>
+				<DEFAULT default="client">Function_Role</DEFAULT>
+				<TEXTFIELD w="430" title="Entity Name" y="10" h="20" x="10">entity_name</TEXTFIELD>
+				<CHECKBOX w="150" title="Active" default="true" y="30" h="20" x="10">is_active</CHECKBOX>
+				<COMBOBOX w="430" title="Site" lptable="sites" tab="Patient" y="2" h="20" x="10" lpfield="site_name">site_id</COMBOBOX>
+				<COMBOBOX w="430" title="Health Worker" lptable="entitys" tab="Patient" lpkey="entity_id" where="(entity_type_id = 1)" y="22" h="20" x="10" lpfield="entity_name">health_worker_id</COMBOBOX>
+				<COMBOBOX w="430" title="Language" default="2" lptable="languages" tab="Patient" y="42" h="20" x="10" lpfield="language_name">language_id</COMBOBOX>
+				<TEXTFIELD w="150" title="Mobile Number" default="+254" tab="Patient" y="62" h="20" x="10">mobile_number</TEXTFIELD>
+				<TEXTDATE w="150" title="Birth Date" tab="Patient" y="62" h="20" x="290">birth_date</TEXTDATE>
+				<TEXTDATE w="150" title="LMP Date" tab="Patient" y="82" h="20" x="10">conception_date</TEXTDATE>
+				<TEXTDATE w="150" title="Enrollment Date" tab="Patient" y="102" h="20" x="290">enrollment_date</TEXTDATE>
+				<COMBOBOX w="430" title="Language" default="2" lptable="languages" tab="Partner" lpkey="language_id" y="2" h="20" x="10" lpfield="language_name">partner_language_id</COMBOBOX>
+				<TEXTFIELD w="430" title="Partner Name" tab="Partner" y="22" h="20" x="10">partner_name</TEXTFIELD>
+				<TEXTFIELD w="150" title="Mobile No" tab="Partner" y="62" h="20" x="290">partner_mobile_no</TEXTFIELD>
+				<TEXTDATE w="150" title="Birth Date" tab="Partner" y="42" h="20" x="10">partner_birth_date</TEXTDATE>
+				<TEXTDATE w="150" title="Enrollment Date" tab="Partner" y="42" h="20" x="290">partner_enrollment_date</TEXTDATE>
+				<TEXTAREA w="550" tab="Details" y="2" h="150" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Organisation" key="11" h="500">
+		<GRID name="Organisation" keyfield="org_id" table="orgs">
+			<GRID wheresql="table_name = 'orgs'" name="Address" keyfield="address_id" linkfield="table_id" table="vw_address">
+				<TEXTFIELD w="140" title="Country Name">sys_country_name</TEXTFIELD>
+				<TEXTFIELD w="80" title="Postal Code">postal_code</TEXTFIELD>
+				<TEXTFIELD w="140" title="Town">town</TEXTFIELD>
+				<TEXTFIELD w="140" title="Phone Number">phone_number</TEXTFIELD>
+				<TEXTFIELD w="120" title="Mobile">mobile</TEXTFIELD>
+				<TEXTFIELD w="120" title="Email">email</TEXTFIELD>
+				<FORM name="Address" keyfield="address_id" linkfield="table_id" table="address">
+					<DEFAULT default="orgs">table_name</DEFAULT>
+					<COMBOBOX w="430" title="Country" default="KE" lptable="sys_countrys" y="10" h="20" x="10" lpfield="sys_country_name">sys_country_id</COMBOBOX>
+					<TEXTFIELD w="150" title="Post Office Box" y="30" h="20" x="10">post_office_box</TEXTFIELD>
+					<TEXTFIELD w="150" title="Postal Code" y="30" h="20" x="290">postal_code</TEXTFIELD>
+					<TEXTFIELD w="150" title="Town" y="50" h="20" x="10">town</TEXTFIELD>
+					<TEXTFIELD w="430" title="Premises" y="70" h="20" x="10">premises</TEXTFIELD>
+					<TEXTFIELD w="430" title="Street" y="90" h="20" x="10">street</TEXTFIELD>
+					<TEXTFIELD w="430" title="Phone Number" y="110" h="20" x="10">phone_number</TEXTFIELD>
+					<TEXTFIELD w="150" title="Extension" y="130" h="20" x="10">extension</TEXTFIELD>
+					<TEXTFIELD w="430" title="Mobile" y="150" h="20" x="10">mobile</TEXTFIELD>
+					<TEXTFIELD w="430" title="Fax" y="170" h="20" x="10">fax</TEXTFIELD>
+					<TEXTFIELD w="430" title="Email" y="190" h="20" x="10">email</TEXTFIELD>
+					<TEXTAREA w="430" title="Details" y="210" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<TEXTFIELD w="80" title="Org ID">org_id</TEXTFIELD>
+			<TEXTFIELD w="240" title="Org Name">org_name</TEXTFIELD>
+			<CHECKBOX w="80" title="Default" format="boolean">is_default</CHECKBOX>
+			<CHECKBOX w="80" title="Active" format="boolean">is_active</CHECKBOX>
+			<FORM name="Organisation" keyfield="org_id" table="orgs">
+				<TEXTFIELD w="350" title="Organisation" y="10" h="20" x="10">org_name</TEXTFIELD>
+				<CHECKBOX w="150" title="Default" y="30" h="20" x="10">is_default</CHECKBOX>
+				<CHECKBOX w="150" title="Active" y="30" h="20" x="290">is_active</CHECKBOX>
+				<TEXTAREA w="430" title="Details" y="50" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Applied Forms" key="2" h="500">
+		<GRID user_="entity_id" name="Patients" keyfield="entity_id" table="vw_patients">
+			<TITLEFIELD w="50" title="Select">site_name</TITLEFIELD>
+			<TEXTFIELD w="150" title="Patient">entity_name</TEXTFIELD>
+			<TEXTFIELD w="100" title="Mobile No">mobile_number</TEXTFIELD>
+			<TEXTFIELD w="100" title="Partner Mobile">partner_mobile_no</TEXTFIELD>
+			<TEXTFIELD w="50" title="Pregnancy Week">pregnancy_week</TEXTFIELD>
+			<TEXTFIELD w="50" title="Patients Language">patient_lang_name</TEXTFIELD>
+			<GRID name="Applied Forms" keyfield="entry_form_id" linkfield="entity_id" table="vw_entry_forms" where="(completed = '0')">
+				<TITLEFIELD w="50" title="Select">entity_name</TITLEFIELD>
+				<TEXTFIELD w="350" title="Form Name">form_name</TEXTFIELD>
+				<TEXTTIMESTAMP w="150" title="Application Date" format="date">application_date</TEXTTIMESTAMP>
+				<ACTION w="75" title="View Form" action="ENTRYFORM" blankpage="true">entry_form_id</ACTION>
+				<BROWSER access_cipher="MHealth Protect 2012" name="Entry Form" linkfield="actionvalue" baseurl="http://localhost:9090/form.jsp?action=ENTRYFORM" blankpage="yes"></BROWSER>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Forms" key="13" h="500">
+		<GRID name="Forms" keyfield="form_id" orderby="form_number, form_id" table="forms">
+			<TEXTFIELD w="75" title="Form ID">form_id</TEXTFIELD>
+			<TEXTFIELD w="240" title="Form Name">form_name</TEXTFIELD>
+			<TEXTFIELD w="120" title="Form Number">form_number</TEXTFIELD>
+			<TEXTFIELD w="75" title="Version">version</TEXTFIELD>
+			<CHECKBOX w="75" title="Completed" format="boolean" ischar="true">completed</CHECKBOX>
+			<CHECKBOX w="75" title="Active" format="boolean" ischar="true">is_active</CHECKBOX>
+			<ACTION w="75" title="View Form" action="FORM" blankpage="true">form_id</ACTION>
+			<GRID name="Fields" keyfield="field_id" orderby="field_order" linkfield="form_id" table="vw_fields">
+				<TEXTFIELD w="75" title="Field Order">field_order</TEXTFIELD>
+				<TEXTFIELD w="240" title="Question">question</TEXTFIELD>
+				<TEXTFIELD w="75" title="Field Type">field_type
+					<NODE>TEXTFIELD</NODE>
+					<NODE>TITLE</NODE>
+					<NODE>SUBGRID</NODE>
+				</TEXTFIELD>
+				<TEXTFIELD w="75" title="Share Line">share_line</TEXTFIELD>
+				<TEXTFIELD w="75" title="Field Size" default="25">field_size</TEXTFIELD>
+				<CHECKBOX w="75" title="Manditory" format="boolean">manditory</CHECKBOX>
+				<CHECKBOX w="75" title="Field Bold" format="boolean">field_bold</CHECKBOX>
+				<CHECKBOX w="75" title="Field Italics" format="boolean">field_italics</CHECKBOX>
+				<GRID name="Sub Fields" keyfield="sub_field_id" orderby="sub_field_order" linkfield="field_id" table="vw_sub_fields">
+					<TEXTFIELD w="75" title="Sub Field Order">sub_field_order</TEXTFIELD>
+					<TEXTFIELD w="240" title="Question">question</TEXTFIELD>
+					<TEXTFIELD w="75" title="Sub Title Share">sub_title_share</TEXTFIELD>
+					<TEXTFIELD w="75" title="Sub Field Type">sub_field_type</TEXTFIELD>
+					<TEXTFIELD w="75" title="Sub Field Size">sub_field_size</TEXTFIELD>
+					<CHECKBOX w="75" title="Manditory" format="boolean">manditory</CHECKBOX>
+					<FORM name="Sub Fields" keyfield="sub_field_id" linkfield="field_id" table="sub_fields">
+						<TEXTAREA w="430" title="Question" y="10" h="70" x="10">question</TEXTAREA>
+						<TEXTFIELD w="150" title="Sub Field Order" y="80" h="20" x="10">sub_field_order</TEXTFIELD>
+						<COMBOLIST w="150" title="Sub Field Type" y="80" h="20" x="290">sub_field_type
+							<NODE>TEXTFIELD</NODE>
+							<NODE>TITLE</NODE>
+							<NODE>SUBGRID</NODE>
+						</COMBOLIST>
+						<TEXTFIELD w="430" title="Sub Title Share" y="100" h="20" x="10">sub_title_share</TEXTFIELD>
+						<TEXTAREA w="430" title="Sub Field Lookup" y="120" h="70" x="10">sub_field_lookup</TEXTAREA>
+						<TEXTFIELD w="150" title="Sub Field Size" y="190" h="20" x="10">sub_field_size</TEXTFIELD>
+						<TEXTFIELD w="150" title="Sub Col Spans" y="190" h="20" x="290">sub_col_spans</TEXTFIELD>
+						<CHECKBOX w="150" title="Manditory" y="210" ischar="true" h="20" x="10">manditory</CHECKBOX>
+						<CHECKBOX w="150" title="Show" y="210" ischar="true" h="20" x="290">show</CHECKBOX>
+					</FORM>
+				</GRID>
+				<FORM name="Fields" keyfield="field_id" linkfield="form_id" table="fields">
+					<TEXTAREA w="430" title="Question" y="10" h="80" x="10">question</TEXTAREA>
+					<TEXTAREA w="430" title="Field Lookup" y="100" h="70" x="10">field_lookup</TEXTAREA>
+					<COMBOLIST w="150" title="Field Type" y="170" h="20" x="10">field_type
+						<NODE>TEXTFIELD</NODE>
+						<NODE>TITLE</NODE>
+						<NODE>SUBGRID</NODE>
+						<NODE>TAB</NODE>
+					</COMBOLIST>
+					<TEXTFIELD w="150" title="Field Order" y="170" h="20" x="290">field_order</TEXTFIELD>
+					<TEXTFIELD w="150" title="Share Line" y="190" h="20" x="10">share_line</TEXTFIELD>
+					<TEXTFIELD w="150" title="Field Size" default="25" y="210" h="20" x="10">field_size</TEXTFIELD>
+					<CHECKBOX w="150" title="Manditory" y="210" ischar="true" h="20" x="290">manditory</CHECKBOX>
+					<CHECKBOX w="150" title="Field Bold" y="230" ischar="true" h="20" x="10">field_bold</CHECKBOX>
+					<CHECKBOX w="150" title="Field Italics" y="230" ischar="true" h="20" x="290">field_italics</CHECKBOX>
+				</FORM>
+			</GRID>
+			<FORM name="Forms" keyfield="form_id" table="forms">
+				<TEXTFIELD w="430" title="Form Name" y="10" h="20" x="10">form_name</TEXTFIELD>
+				<TEXTFIELD w="150" title="Form Number" y="30" h="20" x="10">form_number</TEXTFIELD>
+				<TEXTFIELD w="150" title="Version" y="30" h="20" x="290">version</TEXTFIELD>
+				<CHECKBOX w="150" title="Completed" y="50" ischar="true" h="20" x="10">completed</CHECKBOX>
+				<CHECKBOX w="150" title="Is Active" y="50" ischar="true" h="20" x="290">is_active</CHECKBOX>
+				<TEXTAREA w="430" title="Form Header" y="70" h="70" x="10">form_header</TEXTAREA>
+				<TEXTAREA w="430" title="Form Footer" y="140" h="70" x="10">form_footer</TEXTAREA>
+				<TEXTAREA w="430" title="Details" y="210" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Form Approvals" key="14" h="500">
+		<GRID name="Completed Forms" keyfield="entry_form_id" table="vw_entry_forms" where="(completed = '1') AND (approved = '0') AND (rejected = '0')">
+			<TEXTFIELD w="150" title="Entity Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="150" title="Form Name">form_name</TEXTFIELD>
+			<TEXTTIMESTAMP w="100" title="Application Date" format="date">application_date</TEXTTIMESTAMP>
+			<TEXTTIMESTAMP w="100" title="Completion Date" format="date">completion_date</TEXTTIMESTAMP>
+			<ACTION w="75" title="View Form" action="ENTRYFORM" blankpage="true" disabled="yes">entry_form_id</ACTION>
+			<ACTIONS>
+				<ACTION fnct="Upd_Complete_Form" phase="2">Approve</ACTION>
+				<ACTION fnct="Upd_Complete_Form" phase="3">Reject</ACTION>
+			</ACTIONS>
+		</GRID>
+		<GRID name="Approved Forms" keyfield="entry_form_id" orderby="form_name, entity_name" table="vw_entry_forms" where="(completed = '1') AND (approved = '1')">
+			<TITLEFIELD w="150" title="Form Name">form_name</TITLEFIELD>
+			<TEXTFIELD w="150" title="Entity Name">entity_name</TEXTFIELD>
+			<TEXTTIMESTAMP w="100" title="Application Date" format="date">application_date</TEXTTIMESTAMP>
+			<TEXTTIMESTAMP w="100" title="Completion Date" format="date">completion_date</TEXTTIMESTAMP>
+			<TEXTTIMESTAMP w="100" title="Approve Date" format="date">approve_date</TEXTTIMESTAMP>
+			<ACTION w="75" title="View Form" action="ENTRYFORM" blankpage="true" disabled="yes">entry_form_id</ACTION>
+		</GRID>
+		<GRID name="Rejected Forms" keyfield="entry_form_id" table="vw_entry_forms" where="(completed = '1') AND (rejected = '1')">
+			<TEXTFIELD w="150" title="Entity Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="150" title="Form Name">form_name</TEXTFIELD>
+			<TEXTTIMESTAMP w="100" title="Application Date" format="date">application_date</TEXTTIMESTAMP>
+			<TEXTTIMESTAMP w="100" title="Completion Date" format="date">completion_date</TEXTTIMESTAMP>
+			<TEXTTIMESTAMP w="100" title="Rejected Date" format="date">approve_date</TEXTTIMESTAMP>
+			<ACTION w="75" title="View Form" action="ENTRYFORM" blankpage="true" disabled="yes">entry_form_id</ACTION>
+		</GRID>
+		<GRID name="Application Forms" keyfield="form_id" orderby="form_number, form_id" table="forms">
+			<TEXTFIELD w="75" title="Form ID">form_id</TEXTFIELD>
+			<TEXTFIELD w="240" title="Form Name">form_name</TEXTFIELD>
+			<TEXTFIELD w="120" title="Form Number">form_number</TEXTFIELD>
+			<TEXTFIELD w="75" title="Version">version</TEXTFIELD>
+			<CHECKBOX w="75" title="Completed" format="boolean" ischar="true">completed</CHECKBOX>
+			<CHECKBOX w="75" title="Active" format="boolean" ischar="true">is_active</CHECKBOX>
+			<ACTION w="75" title="View Form" action="FORM" blankpage="true">form_id</ACTION>
+			<GRID name="Application Forms" keyfield="entry_form_id" linkfield="form_id" table="vw_entry_forms" where="(completed = '0')">
+				<TEXTFIELD w="150" title="Entity Name">entity_name</TEXTFIELD>
+				<TEXTFIELD w="150" title="Form Name">form_name</TEXTFIELD>
+				<TEXTTIMESTAMP w="100" title="Application Date" format="date">application_date</TEXTTIMESTAMP>
+				<TEXTTIMESTAMP w="100" title="Completion Date" format="date">completion_date</TEXTTIMESTAMP>
+				<ACTION w="75" title="View Form" action="ENTRYFORM" blankpage="true" disabled="yes">entry_form_id</ACTION>
+				<ACTIONS>
+					<ACTION fnct="Upd_Complete_Form" phase="1">Submit Form</ACTION>
+				</ACTIONS>
+				<FORM name="Entry Forms" keyfield="entry_form_id" linkfield="form_id" table="entry_forms">
+					<COMBOBOX w="350" title="Entity Id" lptable="entitys" y="10" h="20" x="10" lpfield="entity_name">entity_id</COMBOBOX>
+					<TEXTFIELD w="430" title="Narrative" y="30" h="20" x="10">narrative</TEXTFIELD>
+					<TEXTAREA w="430" title="Details" y="50" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Form Reports" key="15" h="500">
+		<GRID name="Forms" keyfield="form_id" orderby="form_id" table="forms">
+			<TEXTFIELD w="75" title="Form ID">form_id</TEXTFIELD>
+			<TEXTFIELD w="150" title="Form Name">form_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Form Number">form_number</TEXTFIELD>
+			<TEXTFIELD w="75" title="Version">version</TEXTFIELD>
+			<CHECKBOX w="75" title="Completed" format="boolean">completed</CHECKBOX>
+			<ACTION w="75" title="View Form" path="form.report.jsp" action="FORMREPORT">form_id</ACTION>
+			<GRID name="Fields" keyfield="field_id" orderby="field_order" linkfield="form_id" table="vw_fields">
+				<TEXTFIELD w="75" title="Field Order">field_order</TEXTFIELD>
+				<TEXTFIELD w="240" title="Question">question</TEXTFIELD>
+				<TEXTFIELD w="75" title="Field Type">field_type</TEXTFIELD>
+				<TEXTFIELD w="75" title="Share Line">share_line</TEXTFIELD>
+				<TEXTFIELD w="75" title="Field Size" default="25">field_size</TEXTFIELD>
+				<CHECKBOX w="75" title="Manditory" format="boolean">manditory</CHECKBOX>
+				<CHECKBOX w="75" title="Field Bold" format="boolean">field_bold</CHECKBOX>
+				<CHECKBOX w="75" title="Field Italics" format="boolean">field_italics</CHECKBOX>
+				<GRID name="Sub Fields" keyfield="sub_field_id" orderby="sub_field_order" linkfield="field_id" table="vw_sub_fields">
+					<TEXTFIELD w="75" title="Sub Field Order">sub_field_order</TEXTFIELD>
+					<TEXTFIELD w="240" title="Question">question</TEXTFIELD>
+					<TEXTFIELD w="75" title="Sub Title Share">sub_title_share</TEXTFIELD>
+					<TEXTFIELD w="75" title="Sub Field Type">sub_field_type</TEXTFIELD>
+					<TEXTFIELD w="75" title="Sub Field Size">sub_field_size</TEXTFIELD>
+					<CHECKBOX w="75" title="Manditory" format="boolean">manditory</CHECKBOX>
+				</GRID>
+			</GRID>
+		</GRID>
+		<GRID name="Approved Forms" keyfield="entry_form_id" orderby="form_name, entity_name" table="vw_entry_forms" where="(completed = '1') AND (approved = '1')">
+			<TITLEFIELD w="150" title="Form Name">form_name</TITLEFIELD>
+			<TEXTFIELD w="150" title="Entity Name">entity_name</TEXTFIELD>
+			<TEXTTIMESTAMP w="100" title="Application Date" format="date">application_date</TEXTTIMESTAMP>
+			<TEXTTIMESTAMP w="100" title="Completion Date" format="date">completion_date</TEXTTIMESTAMP>
+			<TEXTTIMESTAMP w="100" title="Approve Date" format="date">approve_date</TEXTTIMESTAMP>
+			<ACTION w="75" title="View Form" action="ENTRYFORM" blankpage="true" disabled="yes">entry_form_id</ACTION>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="SMS Language" key="20" h="500">
+		<GRID name="Languages" keyfield="language_id" table="languages">
+			<TEXTFIELD w="150" title="ID">language_id</TEXTFIELD>
+			<TEXTFIELD w="150" title="Language">language_name</TEXTFIELD>
+			<FORM name="Language" keyfield="language_id" table="languages">
+				<TEXTFIELD w="430" title="Language" y="10" h="20" x="10">language_name</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="30" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="SMS Messages" key="21" h="500">
+		<GRID order="message_category_id,language_id,week_number,message_order" name="Messages" keyfield="message_id" linkfield="message_category_id" table="vw_messages" where="is_misc = false">
+			<TITLEFIELD w="75" title="Category">message_category_name</TITLEFIELD>
+			<TEXTFIELD w="10" title="SMS ID">message_id</TEXTFIELD>
+			<TEXTFIELD w="10" title="Language">language_name</TEXTFIELD>
+			<EDITFIELD w="10" title="Code" editkey="message_id" editvalue="messages">message_code</EDITFIELD>
+			<TEXTFIELD w="150" title="Message">message_data</TEXTFIELD>
+			<CHECKBOX w="75" title="Before Delivery">is_before_delivery</CHECKBOX>
+			<CHECKBOX w="75" title="After Delivery">is_after_delivery</CHECKBOX>
+			<TEXTFIELD w="75" title="Week Number">week_number</TEXTFIELD>
+			<TEXTFIELD w="75" title="Message Order">message_order</TEXTFIELD>
+			<CHECKBOX w="75" title="For Partner">is_partner</CHECKBOX>
+			<FORM name="Messages" keyfield="message_id" linkfield="message_category_id" table="messages">
+				<COMBOBOX w="430" title="Language ID" default="2" lptable="languages" y="10" h="20" x="10" lpfield="language_name">language_id</COMBOBOX>
+				<COMBOBOX w="430" title="Category" lptable="message_category" where="is_misc = false" y="10" h="20" x="10" lpfield="message_category_name">message_category_id</COMBOBOX>
+				<TEXTFIELD w="50" title="Message Code" y="30" h="20" x="10">message_code</TEXTFIELD>
+				<CHECKBOX w="150" title="Before Delivery" y="30" h="20" x="290">is_before_delivery</CHECKBOX>
+				<CHECKBOX w="150" title="After Delivery" y="50" h="20" x="10">is_after_delivery</CHECKBOX>
+				<TEXTFIELD w="150" title="Month Number" default="1" y="50" h="20" x="290">month_number</TEXTFIELD>
+				<TEXTFIELD w="150" title="Week Number" default="1" y="50" h="20" x="290">week_number</TEXTFIELD>
+				<TEXTFIELD w="150" title="Message Order" default="1" y="70" h="20" x="10">message_order</TEXTFIELD>
+				<TEXTFIELD w="150" title="Frequency" y="70" h="20" x="290">frequency</TEXTFIELD>
+				<TEXTFIELD w="150" title="Frequency Interval" y="90" h="20" x="10">frequency_interval</TEXTFIELD>
+				<CHECKBOX w="150" title="Weekly Interval" y="90" h="20" x="290">is_weekly_interval</CHECKBOX>
+				<CHECKBOX w="150" title="Partner" y="110" h="20" x="10">is_partner</CHECKBOX>
+				<TEXTAREA w="430" tab="Message Text" y="2" h="50" x="10">message_data</TEXTAREA>
+				<TEXTAREA w="430" tab="Remarks" y="2" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+		<GRID name="Categories" keyfield="message_category_id" table="message_category">
+			<TEXTFIELD w="150" title="ID">message_category_id</TEXTFIELD>
+			<TEXTFIELD w="150" title="Category">message_category_name</TEXTFIELD>
+			<FORM name="Category" keyfield="message_category_id" table="message_category">
+				<TEXTFIELD w="430" title="Category" y="30" h="20" x="10">message_category_name</TEXTFIELD>
+				<CHECKBOX w="150" title="Is Miscellaneous" y="90" h="20" x="290">is_misc</CHECKBOX>
+				<TEXTAREA w="430" title="Details" y="50" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="SMS Schedule" key="23" h="500">
+		<GRID name="Patients" keyfield="entity_id" table="vw_patients" where="(is_active = true)">
+			<TITLEFIELD w="75" title="Site ID">site_name</TITLEFIELD>
+			<TEXTFIELD w="75" title="Entity ID">entity_id</TEXTFIELD>
+			<TEXTFIELD w="140" title="Entity Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="140" title="Mobile No">mobile_number</TEXTFIELD>
+			<TEXTFIELD w="140" title="Partner Mobile">partner_mobile_no</TEXTFIELD>
+			<TEXTFIELD w="140" title="Pregnancy Week">pregnancy_week</TEXTFIELD>
+			<TEXTTIMESTAMP w="175" title="Date Enroled" format="timestamp">date_enroled</TEXTTIMESTAMP>
+			<GRID order="message_category_id, message_code" name="Patient Schedule" keyfield="message_schedule_id" linkfield="entity_id" table="vw_message_schedule" where="(is_partner=false) AND (is_misc=false)" reporttitle="entity_name">
+				<TITLEFIELD w="75" title="Select">message_category_name</TITLEFIELD>
+				<TEXTFIELD w="75" title="Code">message_code</TEXTFIELD>
+				<TEXTFIELD w="50" title="Destination">mobile_number</TEXTFIELD>
+				<TEXTFIELD w="150" title="Message">message</TEXTFIELD>
+				<EDITFIELD w="10" title="Date (yyyy-mm-dd)" editkey="message_schedule_id" editvalue="message_schedule">schedule_date</EDITFIELD>
+				<EDITFIELD w="10" title="Time (hh:mm:ss)" editkey="message_schedule_id" editvalue="message_schedule">schedule_time</EDITFIELD>
+				<FORM new="false" name="Schedule" keyfield="message_schedule_id" linkfield="entity_id" table="message_schedule">
+					<COMBOBOX w="430" title="Message" lptable="messages" y="5" h="20" x="10" lpfield="message_code">message_id</COMBOBOX>
+					<TEXTDATE w="150" title="Schedule Date" y="30" h="20" x="10">schedule_date</TEXTDATE>
+					<SPINTIME w="150" title="Schedule Time (hh:mm AM)" y="30" h="20" x="290">schedule_time</SPINTIME>
+					<TEXTAREA w="430" title="Message" y="55" h="45" x="10">message</TEXTAREA>
+				</FORM>
+			</GRID>
+			<GRID order="message_category_id, message_code" name="Partner Schedule" keyfield="message_schedule_id" linkfield="entity_id" table="vw_message_schedule" where="(is_partner=true) AND (is_misc=false)">
+				<TITLEFIELD w="75" title="Select">message_category_name</TITLEFIELD>
+				<TEXTFIELD w="20" title="Code">message_code</TEXTFIELD>
+				<TEXTFIELD w="75" title="Partner">partner_name</TEXTFIELD>
+				<TEXTFIELD w="50" title="Destination">partner_mobile_no</TEXTFIELD>
+				<TEXTFIELD w="150" title="Message">message</TEXTFIELD>
+				<EDITFIELD w="10" title="Date (yyyy-mm-dd)" editkey="message_schedule_id" editvalue="message_schedule">schedule_date</EDITFIELD>
+				<EDITFIELD w="10" title="Time (hh:mm:ss)" editkey="message_schedule_id" editvalue="message_schedule">schedule_time</EDITFIELD>
+				<FORM new="false" name="Schedule" keyfield="message_schedule_id" linkfield="entity_id" table="message_schedule">
+					<COMBOBOX w="430" title="Message" lptable="messages" y="5" h="20" x="10" lpfield="message_code">message_id</COMBOBOX>
+					<TEXTDATE w="150" title="Schedule Date" y="30" h="20" x="10">schedule_date</TEXTDATE>
+					<SPINTIME w="150" title="Schedule Time (hh:mm AM)" y="30" h="20" x="290">schedule_time</SPINTIME>
+					<TEXTAREA w="430" title="Message" y="55" h="45" x="10">message</TEXTAREA>
+				</FORM>
+			</GRID>
+		</GRID>
+		<GRID name="Adhoc Messages" keyfield="message_schedule_id" linkfield="entity_id" table="vw_message_schedule" where="is_misc = true">
+			<TITLEFIELD w="75" title="Select">message</TITLEFIELD>
+			<TEXTFIELD w="75" title="Schedule ID">message_schedule_id</TEXTFIELD>
+			<TEXTFIELD w="150" title="Message">entity_name</TEXTFIELD>
+			<EDITFIELD w="10" title="Date (yyyy-mm-dd)" editkey="message_schedule_id" editvalue="message_schedule">schedule_date</EDITFIELD>
+			<EDITFIELD w="10" title="Time (hh:mm:ss)" editkey="message_schedule_id" editvalue="message_schedule">schedule_time</EDITFIELD>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Sites" key="22" h="500">
+		<GRID name="Sites" keyfield="site_id" table="sites">
+			<TEXTFIELD w="150" title="ID">site_id</TEXTFIELD>
+			<TEXTFIELD w="350" title="Site">site_name</TEXTFIELD>
+			<FORM name="Site" keyfield="site_id" table="sites">
+				<TEXTFIELD w="430" title="Site" y="10" h="20" x="10">site_name</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="30" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Health Workers" key="24" h="500">
+		<GRID name="Health Workers" keyfield="entity_id" table="entitys" where="(entity_type_id = 1)">
+			<TEXTFIELD w="75" title="ID">entity_id</TEXTFIELD>
+			<TEXTFIELD w="140" title="Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="100" title="User Name">user_name</TEXTFIELD>
+			<TEXTTIMESTAMP w="175" title="Date Enroled" format="timestamp">date_enroled</TEXTTIMESTAMP>
+			<CHECKBOX w="75" title="Active" format="boolean">is_active</CHECKBOX>
+			<FORM name="Worker" keyfield="entity_id" table="entitys">
+				<DEFAULT default="0">org_id</DEFAULT>
+				<DEFAULT default="1">entity_type_id</DEFAULT>
+				<DEFAULT default="staff">Function_Role</DEFAULT>
+				<COMBOBOX w="430" title="Site" lptable="sites" y="10" h="20" x="10" lpfield="site_name">site_id</COMBOBOX>
+				<TEXTFIELD w="430" title="Worker Name" y="30" h="20" x="10">entity_name</TEXTFIELD>
+				<TEXTFIELD w="350" title="User Name" y="50" h="20" x="10">user_name</TEXTFIELD>
+				<TEXTFIELD w="350" title="Mobile Number" y="70" h="20" x="10">mobile_number</TEXTFIELD>
+				<CHECKBOX w="150" title="Active" y="90" h="20" x="10">is_active</CHECKBOX>
+				<TEXTFIELD w="150" title="First Password" y="90" h="20" x="290">first_password</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="110" h="70" x="10">details</TEXTAREA>
+			</FORM>
+			<GRID wheresql="table_name = 'entitys'" name="Address" keyfield="address_id" linkfield="table_id" table="vw_address">
+				<TEXTFIELD w="100" title="Country Name">sys_country_name</TEXTFIELD>
+				<TEXTFIELD w="100" title="Postal Code">postal_code</TEXTFIELD>
+				<TEXTFIELD w="100" title="Town">town</TEXTFIELD>
+				<TEXTFIELD w="100" title="Phone Number">phone_number</TEXTFIELD>
+				<TEXTFIELD w="100" title="Mobile">mobile</TEXTFIELD>
+				<TEXTFIELD w="140" title="Email">email</TEXTFIELD>
+				<TEXTFIELD w="140" title="Default">is_default</TEXTFIELD>
+				<FORM name="Address" keyfield="address_id" linkfield="table_id" table="address">
+					<DEFAULT default="entitys">table_name</DEFAULT>
+					<COMBOBOX w="430" title="Country" default="KE" lptable="sys_countrys" y="10" h="20" x="10" lpfield="sys_country_name">sys_country_id</COMBOBOX>
+					<TEXTFIELD w="150" title="Post Office Box" y="30" h="20" x="10">post_office_box</TEXTFIELD>
+					<TEXTFIELD w="150" title="Postal Code" y="30" h="20" x="290">postal_code</TEXTFIELD>
+					<TEXTFIELD w="150" title="Town" y="50" h="20" x="10">town</TEXTFIELD>
+					<TEXTFIELD w="430" title="Premises" y="70" h="20" x="10">premises</TEXTFIELD>
+					<TEXTFIELD w="430" title="Street" y="90" h="20" x="10">street</TEXTFIELD>
+					<TEXTFIELD w="430" title="Phone Number" y="110" h="20" x="10">phone_number</TEXTFIELD>
+					<TEXTFIELD w="150" title="Extension" y="130" h="20" x="10">extension</TEXTFIELD>
+					<TEXTFIELD w="430" title="Mobile" y="150" h="20" x="10">mobile</TEXTFIELD>
+					<TEXTFIELD w="430" title="Fax" y="170" h="20" x="10">fax</TEXTFIELD>
+					<TEXTFIELD w="430" title="Email" y="190" h="20" x="10">email</TEXTFIELD>
+					<CHECKBOX w="30" title="Default" y="210" h="20" x="10">is_default</CHECKBOX>
+					<TEXTAREA w="430" title="Details" y="230" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Entitys" key="25" h="500">
+		<GRID name="Entitys" keyfield="entity_id" table="entitys">
+			<TEXTFIELD w="75" title="Entity ID">entity_id</TEXTFIELD>
+			<TEXTFIELD w="140" title="Entity Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="100" title="User Name">user_name</TEXTFIELD>
+			<CHECKBOX w="100" title="Super User" format="boolean">super_user</CHECKBOX>
+			<CHECKBOX w="100" title="Entity Leader" format="boolean">entity_leader</CHECKBOX>
+			<TEXTTIMESTAMP w="175" title="Date Enroled" format="timestamp">date_enroled</TEXTTIMESTAMP>
+			<CHECKBOX w="75" title="Active" format="boolean">is_active</CHECKBOX>
+			<GRID wheresql="table_name = 'entitys'" name="Address" keyfield="address_id" linkfield="table_id" table="vw_address">
+				<TEXTFIELD w="100" title="Country Name">sys_country_name</TEXTFIELD>
+				<TEXTFIELD w="100" title="Postal Code">postal_code</TEXTFIELD>
+				<TEXTFIELD w="100" title="Town">town</TEXTFIELD>
+				<TEXTFIELD w="100" title="Phone Number">phone_number</TEXTFIELD>
+				<TEXTFIELD w="100" title="Mobile">mobile</TEXTFIELD>
+				<TEXTFIELD w="140" title="Email">email</TEXTFIELD>
+				<TEXTFIELD w="140" title="Default">is_default</TEXTFIELD>
+				<FORM name="Address" keyfield="address_id" linkfield="table_id" table="address">
+					<DEFAULT default="entitys">table_name</DEFAULT>
+					<COMBOBOX w="430" title="Sys Country Id" default="KE" lptable="sys_countrys" y="10" h="20" x="10" lpfield="sys_country_name">sys_country_id</COMBOBOX>
+					<TEXTFIELD w="150" title="Post Office Box" y="30" h="20" x="10">post_office_box</TEXTFIELD>
+					<TEXTFIELD w="150" title="Postal Code" y="30" h="20" x="290">postal_code</TEXTFIELD>
+					<TEXTFIELD w="150" title="Town" y="50" h="20" x="10">town</TEXTFIELD>
+					<TEXTFIELD w="430" title="Premises" y="70" h="20" x="10">premises</TEXTFIELD>
+					<TEXTFIELD w="430" title="Street" y="90" h="20" x="10">street</TEXTFIELD>
+					<TEXTFIELD w="430" title="Phone Number" y="110" h="20" x="10">phone_number</TEXTFIELD>
+					<TEXTFIELD w="150" title="Extension" y="130" h="20" x="10">extension</TEXTFIELD>
+					<TEXTFIELD w="430" title="Mobile" y="150" h="20" x="10">mobile</TEXTFIELD>
+					<TEXTFIELD w="430" title="Fax" y="170" h="20" x="10">fax</TEXTFIELD>
+					<TEXTFIELD w="430" title="Email" y="190" h="20" x="10">email</TEXTFIELD>
+					<CHECKBOX w="30" title="Default" y="210" h="20" x="10">is_default</CHECKBOX>
+					<TEXTAREA w="430" title="Details" y="230" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<FORM name="Entitys" keyfield="entity_id" table="entitys">
+				<COMBOBOX w="150" title="Org" lptable="orgs" y="10" h="20" x="10" lpfield="org_name">org_id</COMBOBOX>
+				<COMBOBOX w="150" title="Entity Type" lptable="entity_types" y="10" h="20" x="290" lpfield="entity_type_name">entity_type_id</COMBOBOX>
+				<TEXTFIELD w="430" title="Entity Name" y="30" h="20" x="10">entity_name</TEXTFIELD>
+				<TEXTFIELD w="430" title="User Name" y="50" h="20" x="10">user_name</TEXTFIELD>
+				<CHECKBOX w="150" title="Super User" y="70" h="20" x="10">super_user</CHECKBOX>
+				<CHECKBOX w="150" title="Entity Leader" y="70" h="20" x="290">entity_leader</CHECKBOX>
+				<TEXTFIELD w="430" title="Function Role" y="90" h="20" x="10">function_role</TEXTFIELD>
+				<CHECKBOX w="150" title="Active" y="110" h="20" x="10">is_active</CHECKBOX>
+				<TEXTFIELD w="150" title="First Password" y="110" h="20" x="290">first_password</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="130" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+		<GRID name="Entity Types" keyfield="entity_type_id" table="entity_types">
+			<TEXTFIELD w="75" title="Entity Type ID">entity_type_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Entity Type Name">entity_type_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Entity Role">entity_role</TEXTFIELD>
+			<TEXTFIELD w="75" title="Use Key">use_key</TEXTFIELD>
+			<GRID name="Entity Subscriptions" keyfield="entity_subscription_id" linkfield="entity_type_id" table="vw_entity_subscriptions">
+				<TEXTFIELD w="75" title="Entity Type ID">entity_type_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Entity Type Name">entity_type_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Entity ID">entity_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Entity Name">entity_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Entity Subscription ID">entity_subscription_id</TEXTFIELD>
+				<FORM name="Entity Subscriptions" keyfield="entity_subscription_id" linkfield="entity_type_id" table="entity_subscriptions">
+					<COMBOBOX w="430" title="Entity" lptable="entitys" y="10" h="20" x="10" lpfield="entity_name">entity_id</COMBOBOX>
+					<COMBOBOX w="430" title="Subscription Level" lptable="subscription_levels" y="30" h="20" x="10" lpfield="subscription_level_name">subscription_level_id</COMBOBOX>
+					<TEXTAREA w="430" title="Details" y="50" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<FORM name="Entity Types" keyfield="entity_type_id" table="entity_types">
+				<TEXTFIELD w="430" title="Entity Type Name" y="10" h="20" x="10">entity_type_name</TEXTFIELD>
+				<TEXTFIELD w="430" title="Entity Role" y="30" h="20" x="10">entity_role</TEXTFIELD>
+				<TEXTFIELD w="150" title="Use Key" y="50" h="20" x="10">use_key</TEXTFIELD>
+				<TEXTAREA w="430" title="Description" y="70" h="70" x="10">description</TEXTAREA>
+				<TEXTAREA w="430" title="Details" y="140" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+		<GRID name="Subscription Levels" keyfield="subscription_level_id" table="subscription_levels">
+			<TEXTFIELD w="75" title="Level ID">subscription_level_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Level Name">subscription_level_name</TEXTFIELD>
+			<FORM name="Subscription Levels" keyfield="subscription_level_id" table="subscription_levels">
+				<TEXTFIELD w="430" title="Level" y="10" h="20" x="10">subscription_level_name</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="30" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="SMS" key="30" h="500">
+		<GRID order="sms_number" name="Outbox" keyfield="sms_id" orderby="sms_id desc" table="vw_sms" where="folder_id = 0">
+			<TITLEFIELD w="75" title="Tel. Number">sms_number</TITLEFIELD>
+			<TEXTFIELD w="75" title="SMS ID">sms_id</TEXTFIELD>
+			<CHECKBOX w="75" title="Message Ready" format="boolean">message_ready</CHECKBOX>
+			<CHECKBOX w="75" title="Sent" format="boolean">sent</CHECKBOX>
+			<TEXTAREA w="175" title="message">message</TEXTAREA>
+			<FORM name="SMS" keyfield="sms_id" table="sms">
+				<DEFAULT default="0">folder_id</DEFAULT>
+				<TEXTFIELD w="250" title="Tel. Number" y="10" h="20" x="10">sms_number</TEXTFIELD>
+				<CHECKBOX w="150" title="Message Ready" y="30" h="20" x="10">message_ready</CHECKBOX>
+				<TEXTAREA w="430" title="Message" y="50" h="70" x="10">message</TEXTAREA>
+				<TEXTAREA w="430" title="Details" y="120" h="70" x="10">details</TEXTAREA>
+			</FORM>
+			<GRID name="SMS Address" keyfield="sms_address_id" linkfield="sms_id" table="vw_sms_address">
+				<TEXTFIELD w="75" title="Entity Name">entity_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Mobile Number">mobile</TEXTFIELD>
+				<TEXTFIELD w="75" title="Narrative">narrative</TEXTFIELD>
+				<FORM name="SMS Address" keyfield="sms_address_id" linkfield="sms_id" table="sms_address">
+					<GRIDBOX w="430" title="Address" lptable="address" y="10" h="20" x="10" lpfield="address_id">address_id
+						<GRID name="Vw Entitys" keyfield="entity_id" table="vw_entitys" where="table_name = 'entitys'">
+							<TEXTFIELD w="75" title="Entiry Name">entity_name</TEXTFIELD>
+							<TEXTFIELD w="75" title="Mobile">mobile</TEXTFIELD>
+						</GRID>
+					</GRIDBOX>
+					<TEXTFIELD w="430" title="Narrative" y="30" h="20" x="10">narrative</TEXTFIELD>
+				</FORM>
+			</GRID>
+			<GRID name="SMS Groups" keyfield="sms_groups_id" linkfield="sms_id" table="vw_sms_groups">
+				<TEXTFIELD w="75" title="Entity Type">entity_type_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Narrative">narrative</TEXTFIELD>
+				<FORM name="SMS Groups" keyfield="sms_groups_id" linkfield="sms_id" table="sms_groups">
+					<COMBOBOX w="430" title="Entity Type" lptable="entity_types" y="10" h="20" x="10" lpfield="entity_type_name">entity_type_id</COMBOBOX>
+					<TEXTFIELD w="430" title="Narrative" y="30" h="20" x="10">narrative</TEXTFIELD>
+				</FORM>
+			</GRID>
+			<GRID name="Add Address" keyfield="entity_id" table="vw_entitys" where="table_name = 'entitys'">
+				<TEXTFIELD w="75" title="Entiry Name">entity_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Mobile">mobile</TEXTFIELD>
+				<ACTIONS>
+					<ACTION fnct="ins_sms_address">Add</ACTION>
+				</ACTIONS>
+			</GRID>
+		</GRID>
+		<GRID order="sms_number" name="Sent" keyfield="sms_id" orderby="sms_id desc" table="vw_sms" where="folder_id = 2">
+			<TITLEFIELD w="75" title="Tel. Number">sms_number</TITLEFIELD>
+			<TEXTFIELD w="75" title="SMS Id">sms_id</TEXTFIELD>
+			<TEXTAREA w="200" title="message">message</TEXTAREA>
+			<CHECKBOX w="75" title="Sent">sent</CHECKBOX>
+			<TEXTFIELD w="75" title="Name">entity_name</TEXTFIELD>
+			<GRID name="SMS Address" keyfield="sms_address_id" linkfield="sms_id" table="vw_sms_address">
+				<TEXTFIELD w="75" title="Entity Name">entity_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Mobile Number">mobile</TEXTFIELD>
+				<TEXTFIELD w="75" title="Narrative">narrative</TEXTFIELD>
+			</GRID>
+			<GRID name="SMS Groups" keyfield="sms_groups_id" linkfield="sms_id" table="vw_sms_groups">
+				<TEXTFIELD w="75" title="Entity Type">entity_type_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Narrative">narrative</TEXTFIELD>
+			</GRID>
+		</GRID>
+		<GRID order="sms_number" name="Inbox" keyfield="sms_id" orderby="sms_id desc" table="vw_sms" where="folder_id = 3">
+			<TITLEFIELD w="75" title="Tel. Number">sms_number</TITLEFIELD>
+			<TEXTFIELD w="75" title="SMS Id">sms_id</TEXTFIELD>
+			<TEXTAREA w="275" title="message">message</TEXTAREA>
+			<TEXTFIELD w="75" title="Name">entity_name</TEXTFIELD>
+			<FORM name="SMS" keyfield="sms_id" table="sms">
+				<TEXTAREA w="430" title="Message" y="10" h="110" disabled="true" x="10">message</TEXTAREA>
+				<TEXTAREA w="430" title="Details" y="120" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Call Settings" key="31" h="500">
+		<GRID name="Call Correspondents" keyfield="call_correspondent_id" table="call_correspondent">
+			<TEXTFIELD w="40" title="Code">call_correspondent_code</TEXTFIELD>
+			<TEXTFIELD w="80" title="Name">call_correspondent_name</TEXTFIELD>
+			<TEXTFIELD w="150" title="Details">details</TEXTFIELD>
+			<FORM name="Correspondent" keyfield="call_correspondent_id" table="call_correspondent">
+				<TEXTFIELD w="430" title="Code" y="190" h="20" x="10">call_correspondent_code</TEXTFIELD>
+				<TEXTFIELD w="430" title="Name" y="190" h="20" x="10">call_correspondent_name</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="210" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+		<GRID name="Call Time" keyfield="call_time_id" table="call_time">
+			<TEXTFIELD w="40" title="Code">call_time_code</TEXTFIELD>
+			<TEXTFIELD w="80" title="Name">call_time_name</TEXTFIELD>
+			<TEXTFIELD w="150" title="Details">details</TEXTFIELD>
+			<FORM name="Call Time" keyfield="call_time_id" table="call_time">
+				<TEXTFIELD w="430" title="Code" y="190" h="20" x="10">call_time_code</TEXTFIELD>
+				<TEXTFIELD w="430" title="Name" y="190" h="20" x="10">call_time_name</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="210" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+		<GRID name="Call Content" keyfield="call_content_id" table="call_content">
+			<TEXTFIELD w="40" title="Code">call_content_code</TEXTFIELD>
+			<TEXTFIELD w="80" title="Name">call_content_name</TEXTFIELD>
+			<TEXTFIELD w="150" title="Details">details</TEXTFIELD>
+			<FORM name="Call Content" keyfield="call_content_id" table="call_content">
+				<TEXTFIELD w="430" title="Code" y="190" h="20" x="10">call_content_code</TEXTFIELD>
+				<TEXTFIELD w="430" title="Name" y="190" h="20" x="10">call_content_name</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="210" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Call Log" key="32" h="500">
+		<GRID name="Call Logs" keyfield="call_log_id" table="vw_call_log">
+			<TITLEFIELD w="40" title="Patient">entity_name</TITLEFIELD>
+			<TEXTFIELD w="10" title="Week No">week_number</TEXTFIELD>
+			<TEXTFIELD w="40" title="Correspondent">call_correspondent_name</TEXTFIELD>
+			<TEXTFIELD w="40" title="Time of Day">call_time_name</TEXTFIELD>
+			<TEXTFIELD w="40" title="Duration">call_duration_mins</TEXTFIELD>
+			<TEXTFIELD w="100" title="Content">call_content_name</TEXTFIELD>
+			<TEXTFIELD w="150" title="Details">details</TEXTFIELD>
+			<FORM name="Call" keyfield="call_log_id" table="call_log">
+				<TEXTFIELD w="430" title="Week Number" y="190" h="20" x="10">week_number</TEXTFIELD>
+				<COMBOBOX w="430" title="Patient" lptable="vw_entitys" y="30" h="20" x="10" lpfield="entity_name">entity_id</COMBOBOX>
+				<COMBOBOX w="430" title="Correspondent" order="call_correspondent_id" lptable="call_correspondent" y="30" h="20" x="10" lpfield="call_correspondent_name">call_correspondent_id</COMBOBOX>
+				<COMBOBOX w="430" title="Time of Day" lptable="call_time" y="30" h="20" x="10" lpfield="call_time_name">call_time_id</COMBOBOX>
+				<TEXTFIELD w="430" title="Duration (mins)" y="190" h="20" x="10">call_duration_mins</TEXTFIELD>
+				<COMBOBOX w="430" title="Content" lptable="call_content" y="30" h="20" x="10" lpfield="call_content_name">call_content_id</COMBOBOX>
+				<TEXTAREA w="430" title="Details" y="210" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="SMS Messages" key="33" h="500">
+		<GRID order="message_category_id,language_id,week_number,message_order" name="Messages" keyfield="message_id" table="vw_messages" where="is_misc = true">
+			<TITLEFIELD w="75" title="Category">message_category_name</TITLEFIELD>
+			<TEXTFIELD w="10" title="SMS ID">message_id</TEXTFIELD>
+			<TEXTFIELD w="10" title="Language">language_name</TEXTFIELD>
+			<TEXTFIELD w="5" title="Code">message_code</TEXTFIELD>
+			<TEXTFIELD w="150" title="Message">message_data</TEXTFIELD>
+			<CHECKBOX w="75" title="Before Delivery">is_before_delivery</CHECKBOX>
+			<CHECKBOX w="75" title="After Delivery">is_after_delivery</CHECKBOX>
+			<CHECKBOX w="75" title="For Partner">is_partner</CHECKBOX>
+			<ACTIONS>
+				<ACTION fnct="misc_SMS" approval="SELECT MESSAGE" from_="from dual">==SELECT MESSAGE==</ACTION>
+				<ACTION fnct="misc_SMS" approval="To All" from_="from dual">To All</ACTION>
+			</ACTIONS>
+			<GRID name="Recepients" keyfield="entity_id" linkfield="message_id" table="vw_patients,vw_messages" where="is_misc = true">
+				<TITLEFIELD w="75" title="Site ID">message_data</TITLEFIELD>
+				<TEXTFIELD w="140" title="Entity Name">entity_name</TEXTFIELD>
+				<TEXTFIELD w="140" title="Patients Language">patient_lang_name</TEXTFIELD>
+				<TEXTFIELD w="140" title="Mobile No">mobile_number</TEXTFIELD>
+				<TEXTFIELD w="140" title="Partner Mobile">partner_mobile_no</TEXTFIELD>
+				<TEXTFIELD w="140" title="Pregnancy Week">pregnancy_week</TEXTFIELD>
+				<CHECKBOX w="140" title="Patient Enroleed">is_patient_enrolled</CHECKBOX>
+				<CHECKBOX w="140" title="Partner Enroleed">is_partner_enrolled</CHECKBOX>
+				<CHECKBOX w="75" title="Active" format="boolean">is_active</CHECKBOX>
+				<ACTIONS>
+					<ACTION fnct="misc_Recepient" approval="SELECT RECEPIENT" from_="from dual">==SELECT RECEPIENTS==</ACTION>
+					<ACTION fnct="misc_Recepient" approval="patient" from_="from dual">Patients</ACTION>
+				</ACTIONS>
+			</GRID>
+			<FORM name="Message" keyfield="message_id" linkfield="message_category_id" table="messages">
+				<COMBOBOX w="430" title="Language ID" default="2" lptable="languages" y="10" h="20" x="10" lpfield="language_name">language_id</COMBOBOX>
+				<COMBOBOX w="430" title="Category" lptable="message_category" where="is_misc = true" y="10" h="20" x="10" lpfield="message_category_name">message_category_id</COMBOBOX>
+				<TEXTFIELD w="50" title="Message Code" y="30" h="20" x="10">message_code</TEXTFIELD>
+				<CHECKBOX w="150" title="Partner" y="110" h="20" x="10">is_partner</CHECKBOX>
+				<TEXTAREA w="430" tab="Message Text" y="2" h="50" x="10">message_data</TEXTAREA>
+				<TEXTAREA w="430" tab="Remarks" y="2" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+		<GRID name="Categories" keyfield="message_category_id" table="message_category" where="is_misc = true">
+			<TEXTFIELD w="150" title="ID">message_category_id</TEXTFIELD>
+			<TEXTFIELD w="150" title="Category">message_category_name</TEXTFIELD>
+			<FORM name="Category" keyfield="message_category_id" table="message_category">
+				<TEXTFIELD w="430" title="Category" y="30" h="20" x="10">message_category_name</TEXTFIELD>
+				<CHECKBOX w="150" title="Is Miscellaneous" default="true" y="90" h="20" x="290">is_misc</CHECKBOX>
+				<TEXTAREA w="430" title="Details" y="50" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="SMS" key="34" h="500">
+		<GRID order="sms_number" name="Inbox" keyfield="sms_number" orderby="sms_id desc" table="vw_sms" where="folder_id = 3">
+			<TITLEFIELD w="75" title="Tel. Number">sms_number</TITLEFIELD>
+			<TEXTFIELD w="75" title="SMS Id">sms_id</TEXTFIELD>
+			<TEXTAREA w="275" title="message">message</TEXTAREA>
+			<TEXTFIELD w="75" title="Name">entity_name</TEXTFIELD>
+			<GRID order="sms_number" name="Replies" keyfield="sms_number" orderby="sms_id desc" linkfield="sms_number" table="vw_sms" where="folder_id = 0">
+				<TITLEFIELD w="75" title="Tel. Number">sms_number</TITLEFIELD>
+				<TEXTFIELD w="75" title="SMS ID">sms_id</TEXTFIELD>
+				<CHECKBOX w="75" title="Message Ready" format="boolean">message_ready</CHECKBOX>
+				<CHECKBOX w="75" title="Sent" format="boolean">sent</CHECKBOX>
+				<TEXTAREA w="175" title="message">message</TEXTAREA>
+				<FORM name="Reply" keyfield="sms_id" linkfield="sms_number" table="sms">
+					<DEFAULT default="0">folder_id</DEFAULT>
+					<CHECKBOX w="150" title="Message Ready" y="30" h="20" x="10">message_ready</CHECKBOX>
+					<TEXTAREA w="430" title="Message" y="50" h="70" x="10">message</TEXTAREA>
+					<TEXTAREA w="430" title="Details" y="120" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+		</GRID>
+		<GRID order="sms_number" name="Outbox" keyfield="sms_id" orderby="sms_id desc" table="vw_sms" where="folder_id = 0">
+			<TITLEFIELD w="75" title="Tel. Number">sms_number</TITLEFIELD>
+			<TEXTFIELD w="75" title="SMS ID">sms_id</TEXTFIELD>
+			<CHECKBOX w="75" title="Message Ready" format="boolean">message_ready</CHECKBOX>
+			<CHECKBOX w="75" title="Sent" format="boolean">sent</CHECKBOX>
+			<TEXTAREA w="175" title="message">message</TEXTAREA>
+			<FORM name="SMS" keyfield="sms_id" table="sms">
+				<DEFAULT default="0">folder_id</DEFAULT>
+				<TEXTFIELD w="250" title="Tel. Number" y="10" h="20" x="10">sms_number</TEXTFIELD>
+				<CHECKBOX w="150" title="Message Ready" y="30" h="20" x="10">message_ready</CHECKBOX>
+				<TEXTAREA w="430" title="Message" y="50" h="70" x="10">message</TEXTAREA>
+				<TEXTAREA w="430" title="Details" y="120" h="70" x="10">details</TEXTAREA>
+			</FORM>
+			<GRID name="SMS Address" keyfield="sms_address_id" linkfield="sms_id" table="vw_sms_address">
+				<TEXTFIELD w="75" title="Entity Name">entity_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Mobile Number">mobile</TEXTFIELD>
+				<TEXTFIELD w="75" title="Narrative">narrative</TEXTFIELD>
+				<FORM name="SMS Address" keyfield="sms_address_id" linkfield="sms_id" table="sms_address">
+					<GRIDBOX w="430" title="Address" lptable="address" y="10" h="20" x="10" lpfield="address_id">address_id
+						<GRID name="Vw Entitys" keyfield="entity_id" table="vw_entitys" where="table_name = 'entitys'">
+							<TEXTFIELD w="75" title="Entiry Name">entity_name</TEXTFIELD>
+							<TEXTFIELD w="75" title="Mobile">mobile</TEXTFIELD>
+						</GRID>
+					</GRIDBOX>
+					<TEXTFIELD w="430" title="Narrative" y="30" h="20" x="10">narrative</TEXTFIELD>
+				</FORM>
+			</GRID>
+			<GRID name="SMS Groups" keyfield="sms_groups_id" linkfield="sms_id" table="vw_sms_groups">
+				<TEXTFIELD w="75" title="Entity Type">entity_type_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Narrative">narrative</TEXTFIELD>
+				<FORM name="SMS Groups" keyfield="sms_groups_id" linkfield="sms_id" table="sms_groups">
+					<COMBOBOX w="430" title="Entity Type" lptable="entity_types" y="10" h="20" x="10" lpfield="entity_type_name">entity_type_id</COMBOBOX>
+					<TEXTFIELD w="430" title="Narrative" y="30" h="20" x="10">narrative</TEXTFIELD>
+				</FORM>
+			</GRID>
+			<GRID name="Add Address" keyfield="entity_id" table="vw_entitys" where="table_name = 'entitys'">
+				<TEXTFIELD w="75" title="Entiry Name">entity_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Mobile">mobile</TEXTFIELD>
+				<ACTIONS>
+					<ACTION fnct="ins_sms_address">Add</ACTION>
+				</ACTIONS>
+			</GRID>
+		</GRID>
+		<GRID order="sms_number" name="Sent" keyfield="sms_id" orderby="sms_id desc" table="vw_sms" where="folder_id = 2">
+			<TITLEFIELD w="75" title="Tel. Number">sms_number</TITLEFIELD>
+			<TEXTFIELD w="75" title="SMS Id">sms_id</TEXTFIELD>
+			<TEXTAREA w="200" title="message">message</TEXTAREA>
+			<CHECKBOX w="75" title="Sent">sent</CHECKBOX>
+			<TEXTFIELD w="75" title="Name">entity_name</TEXTFIELD>
+			<GRID name="SMS Address" keyfield="sms_address_id" linkfield="sms_id" table="vw_sms_address">
+				<TEXTFIELD w="75" title="Entity Name">entity_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Mobile Number">mobile</TEXTFIELD>
+				<TEXTFIELD w="75" title="Narrative">narrative</TEXTFIELD>
+			</GRID>
+			<GRID name="SMS Groups" keyfield="sms_groups_id" linkfield="sms_id" table="vw_sms_groups">
+				<TEXTFIELD w="75" title="Entity Type">entity_type_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Narrative">narrative</TEXTFIELD>
+			</GRID>
+		</GRID>
+	</DESK>
+</APP>

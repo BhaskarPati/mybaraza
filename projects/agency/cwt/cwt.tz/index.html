@@ -1,0 +1,127 @@
+<html>
+<head>
+	<title>CWT Corporate Script</title>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	<script>
+		var VP = new ActiveXObject("Viewpoint.ViewpointSrv");
+
+		function getPNRInfor(){	
+			VP.RetrieveCurrentPNR();
+			var PNR = VP.GetPNR();
+	
+			var XMLDoc = new ActiveXObject("MICROSOFT.XMLDOM");
+			XMLDoc.async = false;
+			XMLDoc.loadXML(PNR);
+	
+			var AirSegs = XMLDoc.getElementsByTagName("AirSeg");
+			var HotelSegs = XMLDoc.getElementsByTagName("HtlSeg");
+
+			var $xmlDoc = $.parseXML(PNR);
+			var $xml = $($xmlDoc);
+			
+			if(AirSegs.length>0) {
+				cwtScript.remark1ckb.checked = true;
+				var lastAirSegNum = $xml.find('AirSeg').last().find('SegNum').text();				
+				cwtScript.remark1seg.value = lastAirSegNum;
+			}
+			if(HotelSegs.length>0) {
+				cwtScript.remark2ckb.checked = true;
+				var lastHotelSegNum = $xml.find('HtlSeg').last().find('SegNum').text();				
+				cwtScript.remark2seg.value = lastHotelSegNum;
+			}
+			
+			var txt1 = DisplayTE("*R");
+			var txt2 = DisplayTE("*RI");
+			cwtScript.resultarea.value = txt1 + txt2;
+		}
+
+		function addPNRInfor(){	
+			if(cwtScript.remark1ckb.checked) 
+				var results = DisplayTE("RI.S" + cwtScript.remark1seg.value + "*AIRFARE IN POLICY");
+			if(cwtScript.remark2ckb.checked) 
+				var results = DisplayTE("RI.S" + cwtScript.remark2seg.value + "*HOTEL IN POLICY");
+			if(cwtScript.remark3ckb.checked) 
+				var results = DisplayTE("DI.FT-FF" + cwtScript.remark3ftf.value + "/" + cwtScript.remark3val.value);
+			if(cwtScript.remark4ckb.checked) 
+				var results = DisplayTE("DI.FT-FF" + cwtScript.remark4ftf.value + "/" + cwtScript.remark4val.value);
+
+			var txt1 = DisplayTE("*R");
+			var txt2 = DisplayTE("*RI");
+			cwtScript.resultarea.value = txt1 + txt2;
+		}
+
+		function DisplayTE(gcmd) {
+			   //console.log('Writing to Free Field');
+			   var TE = new ActiveXObject("DAT32COM.TERMINALEMULATION");
+			   var command = "<FORMAT>" + gcmd + "</FORMAT>";
+			   TE.MakeEntry(command);
+			   while (TE.More == true) {
+				       TE.GetMore(true, false);
+			   }
+
+			   var rl = TE.NumResponseLines;
+			   var result = "";
+			   var i;
+			   for (i = 0; i < rl; i++) {
+				       result = result + TE.ResponseLine(i).replace("<CARRIAGE_RETURN/>", "").replace("<SOM/>", "").replace("<TABSTOP/>", "\t") + "\n";
+			   }
+			   //console.log('result : ' + result);
+			   return result;
+		}
+
+		function getPNRXML(){	
+			VP.RetrieveCurrentPNR();
+			var PNR = VP.GetPNR();
+
+			var txt = document.getElementById("resultarea");
+			txt.value = PNR;
+		}
+
+	</script> 
+</head>
+
+<body  onload="getPNRInfor()">
+	
+	<form name="cwtScript" method="post">
+		<P>
+			<strong><u><FONT face="Verdana" size="4" color="teal">CWT CORPORATE SCRIPT</FONT></u></strong>
+		</P>
+		<table id="tblInput" style="FONT-SIZE: 10px; FONT-FAMILY: verdana; HEIGHT: 192px" border="0" width="100%">
+			<tr>
+				<td><input type="checkbox" name="remark1ckb" value="select"/></td>
+				<td><input type="text" id="remark1seg" name="remark1seg" maxLength="10" size="12"/></td>
+				<td>RI.S4*AIRFARE IN POLICY</td>
+			</tr>
+
+			<tr>
+				<td><input type="checkbox" name="remark2ckb" value="select"/></td>
+				<td><input type="text" id="remark2seg" name="remark2seg" maxLength="10" size="12"/></td>
+				<td>RI.S3*HOTEL IN POLICY</td>
+			</tr>
+		
+			<tr>
+				<td><input type="checkbox" name="remark3ckb" value="select"/></td>
+				<td><input type="text" id="remark3ftf" name="remark3ftf" maxLength="10" size="12" value="21"/></td>
+				<td><input type="text" id="remark3val" name="remark3val" maxLength="50" size="55"/></td>
+			</tr>
+
+			<tr>
+				<td><input type="checkbox" name="remark4ckb" value="select"/></td>
+				<td><input type="text" id="remark4ftf" name="remark4ftf" maxLength="10" size="12" value="22"/></td>
+				<td><input type="text" id="remark4val" name="remark4val" maxLength="50" size="55"/></td>
+			</tr>
+
+			<tr>
+				<td colspan="2"><input type="button" id="btnExe" name="btnExe" value="Execute" onclick="addPNRInfor()"/></td>
+				<td ><input type="button" id="btnExe" name="btnPNR" value="ExecutePNR" onclick="getPNRXML()"/></td>
+
+			</tr>
+
+			<tr>
+				<td colspan="3"><textarea id="resultarea"  name="resultarea" cols="100" rows="10"></textarea></td>
+			</tr>
+
+		
+	</form>
+</body>
+</html>

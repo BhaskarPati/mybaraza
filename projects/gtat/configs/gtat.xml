@@ -1,0 +1,597 @@
+<APP name="GTA" password="change_password" material="true">
+	<MENU name="GTA Finance">
+		<MENU name="Entries" role="finance">
+			<MENU name="Clients">1</MENU>
+			<MENU name="Users" role="admin">2</MENU>
+			<MENU name="Accounting Periods">6</MENU>
+			<MENU name="Periods Modification">7</MENU>
+			<MENU name="Approve Periods" role="admin">8</MENU>
+			<MENU name="Delete Periods">9</MENU>
+			<MENU name="Import">5</MENU>
+			<MENU name="GTA Revenue">11</MENU>
+			<MENU name="EMails">133</MENU>
+			<MENU name="Client Payments">138</MENU>
+		</MENU>
+		<MENU name="Report" role="finance,reports">
+			<MENU name="Clients">102</MENU>
+			<MENU name="Branches">101</MENU>
+			<MENU name="Accounting Periods">105</MENU>
+			<MENU name="Management">103</MENU>
+			<MENU name="Sales">104</MENU>
+			<MENU name="Client Sales Details">117</MENU>
+			<MENU name="Branch Sales Details">122</MENU>
+			<MENU name="Non Allocated sales">120</MENU>
+			<MENU name="Duplicate Booking">125</MENU>
+			<MENU name="Group Client Invoices">110</MENU>
+			<MENU name="Branch Statement">121</MENU>
+			<MENU name="Credit Note">118</MENU>
+			<MENU name="Client Statement">123</MENU>
+			<MENU name="GTA Revenue">111</MENU>
+			<MENU name="GK GTA Revenue">124</MENU>
+			<MENU name="Invoice Listing">128</MENU>
+			<MENU name="Statements">143</MENU>
+			<MENU name="Client Payments">148</MENU>
+		</MENU>
+	</MENU>
+	<DESK w="700" name="Clients" type="vert" key="1" h="500">
+		<GRID name="Active Clients" keyfield="clientid" orderby="clientname" table="vwclients" where="(IsActive = true)">
+			<TEXTFIELD w="40" title="MST CUS ID">mst_cus_id</TEXTFIELD>
+			<TEXTFIELD w="140" title="Client Name">clientname</TEXTFIELD>
+			<TEXTFIELD w="80" title="Town">Town</TEXTFIELD>
+			<TEXTFIELD w="40" title="Country">countryname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Tel No.">telno</TEXTFIELD>
+			<TEXTFIELD w="40" title="Email">email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Contact Person">contact_person</TEXTFIELD>
+			<FORM name="Clients" keyfield="clientid" table="clients">
+				<TEXTFIELD w="150" title="Client Name" y="10" h="20" x="10">clientname</TEXTFIELD>
+				<TEXTFIELD w="150" title="Address" y="10" h="20" x="290">address</TEXTFIELD>
+				<TEXTFIELD w="150" title="Postal Code" y="30" h="20" x="10">postalcode</TEXTFIELD>
+				<TEXTFIELD w="150" title="Town" y="30" h="20" x="290">town</TEXTFIELD>
+				<COMBOBOX w="150" title="Country" lptable="countrys" y="50" h="20" x="10" lpfield="countryname">countryid</COMBOBOX>
+				<TEXTFIELD w="150" title="Tel No." y="50" h="20" x="290">telno</TEXTFIELD>
+				<TEXTFIELD w="150" title="Email" y="70" h="20" x="10">email</TEXTFIELD>
+				<TEXTFIELD w="430" title="Contact Person" y="260" h="20" x="10">contact_person</TEXTFIELD>
+				<CHECKBOX w="50" title="Active" y="70" h="20" x="290">IsActive</CHECKBOX>
+				<TEXTFIELD w="150" title="MST CUS ID" y="90" h="20" x="10">mst_cus_id</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="110" h="70" x="10">details</TEXTAREA>
+			</FORM>
+			<GRID name="Branches" keyfield="clientbranchid" linkfield="clientid" table="clientbranches">
+				<TEXTFIELD w="175" title="Branch Name">branchname</TEXTFIELD>
+				<CHECKBOX w="75" title="Active">isactive</CHECKBOX>
+				<FORM name="Clientbranches" keyfield="clientbranchid" linkfield="clientid" table="clientbranches">
+					<TEXTFIELD w="350" title="Branchn" y="10" h="20" x="10">branchname</TEXTFIELD>
+					<CHECKBOX w="150" title="Isactive" y="30" h="20" x="10">isactive</CHECKBOX>
+					<TEXTAREA w="430" title="Details" y="50" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+		</GRID>
+		<GRID name="Clients" keyfield="clientid" orderby="clientname" table="vwclients">
+			<TEXTFIELD w="40" title="MST CUS ID">mst_cus_id</TEXTFIELD>
+			<TEXTFIELD w="140" title="Client Name">clientname</TEXTFIELD>
+			<TEXTFIELD w="80" title="Town">Town</TEXTFIELD>
+			<TEXTFIELD w="40" title="Country">countryname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Tel No.">telno</TEXTFIELD>
+			<TEXTFIELD w="40" title="Email">email</TEXTFIELD>
+			<FORM name="Clients" keyfield="clientid" table="clients">
+				<TEXTFIELD w="150" title="Client Name" y="10" h="20" x="10">clientname</TEXTFIELD>
+				<TEXTFIELD w="150" title="Address" y="10" h="20" x="290">address</TEXTFIELD>
+				<TEXTFIELD w="150" title="Postal Code" y="30" h="20" x="10">postalcode</TEXTFIELD>
+				<TEXTFIELD w="150" title="Town" y="30" h="20" x="290">town</TEXTFIELD>
+				<COMBOBOX w="150" title="Country" lptable="countrys" y="50" h="20" x="10" lpfield="countryname">countryid</COMBOBOX>
+				<TEXTFIELD w="150" title="Tel No." y="50" h="20" x="290">telno</TEXTFIELD>
+				<TEXTFIELD w="150" title="Email" y="70" h="20" x="10">email</TEXTFIELD>
+				<CHECKBOX w="50" title="Active" y="70" h="20" x="290">IsActive</CHECKBOX>
+				<TEXTFIELD w="150" title="MST CUS ID" y="90" h="20" x="10">mst_cus_id</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="110" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+		<GRID name="Branches" keyfield="clientbranchid" orderby="clientname" table="vwclientbranches">
+			<TEXTFIELD w="240" title="Client">clientname</TEXTFIELD>
+			<TEXTFIELD w="240" title="Branch Name">branchname</TEXTFIELD>
+			<FORM name="Branches" keyfield="clientbranchid" table="clientbranches">
+				<COMBOBOX w="430" title="Client" lptable="clients" y="10" h="20" x="10" lpfield="clientname">clientid</COMBOBOX>
+				<TEXTFIELD w="320" title="Branch Name" y="30" h="20" x="10">branchname</TEXTFIELD>
+				<CHECKBOX w="30" title="Active" lw="70" y="30" h="20" x="460">IsActive</CHECKBOX>
+				<TEXTAREA w="430" title="Details" y="50" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Users" key="2" h="500">
+		<GRID name="Entitys" keyfield="entity_id" table="vw_entitys">
+			<TEXTFIELD w="75" title="Entity ID">entity_id</TEXTFIELD>
+			<TEXTFIELD w="140" title="Entity Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="100" title="User Name">user_name</TEXTFIELD>
+			<TEXTFIELD w="100" title="Role">function_role</TEXTFIELD>
+			<CHECKBOX w="100" title="Super User" format="boolean">super_user</CHECKBOX>
+			<CHECKBOX w="75" title="Active" format="boolean">is_active</CHECKBOX>
+			<TEXTFIELD w="100" title="Type">entity_type_name</TEXTFIELD>
+			<GRID name="Address" keyfield="address_id" linkfield="table_id" table="vw_address" where="table_name = 'entitys'">
+				<TEXTFIELD w="100" title="Country">sys_country_name</TEXTFIELD>
+				<TEXTFIELD w="100" title="Postal Code">postal_code</TEXTFIELD>
+				<TEXTFIELD w="100" title="Town">town</TEXTFIELD>
+				<TEXTFIELD w="100" title="Phone Number">phone_number</TEXTFIELD>
+				<TEXTFIELD w="100" title="Mobile">mobile</TEXTFIELD>
+				<TEXTFIELD w="140" title="Email">email</TEXTFIELD>
+				<TEXTFIELD w="140" title="Default">is_default</TEXTFIELD>
+				<FORM name="Address" keyfield="address_id" linkfield="table_id" table="address">
+					<DEFAULT default="entitys">table_name</DEFAULT>
+					<COMBOBOX w="430" title="Country" default="KE" lptable="sys_countrys" noorg="true" y="10" h="20" x="10" lpfield="sys_country_name">sys_country_id</COMBOBOX>
+					<TEXTFIELD w="150" title="Post Office Box" y="30" h="20" x="10">post_office_box</TEXTFIELD>
+					<TEXTFIELD w="150" title="Postal Code" y="30" h="20" x="290">postal_code</TEXTFIELD>
+					<TEXTFIELD w="150" title="Town" y="50" h="20" x="10">town</TEXTFIELD>
+					<TEXTFIELD w="430" title="Premises" y="70" h="20" x="10">premises</TEXTFIELD>
+					<TEXTFIELD w="430" title="Street" y="90" h="20" x="10">street</TEXTFIELD>
+					<TEXTFIELD w="430" title="Phone Number" y="110" h="20" x="10">phone_number</TEXTFIELD>
+					<TEXTFIELD w="150" title="Extension" y="130" h="20" x="10">extension</TEXTFIELD>
+					<TEXTFIELD w="430" title="Mobile" y="150" h="20" x="10">mobile</TEXTFIELD>
+					<TEXTFIELD w="430" title="Fax" y="170" h="20" x="10">fax</TEXTFIELD>
+					<TEXTFIELD w="430" title="Email" y="190" h="20" x="10">email</TEXTFIELD>
+					<CHECKBOX w="30" title="Default" y="210" h="20" x="10">is_default</CHECKBOX>
+					<TEXTAREA w="430" title="Details" y="230" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<GRID name="Entity Subscriptions" keyfield="entity_subscription_id" linkfield="entity_id" table="vw_entity_subscriptions">
+				<TEXTFIELD w="275" title="Entity Type">entity_type_name</TEXTFIELD>
+				<TEXTFIELD w="275" title="Level">subscription_level_name</TEXTFIELD>
+				<FORM name="Entity Subscriptions" keyfield="entity_subscription_id" linkfield="entity_id" table="entity_subscriptions">
+					<COMBOBOX w="430" title="Entity Type" lptable="entity_types" y="10" h="20" x="10" lpfield="entity_type_name">entity_type_id</COMBOBOX>
+					<COMBOBOX w="430" title="Subscription Level" lptable="subscription_levels" y="30" h="20" x="10" lpfield="subscription_level_name">subscription_level_id</COMBOBOX>
+					<TEXTAREA w="430" title="Details" y="50" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<FORM name="Entitys" keyfield="entity_id" table="entitys">
+				<COMBOBOX w="150" title="Org" lptable="orgs" y="10" h="20" x="10" lpfield="org_name">org_id</COMBOBOX>
+				<COMBOBOX w="150" title="Entity Type" lptable="entity_types" y="10" h="20" x="290" lpfield="entity_type_name">entity_type_id</COMBOBOX>
+				<TEXTFIELD w="430" title="Entity Name" y="30" h="20" x="10">entity_name</TEXTFIELD>
+				<TEXTFIELD w="430" title="User Name" y="50" h="20" x="10">user_name</TEXTFIELD>
+				<TEXTFIELD w="430" title="Primary EMail" y="70" h="20" x="10">primary_email</TEXTFIELD>
+				<CHECKBOX w="50" title="Super User" y="90" h="20" x="10">super_user</CHECKBOX>
+				<CHECKBOX w="50" title="Entity Leader" y="90" h="20" x="190">entity_leader</CHECKBOX>
+				<CHECKBOX w="50" title="No Org" y="90" h="20" x="390">no_org</CHECKBOX>
+				<TEXTFIELD w="430" title="Function Role" y="110" h="20" x="10">function_role</TEXTFIELD>
+				<CHECKBOX w="150" title="Active" y="130" h="20" x="10">is_active</CHECKBOX>
+				<TEXTFIELD w="150" title="First Password" y="130" h="20" x="290">first_password</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="150" h="70" x="10">details</TEXTAREA>
+			</FORM>
+			<ACTIONS>
+				<ACTION fnct="change_password">Reset Password</ACTION>
+			</ACTIONS>
+		</GRID>
+		<GRID name="Entity Types" keyfield="entity_type_id" table="entity_types">
+			<TEXTFIELD w="75" title="Entity Type ID">entity_type_id</TEXTFIELD>
+			<TEXTFIELD w="175" title="Entity Type Name">entity_type_name</TEXTFIELD>
+			<TEXTFIELD w="175" title="Entity Role">entity_role</TEXTFIELD>
+			<TEXTFIELD w="175" title="Group EMail">group_email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Use Key">use_key</TEXTFIELD>
+			<GRID name="Entity Subscriptions" keyfield="entity_subscription_id" linkfield="entity_type_id" table="vw_entity_subscriptions">
+				<TEXTFIELD w="75" title="Entity ID">entity_id</TEXTFIELD>
+				<TEXTFIELD w="275" title="Entity Name">entity_name</TEXTFIELD>
+				<TEXTFIELD w="275" title="Level">subscription_level_name</TEXTFIELD>
+				<FORM name="Entity Subscriptions" keyfield="entity_subscription_id" linkfield="entity_type_id" table="entity_subscriptions">
+					<COMBOBOX w="430" title="Entity" lptable="entitys" y="10" h="20" x="10" lpfield="entity_name">entity_id</COMBOBOX>
+					<COMBOBOX w="430" title="Subscription Level" lptable="subscription_levels" y="30" h="20" x="10" lpfield="subscription_level_name">subscription_level_id</COMBOBOX>
+					<TEXTAREA w="430" title="Details" y="50" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<FORM name="Entity Types" keyfield="entity_type_id" table="entity_types" th="210">
+				<TEXTFIELD w="430" title="Entity Type Name" y="10" h="20" x="10">entity_type_name</TEXTFIELD>
+				<TEXTFIELD w="430" title="Entity Role" y="30" h="20" x="10">entity_role</TEXTFIELD>
+				<TEXTFIELD w="150" title="Use Key" y="50" h="20" x="10">use_key</TEXTFIELD>
+				<TEXTFIELD w="150" title="Start View" y="50" h="20" x="290">start_view</TEXTFIELD>
+				<TEXTFIELD w="430" title="Group EMail" y="70" h="20" x="10">group_email</TEXTFIELD>
+				<TEXTAREA w="530" tab="Description" y="2" h="170" x="10">description</TEXTAREA>
+				<TEXTAREA w="530" tab="Details" y="2" h="170" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+		<GRID name="Subscription Levels" keyfield="subscription_level_id" table="subscription_levels">
+			<TEXTFIELD w="75" title="Level ID">subscription_level_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Level Name">subscription_level_name</TEXTFIELD>
+			<FORM name="Subscription Levels" keyfield="subscription_level_id" table="subscription_levels">
+				<TEXTFIELD w="430" title="Level" y="10" h="20" x="10">subscription_level_name</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="30" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Imports" type="vert" key="5" h="500">
+		<GRID process="inssales" name="Sales" keyfield="tmpsaleid" worksheet="0" import="excel" table="tmpsales">
+			<TEXTFIELD w="40" title="GK Ref">gkref</TEXTFIELD>
+			<TEXTFIELD w="40" title="Booking">bookingid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Agent Reference">agentreference</TEXTFIELD>
+			<TEXTFIELD w="40" title="Item">item</TEXTFIELD>
+			<TEXTFIELD w="40" title="City">city</TEXTFIELD>
+			<TEXTFIELD w="40" title="Name">name</TEXTFIELD>
+			<TEXTFIELD w="40" title="Service Date">servicedate</TEXTFIELD>
+			<TEXTFIELD w="40" title="Nights">nights</TEXTFIELD>
+			<TEXTFIELD w="40" title="Total Price">totalprice</TEXTFIELD>
+			<TEXTFIELD w="40" title="Status">status</TEXTFIELD>
+			<TEXTFIELD w="40" title="Alternate">alternate</TEXTFIELD>
+			<TEXTFIELD w="40" title="Rmks">rmks</TEXTFIELD>
+			<TEXTFIELD w="40" title="Completed">completed</TEXTFIELD>
+			<TEXTFIELD w="40" title="Requested Date">requesteddate</TEXTFIELD>
+			<TEXTFIELD w="40" title="Requested Time">requestedtime</TEXTFIELD>
+			<TEXTFIELD w="40" title="Nationality">nationality</TEXTFIELD>
+		</GRID>
+		<GRID process="insmanagement" name="Management" keyfield="tmpmanagementid" worksheet="1" import="excel" table="tmpmanagement">
+			<TEXTFIELD w="40" title="Booking">booking</TEXTFIELD>
+			<TEXTFIELD w="40" title="Agent Reference">agentreference</TEXTFIELD>
+			<TEXTFIELD w="40" title="Creation Date">creationdate</TEXTFIELD>
+			<TEXTFIELD w="40" title="Departure Date">departuredate</TEXTFIELD>
+			<TEXTFIELD w="40" title="Lead Name">leadname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Wholesale Value">wholesalevalue</TEXTFIELD>
+			<TEXTFIELD w="40" title="Gross Value">grossvalue</TEXTFIELD>
+			<TEXTFIELD w="40" title="Currency">Currency</TEXTFIELD>
+			<TEXTFIELD w="40" title="Commission">commission</TEXTFIELD>
+			<TEXTFIELD w="40" title="Sub Agent">subagent</TEXTFIELD>
+			<TEXTFIELD w="40" title="External Rates">externalrates</TEXTFIELD>
+			<TEXTFIELD w="40" title="Agent Fee">agentfee</TEXTFIELD>
+		</GRID>
+		<GRID process="insNetRates" name="Net Rates" keyfield="tmpnetrateid" worksheet="2" import="excel" table="tmpnetrates">
+			<TEXTFIELD w="40" title="GK Ref">gkref</TEXTFIELD>
+			<TEXTFIELD w="40" title="Booking">bookingid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Agent Reference">agentreference</TEXTFIELD>
+			<TEXTFIELD w="40" title="Item">item</TEXTFIELD>
+			<TEXTFIELD w="40" title="City">city</TEXTFIELD>
+			<TEXTFIELD w="40" title="Name">name</TEXTFIELD>
+			<TEXTFIELD w="40" title="Service Date">servicedate</TEXTFIELD>
+			<TEXTFIELD w="40" title="Nights">nights</TEXTFIELD>
+			<TEXTFIELD w="40" title="Total Price">totalprice</TEXTFIELD>
+			<TEXTFIELD w="40" title="Status">status</TEXTFIELD>
+			<TEXTFIELD w="40" title="Alternate">alternate</TEXTFIELD>
+			<TEXTFIELD w="40" title="Rmks">rmks</TEXTFIELD>
+			<TEXTFIELD w="40" title="Completed">completed</TEXTFIELD>
+			<TEXTFIELD w="40" title="Requested Date">requesteddate</TEXTFIELD>
+			<TEXTFIELD w="40" title="Requested Time">requestedtime</TEXTFIELD>
+			<TEXTFIELD w="40" title="Nationality">nationality</TEXTFIELD>
+			<TEXTFIELD w="40" title="Supplier Deadline">Supplier_Deadline</TEXTFIELD>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Accounting Periods" type="vert" key="6" h="500">
+		<GRID name="Accounting Periods" keyfield="PeriodID" orderby="Startdate desc" table="Period">
+			<TEXTFIELD w="40" title="Period">periodid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Sales Period">salesperiod</TEXTFIELD>
+			<TEXTFIELD w="40" title="Start Date">Startdate</TEXTFIELD>
+			<TEXTFIELD w="40" title="End Date">enddate</TEXTFIELD>
+			<TEXTFIELD w="40" title="Invoice Date">InvoiceDate</TEXTFIELD>
+			<TEXTFIELD w="40" title="Commission Rate">CommissionRate</TEXTFIELD>
+			<TEXTFIELD w="40" title="Mark Up Rate">markup</TEXTFIELD>
+			<CHECKBOX w="40" title="Active">IsActive</CHECKBOX>
+			<FORM name="Accounting Periods" keyfield="periodid" linkfield="PeriodID" table="Period">
+				<TEXTFIELD w="150" title="Sales Period" y="10" h="20" x="10">salesperiod</TEXTFIELD>
+				<TEXTDATE w="150" title="Start Date" y="30" h="20" x="290">Startdate</TEXTDATE>
+				<TEXTDATE w="150" title="End Date" y="50" h="20" x="10">enddate</TEXTDATE>
+				<TEXTDATE w="150" title="Invoice Date" y="50" h="20" x="290">InvoiceDate</TEXTDATE>
+				<TEXTDECIMAL w="150" title="Commission Rate" default="0" y="70" h="20" x="10">CommissionRate</TEXTDECIMAL>
+				<TEXTDECIMAL w="150" title="Mark up Rate" default="0" y="70" h="20" x="290">markup</TEXTDECIMAL>
+				<CHECKBOX w="50" title="Active" y="90" h="20" x="10">IsActive</CHECKBOX>
+				<TEXTAREA w="430" title="Details" y="110" h="50" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Periods Modification" type="vert" key="7" h="500">
+		<GRID name="Accounting Periods" keyfield="PeriodID" orderby="Startdate desc" table="Period" where="(isactive = true) and (approved = false)">
+			<TEXTFIELD w="40" title="Period">periodid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Sales Period">salesperiod</TEXTFIELD>
+			<TEXTFIELD w="40" title="Start Date">Startdate</TEXTFIELD>
+			<TEXTFIELD w="40" title="End Date">enddate</TEXTFIELD>
+			<TEXTFIELD w="40" title="Invoice Date">InvoiceDate</TEXTFIELD>
+			<TEXTFIELD w="40" title="Commission Rate">CommissionRate</TEXTFIELD>
+			<TEXTFIELD w="40" title="Mark Up Rate">markup</TEXTFIELD>
+			<CHECKBOX w="40" title="Active">IsActive</CHECKBOX>
+			<FORM name="Accounting Periods" keyfield="periodid" linkfield="PeriodID" table="Period" key="2">
+				<TEXTFIELD w="150" title="Sales Period" y="10" h="20" x="10">salesperiod</TEXTFIELD>
+				<TEXTFIELD w="150" title="Account Period" y="10" h="20" x="290">AccountPeriod</TEXTFIELD>
+				<TEXTFIELD w="150" title="KQ Account Period" y="30" h="20" x="10">KQAccountPeriod</TEXTFIELD>
+				<TEXTDATE w="150" title="Start Date" y="30" h="20" x="290">Startdate</TEXTDATE>
+				<TEXTDATE w="150" title="End Date" y="50" h="20" x="10">enddate</TEXTDATE>
+				<TEXTDATE w="150" title="Invoice Date" y="50" h="20" x="290">InvoiceDate</TEXTDATE>
+				<TEXTDECIMAL w="150" title="Commission Rate" y="70" h="20" x="10">CommissionRate</TEXTDECIMAL>
+				<TEXTDECIMAL w="150" title="Mark up Rate" y="70" h="20" x="290">markup</TEXTDECIMAL>
+				<CHECKBOX w="50" title="Active" y="90" h="20" x="10">IsActive</CHECKBOX>
+				<TEXTAREA w="430" title="Details" y="110" h="50" x="10">details</TEXTAREA>
+			</FORM>
+			<GRID name="Management" keyfield="managementid" linkfield="PeriodID" table="management">
+				<TEXTFIELD w="40" title="Booking">bookingid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Agent Reference">agentreference</TEXTFIELD>
+				<TEXTFIELD w="40" title="Subagent">subagent</TEXTFIELD>
+				<TEXTFIELD w="40" title="Creation Date">creationdate</TEXTFIELD>
+				<TEXTFIELD w="40" title="Lead Name">leadname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Wholesale Value">wholesalevalue</TEXTFIELD>
+				<TEXTFIELD w="40" title="Gross Value">grossvalue</TEXTFIELD>
+				<TEXTFIELD w="40" title="Commission">commission</TEXTFIELD>
+			</GRID>
+			<GRID update="sales" name="Sales" keyfield="saleid" updatetable="sales" linkfield="PeriodID" table="sales">
+				<TEXTFIELD w="40" title="GK Ref">gkref</TEXTFIELD>
+				<TEXTFIELD w="40" title="Booking">bookingid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Agent Reference">agentreference</TEXTFIELD>
+				<TEXTFIELD w="40" title="Service Date">servicedate</TEXTFIELD>
+				<TEXTFIELD w="40" title="Requested Date">requesteddate</TEXTFIELD>
+				<TEXTFIELD w="40" title="Item">item</TEXTFIELD>
+				<TEXTFIELD w="40" title="Name">name</TEXTFIELD>
+				<TEXTFIELD w="40" title="Nights">nights</TEXTFIELD>
+				<TEXTFIELD w="40" title="Total Price">totalprice</TEXTFIELD>
+				<TEXTFIELD w="40" title="Commission">commission</TEXTFIELD>
+				<TEXTFIELD w="40" title="Net Remits">netremits</TEXTFIELD>
+				<TEXTFIELD w="40" title="Status">status</TEXTFIELD>
+				<TEXTFIELD w="40" title="Nationality">nationality</TEXTFIELD>
+				<TEXTFIELD w="40" title="Net Remits">netremits</TEXTFIELD>
+				<EDITFIELD w="40" title="VAT Rate" edit="true" edittable="sales">vat_rate</EDITFIELD>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Approve Periods" type="vert" key="8" h="500">
+		<GRID name="Accounting Periods" keyfield="PeriodID" orderby="Startdate desc" table="Period" key="1">
+			<TEXTFIELD w="40" title="Period">periodid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Sales Period">salesperiod</TEXTFIELD>
+			<TEXTFIELD w="40" title="Start Date">Startdate</TEXTFIELD>
+			<TEXTFIELD w="40" title="End Date">enddate</TEXTFIELD>
+			<TEXTFIELD w="40" title="Invoice Date">InvoiceDate</TEXTFIELD>
+			<TEXTFIELD w="40" title="Commission Rate">CommissionRate</TEXTFIELD>
+			<TEXTFIELD w="40" title="Mark Up Rate">markup</TEXTFIELD>
+			<CHECKBOX w="40" title="Active">IsActive</CHECKBOX>
+			<ACTIONS>
+				<ACTION fnct="approve_period" approval="1">Approve Period</ACTION>
+				<ACTION fnct="approve_period" approval="2">Send Invoice</ACTION>
+			</ACTIONS>
+			<FORM name="Accounting Periods" keyfield="periodid" linkfield="PeriodID" table="Period" key="2">
+				<TEXTFIELD w="150" title="Sales Period" y="10" h="20" x="10">salesperiod</TEXTFIELD>
+				<TEXTFIELD w="150" title="Account Period" y="10" h="20" x="290">AccountPeriod</TEXTFIELD>
+				<TEXTFIELD w="150" title="KQ Account Period" y="30" h="20" x="10">KQAccountPeriod</TEXTFIELD>
+				<TEXTDATE w="150" title="Start Date" y="30" h="20" x="290">Startdate</TEXTDATE>
+				<TEXTDATE w="150" title="End Date" y="50" h="20" x="10">enddate</TEXTDATE>
+				<TEXTDATE w="150" title="Invoice Date" y="50" h="20" x="290">InvoiceDate</TEXTDATE>
+				<TEXTDECIMAL w="150" title="Commission Rate" y="70" h="20" x="10">CommissionRate</TEXTDECIMAL>
+				<TEXTDECIMAL w="150" title="Mark up Rate" y="70" h="20" x="290">markup</TEXTDECIMAL>
+				<CHECKBOX w="50" title="Active" y="90" h="20" x="10">IsActive</CHECKBOX>
+				<CHECKBOX w="50" title="Approved" y="90" h="20" x="290">Approved</CHECKBOX>
+				<TEXTAREA w="430" title="Details" y="110" h="50" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="705" name="Delete Periods" type="vert" key="9" h="500">
+		<GRID name="Accounting Periods" keyfield="PeriodID" orderby="Startdate desc" table="Period">
+			<TEXTFIELD w="40" title="Period">periodid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Sales Period">salesperiod</TEXTFIELD>
+			<TEXTFIELD w="40" title="Start Date">Startdate</TEXTFIELD>
+			<TEXTFIELD w="40" title="End Date">enddate</TEXTFIELD>
+			<TEXTFIELD w="40" title="Invoice Date">InvoiceDate</TEXTFIELD>
+			<CHECKBOX w="40" title="Active">IsActive</CHECKBOX>
+			<CHECKBOX w="40" title="Approved">Approved</CHECKBOX>
+			<CHECKBOX w="40" title="Picked">ispicked</CHECKBOX>
+			<ACTIONS>
+				<ACTION fnct="del_period" title="Delete Period">Delete Period</ACTION>
+			</ACTIONS>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="GTA Revenue" type="vert" key="11" h="500">
+		<GRID name="GTA Revenue" keyfield="gtarevenueid" table="gtarevenue" key="1">
+			<TEXTFIELD w="40" title="Service ID">serviceid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Service Name">servicename</TEXTFIELD>
+			<TEXTFIELD w="40" title="Basis">basis</TEXTFIELD>
+			<TEXTFIELD w="40" title="Total Commission Earned">totalcommissionearned</TEXTFIELD>
+			<TEXTFIELD w="40" title="Gk %">gkpercentage</TEXTFIELD>
+			<TEXTFIELD w="40" title="TA Commission Out">TAcommissionout</TEXTFIELD>
+			<TEXTFIELD w="40" title="Shared Ndc Commission">sharedndccommission</TEXTFIELD>
+			<TEXTFIELD w="40" title="Other Ndc Commission">otherndccommission</TEXTFIELD>
+			<TEXTFIELD w="40" title="Gk">gk</TEXTFIELD>
+			<FORM name="GTA Revenue" keyfield="gtarevenueid" table="gtarevenue" key="2">
+				<TEXTFIELD w="150" title="Service ID" y="10" h="20" x="10">serviceid</TEXTFIELD>
+				<TEXTFIELD w="150" title="Service Name" y="10" h="20" x="290">servicename</TEXTFIELD>
+				<TEXTFIELD w="150" title="Basis" y="30" h="20" x="10">basis</TEXTFIELD>
+				<TEXTDECIMAL w="150" title="Gk %" y="30" h="20" x="290">gkpercentage</TEXTDECIMAL>
+				<TEXTDECIMAL w="50" title="TA Commission Out" lw="200" y="50" h="20" x="10">TAcommissionout</TEXTDECIMAL>
+				<TEXTDECIMAL w="50" title="Shared NDC Commission" lw="200" y="50" h="20" x="290">sharedndccommission</TEXTDECIMAL>
+				<TEXTDECIMAL w="50" title="Other Ndc Commission" lw="200" y="70" h="20" x="10">otherndccommission</TEXTDECIMAL>
+				<TEXTDECIMAL w="50" title="Gk" lw="200" y="70" h="20" x="290">gk</TEXTDECIMAL>
+				<TEXTDECIMAL w="50" title="Total Commission Earned" lw="200" y="90" h="20" x="10">totalcommissionearned</TEXTDECIMAL>
+				<CHECKBOX w="50" title="Commisionable" lw="200" y="90" h="20" x="290">commisionable</CHECKBOX>
+				<TEXTAREA w="430" title="Details" y="110" h="50" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Clients" type="horl" key="102" h="500">
+		<JASPER name="Clients" reportfile="clients.jasper"></JASPER>
+	</DESK>
+	<DESK w="700" name="Branches" type="horl" key="101" h="500">
+		<JASPER name="Branches" reportfile="vwclientbranches.jasper"></JASPER>
+	</DESK>
+	<DESK w="700" name="Accounting Period" type="horl" key="105" h="500">
+		<JASPER name="Accounting Period" reportfile="period.jasper"></JASPER>
+	</DESK>
+	<DESK w="700" name="Management" type="horl" key="103" h="500">
+		<FILTER location="250" name="Management" type="horl">
+			<DRILLDOWN name="Period" keyfield="periodid" orderby="startdate desc" table="Period" listfield="AccountPeriod" filter="filterid"></DRILLDOWN>
+			<JASPER filtered="true" name="Management" reportfile="vwmanagement.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Sales" type="horl" key="104" h="500">
+		<FILTER location="250" name="Sales" type="horl">
+			<DRILLDOWN name="Account Period" keyfield="periodid" orderby="startdate desc" table="period" listfield="AccountPeriod" filter="filterid"></DRILLDOWN>
+			<JASPER filtered="true" name="Sales" reportfile="vwsales.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Client Sales Details" type="horl" key="117" h="500">
+		<FILTER location="250" name="Client Sales Details" type="horl">
+			<DRILLDOWN name="Period" keyfield="periodid" orderby="startdate desc" table="Period" listfield="AccountPeriod" filter="filterid"></DRILLDOWN>
+			<JASPER filtered="true" name="Sales Details" reportfile="salesdetails.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Branch Sales Details" type="horl" key="122" h="500">
+		<FILTER location="250" name="Branch Sales Details" type="horl">
+			<DRILLDOWN name="Period" keyfield="periodid" orderby="startdate desc" table="Period" listfield="AccountPeriod" filter="filterid"></DRILLDOWN>
+			<JASPER filtered="true" name="Branch Sales Details" reportfile="branchsalesdetails.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Non Allocated Sales" type="horl" key="120" h="500">
+		<FILTER location="250" name="Non Allocated Sales" type="horl">
+			<DRILLDOWN name="Period" keyfield="periodid" orderby="startdate desc" table="Period" listfield="AccountPeriod" filter="filterid"></DRILLDOWN>
+			<JASPER filtered="true" name="Non Allocated Sales" reportfile="vwsalesa.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Group Client Invoices" type="horl" key="110" h="500">
+		<FILTER location="250" name="Group Client Invoices" type="horl">
+			<DRILLDOWN name="Clients" keyfield="clientid" table="clients" listfield="clientname" filter="clientid"></DRILLDOWN>
+			<DRILLDOWN name="Account Period" keyfield="periodid" orderby="startdate desc" table="period" listfield="AccountPeriod" filter="periodid"></DRILLDOWN>
+			<JASPER name="Invoice" linkfield="clientid" reportfile="invoice.jasper"></JASPER>
+		</FILTER>
+		<FILTER w="700" name="Invoice Printing" split="250" type="vert">
+			<FILTERGRID name="Period" keyfield="periodid" orderby="startdate desc" table="period" noorg="true">
+				<TEXTFIELD w="75" title="Periodid">periodid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Salesperiod">salesperiod</TEXTFIELD>
+				<TEXTDATE w="75" title="Startdate">startdate</TEXTDATE>
+				<TEXTDATE w="75" title="Enddate">enddate</TEXTDATE>
+				<TEXTDATE w="75" title="Invoicedate">invoicedate</TEXTDATE>
+				<CHECKBOX w="75" title="Isactive">isactive</CHECKBOX>
+				<CHECKBOX w="75" title="Approved">approved</CHECKBOX>
+				<FILTERGRID name="Invoice" keyfield="invoiceid" orderby="clientname" linkfield="periodid" table="vwinvoicelist">
+					<TEXTFIELD w="75" title="Invoice No">invoiceid</TEXTFIELD>
+					<TEXTFIELD w="75" title="Client ID">clientid</TEXTFIELD>
+					<TEXTFIELD w="75" title="Client Name">clientname</TEXTFIELD>
+					<TEXTFIELD w="75" title="Town">town</TEXTFIELD>
+					<TEXTFIELD w="75" title="Country">countryname</TEXTFIELD>
+					<CHECKBOX w="75" title="Issued">issued</CHECKBOX>
+				</FILTERGRID>
+			</FILTERGRID>
+			<JASPER name="Invoice" printcopies="1" reportfile="invoice_a.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Branch Statement" type="horl" key="121" h="500">
+		<FILTER location="250" name="Branch Statement" type="horl">
+			<DRILLDOWN name="Branches" keyfield="clientbranchid" table="clientbranches" listfield="branchname" filter="filterid"></DRILLDOWN>
+			<DRILLDOWN name="Account Period" keyfield="periodid" orderby="startdate desc" table="period" listfield="AccountPeriod" filter="periodid"></DRILLDOWN>
+			<JASPER filtered="true" name="Branch Statement" reportfile="branchinvoice.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Credit Note" type="horl" key="118" h="500">
+		<FILTER location="250" name="Credit Note" type="horl">
+			<DRILLDOWN name="Clients" keyfield="clientid" table="clients" listfield="clientname" filter="clientid"></DRILLDOWN>
+			<DRILLDOWN name="Account Period" keyfield="periodid" orderby="startdate desc" table="Period" listfield="AccountPeriod" filter="periodid"></DRILLDOWN>
+			<JASPER filtered="true" name="Credit Note" linkfield="clientid" reportfile="creditnote.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Client Statement" type="horl" key="123" h="500">
+		<FILTER location="250" name="Client Statement" type="horl">
+			<DRILLDOWN name="Clients" keyfield="clientid" table="clients" listfield="clientname" filter="filterid"></DRILLDOWN>
+			<DRILLDOWN name="Account Period" keyfield="periodid" orderby="startdate desc" table="period" listfield="AccountPeriod" filter="periodid"></DRILLDOWN>
+			<JASPER filtered="true" name="Client Statement" reportfile="clientstatement.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="GTA Revenue" type="horl" key="111" h="500">
+		<JASPER name="GTA Revenue" reportfile="gtarevenue.jasper"></JASPER>
+	</DESK>
+	<DESK w="700" name="GK GTA Revenue" type="horl" key="124" h="500">
+		<FILTER location="250" name="GK GTA Revenue" type="horl">
+			<DRILLDOWN name="Account Period" keyfield="periodid" orderby="startdate desc" table="period" listfield="AccountPeriod" filter="filterid"></DRILLDOWN>
+			<JASPER name="GTA Revenue" reportfile="gtarevenuea.jasper"></JASPER>
+			<JASPER name="NDC GTA Revenue" reportfile="gtarevenueb.jasper"></JASPER>
+			<JASPER name="Kenya GTA Revenue" reportfile="gtarevenuec.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Duplicate Booking" type="horl" key="125" h="500">
+		<JASPER name="Duplicate Booking" reportfile="duplicatebooking.jasper"></JASPER>
+	</DESK>
+	<DESK w="700" name="Invoice Listing" type="horl" key="128" h="500">
+		<FILTER location="250" name="Invoice Listing" type="horl">
+			<DRILLDOWN name="Account Period" keyfield="periodid" orderby="startdate desc" table="period" listfield="AccountPeriod" filter="filterid"></DRILLDOWN>
+			<JASPER filtered="true" name="Invoice Listing" reportfile="vwinvoicesummary.jasper"></JASPER>
+			<JASPER filtered="true" name="Credit Note Listing" reportfile="vwcreditnotesummary.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="EMails" key="133" h="500">
+		<GRID name="EMails" keyfield="sys_email_id" table="sys_emails" noorg="true">
+			<TEXTFIELD w="75" title="Email ID">sys_email_id</TEXTFIELD>
+			<TEXTFIELD w="275" title="Email Name">sys_email_name</TEXTFIELD>
+			<TEXTFIELD w="275" title="Title">title</TEXTFIELD>
+			<FORM name="EMails" keyfield="sys_email_id" table="sys_emails" th="210">
+				<TEXTFIELD w="350" title="Email Name" y="10" h="20" x="10">sys_email_name</TEXTFIELD>
+				<TEXTFIELD w="430" title="Title" y="30" h="20" x="10">title</TEXTFIELD>
+				<EDITOR w="530" tab="Details" y="2" h="170" x="10">details</EDITOR>
+			</FORM>
+		</GRID>
+		<GRID name="Email List" keyfield="sys_emailed_id" table="vw_sys_emailed">
+			<TEXTFIELD w="75" title="Email ID">sys_email_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Email Name">sys_email_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Emailed ID">sys_emailed_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Table ID">table_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Table Name">table_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Email Type">email_type</TEXTFIELD>
+			<CHECKBOX w="75" title="Emailed">emailed</CHECKBOX>
+			<TEXTFIELD w="75" title="Narrative">narrative</TEXTFIELD>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Client Payments" key="138" h="550">
+		<GRID name="Active Clients" keyfield="clientid" orderby="clientname" table="vwclients" where="(IsActive = true)">
+			<TEXTFIELD w="140" title="Client Name">clientname</TEXTFIELD>
+			<TEXTFIELD w="80" title="Town">Town</TEXTFIELD>
+			<TEXTFIELD w="40" title="Country">countryname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Tel No.">telno</TEXTFIELD>
+			<TEXTFIELD w="40" title="Email">email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Contact Person">contact_person</TEXTFIELD>
+			<GRID name="Client Payments" keyfield="clientpaymentsid" linkfield="clientid" table="vw_clientpayments">
+				<TEXTFIELD w="75" title="Clientname">clientname</TEXTFIELD>
+				<TEXTDATE w="75" title="Accounting Date">accounting_date</TEXTDATE>
+				<TEXTFIELD w="75" title="Currency">currency</TEXTFIELD>
+				<TEXTDECIMAL w="75" title="Amount">amount</TEXTDECIMAL>
+				<TEXTFIELD w="75" title="Payment Reference">payment_reference</TEXTFIELD>
+				<TEXTFIELD w="75" title="Payment Allocation">payment_type</TEXTFIELD>
+				<FORM name="Client Payment" keyfield="clientpaymentsid" linkfield="clientid" table="clientpayments">
+					<TEXTDATE w="150" title="Accounting Date" y="30" h="20" x="10">accounting_date</TEXTDATE>
+					<TEXTFIELD w="150" title="Currency" y="50" h="20" x="10">currency</TEXTFIELD>
+					<TEXTDECIMAL w="150" title="Amount" y="50" h="20" x="290">amount</TEXTDECIMAL>
+					<TEXTFIELD w="430" title="Payment Reference" y="70" h="20" x="10">payment_reference</TEXTFIELD>
+					<TEXTFIELD w="430" title="Payment Allocation" y="90" h="20" x="10">payment_type</TEXTFIELD>
+					<TEXTFIELD w="430" title="Our Reference" y="110" h="20" x="10">journal_name</TEXTFIELD>
+				</FORM>
+				<JASPER name="Receipt" linkfield="clientid" reportfile="receipt.jasper"></JASPER>
+			</GRID>
+		</GRID>
+		<GRID process="inspayments" name="Import Client Payments" keyfield="clientpaymentsid" worksheet="0" import="excel" table="tmpclientpayments">
+			<TEXTFIELD w="75" title="Category">category</TEXTFIELD>
+			<TEXTFIELD w="75" title="Currency">currency</TEXTFIELD>
+			<TEXTFIELD w="75" title="Accounting Date">accounting_date</TEXTFIELD>
+			<TEXTFIELD w="75" title="Company">company</TEXTFIELD>
+			<TEXTFIELD w="75" title="Location">location</TEXTFIELD>
+			<TEXTFIELD w="75" title="Cost Center">cost_center</TEXTFIELD>
+			<TEXTFIELD w="75" title="Account">account</TEXTFIELD>
+			<TEXTFIELD w="75" title="Bud">bud</TEXTFIELD>
+			<TEXTFIELD w="75" title="Intercompany">intercompany</TEXTFIELD>
+			<TEXTFIELD w="75" title="Debit">debit</TEXTFIELD>
+			<TEXTFIELD w="75" title="Credit">credit</TEXTFIELD>
+			<TEXTFIELD w="75" title="Conversion Type">conversion_type</TEXTFIELD>
+			<TEXTFIELD w="75" title="Conversiondate">conversiondate</TEXTFIELD>
+			<TEXTFIELD w="75" title="Conversion Rate">conversion_rate</TEXTFIELD>
+			<TEXTFIELD w="75" title="Journal Name">journal_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Journal Description">journal_description</TEXTFIELD>
+			<TEXTFIELD w="75" title="Reverse Journal">reverse_journal</TEXTFIELD>
+			<TEXTFIELD w="75" title="Reversal Period">reversal_period</TEXTFIELD>
+			<TEXTFIELD w="75" title="Line Description">line_description</TEXTFIELD>
+			<TEXTFIELD w="75" title="Messages">messages</TEXTFIELD>
+			<TEXTFIELD w="75" title="Mst Cus ID">mst_cus_id</TEXTFIELD>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Statements" type="horl" key="143" h="500">
+		<FILTER location="250" name="Clients Statements" type="horl">
+			<FILTERFORM name="Clients Statements">
+				<COMBOBOX w="430" title="Client" lptable="clients" y="10" h="20" x="10" lpfield="clientname">clientid</COMBOBOX>
+				<TEXTDATE w="150" title="From" y="30" h="20" default_fnct="get_start_year" x="10">date_from</TEXTDATE>
+				<TEXTDATE w="150" title="Up to" default="now" y="30" h="20" x="290">date_to</TEXTDATE>
+			</FILTERFORM>
+			<JASPER name="6M Clients Statements" linkfield="clientid" reportfile="clienttotalstatementb.jasper"></JASPER>
+			<JASPER name="Clients Statements" linkfield="clientid" reportfile="clienttotalstatementa.jasper"></JASPER>
+		</FILTER>
+		<FILTER location="250" name="GTA Summary Statements" type="horl">
+			<FILTERFORM name="GTA Summary Statements">
+				<TEXTDATE w="150" title="Up to" y="30" h="20" default_fnct="get_start_year" x="10">filterid</TEXTDATE>
+			</FILTERFORM>
+			<JASPER name="GTA Summary Statements" reportfile="clienttotalstatement.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Client Payments" type="horl" key="148" h="500">
+		<FILTER location="250" name="Client Payments" type="horl">
+			<FILTERFORM name="GTA Summary Statements">
+				<TEXTDATE w="150" title="Starting From" y="30" h="20" default_fnct="get_start_year" x="10">filterid</TEXTDATE>
+				<TEXTDATE w="150" title="Up to" default="now" y="30" h="20" x="10">filter2id</TEXTDATE>
+			</FILTERFORM>
+			<JASPER filtered="true" name="Client Payments" reportfile="payments.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+</APP>

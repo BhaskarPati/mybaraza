@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="print_batch" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f91f0d3-a979-478b-b8d7-1441880767a1">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="281"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/opt/baraza/projects/faidaplus/reports/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="batch_no" class="java.lang.String">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="entityname" class="java.lang.String">
+		<defaultValueExpression><![CDATA["default"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="order_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="entity_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT vw_orders.order_id,  (vw_orders.batch_no||' - '||vw_orders.order_id)as order_no, encode(((vw_orders.order_id*141||md5('travelcreations+2017'))::text)::bytea, 'base64') as v_order_id,  vw_orders.order_date::date,
+vw_orders.order_status, ('Town : ' || vw_orders.town_name) as town_name,
+('Mobile Number : ' || vw_orders.phone_no) as phone_no,
+( 'Address : '|| vw_orders.physical_address) as address,
+vw_orders.batch_no, vw_orders.shipping_cost, vw_orders.grand_total,   vw_entitys.entity_name,  vw_entitys.client_code, vw_entitys.entity_id, vw_entitys.org_name,      vw_entitys.primary_email, vw_entitys.primary_telephone, vw_entitys.function_role,    vw_entitys.entity_role, vw_entitys.org_id
+FROM vw_orders
+JOIN vw_entitys ON vw_orders.entity_id = vw_entitys.entity_id
+WHERE  vw_orders.entity_id = '$P!{entity_id}' AND vw_orders.batch_no is not null
+AND  vw_orders.order_status ='Awaiting Collection';]]>
+	</queryString>
+	<field name="order_id" class="java.lang.Integer"/>
+	<field name="order_no" class="java.lang.String"/>
+	<field name="v_order_id" class="java.lang.String"/>
+	<field name="order_date" class="java.sql.Date"/>
+	<field name="order_status" class="java.lang.String"/>
+	<field name="town_name" class="java.lang.String"/>
+	<field name="phone_no" class="java.lang.String"/>
+	<field name="address" class="java.lang.String"/>
+	<field name="batch_no" class="java.lang.Integer"/>
+	<field name="shipping_cost" class="java.lang.Float"/>
+	<field name="grand_total" class="java.lang.Float"/>
+	<field name="entity_name" class="java.lang.String"/>
+	<field name="client_code" class="java.lang.String"/>
+	<field name="entity_id" class="java.lang.Integer"/>
+	<field name="org_name" class="java.lang.String"/>
+	<field name="primary_email" class="java.lang.String"/>
+	<field name="primary_telephone" class="java.lang.String"/>
+	<field name="function_role" class="java.lang.String"/>
+	<field name="entity_role" class="java.lang.String"/>
+	<field name="org_id" class="java.lang.Integer"/>
+	<group name="group" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{order_id}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="45" splitType="Stretch"/>
+	</title>
+	<columnHeader>
+		<band height="56">
+			<staticText>
+				<reportElement x="157" y="1" width="398" height="49" uuid="30c0e383-a72c-4274-be1a-b4f4d3c4341a"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="24"/>
+				</textElement>
+				<text><![CDATA[Collection 	Document]]></text>
+			</staticText>
+			<line>
+				<reportElement x="3" y="50" width="552" height="1" uuid="0d9076d1-4710-4478-812c-a50225529699"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="290" splitType="Stretch">
+			<subreport isUsingCache="false" runToBottom="false">
+				<reportElement positionType="Float" x="0" y="196" width="555" height="28" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" uuid="a9b89c35-1098-410b-98fb-3545c79f1ecd"/>
+				<subreportParameter name="shipping_cost">
+					<subreportParameterExpression><![CDATA[$F{shipping_cost}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="order_id">
+					<subreportParameterExpression><![CDATA[$F{order_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "print_batch_item_doc.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement style="table_TH" positionType="Float" x="3" y="107" width="141" height="19" isPrintInFirstWholeBand="true" backcolor="#E5E5E5" uuid="ab2eb9c1-3548-4076-9a73-47fff3e1a727"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<text><![CDATA[Date Ordered]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_TH" positionType="Float" x="3" y="126" width="141" height="15" isPrintInFirstWholeBand="true" backcolor="#E5E5E5" uuid="a33d150c-3ccc-4c5b-b165-b0b21203663b"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<text><![CDATA[Shipping]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_TH" positionType="Float" x="3" y="141" width="141" height="54" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" backcolor="#E5E5E5" uuid="7e3fa3c3-3ae1-4aad-a55e-40f0668385d7"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<text><![CDATA[Pickup Location]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="table_TD" positionType="Float" x="145" y="107" width="305" height="19" isPrintInFirstWholeBand="true" backcolor="#FFFFFF" uuid="b5862140-6230-4002-ac0b-0cfd7d0104f5"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{order_date}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="table_TD" positionType="Float" x="145" y="126" width="305" height="15" isPrintInFirstWholeBand="true" backcolor="#FFFFFF" uuid="f8e1b8d1-af85-4dbf-bbf2-78c204a9d90e"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{shipping_cost}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="table_TD" positionType="Float" x="145" y="141" width="305" height="15" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" backcolor="#FFFFFF" uuid="234c35ae-baf2-4743-8431-26e8caefa335"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{town_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="2" width="100" height="20" isPrintInFirstWholeBand="true" backcolor="#05ACDF" uuid="a4077e5f-9759-4a24-a904-68fab1d14266"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Order No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="25" width="100" height="20" isPrintInFirstWholeBand="true" backcolor="#05ACDF" uuid="4662a83e-40e8-4cbd-adde-dbea74f87dfb"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Order Ststus:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_TH" positionType="Float" x="3" y="47" width="141" height="15" isPrintInFirstWholeBand="true" backcolor="#E5E5E5" uuid="28a1185f-8325-4707-af34-8813a1a3bda7"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_TH" positionType="Float" x="3" y="62" width="141" height="15" isPrintInFirstWholeBand="true" backcolor="#E5E5E5" uuid="8c8fa869-cdca-435c-9c2b-6a2293e52464"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<text><![CDATA[Agency]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_TH" positionType="Float" x="3" y="77" width="141" height="15" isPrintInFirstWholeBand="true" backcolor="#E5E5E5" uuid="f5515056-bc6c-45d3-9670-8ef4dd36be93"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<text><![CDATA[Email Address]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_TH" positionType="Float" x="3" y="92" width="141" height="15" isPrintInFirstWholeBand="true" backcolor="#E5E5E5" uuid="12cd29fb-1dd6-4e8b-aed2-4cdc309adfb4"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<text><![CDATA[Cellphone]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="table_TD" positionType="Float" x="145" y="47" width="305" height="15" isPrintInFirstWholeBand="true" backcolor="#FFFFFF" uuid="9b88542a-c293-43f2-a6ec-0366b9db13df"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entity_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="table_TD" positionType="Float" x="145" y="62" width="305" height="15" isPrintInFirstWholeBand="true" backcolor="#FFFFFF" uuid="d77c2081-f1f7-4937-a942-91dd942c15a3"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{org_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="table_TD" positionType="Float" x="145" y="77" width="305" height="15" isPrintInFirstWholeBand="true" backcolor="#FFFFFF" uuid="07ceec2a-59fa-4b6d-847b-b96cb13ac38f"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{primary_email}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="table_TD" positionType="Float" x="145" y="92" width="305" height="15" isPrintInFirstWholeBand="true" backcolor="#FFFFFF" uuid="fbe3bfe3-03fa-4bc6-824d-dda9ab8bc966"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{primary_telephone}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement positionType="Float" x="100" y="25" width="191" height="20" isPrintInFirstWholeBand="true" uuid="1a9a3266-1b66-4af8-be75-dd2bfacd6f8b"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{order_status}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="100" y="2" width="191" height="20" isPrintInFirstWholeBand="true" uuid="6ad534ff-071a-41e4-ba5b-2a302ade0ebb"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{order_no}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="145" y="156" width="305" height="15" isPrintWhenDetailOverflows="true" uuid="1796e386-2e8c-47ff-b26a-5fe7bc00511f"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{phone_no}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="145" y="171" width="305" height="24" isPrintWhenDetailOverflows="true" uuid="dd5268dc-bc3d-42db-8104-c5cd47a66602"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="108" splitType="Stretch">
+			<image>
+				<reportElement x="368" y="5" width="187" height="103" uuid="bcee6746-58c3-4e90-a1ce-f613fc3f9168"/>
+				<imageExpression><![CDATA[new com.onbarcode.barcode.jasper.JasperRenderer(com.onbarcode.barcode.jasper.BarcodeGenerator.draw(102,"http://demo.dewcis.com/travelcreations/document.jsp?ref="+$F{v_order_id}, "", "X=2&Y=60"))]]></imageExpression>
+			</image>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="220" y="1" width="100" height="20" uuid="da5fb2d9-dcde-4e0d-b8fb-4b3c0322e9b5"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="87" splitType="Stretch">
+			<staticText>
+				<reportElement x="100" y="25" width="100" height="20" uuid="bedaba98-a1cc-4ac7-b08a-3b25d8f70888"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID Number:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="200" y="14" width="335" height="1" uuid="378fb2e3-8b78-43d3-9584-220bd95d069b"/>
+			</line>
+			<line>
+				<reportElement x="200" y="42" width="335" height="1" uuid="6a9afd44-65d7-4eec-b448-1e6a6d1b6638"/>
+			</line>
+			<staticText>
+				<reportElement x="100" y="58" width="100" height="20" uuid="0f885c10-425c-4c84-bc25-e16a6b406574"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Signature:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="200" y="77" width="250" height="1" uuid="31b6fe1c-ffbb-40bc-b08f-2ffcb81c904d"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="0" width="121" height="20" uuid="1601c596-2570-486c-9f22-da5972705a9a"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[To be collected by:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="133" y="0" width="67" height="20" uuid="0168c99a-cf78-4058-986b-e0c87fb3aaf4"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

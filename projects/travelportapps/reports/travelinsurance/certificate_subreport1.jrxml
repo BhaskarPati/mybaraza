@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="certificate_subreport1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="541" leftMargin="27" rightMargin="27" topMargin="20" bottomMargin="5" uuid="1fa3ba50-c949-4a5d-9b2a-a8a239f9432a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="104"/>
+	<parameter name="filterid" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA["78"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT  days_from,days_to, countries,passenger_id,member_name,
+     passport_number, passenger_dob::text, policy_number, sys_country_name,  departure_country, rate_plan_name
+FROM vw_policy_members
+WHERE vw_policy_members.passenger_id = '$P!{filterid}';]]>
+	</queryString>
+	<field name="days_from" class="java.lang.String"/>
+	<field name="days_to" class="java.lang.String"/>
+	<field name="countries" class="java.lang.String"/>
+	<field name="passenger_id" class="java.lang.Integer"/>
+	<field name="member_name" class="java.lang.String"/>
+	<field name="passport_number" class="java.lang.String"/>
+	<field name="passenger_dob" class="java.lang.String"/>
+	<field name="policy_number" class="java.lang.String"/>
+	<field name="sys_country_name" class="java.lang.String"/>
+	<field name="departure_country" class="java.lang.String"/>
+	<field name="rate_plan_name" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="160">
+			<staticText>
+				<reportElement x="0" y="127" width="541" height="30" forecolor="#FCD40E" uuid="26973b21-c9f0-4c6d-a3b3-039e58b7481e"/>
+				<textElement textAlignment="Center">
+					<font fontName="Garamond-Normal" size="18" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[TRAVEL INSURANCE CERTIFICATE]]></text>
+			</staticText>
+			<image>
+				<reportElement x="179" y="0" width="187" height="127" uuid="df4261bd-7d44-40fc-bf9b-a824af0b3c0d"/>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR}+"ICEA-LION-Travel-Insurance-Logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="552" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="179" y="74" width="296" height="23" uuid="06af7ad4-eb85-4789-ae3c-d29e8cbc0876"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{policy_number}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="5" width="143" height="23" uuid="faffe9df-57a1-4555-aadb-76c9fef46dc0"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[Insured Name :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="178" y="51" width="297" height="23" uuid="8a94d02a-9611-4dcc-bf05-e7d0aab91c1c"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{passport_number}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="158" width="132" height="23" uuid="552a4c77-72b8-412f-b93e-d8e3a6c2cb54"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[Date of Travel - From :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="143" y="158" width="332" height="23" uuid="f4992b06-7e00-48b0-acfa-3707c9e07c2f"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{days_from} +' To: '+ $F{days_to}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="178" y="5" width="297" height="23" uuid="5b34645d-82b9-4f4f-93fd-0396ae7726f6"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{member_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="179" y="97" width="296" height="23" uuid="de80182a-68e7-4b76-8d71-a4feae2add25"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sys_country_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="74" width="143" height="23" uuid="89aa2ab4-4571-4921-90dd-da8a071c0fca"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[Policy Number :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="63" y="235" width="168" height="15" uuid="1db6794c-9e84-4802-aad1-ae4d679f4435"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[Emergency dental expenses]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="63" y="205" width="100" height="15" uuid="02c28a88-49f3-40f7-b3c5-abaea0816e2d"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[Medical emergency]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="302" y="280" width="100" height="15" uuid="481c50a8-b7f6-41c2-8387-2237e600561d"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[Missed departure]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="63" y="280" width="100" height="15" uuid="4481074f-d2e8-4c06-9029-b6bc3e560142"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[Personal accident]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="28" width="143" height="23" uuid="80e08b07-0280-4753-ae80-dc4d46a672c1"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[Date of birth :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="51" width="143" height="23" uuid="1bf2cb1b-5cdf-4a41-b35d-e5094efa6b47"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[Passport Number :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="302" y="235" width="215" height="15" uuid="e5dddbc6-11a5-43c6-a049-d538a670615c"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[Trip cancellation and curtailment]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="63" y="250" width="212" height="15" uuid="a42466bc-b508-4b8a-b6c6-17c19ca176dd"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[Follow up treatment residence country]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="302" y="295" width="100" height="15" uuid="747babfc-f30b-47f7-979c-03ecb82f49e4"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[Personal liability]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="97" width="143" height="23" uuid="dc3deed2-6af4-4af8-8c51-403d955b1a3f"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[Country of residence :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="302" y="205" width="215" height="15" uuid="2e61a9a3-761e-41d7-9c12-0a27e0f86ebe"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Luggage loss or theft/delay]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="302" y="265" width="100" height="15" uuid="56bff74c-8370-4ee1-a707-e8a39f3325c6"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[Travel delay]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="179" y="120" width="296" height="23" uuid="a9ef49fd-a628-4545-92e1-7a66cf634ce6"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{countries}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="63" y="265" width="100" height="15" uuid="7089b6b3-6d0d-4f08-9546-179819d1443b"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[Body rapatriation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="302" y="220" width="100" height="15" uuid="26fedc34-1035-4ee5-8b8a-45d7159da6de"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[Legal assistance]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="179" y="28" width="296" height="23" uuid="ac64752e-6578-4233-861e-6f079435bd32"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{passenger_dob}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="182" width="541" height="20" forecolor="#1A1911" uuid="31b4ac18-403d-4857-895e-54a9a97adaf0"/>
+				<textElement textAlignment="Center">
+					<font fontName="Garamond-Normal" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MAIN BENEFITS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="120" width="143" height="23" uuid="f0ca96df-580b-45a9-88f3-8a1bbab7f094"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[Country of destination :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="302" y="250" width="215" height="15" uuid="d3e8aa6b-0c03-40c7-8a1b-e4ceaa6d4d3e"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[Repatriation after treatment]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="63" y="220" width="100" height="15" uuid="71b6634d-7976-4263-be6e-0f1d04c10ef9"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[Medical evacuation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="311" width="541" height="20" forecolor="#15150B" uuid="3079585b-d80b-4f1e-9528-19f3aba69c66"/>
+				<textElement textAlignment="Center">
+					<font fontName="Garamond-Normal" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SPECIAL PROVISION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="333" width="541" height="49" uuid="21c0dab1-793b-4e0f-a717-c16cf2853a08"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[The insured recognizes and declares to be informed of the General Condition as well as the benefits and the exclusions. This certificate cannot be used as a letter of gurantee for payment into public or private medical organization. The insured declares to have not scheduled any travel for therapeutic treatment.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="452" width="541" height="15" forecolor="#FA0505" uuid="5e82b2fe-e2dd-4271-abf2-59a126abd529"/>
+				<textElement textAlignment="Center">
+					<font fontName="Garamond-Normal" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bangkok, Thailand:- +662 645 3932]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="422" width="541" height="15" forecolor="#FA0505" uuid="e71fd51e-5572-458b-bd64-8f17c18230e1"/>
+				<textElement textAlignment="Center">
+					<font fontName="Garamond-Normal" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Johannesburg, South Africa:- +27 10 209 8300]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="437" width="541" height="15" forecolor="#FA0505" uuid="12aefc5f-1d3c-4ef0-99e5-e861979c7dab"/>
+				<textElement textAlignment="Center">
+					<font fontName="Garamond-Normal" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Philadelphia, USA:- +1215 489 37 85]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="407" width="541" height="15" forecolor="#FA0505" uuid="ca81f59c-2e06-4940-a918-b15fa4a08f2d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Garamond-Normal" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[London, United Kindom +44(0)20 7902 7405]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="386" width="541" height="18" forecolor="#1F0F0F" uuid="d81b3d05-523f-4b33-88c0-97e8795b59fd"/>
+				<textElement textAlignment="Center">
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[For any travel claim, please call the following numbers:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="467" width="541" height="15" forecolor="#FA0505" uuid="b003c047-3806-44ad-99bc-fe6b7985154e"/>
+				<textElement textAlignment="Center">
+					<font fontName="Garamond-Normal" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[   	 Paris, France:- +33 130 62 11 22	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="488" width="541" height="15" uuid="19c5b38e-ca24-4587-9e9e-6b7de0cf2919"/>
+				<textElement textAlignment="Center">
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[ICEA LION Center-Riverside Park, Chiromo Road, Westlands ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="533" width="541" height="15" uuid="03a42109-7e91-41c7-a39b-bb9cb825c963"/>
+				<textElement textAlignment="Center">
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[	Email: info@icealion.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="518" width="541" height="15" uuid="cf341443-6ba9-4549-aa77-c21f7c97c104"/>
+				<textElement textAlignment="Center">
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[Tel: +254(0) 20 2750000 | Mobile: +254 719071000 | +254 730151000]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="503" width="541" height="15" uuid="c0962e63-0b8e-4396-967d-840db0c671bf"/>
+				<textElement textAlignment="Center">
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[P.O Box 46143-00100 or 30190-00100 Nairobi	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="143" width="142" height="15" uuid="a419991d-5063-4a48-a2f9-2ff26038d9d1"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="12"/>
+				</textElement>
+				<text><![CDATA[Cover Plan:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="180" y="143" width="100" height="15" uuid="2401e78b-874e-4973-9248-9440ab339242"/>
+				<textElement>
+					<font fontName="Garamond-Normal"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rate_plan_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

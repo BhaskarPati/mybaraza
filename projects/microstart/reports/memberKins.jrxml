@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="memberKins" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="99e32a22-9cb8-4e69-8c46-1acdc116da70">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="entity_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="organd" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT kins.entity_id, kins.kin_type_id, kins.full_names, kins.date_of_birth, kins.identification, kins.relation, kins.emergency_contact, kins.beneficiary, kins.beneficiary_ps, kins.details, kins.postal_address, kins.tel_number, kins.email_address, kins.pin, kins.org_id
+FROM kins
+ where kins.entity_id='$P!{entity_id}'
+ $P!{organd}
+Order by kins.kin_type_id;]]>
+	</queryString>
+	<field name="entity_id" class="java.lang.Integer"/>
+	<field name="kin_type_id" class="java.lang.Integer"/>
+	<field name="full_names" class="java.lang.String"/>
+	<field name="date_of_birth" class="java.sql.Date"/>
+	<field name="identification" class="java.lang.String"/>
+	<field name="relation" class="java.lang.String"/>
+	<field name="emergency_contact" class="java.lang.Boolean"/>
+	<field name="beneficiary" class="java.lang.Boolean"/>
+	<field name="beneficiary_ps" class="java.lang.Float"/>
+	<field name="details" class="java.lang.String"/>
+	<field name="postal_address" class="java.lang.String"/>
+	<field name="tel_number" class="java.lang.String"/>
+	<field name="email_address" class="java.lang.String"/>
+	<field name="pin" class="java.lang.String"/>
+	<field name="org_id" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="58" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="0" width="236" height="58" uuid="5199c329-25d9-4c27-8f0d-ac3cc4eb8b05"/>
+				<textElement>
+					<font fontName="Times New Roman" size="23" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[KINS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="6" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="49" y="11" width="446" height="28" uuid="541636cf-dcca-432a-916d-d239e533a3ab"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="24" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Kins Members Report]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="146" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="153" y="10" width="120" height="25" uuid="5fd6ee66-8d9c-493a-8901-6a190e8667d7"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{full_names}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="426" y="88" width="120" height="25" uuid="c2a451fd-8fb1-4781-b0dc-7edf2bddc700"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emergency_contact}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="153" y="63" width="120" height="25" uuid="9ec810f7-fec4-4587-bc9b-ac3b364db5c3"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{identification}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="426" y="37" width="120" height="25" uuid="d9dc144b-0b7c-424f-be24-a6a85001dae8"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pin}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="288" y="118" width="120" height="25" forecolor="#000000" uuid="6f481d61-f0c0-4bd8-9043-1bb419c8b332"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Email Address]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="288" y="37" width="120" height="25" forecolor="#000000" uuid="9a2082bb-5c06-4694-9b6d-3d82572038ba"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Pin]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="10" y="63" width="120" height="25" forecolor="#000000" uuid="deef736b-4c14-4cc4-8f66-8ba59b108984"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Identification]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="288" y="10" width="120" height="25" forecolor="#000000" uuid="8c449e2e-6a9b-45be-8d53-6539a27600bd"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Tel Number]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="426" y="10" width="120" height="25" uuid="83e6a5d5-29d1-4046-bbde-9f209b05e150"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tel_number}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="426" y="118" width="120" height="25" uuid="e59e4810-db87-40c2-ac04-a44283621c89"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{email_address}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="10" y="10" width="120" height="25" forecolor="#000000" uuid="c98e183a-9318-43ec-9844-2aba5e4e1ba9"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Full Names]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="288" y="88" width="120" height="25" forecolor="#000000" uuid="3f9ae570-911d-4194-88ff-af5d53526982"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Emergency Contact]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="10" y="93" width="120" height="25" forecolor="#000000" uuid="680624e6-ad05-4273-a017-a4dd9d9668ef"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Beneficiary Ps]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="153" y="37" width="120" height="25" uuid="d30802ef-992c-4de6-b833-bf9981c92c79"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{date_of_birth}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="10" y="37" width="120" height="25" forecolor="#000000" uuid="11d67844-773e-4f75-9e1d-9f12d49dfdd8"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Date Of Birth]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="426" y="62" width="120" height="25" uuid="185e28bf-9825-43ee-9f9b-1bff52624921"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{relation}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="153" y="88" width="120" height="25" uuid="80ff93d2-0729-4264-b912-a5f0abe90f71"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{beneficiary_ps}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="288" y="63" width="120" height="25" forecolor="#000000" uuid="86ad5b3c-ae20-4993-93ba-133d494fa81f"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Relation]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="153" y="118" width="120" height="25" uuid="db6274ab-be98-42d9-938f-f1efa090208a"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{postal_address}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="10" y="118" width="120" height="25" forecolor="#000000" uuid="5afb0d1b-f0c4-4686-93f4-d37aa9fa0c7d"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Postal Address]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="16" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="15" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

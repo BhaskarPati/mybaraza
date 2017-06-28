@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vw_sub_regional_daily_sales" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="filterid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="sale_date" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2014-01-01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="organd" class="java.lang.String">
+		<defaultValueExpression><![CDATA[" "]]></defaultValueExpression>
+	</parameter>
+	<parameter name="sub_region_org_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+orgs.parent_org_id AS sub_region_id, vw_orgs.org_name AS sub_region_name,
+vw_sales.distributor_id, vw_sales.distributor_name,
+SUM(vw_sales.ordered) AS ordered,
+SUM(vw_sales.supplied) AS supplied,
+SUM(vw_sales.delivered) AS delivered,
+SUM(vw_sales.vendor_confirmed) AS vendor_confirmed,
+SUM(vw_sales.vendor_sold) AS vendor_sold,
+SUM(vw_sales.vendor_returns) AS vendor_returns,
+vw_sales.unit_price,
+((SUM(vw_sales.delivered) - SUM(vw_sales.vendor_returns)) * vw_sales.unit_price) AS expected_revenue,
+(SUM(vw_sales.vendor_sold) * vw_sales.unit_price) AS submitted_revenue
+
+FROM vw_sales
+INNER JOIN orgs ON orgs.org_id = vw_sales.org_id
+INNER JOIN vw_orgs ON vw_orgs.org_id = orgs.parent_org_id
+WHERE (orgs.parent_org_id = '$P!{sub_region_org_id}')
+AND (vw_sales.sale_date = '$P!{sale_date}'::date)
+GROUP BY orgs.parent_org_id, vw_orgs.org_name, vw_sales.distributor_id, vw_sales.distributor_name, vw_sales.sale_date,vw_sales.unit_price]]>
+	</queryString>
+	<field name="sub_region_id" class="java.lang.Integer"/>
+	<field name="sub_region_name" class="java.lang.String"/>
+	<field name="distributor_id" class="java.lang.Integer"/>
+	<field name="distributor_name" class="java.lang.String"/>
+	<field name="ordered" class="java.lang.Long"/>
+	<field name="supplied" class="java.lang.Long"/>
+	<field name="delivered" class="java.lang.Long"/>
+	<field name="vendor_confirmed" class="java.lang.Long"/>
+	<field name="vendor_sold" class="java.lang.Long"/>
+	<field name="vendor_returns" class="java.lang.Long"/>
+	<field name="unit_price" class="java.lang.Float"/>
+	<field name="expected_revenue" class="java.lang.Double"/>
+	<field name="submitted_revenue" class="java.lang.Double"/>
+	<variable name="total_expected_revenue" class="java.lang.Integer" incrementType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$V{total_expected_revenue} + $F{expected_revenue}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="total_submitted_revenue" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$V{total_submitted_revenue} + $F{submitted_revenue}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="144" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="0" y="68" width="555" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="24" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Sub Region Daily Sales Report]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="1" y="114" width="96" height="15" forecolor="#000000"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Sub Region ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="1" y="129" width="96" height="15" forecolor="#000000"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Sub Region Name]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="97" y="129" width="169" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{sub_region_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="289" y="114" width="96" height="15" forecolor="#000000"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Sale Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="289" y="129" width="96" height="15" forecolor="#000000"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[Unit Price]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="385" y="129" width="169" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{unit_price}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="3" y="2" width="202" height="66"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "logo.png"]]></imageExpression>
+			</image>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="386" y="114" width="169" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{sale_date}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="97" y="114" width="169" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{sub_region_id}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="53" y="13" width="88" height="15" forecolor="#000000"/>
+				<box>
+					<bottomPen lineWidth="0.75" lineColor="#E7E7E7"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[Distributor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="141" y="13" width="50" height="15" forecolor="#000000"/>
+				<box>
+					<bottomPen lineWidth="0.75" lineColor="#E7E7E7"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[Ordered]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="191" y="13" width="50" height="15" forecolor="#000000"/>
+				<box>
+					<bottomPen lineWidth="0.75" lineColor="#E7E7E7"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[Supplied]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="241" y="13" width="50" height="15" forecolor="#000000"/>
+				<box>
+					<bottomPen lineWidth="0.75" lineColor="#E7E7E7"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[Delivered]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="291" y="0" width="42" height="28" forecolor="#000000"/>
+				<box>
+					<bottomPen lineWidth="0.75" lineColor="#E7E7E7"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[Vendor Confirmed]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="333" y="0" width="37" height="28" forecolor="#000000"/>
+				<box>
+					<bottomPen lineWidth="0.75" lineColor="#E7E7E7"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[Vendor Sold]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="370" y="0" width="38" height="28" forecolor="#000000"/>
+				<box>
+					<bottomPen lineWidth="0.75" lineColor="#E7E7E7"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[Vendor Returns]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="3" y="13" width="22" height="15" forecolor="#000000"/>
+				<box>
+					<bottomPen lineWidth="0.75" lineColor="#E7E7E7"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="25" y="0" width="28" height="28" forecolor="#000000"/>
+				<box>
+					<bottomPen lineWidth="0.75" lineColor="#E7E7E7"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="408" y="0" width="50" height="28" forecolor="#000000"/>
+				<box>
+					<bottomPen lineWidth="0.75" lineColor="#E7E7E7"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[Expected Revenue]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="458" y="0" width="50" height="28" forecolor="#000000"/>
+				<box>
+					<bottomPen lineWidth="0.75" lineColor="#E7E7E7"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[Submited Revenue]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="508" y="0" width="47" height="28" forecolor="#000000"/>
+				<box>
+					<bottomPen lineWidth="0.75" lineColor="#E7E7E7"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[Difference]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="53" y="0" width="88" height="15"/>
+				<box leftPadding="4"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{distributor_name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="370" y="0" width="38" height="15"/>
+				<box leftPadding="4"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{vendor_returns}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="333" y="0" width="37" height="15"/>
+				<box leftPadding="4"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{vendor_sold}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="191" y="0" width="50" height="15"/>
+				<box leftPadding="4"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{supplied}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="3" y="0" width="22" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="291" y="0" width="42" height="15"/>
+				<box leftPadding="4"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{vendor_confirmed}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="25" y="0" width="28" height="15"/>
+				<box leftPadding="4"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{distributor_id}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="241" y="0" width="50" height="15"/>
+				<box leftPadding="4"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{delivered}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="141" y="0" width="50" height="15"/>
+				<box leftPadding="4"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{ordered}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="408" y="0" width="50" height="15"/>
+				<box leftPadding="4"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{expected_revenue}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="458" y="0" width="50" height="15"/>
+				<box leftPadding="4"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{submitted_revenue}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" x="508" y="0" width="47" height="15"/>
+				<box leftPadding="4"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{expected_revenue} - $F{submitted_revenue}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="54" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="241" y="4" width="167" height="15" forecolor="#000000"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Total Expected Revenue]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement style="Detail" x="408" y="4" width="146" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{total_expected_revenue}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="241" y="19" width="167" height="15" forecolor="#000000"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineColor="#E7E7E7"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Total Submitted Revenue]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement style="Detail" x="408" y="19" width="146" height="15"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineColor="#E7E7E7"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{total_submitted_revenue}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="242" y="34" width="166" height="15" forecolor="#000000"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Difference]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement style="Detail" x="408" y="34" width="146" height="15"/>
+				<box>
+					<bottomPen lineWidth="2.5" lineStyle="Double" lineColor="#E7E7E7"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{total_expected_revenue} - $V{total_submitted_revenue}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="597" height="24" forecolor="#D0B48E" backcolor="#F2EBDF"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="533" y="0" width="40" height="20" forecolor="#736343"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="453" y="0" width="80" height="20" forecolor="#736343"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE, d MMMMM yyyy HH:mm:ss Z">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

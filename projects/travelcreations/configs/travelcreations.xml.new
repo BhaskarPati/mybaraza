@@ -1,0 +1,43 @@
+<APP>
+	<MENU name="Travel Creations">
+		<MENU role="admin" icon="fa fa-gift" name="Products">
+			<MENU role="admin" icon="fa fa-gift" name="Products">null</MENU>
+			<MENU role="admin" icon="fa fa-bars" name="Products Category">null</MENU>
+			<MENU role="admin" name="Suppliers">null</MENU>
+		</MENU>
+		<MENU role="admin" name="Clients">25</MENU>
+		<MENU role="admin" name="Loyalty Points">30</MENU>
+		<MENU role="admin" name="Orders">50</MENU>
+		<MENU role="admin" name="Orgs">14</MENU>
+		<MENU role="admin" name="Entities">10</MENU>
+		<MENU role="client" name="Update contacts">61</MENU>
+		<MENU role="admin" name="Administrator">
+			<MENU role="admin" name="Periods">null</MENU>
+			<MENU role="admin" icon="fa fa-file" name="Generate Points" page="period">null</MENU>
+			<MENU role="admin" name="Entity Subscriptions">null</MENU>
+			<MENU role="admin" name="Entity Types">null</MENU>
+			<MENU role="admin" name="Approvals">null</MENU>
+			<MENU role="admin" name="Subscription Levels">null</MENU>
+			<MENU role="admin" name="Workflows">null</MENU>
+			<MENU role="admin" name="Emails">null</MENU>
+		</MENU>
+		<MENU role="admin" name="Reports">
+			<MENU name="Orders">null</MENU>
+			<MENU name="Statement">null</MENU>
+			<MENU name="Loyalty Points">null</MENU>
+		</MENU>
+	</MENU>
+	<DESK w="700" h="500" name="Dashboard">
+		<DASHBOARD noorg="true" role="admin" w="650" name="Dashboard">
+			<TILE noorg="true" noorg.query="true" role="admin" w="60" h="25" name="New Orders" where="(lower(order_status) = lower('Processing Order'))" table="orders">
+				<TEXTFIELD w="75" fnct="COALESCE(count(order_id), 0)" title="New Orders">orders</TEXTFIELD>
+			</TILE>
+			<TILE noorg="true" noorg.query="true" role="client" w="60" h="25" name="New Orders" where="(lower(order_status) = lower('Processing Order')) " user="entity_id" table="orders">
+				<TEXTFIELD w="75" fnct="COALESCE(count(order_id), 0)" title="New Orders">orders</TEXTFIELD>
+			</TILE>
+			<TILE noorg="true" noorg.query="true" role="admin" w="60" h="25" name="Clients" where="entity_id != 0" table="entitys">
+				<TEXTFIELD w="75" fnct="COALESCE(count(entity_id), 0)" title="clients">clients</TEXTFIELD>
+			</TILE>
+		</DASHBOARD>
+	</DESK>
+</APP>

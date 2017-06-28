@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vw_passengers_bima" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="BlankPage" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1e0576e4-b74f-4faa-86dd-856b20a5491b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="filterid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="orgid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="orgwhere" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="organd" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="maxDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2016-01-30"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="minDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2016-01-01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT vw_allpassengers.org_name, vw_allpassengers.rate_category_name, vw_allpassengers.rate_plan_name, vw_allpassengers.passenger_name, vw_allpassengers.passenger_mobile, vw_allpassengers.passenger_email, vw_allpassengers.totalamount_covered, vw_allpassengers.policy_number, vw_allpassengers.entity_name, vw_allpassengers.approved_date::date
+FROM vw_allpassengers
+WHERE approved_date::date >= '$P!{minDate}' AND  approved_date::date <= '$P!{maxDate}'
+AND portal_id =3 AND is_valid is true AND approved is true ORDER BY passenger_id DESC;]]>
+	</queryString>
+	<field name="org_name" class="java.lang.String"/>
+	<field name="rate_category_name" class="java.lang.String"/>
+	<field name="rate_plan_name" class="java.lang.String"/>
+	<field name="passenger_name" class="java.lang.String"/>
+	<field name="passenger_mobile" class="java.lang.String"/>
+	<field name="passenger_email" class="java.lang.String"/>
+	<field name="totalamount_covered" class="java.lang.Float"/>
+	<field name="policy_number" class="java.lang.String"/>
+	<field name="entity_name" class="java.lang.String"/>
+	<field name="approved_date" class="java.sql.Date"/>
+	<variable name="total_amount" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{totalamount_covered}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="125" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="197" y="0" width="337" height="125" uuid="a37cce88-e192-4c50-8e87-f0728523cdf9"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Garamond-Normal" size="24" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Individual Insurance Report]]></text>
+			</staticText>
+			<image>
+				<reportElement x="1" y="0" width="196" height="125" uuid="73e601dd-91f9-42e0-b9cf-7df2e1c8b546"/>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR} + "ICEA-LION-Travel-Insurance-Logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="40">
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="20" width="150" height="20" uuid="e94fe3d7-383f-4508-a3c5-62f1dc14d6ab"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="14"/>
+				</textElement>
+				<text><![CDATA[Date To]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="150" y="0" width="118" height="20" isPrintWhenDetailOverflows="true" uuid="ca291bf1-5de4-4201-b62e-b423d980d374"/>
+				<textElement>
+					<font fontName="Garamond-Normal" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{minDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="150" y="20" width="118" height="20" isPrintWhenDetailOverflows="true" uuid="9e629e22-3ae5-41d4-8546-8f92b9a2961e"/>
+				<textElement>
+					<font fontName="Garamond-Normal" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{maxDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="150" height="20" uuid="e90a331b-86e9-490c-a2d0-d647fb8cb1c9"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="14"/>
+				</textElement>
+				<text><![CDATA[Date From]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="15" width="802" height="1" uuid="d11a9e27-a459-49a8-b2a7-322949206e09"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" stretchType="RelativeToTallestObject" x="150" y="0" width="118" height="15" isPrintWhenDetailOverflows="true" forecolor="#000000" uuid="fd1c2692-cb99-4043-b1a8-27d8d3e2deea"/>
+				<textElement>
+					<font fontName="Garamond-Normal"/>
+				</textElement>
+				<text><![CDATA[Org Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" stretchType="RelativeToTallestObject" x="268" y="0" width="64" height="15" isPrintWhenDetailOverflows="true" forecolor="#000000" uuid="af6b910b-543b-418c-aa9f-68c585574862"/>
+				<textElement>
+					<font fontName="Garamond-Normal"/>
+				</textElement>
+				<text><![CDATA[Rate Plan Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" stretchType="RelativeToTallestObject" x="332" y="0" width="125" height="15" isPrintWhenDetailOverflows="true" forecolor="#000000" uuid="50086897-8a21-4ede-bce9-b3830c895fa3"/>
+				<textElement>
+					<font fontName="Garamond-Normal"/>
+				</textElement>
+				<text><![CDATA[Passenger Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" stretchType="RelativeToTallestObject" x="457" y="0" width="77" height="15" isPrintWhenDetailOverflows="true" forecolor="#000000" uuid="37633d6c-f54b-4ab4-a42a-9c229d62cefa"/>
+				<textElement>
+					<font fontName="Garamond-Normal"/>
+				</textElement>
+				<text><![CDATA[Mobile No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" stretchType="RelativeToTallestObject" x="534" y="0" width="88" height="15" isPrintWhenDetailOverflows="true" forecolor="#000000" uuid="b42e422f-8d7b-452d-867e-c789b9687cea"/>
+				<textElement>
+					<font fontName="Garamond-Normal"/>
+				</textElement>
+				<text><![CDATA[Email]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" stretchType="RelativeToTallestObject" x="622" y="0" width="81" height="15" isPrintWhenDetailOverflows="true" forecolor="#000000" uuid="0c314044-cd5d-4d9b-873b-27236afdb102"/>
+				<box rightPadding="2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Garamond-Normal"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="150" height="15" isPrintWhenDetailOverflows="true" forecolor="#000000" uuid="74995a14-df25-4cb0-807b-a629217191a8"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Garamond-Normal"/>
+				</textElement>
+				<text><![CDATA[Policy Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" stretchType="RelativeToTallestObject" x="703" y="0" width="99" height="15" isPrintWhenDetailOverflows="true" forecolor="#000000" uuid="3a9b720c-cd69-4054-8b2d-3be0d3903808"/>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Garamond-Normal"/>
+				</textElement>
+				<text><![CDATA[Insured By]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" stretchType="RelativeToTallestObject" x="150" y="0" width="118" height="15" isPrintWhenDetailOverflows="true" uuid="08228a7c-914b-483d-8364-b78d113291fc"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{org_name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" stretchType="RelativeToTallestObject" x="268" y="0" width="64" height="15" isPrintWhenDetailOverflows="true" uuid="270c5783-dc4c-4ced-a21d-d4315160c99c"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rate_plan_name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" stretchType="RelativeToTallestObject" x="332" y="0" width="125" height="15" isPrintWhenDetailOverflows="true" uuid="5e43dcf2-9a73-4bd8-b5c5-a5c9251160d3"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{passenger_name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" stretchType="RelativeToTallestObject" x="457" y="0" width="77" height="15" isPrintWhenDetailOverflows="true" uuid="8b43f4af-dcd5-4098-85be-2274f4fe8213"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{passenger_mobile}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" stretchType="RelativeToTallestObject" x="534" y="0" width="88" height="15" isPrintWhenDetailOverflows="true" uuid="e9010896-d656-41fb-ae27-d0dcf0d434f9"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{passenger_email}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" stretchType="RelativeToTallestObject" x="622" y="0" width="81" height="15" isPrintWhenDetailOverflows="true" uuid="c9ca79c2-d827-4e03-be19-b78e5ed7f38c"/>
+				<box rightPadding="2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Garamond-Normal" size="11" isBold="true"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalamount_covered}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" stretchType="RelativeToTallestObject" x="703" y="0" width="99" height="15" isPrintWhenDetailOverflows="true" uuid="ad122926-b93b-4833-9b42-04360365a744"/>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Garamond-Normal" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entity_name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="150" height="15" isPrintWhenDetailOverflows="true" uuid="29a48333-9cb3-4562-9276-b0670bd9c5de"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Garamond-Normal" size="11"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{policy_number}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="1" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="0" width="802" height="1" uuid="7beb4b32-2c72-4cf4-bd3d-bf518dfa3c7e"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="1" y="1" width="801" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="005f6dfa-98c3-4d9b-bc5a-1e6d35e41d9e"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="703" y="1" width="98" height="20" forecolor="#736343" uuid="a8ffad97-e830-4056-9383-18b2c96378be"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Garamond-Normal" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="622" y="1" width="81" height="20" forecolor="#736343" uuid="b14f1c63-cc11-42e0-8669-64cb48aff659"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Garamond-Normal" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE, d MMMMM yyyy HH:mm:ss Z">
+					<reportElement style="Column header" x="0" y="1" width="150" height="20" forecolor="#736343" uuid="9a11357e-40b4-4cec-b7d5-dbd957eb0291"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Garamond-Normal" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="23">
+			<staticText>
+				<reportElement x="534" y="1" width="88" height="20" uuid="cde708c2-ad21-4ff5-8863-77dab6fe7772"/>
+				<textElement textAlignment="Right">
+					<font fontName="Garamond-Normal" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="622" y="1" width="82" height="20" isPrintWhenDetailOverflows="true" uuid="99d49477-27e2-4183-aa82-4e42ec755717"/>
+				<box rightPadding="2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Garamond-Normal" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total_amount}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="534" y="0" width="170" height="1" uuid="479469af-4339-4e60-aa58-5a3d239234f3"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,10 @@
+#/bin/sh
+
+cd $(dirname $0)
+
+javac *.java
+jar cmf manifest bfm.jar *.class
+
+jarsigner -tsa http://sha256timestamp.ws.symantec.com/sha256/timestamp -keystore ../../../build/lib/dewciskeystore.jks -storepass Baraza9NBO -keypass Baraza9NBO bfm.jar dewciskeystore
+
+

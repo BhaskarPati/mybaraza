@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="system_pm_f" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f7588661-3f63-47de-846a-1afbfd58d419">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#FFE4C4">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFE2BF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="fdf821f5-319a-4038-a8cc-cdcdce4fb285"/>
+	<parameter name="filterid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["956"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT bb.client_id, bb.client_name, bb.model_name,
+    bb.asset_type_name, bb.asset_serial, bb.asset_type_id
+
+FROM
+(SELECT b.client_id, b.client_name, b.asset_type_id, b.asset_type_name, b.asset_serial,
+b.model_name,
+c.pm_schedule_id, c.pm_quarter_id
+FROM vw_client_assets as b
+INNER JOIN pm_schedule c ON b.client_id = c.client_id
+WHERE (c.completed = true) AND (b.is_issued = true) AND (b.retrived is null)) as bb
+
+LEFT OUTER JOIN
+
+(SELECT a.asset_type_id, a.asset_type_name,
+    a.checklistid, a.pm_schedule_id, a.pm_serial_number,
+    a.pm_quarter_id, a.client_id, a.date_done
+FROM vw_pms_assets as a) as aa
+
+    ON (aa.pm_schedule_id = bb.pm_schedule_id) AND (aa.asset_type_id = bb.asset_type_id)
+        AND (trim(upper(aa.pm_serial_number)) = trim(upper(bb.asset_serial)))
+
+
+WHERE (bb.pm_quarter_id = '$P!{filterid}')
+AND (aa.pm_serial_number is null)
+AND (bb.asset_type_id IN (1, 3))
+
+ORDER BY bb.client_name, bb.asset_type_id;]]>
+	</queryString>
+	<field name="client_id" class="java.lang.Integer"/>
+	<field name="client_name" class="java.lang.String"/>
+	<field name="model_name" class="java.lang.String"/>
+	<field name="asset_type_name" class="java.lang.String"/>
+	<field name="asset_serial" class="java.lang.String"/>
+	<field name="asset_type_id" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement style="SubTitle" x="120" y="0" width="312" height="22" forecolor="#484373" uuid="7d6876b9-6180-4f17-83bb-31113f00069f"/>
+				<textElement>
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Assets not in PM]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="18" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="237" y="1" width="126" height="15" forecolor="#221C10" backcolor="#846363" uuid="04d9292d-54f7-4b6a-b4d9-f33ab9aebbee"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[System serial]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="363" y="1" width="188" height="15" forecolor="#221C10" backcolor="#846363" uuid="ea2e03d0-9b27-4b54-beb6-e41f9c7c6398"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Client]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="4" y="1" width="116" height="15" forecolor="#221C10" backcolor="#846363" uuid="ff513eda-676d-4f42-aded-19b0e78ec709"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Asset name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="120" y="1" width="117" height="15" forecolor="#221C10" backcolor="#846363" uuid="788bd759-2759-456b-9b43-a708d0de055b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Asset Model]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="3" y="0" width="555" height="12" uuid="752b5b58-b93b-4422-a61c-0b96b1febebd"/>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement style="Detail" mode="Transparent" x="1" y="0" width="116" height="12" uuid="b0f3698a-5960-4df9-ad6d-2201f4aa44cf"/>
+					<textElement>
+						<font fontName="Times New Roman" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{asset_type_name}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement style="Detail" x="234" y="0" width="126" height="12" uuid="3d88f402-7779-4e90-a802-948038202a92"/>
+					<box>
+						<bottomPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font fontName="Times New Roman" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{asset_serial}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement style="Detail" x="117" y="0" width="117" height="12" uuid="2abe548f-d98c-4fed-8d54-af0be865b660"/>
+					<textElement>
+						<font fontName="Times New Roman" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{model_name}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement style="Detail" x="360" y="0" width="188" height="12" uuid="4db62442-349a-44bb-9b51-df6664f05aff"/>
+					<box>
+						<bottomPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font fontName="Times New Roman" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{client_name}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="8" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="755410df-e03c-418e-9fcf-d60388484886"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="597" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="9123288b-c577-4c63-81b1-ceb62161dc44"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="533" y="0" width="40" height="20" forecolor="#736343" uuid="8abddd9e-7758-4c06-bd5c-8f4d971ef0ce"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="453" y="0" width="80" height="20" forecolor="#736343" uuid="26c679a0-9235-4817-95ff-d01dbbda932a"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="dbc422a7-a157-45d8-b118-4be86a11714f"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

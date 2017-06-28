@@ -1,0 +1,55 @@
+<html>
+<head>
+	<title>Galileo Scripts</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script src="http://www.java.com/js/deployJava.js"></script>
+	<script src ="resources/script.js" ></script> 
+	<link href="resources/menu.css" rel="stylesheet" type="text/css">
+</head>
+		
+<body onload="showDate()"> 
+<form name="frmGalileoScript" action="">
+<table width="700" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tbody>
+    <tr><td colspan="2"><table><tr>
+	  <td>PCC</td><td><input type="text" name="pcc" size="25" class="myinput" value="745M"/></td>
+	  <td>Date</td><td><input type="text" name="tdate" size="25" class="myinput" value="01JUL"/></td>
+	  <td>Ticket</td><td><input type="text" name="ticketnum" size="25" class="myinput" value="0833168628152"/></td>
+	</tr></table></td></tr>
+    <tr><td colspan="2"><table><tr>
+	  <td>Month</td><td><input type="text" name="mymonth" size="25" class="myinput" value="JUL"/></td>
+	  <td>Starting</td><td><input type="text" name="sdate" size="25" class="myinput" value="1"/></td>
+	  <td>Ending</td><td><input type="text" name="edate" size="25" class="myinput" value="31"/></td>
+	</tr></table></td></tr>
+	<tr>
+		<td>Dates</td><td><input type="text" name="mydates" size="25" class="mydates" value="DEC01,DEC02"/></td>
+	</tr>
+	<tr>
+		<td>
+			<input type="button" class="cButton" value="View PCC" onClick="DisplayPCC()"/></br>
+			<input type="button" class="cButton" value="View HMPR" onClick="DisplayHMPR('KES')"/></br>
+			<input type="button" class="cButton" value="View TE" onClick="DisplayTE()"/></br>
+			<input type="button" class="cButton" value="View Data" onClick="DisplayData()"/></br>
+			<input type="button" class="cButton" value="Process Dates" onClick="ProcessDate()"/></br>
+			<input type="button" class="cButton" value="Process Tickets" onClick="updateRange()"/></br>
+			<input type="button" class="cButton" value="Pick Tickets" onClick="pickTickets()"/></br>
+			<input type="reset" value="Clear Form" class="cButton"/>
+		</td>
+		<td><textarea name="resultarea" cols="30" rows="10"></textarea>
+		<textarea name="ticketresult" cols="30" rows="10"></textarea></td>
+	</tr>
+	<tr><td colspan="2">
+		<script>
+			var attributes = { id:'tickets', code:'tickets',  width:700, height:200} ;
+			var parameters = { jnlp_href: 'applet.jnlp', db : 'jdbc:postgresql://62.24.122.1/tickets', dbuser : 'root', dbpasswd : 'invent'} ;
+			deployJava.runApplet(attributes, parameters, '1.7');
+		</script>
+		
+	</td></tr>
+  </tbody>
+</table>
+</form>
+
+
+</body>
+</html>

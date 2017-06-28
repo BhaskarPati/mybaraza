@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<INTERFACE dbclass="com.mysql.jdbc.Driver" dbpath="jdbc:mysql://localhost/kenic" username="root" password=""
+		   rdbclass="org.postgresql.Driver" rdbpath="jdbc:postgresql://localhost/epp" rusername="root" rpassword="invent">
+	<GRID key="1" name="Clients" table="usuario" rtable="client" linkfield="handle_usuario" rlinkfield="roid">
+		<TEXTFIELD fieldname="roid">handle_usuario</TEXTFIELD>
+		<TEXTFIELD fieldname="clid">handle_usuario</TEXTFIELD>
+		<TEXTFIELD fieldname="name">nome</TEXTFIELD>
+		<TEXTFIELD fieldname="pw">senha</TEXTFIELD>
+		<TEXTFIELD fieldname="web_pw">senha</TEXTFIELD>
+		<TEXTFIELD fieldname="email">email</TEXTFIELD>
+		<TEXTFUNCT fieldname="phone" function="CONCAT('+', tel_ddi, ' ' , tel_ddd, ' ', tel_numero)">telphone</TEXTFUNCT>
+		<TEXTFIELD fieldname="address">end_logradouro</TEXTFIELD>
+		<TEXTDATA fieldname="country">KE</TEXTDATA>
+		<TEXTDATA fieldname="timezone">Africa/Nairobi</TEXTDATA>
+		<NTEXTFIELD fieldname="discount">discount</NTEXTFIELD>
+	</GRID>
+	<GRID key="2" name="Contacts" table="entidade" rtable="contact" linkfield="id_documento" rlinkfield="id">
+		<TEXTFIELD fieldname="id">id_documento</TEXTFIELD>
+		<TEXTFIELD fieldname="intpostalname">nome</TEXTFIELD>
+		<TEXTFIELD fieldname="intpostalstreet1">end_logradouro</TEXTFIELD>
+		<TEXTFIELD fieldname="intpostalcity">end_cidade</TEXTFIELD>
+		<TEXTDATA fieldname="intpostalcc">KE</TEXTDATA>
+		<TEXTFUNCT fieldname="voice" function="CONCAT('+', tel_ddi, ' ' , tel_ddd, ' ', tel_numero)">telphone</TEXTFUNCT>
+		<TEXTFIELD fieldname="clid">adm_handle</TEXTFIELD>
+		<TEXTFIELD fieldname="crid">adm_handle</TEXTFIELD>
+	</GRID>
+	<GRID key="3" name="Contacts" table="usuario" rtable="contact" linkfield="handle_usuario" rlinkfield="id">
+		<TEXTFIELD fieldname="id">handle_usuario</TEXTFIELD>
+		<TEXTFIELD fieldname="intpostalname">nome</TEXTFIELD>
+		<TEXTFIELD fieldname="intpostalstreet1">end_logradouro</TEXTFIELD>
+		<TEXTDATA fieldname="intpostalcc">KE</TEXTDATA>
+		<TEXTFUNCT fieldname="voice" function="CONCAT('+', tel_ddi, ' ' , tel_ddd, ' ', tel_numero)">telphone</TEXTFUNCT>
+		<TEXTFIELD fieldname="email">email</TEXTFIELD>
+		<TEXTFIELD fieldname="intpostalcity">end_cidade</TEXTFIELD>
+		<TEXTFIELD fieldname="clid">handle_usuario</TEXTFIELD>
+		<TEXTFIELD fieldname="crid">handle_usuario</TEXTFIELD>
+	</GRID>
+	<GRID key="4" name="Domains" table="vwdomains" rtable="domain" linkfield="kenicid" rlinkfield="roid">
+		<TEXTFIELD fieldname="roid">kenicid</TEXTFIELD>
+		<TEXTFIELD fieldname="name">domainname</TEXTFIELD>
+		<TEXTFIELD fieldname="exdate">renewed_until</TEXTFIELD>
+		<TEXTFIELD fieldname="zone">sld</TEXTFIELD>
+		<TEXTFIELD fieldname="registrant">id_documento</TEXTFIELD>
+		<TEXTFIELD fieldname="clid">adm_handle</TEXTFIELD>
+		<TEXTFIELD fieldname="crid">adm_handle</TEXTFIELD>
+	</GRID>
+	<GRID key="5" name="domain admin contact" table="vwdomains" rtable="domain_contact">
+		<TEXTFIELD fieldname="domain_name">domainname</TEXTFIELD>
+		<TEXTFIELD fieldname="contact_id">adm_handle</TEXTFIELD>
+		<TEXTDATA fieldname="type">admin</TEXTDATA>
+	</GRID>
+	<GRID key="6" name="domain billing contact" table="vwdomains" rtable="domain_contact">
+		<TEXTFIELD fieldname="domain_name">domainname</TEXTFIELD>
+		<TEXTFIELD fieldname="contact_id">cob_handle</TEXTFIELD>
+		<TEXTDATA fieldname="type">billing</TEXTDATA>
+	</GRID>
+	<GRID key="7" name="domain tech contact" table="vwdomains" rtable="domain_contact">
+		<TEXTFIELD fieldname="domain_name">domainname</TEXTFIELD>
+		<TEXTFIELD fieldname="contact_id">tec_handle</TEXTFIELD>
+		<TEXTDATA fieldname="type">tech</TEXTDATA>
+	</GRID>
+	<GRID key="8" name="host" table="vwhost" rtable="host" linkfield="hostname" rlinkfield="name">
+		<TEXTFIELD fieldname="name">hostname</TEXTFIELD>
+		<TEXTFIELD fieldname="clid">adm_handle</TEXTFIELD>
+		<TEXTFIELD fieldname="crid">adm_handle</TEXTFIELD>
+	</GRID>
+	<GRID key="9" name="domain host" table="vwhost" rtable="domain_host">
+		<TEXTFIELD fieldname="domain_name">domainname</TEXTFIELD>
+		<TEXTFIELD fieldname="host_name">hostname</TEXTFIELD>
+		<TEXTFIELD fieldname="sort_order">hostorder</TEXTFIELD>
+	</GRID>
+	<GRID key="10" name="ledger" table="vwcharges" rtable="ledger" linkfield="id_pendencia" rlinkfield="id">
+		<TEXTFIELD fieldname="id">id_pendencia</TEXTFIELD>
+		<TEXTFIELD fieldname="client_roid">adm_handle</TEXTFIELD>
+		<TEXTFIELD fieldname="description">description</TEXTFIELD>
+		<TEXTDATA fieldname="currency">KES</TEXTDATA>
+		<TEXTFIELD fieldname="tax">vat</TEXTFIELD>
+		<TEXTDATA fieldname="tax_label">VAT</TEXTDATA>
+		<TEXTFIELD fieldname="total">amount</TEXTFIELD>
+		<TEXTFIELD fieldname="created">tempo_criacao</TEXTFIELD>
+		<TEXTDATA fieldname="trans_type">Registration</TEXTDATA>
+		<TEXTFIELD fieldname="domain_name">domainname</TEXTFIELD>
+		<TEXTDATA fieldname="tld">ke</TEXTDATA>
+		<TEXTFIELD fieldname="refund_roid">kenicid</TEXTFIELD>
+		<TEXTDATA fieldname="processor_account_history_id">2</TEXTDATA>
+	</GRID>
+	<GRID key="11" name="ledger" table="vwcharges2" rtable="ledger" linkfield="id_pendencia" rlinkfield="id">
+		<TEXTFIELD fieldname="id">id_pendencia</TEXTFIELD>
+		<TEXTFIELD fieldname="client_roid">adm_handle</TEXTFIELD>
+		<TEXTFIELD fieldname="description">description</TEXTFIELD>
+		<TEXTDATA fieldname="currency">KES</TEXTDATA>
+		<TEXTFIELD fieldname="tax">vat</TEXTFIELD>
+		<TEXTDATA fieldname="tax_label">VAT</TEXTDATA>
+		<TEXTFIELD fieldname="total">amount</TEXTFIELD>
+		<TEXTFIELD fieldname="created">tempo_criacao</TEXTFIELD>
+		<TEXTDATA fieldname="trans_type">Registration</TEXTDATA>
+		<TEXTFIELD fieldname="domain_name">domainname</TEXTFIELD>
+		<TEXTDATA fieldname="tld">ke</TEXTDATA>
+		<TEXTFIELD fieldname="refund_roid">kenicid</TEXTFIELD>
+		<TEXTDATA fieldname="processor_account_history_id">2</TEXTDATA>
+	</GRID>
+	<GRID key="12" name="ledger payments" table="vwpayments" rtable="ledger" linkfield="paymentid" rlinkfield="id">
+		<TEXTFIELD fieldname="id">paymentid</TEXTFIELD>
+		<TEXTFIELD fieldname="client_roid">adm_handle</TEXTFIELD>
+		<TEXTFIELD fieldname="description">description</TEXTFIELD>
+		<TEXTDATA fieldname="currency">KES</TEXTDATA>
+		<TEXTFIELD fieldname="total">amount</TEXTFIELD>
+		<TEXTFIELD fieldname="created">data_ult_pagamento</TEXTFIELD>
+		<TEXTDATA fieldname="trans_type">Receipt</TEXTDATA>
+		<TEXTDATA fieldname="tld">ke</TEXTDATA>
+		<TEXTDATA fieldname="processor_account_history_id">2</TEXTDATA>
+	</GRID>
+
+</INTERFACE>

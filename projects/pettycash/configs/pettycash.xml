@@ -1,0 +1,228 @@
+<?xml version="1.0"?>
+<APP database="pettycash" name="Petty Cash" reportpath="/root/baraza/projects/pettycash/reports/">
+	<TREE name="Petty Cash">
+		<NODE name="Entries">
+			<NODE key="1" name="Items"></NODE>
+			<NODE key="2" name="Petty Cash"></NODE>
+			<NODE key="3" name="Banking"></NODE>
+			<NODE key="4" name="Sales"></NODE>
+			<NODE key="5" name="Users"></NODE>
+		</NODE>
+
+		<NODE name="Reports">
+			<NODE key="10" name="Items"></NODE>
+			<NODE key="11" name="Budget"></NODE>
+			<NODE key="12" name="Expenditure"></NODE>
+			<NODE key="14" name="Difference"></NODE>
+			<NODE key="15" name="Summary"></NODE>
+		</NODE>
+
+	</TREE>
+
+	<DESK h="500" key="1" name="Items" splitloc="250" splittype="vert" w="585">
+		<GRID gridfilter="true" key="1" keyfield="itemid" name="Items" ordersql="itemname" pos="top" table="vwitems">
+			<TEXTFIELD title="Item Name" w="240">itemname</TEXTFIELD>
+			<TEXTFIELD title="Category" w="240">categoryname</TEXTFIELD>
+			<TEXTFIELD title="Department" w="240">departmentname</TEXTFIELD>
+			<TEXTFIELD title="Default Units" w="40">defaultunits</TEXTFIELD>
+			<TEXTFIELD title="Default Price" w="70">defaultprice</TEXTFIELD>
+		</GRID>
+
+		<FORM autofield="itemid" key="2" linkfield="itemid" linkkey="1" name="Items" pos="bottom" table="items">
+			<TEXTFIELD h="20" title="Item Name" w="350" x="10" y="10">itemname</TEXTFIELD>
+			<COMBOBOX h="20" lpfield="categoryname" lptable="categories" title="Category" w="350" x="10" y="30">categoryid</COMBOBOX>
+			<COMBOBOX h="20" lpfield="departmentname" lptable="departments" title="Department" w="350" x="10" y="50">departmentid</COMBOBOX>
+			<TEXTFIELD h="20" title="D. Units" w="150" x="10" y="70">defaultunits</TEXTFIELD>
+			<TEXTFIELD h="20" title="D. Price" w="150" x="290" y="70">defaultprice</TEXTFIELD>
+			<CHECKBOX h="20" title="Sale Item" w="50" x="10" y="90">saleitem</CHECKBOX>
+			<TEXTAREA h="70" title="Details" w="430" x="10" y="110">details</TEXTAREA>
+		</FORM>
+
+		<GRID gridfilter="true" key="3" keyfield="categoryid" name="Categories" ordersql="categoryname" pos="top" table="categories">
+			<TEXTFIELD title="#" w="40">categoryid</TEXTFIELD>
+			<TEXTFIELD title="Category Name" w="40">categoryname</TEXTFIELD>
+		</GRID>
+
+		<FORM autofield="categoryid" key="4" linkfield="categoryid" linkkey="3" name="Categories" pos="bottom" table="categories">
+			<TEXTFIELD h="20" title="Category" w="350" x="10" y="10">categoryname</TEXTFIELD>
+			<TEXTAREA h="70" title="Details" w="430" x="10" y="30">details</TEXTAREA>
+		</FORM>
+
+		<GRID gridfilter="true" key="5" keyfield="departmentid" name="Departments" ordersql="departmentname" pos="top" table="departments">
+			<TEXTFIELD title="#" w="40">departmentid</TEXTFIELD>
+			<TEXTFIELD title="Department Name" w="340">departmentname</TEXTFIELD>
+		</GRID>
+
+		<FORM autofield="departmentid" key="6" linkfield="departmentid" linkkey="5" name="Departments" pos="bottom" table="departments">
+			<TEXTFIELD h="20" title="Department" w="350" x="10" y="10">departmentname</TEXTFIELD>
+			<TEXTAREA h="70" title="Details" w="430" x="10" y="30">details</TEXTAREA>
+		</FORM>
+
+	</DESK>
+
+	<DESK h="500" key="2" name="Petty Cash" splitloc="250" splittype="vert" w="585">
+		<GRID gridfilter="true" key="1" keyfield="periodid" name="Months" ordersql="startdate desc" pos="top" table="periodview">
+			<TEXTFIELD title="Month ID" w="40">periodid</TEXTFIELD>
+			<TEXTFIELD title="Year" w="40">periodyear</TEXTFIELD>
+			<TEXTFIELD title="Month" w="40">periodmonth</TEXTFIELD>
+			<TEXTFIELD title="Start Date" w="40">startdate</TEXTFIELD>
+			<TEXTFIELD title="End Date" w="40">enddate</TEXTFIELD>
+		</GRID>
+
+		<FORM autofield="periodid" key="2" linkfield="periodid" linkkey="1" name="Months Entry" pos="bottom" table="periods">
+			<DATESPIN h="20" title="Start Date" w="150" x="10" y="10">startdate</DATESPIN>
+			<DATESPIN h="20" title="End Date" w="150" x="290" y="10">enddate</DATESPIN>
+			<TEXTAREA h="70" title="Details" w="430" x="10" y="30">details</TEXTAREA>
+		</FORM>
+
+		<GRID key="3" keyfield="pcbudgetid" linkfield="periodid" linkkey="1" name="PC Budget" pos="top" table="pcbudgetview">
+			<TEXTFIELD title="Department" w="140">departmentname</TEXTFIELD>
+			<TEXTFIELD title="Item" w="40">itemname</TEXTFIELD>
+			<TEXTFIELD title="Units" w="40">units</TEXTFIELD>
+			<TEXTFIELD title="Unit Cost" w="40">unitcost</TEXTFIELD>
+			<TEXTFIELD title="Cost" w="40">itemscost</TEXTFIELD>
+		</GRID>
+
+		<FORM autofield="pcbudgetid" inputfield="periodid" inputkey="1" key="4" linkfield="pcbudgetid" linkkey="3" name="PC Budget" pos="bottom" table="pcbudget">
+			<COMBOBOX h="20" lpfield="itemname" lptable="items" title="Item" w="350" x="10" y="10">itemid</COMBOBOX>
+			<COMBOBOX h="20" lpfield="departmentname" lptable="departments" title="Department" w="350" x="10" y="30">departmentid</COMBOBOX>
+			<TEXTFIELD h="20" title="Units" w="150" x="10" y="50">units</TEXTFIELD>
+			<TEXTFIELD h="20" title="Unit Cost" w="150" x="290" y="50">unitcost</TEXTFIELD>
+			<TEXTAREA h="70" title="Details" w="430" x="10" y="70">details</TEXTAREA>
+		</FORM>
+
+		<GRID key="5" keyfield="pcexpenditureid" linkfield="periodid" linkkey="1" name="PC Expenditure" pos="top" table="pcexpenditureview">
+			<TEXTFIELD title="Department" w="140">departmentname</TEXTFIELD>
+			<TEXTFIELD title="Item" w="40">itemname</TEXTFIELD>
+			<TEXTFIELD title="Units" w="40">units</TEXTFIELD>
+			<TEXTFIELD title="Unit Cost" w="40">unitcost</TEXTFIELD>
+			<TEXTFIELD title="Cost" w="40">itemscost</TEXTFIELD>
+		</GRID>
+
+		<FORM autofield="pcexpenditureid" inputfield="periodid" inputkey="1" key="6" linkfield="pcexpenditureid" linkkey="5" name="PC Expenditure" pos="bottom" table="pcexpenditure">
+			<COMBOBOX h="20" lpfield="itemname" lptable="items" title="Item" w="350" x="10" y="10">itemid</COMBOBOX>
+			<COMBOBOX h="20" lpfield="departmentname" lptable="departments" title="Department" w="350" x="10" y="30">departmentid</COMBOBOX>
+			<TEXTFIELD h="20" title="Units" w="150" x="10" y="50">units</TEXTFIELD>
+			<TEXTFIELD h="20" title="Unit Cost" w="150" x="290" y="50">unitcost</TEXTFIELD>
+			<DATESPIN h="20" title="Date" w="150" x="10" y="70">expdate</DATESPIN>
+			<TEXTFIELD h="20" title="Receipt No." w="150" x="290" y="70">receiptnumber</TEXTFIELD>
+			<TEXTAREA h="70" title="Details" w="430" x="10" y="90">details</TEXTAREA>
+		</FORM>
+
+	</DESK>
+
+	<DESK h="500" key="3" name="Banking" splitloc="250" splittype="vert" w="585">
+		<GRID gridfilter="true" key="1" keyfield="pcbankingid" name="Banking" ordersql="bankingdate desc" pos="top" table="pcbanking">
+			<TEXTFIELD title="Banking Date" w="40">bankingdate</TEXTFIELD>
+			<TEXTFIELD title="Amount" w="40">amount</TEXTFIELD>
+			<TEXTFIELD title="Sale Receipt" w="40">salereceipt</TEXTFIELD>
+			<TEXTFIELD title="Narrative" w="140">narrative</TEXTFIELD>
+		</GRID>
+
+		<FORM autofield="pcbankingid" key="2" linkfield="pcbankingid" linkkey="1" name="Banking" pos="bottom" table="pcbanking">
+			<TEXTDATE h="20" title="Banking Date" w="150" x="10" y="10">bankingdate</TEXTDATE>
+			<TEXTDECIMAL h="20" title="Amount" w="150" x="290" y="10">amount</TEXTDECIMAL>
+			<TEXTFIELD h="20" title="Narrative" w="430" x="10" y="30">narrative</TEXTFIELD>
+			<CHECKBOX h="20" title="Sale Receipt" w="30" x="10" y="50">salereceipt</CHECKBOX>
+			<TEXTAREA h="70" title="Details" w="430" x="10" y="70">details</TEXTAREA>
+		</FORM>
+
+	</DESK>
+
+	<DESK h="500" key="4" name="Sales" splitloc="250" splittype="vert" w="585">
+		<GRID gridfilter="true" key="1" keyfield="saleid" name="Sales" ordersql="saledate desc" pos="top" table="vwsales">
+			<TEXTFIELD title="#" w="40">saleid</TEXTFIELD>
+			<TEXTFIELD title="Sale Date" w="40">saledate</TEXTFIELD>
+			<TEXTFIELD title="Item" w="40">itemname</TEXTFIELD>
+			<TEXTFIELD title="User" w="40">username</TEXTFIELD>
+			<TEXTFIELD title="Units" w="40">units</TEXTFIELD>
+			<TEXTFIELD title="Unit Price" w="40">unitprice</TEXTFIELD>
+			<TEXTFIELD title="Unit Cost" w="40">unitcost</TEXTFIELD>
+			<TEXTFIELD title="Sale" w="40">saleprice</TEXTFIELD>
+		</GRID>
+
+		<FORM autofield="saleid" key="2" linkfield="saleid" linkkey="1" name="Sales" pos="bottom" table="sales">
+			<COMBOBOX h="20" lpfield="itemname" lptable="items" title="Item" w="150" wheresql="(saleitem = true)" x="10" y="10">itemid</COMBOBOX>
+			<COMBOBOX h="20" lpfield="fullname" lptable="users" title="User" w="150" x="290" y="10">userid</COMBOBOX>
+			<TEXTFIELD h="20" title="Units" w="150" x="10" y="30">units</TEXTFIELD>
+			<TEXTDECIMAL h="20" title="Unit Price" w="150" x="290" y="30">unitprice</TEXTDECIMAL>
+			<TEXTDECIMAL h="20" title="Unit Cost" w="150" x="10" y="50">unitcost</TEXTDECIMAL>
+			<TEXTDATE h="20" title="Sale Date" w="150" x="290" y="50">saledate</TEXTDATE>
+			<TEXTDECIMAL h="20" title="Commision" w="150" x="10" y="70">commision</TEXTDECIMAL>
+			<TEXTAREA h="70" title="Details" w="430" x="10" y="90">details</TEXTAREA>
+		</FORM>
+
+	</DESK>
+
+	<DESK h="520" key="5" name="Users" splitloc="250" splittype="vert" w="585">
+		<GRID filterkey="7" key="1" keyfield="userid" name="Users List" pos="top" table="userview">pcbudget
+			<TEXTFIELD title="Group Name" w="140">groupname</TEXTFIELD>
+			<TEXTFIELD title="User Name" w="140">Username</TEXTFIELD>
+			<TEXTFIELD title="Full Name" w="140">fullname</TEXTFIELD>
+			<TEXTFIELD title="Telno" w="140">telno</TEXTFIELD>
+			<TEXTFIELD title="Email" w="140">email</TEXTFIELD>
+		</GRID>
+
+		<FORM key="2" linkfield="userid" linkkey="1" name="Users" pos="bottom" table="users">
+			<COMBOBOX h="20" lpfield="groupname" lptable="groups" title="Group Name" w="210" x="10" y="10">groupid</COMBOBOX>
+			<TEXTFIELD h="20" title="User ID" w="90" x="350" y="10">UserID</TEXTFIELD>
+			<TEXTFIELD h="20" title="User Name" w="150" x="10" y="30">Username</TEXTFIELD>
+			<TEXTFIELD h="20" title="Full Name" w="150" x="290" y="30">fullname</TEXTFIELD>
+			<TEXTFIELD h="20" title="Extension" w="150" x="10" y="50">extension</TEXTFIELD>
+			<TEXTFIELD h="20" title="Tel no" w="150" x="290" y="50">telno</TEXTFIELD>
+			<TEXTFIELD h="20" title="Email" w="430" x="10" y="70">email</TEXTFIELD>
+			<CHECKBOX h="20" title="Group Leader" w="30" x="10" y="90">GroupLeader</CHECKBOX>
+			<CHECKBOX h="20" title="Account Manager" w="30" x="170" y="90">AccountManager</CHECKBOX>
+			<CHECKBOX h="20" title="Active" w="30" x="350" y="90">IsActive</CHECKBOX>
+			<TEXTAREA h="90" title="Details" w="430" x="10" y="110">details</TEXTAREA>
+		</FORM>
+
+		<GRID key="3" keyfield="groupid" name="Groups List" pos="top" table="groups">
+			<TEXTFIELD title="Group ID" w="40">groupid</TEXTFIELD>
+			<TEXTFIELD title="Group Name" w="240">groupname</TEXTFIELD>
+			<TEXTFIELD title="Super Group" w="240">supergroup</TEXTFIELD>
+		</GRID>
+
+		<FORM autofield="groupid" key="4" linkfield="groupid" linkkey="3" name="Groups" pos="bottom" table="groups">
+			<TEXTFIELD h="20" lw="100" title="Group Name" w="270" x="10" y="10">groupname</TEXTFIELD>
+			<CHECKBOX h="20" lw="100" title="Super Group" w="40" x="410" y="10">supergroup</CHECKBOX>
+			<TEXTAREA h="70" lw="100" title="Activities" w="430" x="10" y="30">activities</TEXTAREA>
+			<TEXTAREA h="70" lw="100" title="Description" w="430" x="10" y="100">description</TEXTAREA>
+		</FORM>
+
+	</DESK>
+
+	<DESK h="500" key="10" name="Items" splitloc="0" splittype="horl" w="700">
+		<REPORT filtered="false" jasperfile="items.jasper" name="Items" pos="bottom"></REPORT>
+	</DESK>
+
+	<DESK h="500" key="11" name="Budget Report" splitloc="120" splittype="horl" w="700">
+		<DRILLDOWN keyfield="periodyear" listfield="periodyear" name="Drill Down" pos="top" table="PeriodYearView">
+			<DRILLDOWN keyfield="periodid" listfield="periodmonth" name="periodmonth" pos="top" sortfield="monthid" table="PeriodView" wherefield="periodyear"></DRILLDOWN>
+		</DRILLDOWN>
+
+		<REPORT filtered="true" jasperfile="pcbudget.jasper" name="Budget" pos="bottom"></REPORT>
+	</DESK>
+
+	<DESK h="500" key="12" name="Expenditure Report" splitloc="120" splittype="horl" w="700">
+		<DRILLDOWN keyfield="periodyear" listfield="periodyear" name="Drill Down" pos="top" table="PeriodYearView">
+			<DRILLDOWN keyfield="periodid" listfield="periodmonth" name="periodmonth" pos="top" sortfield="monthid" table="PeriodView" wherefield="periodyear"></DRILLDOWN>
+		</DRILLDOWN>
+
+		<REPORT filtered="true" jasperfile="pcexpenditure.jasper" name="Expenditure" pos="bottom"></REPORT>
+	</DESK>
+
+	<DESK h="500" key="14" name="Difference Report" splitloc="120" splittype="horl" w="700">
+		<DRILLDOWN keyfield="periodyear" listfield="periodyear" name="Drill Down" pos="top" table="PeriodYearView">
+			<DRILLDOWN keyfield="periodid" listfield="periodmonth" name="periodmonth" pos="top" sortfield="monthid" table="PeriodView" wherefield="periodyear"></DRILLDOWN>
+		</DRILLDOWN>
+
+		<REPORT filtered="true" jasperfile="budgetdifference.jasper" name="Difference" pos="bottom"></REPORT>
+	</DESK>
+
+	<DESK h="500" key="15" name="Summary Report" splitloc="0" splittype="horl" w="700">
+		<REPORT filtered="false" jasperfile="summary.jasper" name="Summary" pos="bottom"></REPORT>
+	</DESK>
+
+</APP>
+

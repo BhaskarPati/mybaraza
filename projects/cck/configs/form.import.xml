@@ -1,0 +1,53 @@
+		<GRID keyfield="form_id" name="Forms Import" table="forms">
+			<TEXTFIELD title="Form Id" w="40">form_id</TEXTFIELD>
+			<TEXTFIELD title="Form Name" w="40">form_name</TEXTFIELD>
+			<TEXTFIELD title="Form Number" w="40">form_number</TEXTFIELD>
+			<TEXTFIELD title="Form Header" w="40">form_header</TEXTFIELD>
+			<TEXTFIELD title="Form Footer" w="40">form_footer</TEXTFIELD>
+			<IMPORT dbclass="org.postgresql.Driver" dbpassword="invent" dbpath="jdbc:postgresql://localhost/cckold" dbusername="root" keyfield="formtypeid" name="Old Forms" table="formtypes">
+				<TEXTFIELD title="Formtypeid" w="40">formtypeid</TEXTFIELD>
+				<TEXTFIELD title="Formtypename" w="40">formtypename</TEXTFIELD>
+				<TEXTFIELD title="Formnumber" w="40">formnumber</TEXTFIELD>
+				<TEXTFIELD title="Header" w="430">header</TEXTFIELD>
+				<TEXTFIELD title="Footer" w="430">footer</TEXTFIELD>
+			</IMPORT>
+		</GRID>
+		<GRID keyfield="field_id" name="Fields Import" table="fields">
+			<TEXTFIELD title="Form id" w="40">form_id</TEXTFIELD>
+			<TEXTFIELD title="Field Id" w="40">field_id</TEXTFIELD>
+			<TEXTFIELD title="Field Order" w="40">field_order</TEXTFIELD>
+			<TEXTFIELD title="Field Type" w="40">field_type</TEXTFIELD>
+			<TEXTFIELD title="Share Line" w="40">share_line</TEXTFIELD>
+			<TEXTFIELD title="Field Size" w="40">field_size</TEXTFIELD>
+			<TEXTFIELD title="Question" w="40">question</TEXTFIELD>
+			<TEXTFIELD title="Field Bold" w="40">field_bold</TEXTFIELD>
+			<TEXTFIELD title="Field Italics" w="40">field_italics</TEXTFIELD>
+			<IMPORT dbclass="org.postgresql.Driver" dbpassword="invent" dbpath="jdbc:postgresql://localhost/cckold" dbusername="root" keyfield="formid" name="old fields" table="forms">
+				<TEXTFIELD title="Formtypeid" w="40">formtypeid</TEXTFIELD>
+				<TEXTFIELD title="Formid" w="40">formid</TEXTFIELD>
+				<TEXTFIELD title="Qorder" w="40">qorder</TEXTFIELD>
+				<TEXTFIELD fnct="(CASE WHEN forms.subformgrid = true THEN 'SUBGRID' WHEN forms.fortitle = true THEN 'TITLE' ELSE 'TEXTFIELD' END)" title="Field Type" w="40">field_type</TEXTFIELD>
+				<TEXTFIELD title="Shareline" w="40">shareline</TEXTFIELD>
+				<TEXTFIELD title="Fieldsize" w="40">fieldsize</TEXTFIELD>
+				<TEXTFIELD title="Question" w="40">question</TEXTFIELD>
+				<TEXTFIELD fnct="(CASE WHEN forms.fieldbold = true THEN '1' ELSE '0' END)" title="Fieldbold" w="40">fieldbold</TEXTFIELD>
+				<TEXTFIELD fnct="(CASE WHEN forms.fielditalics = true THEN '1' ELSE '0' END)" title="Fielditalics" w="40">fielditalics</TEXTFIELD>
+			</IMPORT>
+		</GRID>
+		<GRID keyfield="sub_field_id" name="Sub Field Import" table="sub_fields">
+			<TEXTFIELD title="Sub Field Id" w="40">sub_field_id</TEXTFIELD>
+			<TEXTFIELD title="Field Id" w="40">field_id</TEXTFIELD>
+			<TEXTFIELD title="Sub Field Order" w="40">sub_field_order</TEXTFIELD>
+			<TEXTFIELD title="Sub Title Share" w="40">sub_title_share</TEXTFIELD>
+			<TEXTFIELD title="Sub Field Size" w="40">sub_field_size</TEXTFIELD>
+			<TEXTFIELD title="Question" w="40">question</TEXTFIELD>
+			<IMPORT dbclass="org.postgresql.Driver" dbpassword="invent" dbpath="jdbc:postgresql://localhost/cckold" dbusername="root" keyfield="subformid" name="Old Sub Fields" table="subforms">
+				<TEXTFIELD title="Subformid" w="40">subformid</TEXTFIELD>
+				<TEXTFIELD title="Formid" w="40">formid</TEXTFIELD>
+				<TEXTFIELD title="Qorder" w="40">qorder</TEXTFIELD>
+				<TEXTFIELD title="Titleshare" w="40">titleshare</TEXTFIELD>
+				<TEXTFIELD title="Fieldsize" w="40">fieldsize</TEXTFIELD>
+				<TEXTFIELD title="Question" w="40">question</TEXTFIELD>
+			</IMPORT>
+		</GRID>
+

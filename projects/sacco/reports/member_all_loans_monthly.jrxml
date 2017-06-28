@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="member_all_loans_monthly" language="groovy" pageWidth="752" pageHeight="572" orientation="Landscape" columnWidth="752" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4a125c70-c7b6-43b3-af33-1a8c24604bc2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="entityid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="organd" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from vw_loan_monthly
+where entity_id = '$P!{entityid}'
+$P!{organd}
+order by loan_date asc]]>
+	</queryString>
+	<field name="currency_id" class="java.lang.Integer"/>
+	<field name="currency_name" class="java.lang.String"/>
+	<field name="currency_symbol" class="java.lang.String"/>
+	<field name="loan_type_id" class="java.lang.Integer"/>
+	<field name="loan_type_name" class="java.lang.String"/>
+	<field name="approve_status" class="java.lang.String"/>
+	<field name="entity_id" class="java.lang.Integer"/>
+	<field name="entity_name" class="java.lang.String"/>
+	<field name="loan_date" class="java.sql.Date"/>
+	<field name="loan_id" class="java.lang.Integer"/>
+	<field name="principle" class="java.lang.Float"/>
+	<field name="interest" class="java.lang.Float"/>
+	<field name="monthly_repayment" class="java.lang.Float"/>
+	<field name="reducing_balance" class="java.lang.Boolean"/>
+	<field name="repayment_period" class="java.lang.Integer"/>
+	<field name="period_id" class="java.lang.Integer"/>
+	<field name="start_date" class="java.sql.Date"/>
+	<field name="end_date" class="java.sql.Date"/>
+	<field name="activated" class="java.lang.Boolean"/>
+	<field name="closed" class="java.lang.Boolean"/>
+	<field name="period_year" class="java.lang.String"/>
+	<field name="period_month" class="java.lang.String"/>
+	<field name="org_id" class="java.lang.Integer"/>
+	<field name="loan_month_id" class="java.lang.Integer"/>
+	<field name="interest_amount" class="java.lang.Float"/>
+	<field name="additional_payments" class="java.lang.Float"/>
+	<field name="repayment" class="java.lang.Float"/>
+	<field name="interest_paid" class="java.lang.Float"/>
+	<field name="penalty" class="java.lang.Float"/>
+	<field name="penalty_paid" class="java.lang.Float"/>
+	<field name="details" class="java.lang.String"/>
+	<field name="total_interest" class="java.lang.Float"/>
+	<field name="total_repayment" class="java.lang.Float"/>
+	<field name="loan_balance" class="java.lang.Float"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="6" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="86" splitType="Stretch">
+			<textField>
+				<reportElement x="424" y="0" width="100" height="20" uuid="7eccc928-4f56-4016-9616-13df0d7052f6"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{loan_id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="304" y="0" width="100" height="20" uuid="779810af-00c7-4074-8399-0082b89db174"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Loan_id]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="424" y="20" width="100" height="20" uuid="810f250b-0e4d-44f7-adac-d354b0c4afb3"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_repayment}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="304" y="20" width="100" height="20" uuid="5e8b3916-e6a9-4ae9-a7d6-79a313fee04e"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Repayment]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="45" width="100" height="20" uuid="949abdb8-a069-460f-9ca7-a33238453a44"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Type]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="133" y="45" width="100" height="20" uuid="1dcb448e-539a-48be-9d07-eeb02ed56db1"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{loan_type_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="12" y="64" width="100" height="20" uuid="bd6e22f0-e09b-4996-82a6-e065b05cff4b"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monthly Amt]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="133" y="64" width="100" height="20" uuid="c474679d-8270-4e22-81be-73126fac035d"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{monthly_repayment}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="424" y="45" width="100" height="20" uuid="dd78f9d6-d904-4109-becf-ffc8ac9fa137"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{loan_balance}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="304" y="45" width="100" height="20" uuid="48ac2d9f-949a-47cd-92c7-33811fb82336"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Balance]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="424" y="64" width="100" height="20" uuid="5d44be9f-7042-4fc7-a639-86a6567c5c45"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{loan_balance}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="304" y="64" width="100" height="20" uuid="07b0d1f3-7b2a-4757-b682-c007f9c94895"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Interest]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="23" width="100" height="20" uuid="d447c493-9ff5-49e7-bf2d-36fe14367bfc"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Year]]></text>
+			</staticText>
+			<textField pattern="yyyy">
+				<reportElement x="133" y="25" width="100" height="20" uuid="9cd95f33-426a-4fd6-b0ed-2b0cd5ea9e28"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{start_date}]]></textFieldExpression>
+			</textField>
+			<textField pattern="mm">
+				<reportElement x="131" y="0" width="100" height="20" uuid="40c17ba9-87ae-4422-a421-801dc7e77b57"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{start_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="0" width="100" height="20" uuid="f1d33278-90ae-4840-866f-0a5ffbfe9aad"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Month]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="2" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

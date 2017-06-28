@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<CaseType>
+  <name>Criminal Case</name>
+  <ActivityTypes>
+    <ActivityType>
+      <name>Register Case</name>
+      <max_instances>1</max_instances>
+    </ActivityType>
+    <ActivityType>
+      <name>File Criminal Case</name>
+      <max_instances>1</max_instances>
+    </ActivityType>
+    <ActivityType>
+      <name>Taking of Plea</name>
+    </ActivityType>
+    <ActivityType>
+      <name>Bail Pending Trial</name>
+      <max_instances>1</max_instances>
+    </ActivityType>
+    <ActivityType>
+      <name>Examination-in-Chief</name>
+    </ActivityType>
+    <ActivityType>
+      <name>Cross-Examination</name>
+    </ActivityType>
+    <ActivityType>
+      <name>Re-Examination</name>
+    </ActivityType>
+    <ActivityType>
+      <name>Ruling</name>
+    </ActivityType>
+    <ActivityType>
+      <name>Defence Hearing</name>
+    </ActivityType>
+    <ActivityType>
+      <name>Judgement</name>
+    </ActivityType>
+    <ActivityType>
+      <name>Sentencing</name>
+    </ActivityType>
+    <ActivityType>
+      <name>Follow up</name>
+    </ActivityType>
+	<ActivityType>
+      <name>Change Case Type</name>
+    </ActivityType>
+    <ActivityType>
+      <name>Change Case Status</name>
+    </ActivityType> 
+    <ActivityType>
+      <name>Change Case Start Date</name>
+    </ActivityType>
+    <ActivityType>
+      <name>Link Cases</name>
+    </ActivityType>
+  </ActivityTypes>
+  <ActivitySets>
+    <ActivitySet>
+      <name>standard_timeline</name>
+      <label>Standard Timeline</label>
+      <timeline>true</timeline>
+      <ActivityTypes>
+        <ActivityType>
+          <name>Open Case</name>
+          <status>Completed</status>
+        </ActivityType>
+        <ActivityType>
+          <name>File Criminal Case</name>
+          <reference_activity>Open Case</reference_activity>
+          <reference_select>newest</reference_select>
+        </ActivityType>
+        <ActivityType>
+          <name>Taking of Plea</name>
+          <reference_activity>Open Case</reference_activity>
+          <reference_offset>1</reference_offset>
+          <reference_select>newest</reference_select>
+        </ActivityType>
+        <ActivityType>
+          <name>Bail Pending Trial</name>
+          <reference_activity>Taking of Plea</reference_activity>
+          <reference_offset>1</reference_offset>
+          <reference_select>newest</reference_select>
+        </ActivityType>
+        <ActivityType>
+          <name>Examination-in-Chief</name>
+          <reference_activity>Taking of Plea</reference_activity>
+          <reference_offset>1</reference_offset>
+          <reference_select>newest</reference_select>
+        </ActivityType>
+        <ActivityType>
+          <name>Ruling</name>
+          <reference_activity>Prosecution Hearing</reference_activity>
+          <reference_offset>1</reference_offset>
+          <reference_select>newest</reference_select>
+        </ActivityType>
+        <ActivityType>
+          <name>Defence Hearing</name>
+          <reference_activity>Ruling</reference_activity>
+          <reference_offset>1</reference_offset>
+          <reference_select>newest</reference_select>
+        </ActivityType>
+        <ActivityType>
+          <name>Judgement</name>
+          <reference_activity>Defence Hearing</reference_activity>
+          <reference_offset>1</reference_offset>
+          <reference_select>newest</reference_select>
+        </ActivityType>
+        <ActivityType>
+          <name>Sentencing</name>
+          <reference_activity>Judgement</reference_activity>
+          <reference_offset>1</reference_offset>
+          <reference_select>newest</reference_select>
+        </ActivityType>       
+      </ActivityTypes>
+    </ActivitySet>
+  </ActivitySets>
+  <CaseRoles>
+    <RelationshipType>
+        <name>Registry Clerk</name>
+        <creator>1</creator>
+        <manager>1</manager>
+    </RelationshipType>
+    <RelationshipType>
+        <name>Judge</name>
+        <manager>1</manager>
+    </RelationshipType>
+    <RelationshipType>
+        <name>Magistrate</name>
+        <manager>1</manager>
+    </RelationshipType>
+    <RelationshipType>
+        <name>Complainant</name>
+    </RelationshipType>
+    <RelationshipType>
+        <name>Accused</name>
+    </RelationshipType>
+    <RelationshipType>
+        <name>Prosecutor</name>
+    </RelationshipType>
+    <RelationshipType>
+        <name>Prosecution Witness</name>
+    </RelationshipType>  
+ </CaseRoles>
+</CaseType>

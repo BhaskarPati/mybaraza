@@ -1,0 +1,916 @@
+<APP name="UMIS" org="org_id" password="change_password">
+	<MENU name="Finance" role="finance">
+		<MENU name="Students">
+			<MENU name="Students">11</MENU>
+			<MENU name="Students Requests">21</MENU>
+			<MENU name="Accepted">7</MENU>
+			<MENU name="Scholarship Types">1</MENU>
+		</MENU>
+		<MENU name="Semester">
+			<MENU name="Semesters">12</MENU>
+			<MENU name="Charge Definations">14</MENU>
+			<MENU name="Semesters Approval">16</MENU>
+			<MENU name="Semesters scholarship">24</MENU>
+			<MENU name="Open Finance Entry">18</MENU>
+			<MENU name="Semesters Backdate Approval">36</MENU>
+			<MENU name="Semesters Students">17</MENU>
+			<MENU name="Bank Reconciliation">23</MENU>
+			<MENU name="SUN Posting">22</MENU>
+			<MENU name="Imports">20</MENU>
+			<MENU name="Reconcilation Approval">19</MENU>
+		</MENU>
+		<MENU name="Reports">
+			<MENU name="Charges">150</MENU>
+			<MENU name="Charge Defination">188</MENU>
+			<MENU name="Semester Payments">178</MENU>
+			<MENU name="Semester Filtered Payments">378</MENU>
+			<MENU name="Semester Bank Payments">179</MENU>
+			<MENU name="Full Payments">198</MENU>
+			<MENU name="Semester Paid Students">551</MENU>
+			<MENU name="Application Payments">379</MENU>
+			<MENU name="Calendar">151</MENU>
+			<MENU name="Course List">217</MENU>
+			<MENU name="Withdrawn Courses List">223</MENU>
+			<MENU name="Registration Statistics">569</MENU>
+			<MENU name="Programme Statistics">669</MENU>
+			<MENU name="Bank Reconciliation">199</MENU>
+			<MENU name="Charges List">211</MENU>
+			<MENU name="Scholaships List">212</MENU>
+			<MENU name="Late Registration">214</MENU>
+			<MENU name="Residence Report">215</MENU>
+			<MENU name="Unapproved Payments">241</MENU>
+			<MENU name="Difference">251</MENU>
+			<MENU name="Semester Bank Audit">552</MENU>
+			<MENU name="Financial Clearance">403</MENU>
+			<MENU name="Financial Clearance List">405</MENU>
+			<MENU name="Posting Variance">415</MENU>
+			<MENU name="Tuition Analysis">674</MENU>
+			<MENU name="Major Level Summary">679</MENU>
+		</MENU>
+	</MENU>
+	<DESK w="585" name="Scholarship Types" key="1" h="500">
+		<GRID name="Scholarship Types" keyfield="scholarshiptypeid" table="scholarshiptypes" noorg="true">
+			<TEXTFIELD w="40" title="#">scholarshiptypeid</TEXTFIELD>
+			<TEXTFIELD w="240" title="Scholarship Type">scholarshiptypename</TEXTFIELD>
+			<TEXTFIELD w="140" title="Account Number">scholarshipaccount</TEXTFIELD>
+			<FORM name="Scholarship Types" keyfield="scholarshiptypeid" table="scholarshiptypes" noorg="true">
+				<TEXTFIELD w="150" title="Scholarship Type" y="10" h="20" x="10">scholarshiptypename</TEXTFIELD>
+				<TEXTFIELD w="150" title="Account Number" y="10" h="20" x="290">scholarshipaccount</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="30" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="695" name="Accepted" type="vert" key="7" h="585">
+		<GRID name="Accepted Registrations" keyfield="registrationid" updatetable="registrations" table="registrations" noorg="true" where="(isaccepted=true) AND (isreported=false)">
+			<TEXTFIELD w="80" title="Reg. ID">registrationid</TEXTFIELD>
+			<TEXTFIELD w="100" title="Application Date">applicationdate</TEXTFIELD>
+			<TEXTFIELD w="100" title="Surname">surname</TEXTFIELD>
+			<TEXTFIELD w="100" title="First Name">firstname</TEXTFIELD>
+			<TEXTFIELD w="100" title="Other names">othernames</TEXTFIELD>
+			<TEXTFIELD w="40" title="Sex">sex</TEXTFIELD>
+			<TEXTFIELD w="40" title="ID">existingid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Reported" edit="true">isreported</TEXTFIELD>
+		</GRID>
+	</DESK>
+	<DESK w="585" name="Students" type="vert" key="11" h="560">
+		<GRID name="Students" keyfield="studentid" updatetable="students" table="studentview" noorg="true">
+			<TEXTFIELD w="40" title="Student ID">studentid</TEXTFIELD>
+			<TEXTFIELD w="40" title="School">schoolname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Denomination">denominationname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Student Name">studentname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Sex">sex</TEXTFIELD>
+			<TEXTFIELD w="40" title="Nationality">Nationality</TEXTFIELD>
+			<TEXTFIELD w="40" title="Account Number" edit="true">accountnumber</TEXTFIELD>
+			<TEXTFIELD w="40" title="On Probation">onprobation</TEXTFIELD>
+			<GRID name="Student's Degree" keyfield="studentdegreeid" linkfield="studentid" table="studentdegreeview" noorg="true">
+				<TEXTFIELD w="140" title="Degree">degreename</TEXTFIELD>
+				<TEXTFIELD w="140" title="Sub Level">sublevelname</TEXTFIELD>
+				<TEXTFIELD w="140" title="Student">studentname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Completed">completed</TEXTFIELD>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="585" name="Students Requests" type="vert" key="21" h="500">
+		<GRID name="Student Requests" keyfield="studentrequestid" table="studentrequestview" noorg="true" where="(actioned = false) and (requesttypeid = 0)">
+			<TEXTFIELD w="40" title="#">studentrequestid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Student ID">studentid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Student Name">studentname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Request Type">requesttypename</TEXTFIELD>
+			<TEXTFIELD w="40" title="Narrative">narrative</TEXTFIELD>
+			<TEXTFIELD w="40" title="Date Sent">datesent</TEXTFIELD>
+			<FORM name="Students Requests" keyfield="studentrequestid" table="studentrequests" noorg="true">
+				<TEXTFIELD w="430" enabled="false" title="Narrative" y="10" h="20" x="10">narrative</TEXTFIELD>
+				<CHECKBOX w="150" title="Actioned" y="30" h="20" x="10">actioned</CHECKBOX>
+				<CHECKBOX w="150" title="Approved" y="30" h="20" x="290">approved</CHECKBOX>
+				<TEXTAREA w="430" enabled="false" title="Details" y="50" h="50" x="10">details</TEXTAREA>
+				<TEXTAREA w="430" title="Reply" y="100" h="50" x="10">reply</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="750" name="Semesters" key="12" h="650">
+		<GRID name="Semesters" keyfield="quarterid" orderby="quarterid desc" table="quarterview" noorg="true">
+			<TEXTFIELD w="40" title="Quarter ID">quarterid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Start">qstart</TEXTFIELD>
+			<TEXTFIELD w="40" title="Last Drop">qlastdrop</TEXTFIELD>
+			<TEXTFIELD w="40" title="End">qend</TEXTFIELD>
+			<TEXTFIELD w="40" title="Active">active</TEXTFIELD>
+			<ACTIONS>
+				<ACTION fnct="generate_charges" approval="1">Generate Charges</ACTION>
+			</ACTIONS>
+			<GRID name="Semester Charges" keyfield="qchargeid" linkfield="quarterid" table="chargeview" noorg="true">
+				<TEXTFIELD w="40" title="Quarter ID">quarterid</TEXTFIELD>
+				<TEXTFIELD w="140" title="Degree Level">degreelevelname</TEXTFIELD>
+				<TEXTFIELD w="140" title="Sub Level">sublevelname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Study Level">studylevel</TEXTFIELD>
+				<TEXTFIELD w="40" title="Full Fees">fullfees</TEXTFIELD>
+				<TEXTFIELD w="40" title="Fees">fees</TEXTFIELD>
+				<FORM name="Semester Charges" keyfield="qchargeid" linkfield="quarterid" table="qcharges" noorg="true">
+					<COMBOBOX w="430" title="Degree level" lptable="degreelevels" linkcombo="sublevelid" noorg="true" y="10" h="20" x="10" lpfield="degreelevelname">degreelevelid</COMBOBOX>
+					<TEXTFIELD w="150" title="Study Level" y="30" h="20" x="10">studylevel</TEXTFIELD>
+					<TEXTDECIMAL w="150" title="Premium Hall" y="30" h="20" x="290">premiumhall</TEXTDECIMAL>
+					<TEXTDECIMAL w="150" title="Full Fees" y="50" h="20" x="10">fullfees</TEXTDECIMAL>
+					<TEXTDECIMAL w="150" title="Fees" y="50" h="20" x="290">fees</TEXTDECIMAL>
+					<TEXTDECIMAL w="150" title="Full 2 Meal Fees" y="70" h="20" x="10">fullmeal2fees</TEXTDECIMAL>
+					<TEXTDECIMAL w="150" title="2 Meal Fees" y="70" h="20" x="290">meal2fees</TEXTDECIMAL>
+					<TEXTDECIMAL w="150" title="Full 3 Meal Fees" y="90" h="20" x="10">fullmeal3fees</TEXTDECIMAL>
+					<TEXTDECIMAL w="150" title="3 Meal Fees" y="90" h="20" x="290">meal3fees</TEXTDECIMAL>
+					<COMBOBOX w="430" title="Sub Level" lptable="sublevels" linkfield="degreelevelid" noorg="true" y="110" h="20" x="10" lpfield="sublevelname">sublevelid</COMBOBOX>
+					<TEXTDECIMAL w="150" title="Minimal Fees %" y="130" h="20" x="10">minimalfees</TEXTDECIMAL>
+					<TEXTFIELD w="430" title="Narrative" y="150" h="20" x="10">narrative</TEXTFIELD>
+				</FORM>
+			</GRID>
+			<GRID name="Semester Major Charges" keyfield="qmchargeid" linkfield="quarterid" table="qmchargeview" noorg="true">
+				<TEXTFIELD w="40" title="Quarter ID">quarterid</TEXTFIELD>
+				<TEXTFIELD w="140" title="Sub Level">sublevelname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Programme">majorname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Study Level">studylevel</TEXTFIELD>
+				<TEXTFIELD w="40" title="Charge">charge</TEXTFIELD>
+				<TEXTFIELD w="40" title="Full Charge">fullcharge</TEXTFIELD>
+				<FORM name="Semester Major Charges" keyfield="qmchargeid" linkfield="quarterid" table="qmcharges" noorg="true">
+					<COMBOBOX w="430" title="Programme" lptable="majors" linkfnct="get_quarter_org" linkfield="org_id" noorg="true" y="10" h="20" x="10" lpfield="majorname">majorid</COMBOBOX>
+					<COMBOBOX w="430" title="Sub Level" lptable="sublevels" linkfnct="get_quarter_org" linkfield="org_id" noorg="true" y="30" h="20" x="10" lpfield="sublevelname">sublevelid</COMBOBOX>
+					<TEXTFIELD w="150" title="Study Level" y="50" h="20" x="10">studylevel</TEXTFIELD>
+					<TEXTDECIMAL w="150" title="Premium Hall" y="50" h="20" x="290">phallcharge</TEXTDECIMAL>
+					<TEXTDECIMAL w="150" title="Full Charge" y="70" h="20" x="10">fullcharge</TEXTDECIMAL>
+					<TEXTDECIMAL w="150" title="Charge" y="70" h="20" x="290">charge</TEXTDECIMAL>
+					<TEXTDECIMAL w="150" title="2 Meal Charge" y="90" h="20" x="10">meal2charge</TEXTDECIMAL>
+					<TEXTDECIMAL w="150" title="3 Meal Charge" y="90" h="20" x="290">meal3charge</TEXTDECIMAL>
+					<TEXTFIELD w="430" title="Narrative" y="110" h="20" x="10">narrative</TEXTFIELD>
+				</FORM>
+			</GRID>
+			<GRID name="Semester Residences" keyfield="qresidenceid" linkfield="quarterid" table="qresidenceview" noorg="true">
+				<TEXTFIELD w="40" title="Residence ID">Residenceid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Residence Name">residencename</TEXTFIELD>
+				<TEXTFIELD w="40" title="Quarterid">quarterid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Charges">charges</TEXTFIELD>
+				<FORM name="Semester Residences" keyfield="qresidenceid" linkfield="quarterid" table="qresidences" noorg="true">
+					<COMBOBOX w="430" title="Residence" lptable="residences" noorg="true" y="10" h="20" x="10" lpfield="residencename">residenceid</COMBOBOX>
+					<COMBOLIST w="150" title="Residence Option" y="30" h="20" editable="true" x="10">residenceoption
+						<DATA>Full</DATA>
+						<DATA>Group A</DATA>
+						<DATA>Group B</DATA>
+					</COMBOLIST>
+					<TEXTFIELD w="150" title="Charges" y="50" h="20" x="10">charges</TEXTFIELD>
+					<TEXTFIELD w="150" title="Full Charges" y="50" h="20" x="290">full_charges</TEXTFIELD>
+					<TEXTAREA w="430" title="Details" y="70" h="120" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="750" name="Charge Definations" key="14" h="650">
+		<GRID new="false" name="Semesters" keyfield="quarterid" orderby="quarterid desc" table="quarterview" noorg="true">
+			<TEXTFIELD w="40" title="Quarter ID">quarterid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Start">qstart</TEXTFIELD>
+			<TEXTFIELD w="40" title="Last Drop">qlastdrop</TEXTFIELD>
+			<TEXTFIELD w="40" title="End">qend</TEXTFIELD>
+			<TEXTFIELD w="40" title="Active">active</TEXTFIELD>
+			<ACTIONS>
+				<ACTION fnct="generate_charges" approval="2">Generate Defination</ACTION>
+			</ACTIONS>
+			<GRID name="Charge Definations" keyfield="qchargedefinationid" linkfield="quarterid" table="vwqchargedefinations" noorg="true">
+				<TEXTFIELD w="40" title="Charge Type">chargetypename</TEXTFIELD>
+				<TEXTFIELD w="40" title="Semester">quarterid</TEXTFIELD>
+				<TEXTFIELD w="140" title="Sub Level">sublevelname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Study Level ">studylevel</TEXTFIELD>
+				<TEXTFIELD w="40" title="Narrative">narrative</TEXTFIELD>
+				<TEXTFIELD w="40" title="Amount">amount</TEXTFIELD>
+				<FORM name="Charge Definations" keyfield="qchargedefinationid" linkfield="quarterid" table="qchargedefinations" noorg="true">
+					<COMBOBOX w="430" title="Charge Type" lptable="chargetypes" noorg="true" y="10" h="20" x="10" lpfield="chargetypename">chargetypeid</COMBOBOX>
+					<COMBOBOX w="430" title="Sub Level" lptable="sublevels" linkfnct="get_quarter_org" linkfield="org_id" noorg="true" y="30" h="20" x="10" lpfield="sublevelname">sublevelid</COMBOBOX>
+					<TEXTFIELD w="150" title="Study Level" y="50" h="20" x="10">studylevel</TEXTFIELD>
+					<TEXTDECIMAL w="150" title="Amount" y="50" h="20" x="290">amount</TEXTDECIMAL>
+					<TEXTFIELD w="430" title="Narrative" y="70" h="20" x="10">narrative</TEXTFIELD>
+				</FORM>
+			</GRID>
+			<GRID name="Programme Definations" keyfield="qmchargedefinationid" linkfield="quarterid" table="vwqmchargedefinations" noorg="true">
+				<TEXTFIELD w="40" title="Charge Type">chargetypename</TEXTFIELD>
+				<TEXTFIELD w="40" title="Semester">quarterid</TEXTFIELD>
+				<TEXTFIELD w="140" title="Sub Level">sublevelname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Programme">majorname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Study Level">studylevel</TEXTFIELD>
+				<TEXTFIELD w="40" title="Amount">amount</TEXTFIELD>
+				<TEXTFIELD w="40" title="Narrative">narrative</TEXTFIELD>
+				<FORM name="Programme Definations" keyfield="qmchargedefinationid" linkfield="quarterid" table="qmchargedefinations" noorg="true">
+					<COMBOBOX w="430" title="Charge Type" lptable="chargetypes" noorg="true" y="10" h="20" x="10" lpfield="chargetypename">chargetypeid</COMBOBOX>
+					<COMBOBOX w="430" title="Programme" lptable="majors" linkfnct="get_quarter_org" linkfield="org_id" noorg="true" y="30" h="20" x="10" lpfield="majorname">majorid</COMBOBOX>
+					<COMBOBOX w="430" title="Sub Level" lptable="sublevels" linkfnct="get_quarter_org" linkfield="org_id" noorg="true" y="50" h="20" x="10" lpfield="sublevelname">sublevelid</COMBOBOX>
+					<TEXTFIELD w="150" title="Study Level" y="70" h="20" x="10">studylevel</TEXTFIELD>
+					<TEXTDECIMAL w="150" title="Amount" y="70" h="20" x="290">amount</TEXTDECIMAL>
+					<TEXTFIELD w="430" title="Narrative" y="90" h="20" x="10">narrative</TEXTFIELD>
+				</FORM>
+			</GRID>
+			<FORM name="Semesters" keyfield="quarterid" table="Quarters" noorg="true">
+				<COMBOBOX w="430" enabled="false" title="Divisions" lptable="orgs" noorg="true" y="10" h="20" x="10" lpfield="org_name">org_id</COMBOBOX>
+				<TEXTDATE w="150" title="Late Registration" y="30" h="20" x="10">qlatereg</TEXTDATE>
+				<TEXTDECIMAL w="150" title="Late Reg. Fee" y="30" h="20" x="290">lateregistrationfee</TEXTDECIMAL>
+				<TEXTDECIMAL w="150" title="Application Fees" y="50" h="20" x="10">applicationfees</TEXTDECIMAL>
+				<TEXTDECIMAL w="150" title="Acceptance Fee" y="50" h="20" x="290">acceptance_fee</TEXTDECIMAL>
+				<TEXTDECIMAL w="150" title="Transcript Fees" y="70" h="20" x="10">transcriptfees</TEXTDECIMAL>
+				<TEXTDECIMAL w="150" title="Meal Charge" y="90" h="20" x="10">mealcharge</TEXTDECIMAL>
+			</FORM>
+		</GRID>
+		<GRID name="Charge Types" keyfield="chargetypeid" table="chargetypes" noorg="true">
+			<TEXTFIELD w="40" title="Charge Type">chargetypeid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Chargetype Name">chargetypename</TEXTFIELD>
+			<TEXTFIELD w="40" title="Account Number">accountnumber</TEXTFIELD>
+			<CHECKBOX w="40" title="On Campus">oncampus</CHECKBOX>
+			<CHECKBOX w="40" title="Off Campus">offcampus</CHECKBOX>
+			<FORM name="Charge Types" keyfield="chargetypeid" table="chargetypes" noorg="true">
+				<TEXTFIELD w="150" title="Charge Type" y="10" h="20" x="10">chargetypename</TEXTFIELD>
+				<TEXTFIELD w="150" title="Account Number" y="10" h="20" x="290">accountnumber</TEXTFIELD>
+				<TEXTFIELD w="150" title="Account Code" y="30" h="20" x="10">accountcode</TEXTFIELD>
+				<CHECKBOX w="30" title="On Campus" lw="90" y="30" h="20" x="290">oncampus</CHECKBOX>
+				<CHECKBOX w="30" title="Off Campus" lw="90" y="30" h="20" x="430">offcampus</CHECKBOX>
+				<TEXTAREA w="430" title="Details" y="50" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="630" name="Semesters Approval" key="16" h="520">
+		<GRID name="Semesters" keyfield="quarterid" orderby="quarterid desc" table="quarterview" noorg="true" where="(active = true)">
+			<TEXTFIELD w="240" title="Quarter ID">quarterid</TEXTFIELD>
+			<TEXTFIELD w="240" title="Start">qstart</TEXTFIELD>
+			<TEXTFIELD w="240" title="End">qend</TEXTFIELD>
+			<GRID auditid="sys_audit_trail_id" name="Students List" keyfield="qstudentid" updatetable="qstudents" linkfield="quarterid" table="vwqstudentbalances" noorg="true" where="(financeclosed = true) and (finaceapproval = false)">
+				<TEXTFIELD w="10" title="Student ID">studentid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Student">studentname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Account Number">accountnumber</TEXTFIELD>
+				<TEXTFIELD w="20" title="Off Campus">offcampus</TEXTFIELD>
+				<TEXTFIELD w="20" title="Residence">residencename</TEXTFIELD>
+				<TEXTFIELD w="10" title="Meal Type">mealtype</TEXTFIELD>
+				<TEXTFIELD w="10" title="Study Level">studylevel</TEXTFIELD>
+				<TEXTFIELD w="20" title="Major">majorname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Closed" edit="true">financeclosed</TEXTFIELD>
+				<TEXTFIELD w="20" title="Opening Balance">currbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Full Fees">fullfees</TEXTFIELD>
+				<TEXTFIELD w="20" title="Fees">fees</TEXTFIELD>
+				<TEXTFIELD w="20" title="Scholarship">scholarship</TEXTFIELD>
+				<TEXTFIELD w="20" title="Receipts">studentpayment</TEXTFIELD>
+				<TEXTFIELD w="20" title="Full Balance">fullfinalbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Balance">finalbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Approval" edit="true">finaceapproval</TEXTFIELD>
+				<FORM name="Financial Narrative" keyfield="qstudentid" table="qstudents" noorg="true">
+					<TEXTDECIMAL w="150" title="Misc. Charges" y="10" h="20" x="10">charges</TEXTDECIMAL>
+					<TEXTAREA w="430" title="Narrative" y="30" h="220" x="10">financenarrative</TEXTAREA>
+				</FORM>
+			</GRID>
+			<GRID name="Scholarships" keyfield="scholarshipid" linkfield="quarterid" table="vwscholarships" noorg="true">
+				<TEXTFIELD w="40" title="Matric No">studentid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Student Name">studentname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Account Number">accountnumber</TEXTFIELD>
+				<TEXTFIELD w="40" title="Nationality">nationality</TEXTFIELD>
+				<TEXTFIELD w="40" title="Sex">sex</TEXTFIELD>
+				<TEXTFIELD w="40" title="Scholarship Type">scholarshiptypename</TEXTFIELD>
+				<TEXTFIELD w="40" title="Payment Date">paymentdate</TEXTFIELD>
+				<TEXTFIELD w="40" title="Amount">amount</TEXTFIELD>
+				<TEXTFIELD w="40" title="Approved">approved</TEXTFIELD>
+				<FORM name="Scholarships" keyfield="scholarshipid" linkfield="quarterid" table="scholarships" noorg="true">
+					<GRIDBOX w="350" title="Student " lptable="studentview" noorg="true" y="10" h="20" x="10" lpfield="studentid || ', ' || studentname">studentid
+						<GRID name="Students" keyfield="studentid" table="studentview" noorg="true">
+							<TEXTFIELD w="10" title="Student ID">studentid</TEXTFIELD>
+							<TEXTFIELD w="40" title="Student">studentname</TEXTFIELD>
+							<TEXTFIELD w="40" title="Department">departmentname</TEXTFIELD>
+						</GRID>
+					</GRIDBOX>
+					<COMBOBOX w="150" title="Scholarship Type" lptable="scholarshiptypes" noorg="true" y="30" h="20" x="10" lpfield="scholarshiptypename">scholarshiptypeid</COMBOBOX>
+					<TEXTDECIMAL w="150" title="Amount" y="30" h="20" x="290">amount</TEXTDECIMAL>
+					<TEXTDATE w="150" title="Payment Date" y="50" h="20" x="10">paymentdate</TEXTDATE>
+					<CHECKBOX w="150" title="Approved" y="50" h="20" x="290">approved</CHECKBOX>
+					<TEXTAREA w="430" title="Details" y="70" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<GRID name="Payment Plan Request" keyfield="qstudentid" updatetable="qstudents" linkfield="quarterid" table="vwqstudentbalances" noorg="true" where="(paymenttype = 3)">
+				<TEXTFIELD w="10" title="Student ID">studentid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Student">studentname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Account Number">accountnumber</TEXTFIELD>
+				<TEXTFIELD w="20" title="Off Campus">offcampus</TEXTFIELD>
+				<TEXTFIELD w="20" title="Premium Hall">premiumhall</TEXTFIELD>
+				<TEXTFIELD w="10" title="Meal Type">mealtype</TEXTFIELD>
+				<TEXTFIELD w="10" title="Study Level">studylevel</TEXTFIELD>
+				<TEXTFIELD w="20" title="Major">majorname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Opening Balance">currbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Full Fees">fullfees</TEXTFIELD>
+				<TEXTFIELD w="20" title="Fees">fees</TEXTFIELD>
+				<TEXTFIELD w="20" title="Scholarship">scholarship</TEXTFIELD>
+				<TEXTFIELD w="20" title="Receipts">studentpayment</TEXTFIELD>
+				<TEXTFIELD w="20" title="Full Balance">fullfinalbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Balance">finalbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Part Payment" edit="true">ispartpayment</TEXTFIELD>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="630" name="Semesters Scholarship" key="24" h="520">
+		<GRID name="Semesters" keyfield="quarterid" orderby="quarterid desc" table="quarterview" noorg="true" where="(active = true)">
+			<TEXTFIELD w="240" title="Quarter ID">quarterid</TEXTFIELD>
+			<TEXTFIELD w="240" title="Start">qstart</TEXTFIELD>
+			<TEXTFIELD w="240" title="End">qend</TEXTFIELD>
+			<GRID name="Scholarships" keyfield="scholarshipid" linkfield="quarterid" table="vwscholarships" noorg="true">
+				<TEXTFIELD w="40" title="Matric No">studentid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Student Name">studentname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Account Number">accountnumber</TEXTFIELD>
+				<TEXTFIELD w="40" title="Nationality">nationality</TEXTFIELD>
+				<TEXTFIELD w="40" title="Sex">sex</TEXTFIELD>
+				<TEXTFIELD w="40" title="Scholarship Type">scholarshiptypename</TEXTFIELD>
+				<TEXTFIELD w="40" title="Payment Date">paymentdate</TEXTFIELD>
+				<TEXTFIELD w="40" title="Amount">amount</TEXTFIELD>
+				<TEXTFIELD w="40" title="Approved">approved</TEXTFIELD>
+				<FORM name="Scholarships" keyfield="scholarshipid" linkfield="quarterid" table="scholarships" noorg="true" inputkey="1">
+					<GRIDBOX w="430" title="Student " lptable="studentview" noorg="true" y="10" h="20" x="10" lpfield="studentid || ', ' || studentname">studentid
+						<GRID name="Students" keyfield="studentid" table="studentview" noorg="true">
+							<TEXTFIELD w="50" title="Account Number">accountnumber</TEXTFIELD>
+							<TEXTFIELD w="50" title="Student ID">studentid</TEXTFIELD>
+							<TEXTFIELD w="140" title="Student">studentname</TEXTFIELD>
+							<TEXTFIELD w="140" title="Department">departmentname</TEXTFIELD>
+						</GRID>
+					</GRIDBOX>
+					<COMBOBOX w="150" title="Scholarship Type" lptable="scholarshiptypes" noorg="true" y="30" h="20" x="10" lpfield="scholarshiptypename">scholarshiptypeid</COMBOBOX>
+					<TEXTDECIMAL w="150" title="Amount" y="30" h="20" x="290">amount</TEXTDECIMAL>
+					<TEXTDATE w="150" title="Payment Date" y="50" h="20" x="10">paymentdate</TEXTDATE>
+					<CHECKBOX w="150" title="Approved" y="50" h="20" x="290">approved</CHECKBOX>
+					<TEXTAREA w="430" title="Details" y="70" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<GRID name="Students List" keyfield="qstudentid" updatetable="qstudents" linkfield="quarterid" table="vwqstudentbalances" noorg="true">
+				<TEXTFIELD w="10" title="Student ID">studentid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Student">studentname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Account Number">accountnumber</TEXTFIELD>
+				<TEXTFIELD w="20" title="Off Campus">offcampus</TEXTFIELD>
+				<TEXTFIELD w="20" title="Residence">residencename</TEXTFIELD>
+				<TEXTFIELD w="10" title="Meal Type">mealtype</TEXTFIELD>
+				<TEXTFIELD w="10" title="Study Level">studylevel</TEXTFIELD>
+				<TEXTFIELD w="20" title="Major">majorname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Opening Balance">currbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Full Fees">fullfees</TEXTFIELD>
+				<TEXTFIELD w="20" title="Semfees">fees</TEXTFIELD>
+				<TEXTFIELD w="20" title="Scholarship">scholarship</TEXTFIELD>
+				<TEXTFIELD w="20" title="Full Balance">fullfinalbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Balance">finalbalance</TEXTFIELD>
+			</GRID>
+			<GRID name="Payment Plan Request" keyfield="qstudentid" updatetable="qstudents" linkfield="quarterid" table="vwqstudentbalances" noorg="true" where="(paymenttype = 3)">
+				<TEXTFIELD w="10" title="Student ID">studentid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Student">studentname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Account Number">accountnumber</TEXTFIELD>
+				<TEXTFIELD w="20" title="Off Campus">offcampus</TEXTFIELD>
+				<TEXTFIELD w="20" title="Premium Hall">premiumhall</TEXTFIELD>
+				<TEXTFIELD w="10" title="Meal Type">mealtype</TEXTFIELD>
+				<TEXTFIELD w="10" title="Study Level">studylevel</TEXTFIELD>
+				<TEXTFIELD w="20" title="Major">majorname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Opening Balance">currbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Full Fees">fullfees</TEXTFIELD>
+				<TEXTFIELD w="20" title="Fees">fees</TEXTFIELD>
+				<TEXTFIELD w="20" title="Scholarship">scholarship</TEXTFIELD>
+				<TEXTFIELD w="20" title="Receipts">studentpayment</TEXTFIELD>
+				<TEXTFIELD w="20" title="Full Balance">fullfinalbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Balance">finalbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Part Payment" edit="true">ispartpayment</TEXTFIELD>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="630" name="Open Finance Entry" key="18" h="520">
+		<GRID name="Semesters" keyfield="quarterid" orderby="quarterid desc" table="quarterview" noorg="true">
+			<TEXTFIELD w="240" title="Quarter ID">quarterid</TEXTFIELD>
+			<TEXTFIELD w="240" title="Start">qstart</TEXTFIELD>
+			<TEXTFIELD w="240" title="End">qend</TEXTFIELD>
+			<GRID auditid="sys_audit_trail_id" name="Students List" keyfield="qstudentid" updatetable="qstudents" linkfield="quarterid" table="vwqstudentbalances" noorg="true" where="(finaceapproval = true)">
+				<TEXTFIELD w="10" title="Student ID">studentid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Student">studentname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Account Number">accountnumber</TEXTFIELD>
+				<TEXTFIELD w="20" title="Off Campus">offcampus</TEXTFIELD>
+				<TEXTFIELD w="20" title="Residence">residencename</TEXTFIELD>
+				<TEXTFIELD w="10" title="Meal Type">mealtype</TEXTFIELD>
+				<TEXTFIELD w="10" title="Study Level">studylevel</TEXTFIELD>
+				<TEXTFIELD w="20" title="Major">majorname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Opening Balance">currbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Full Fees">fullfees</TEXTFIELD>
+				<TEXTFIELD w="20" title="Fees">fees</TEXTFIELD>
+				<TEXTFIELD w="20" title="Scholarship">scholarship</TEXTFIELD>
+				<TEXTFIELD w="20" title="Receipts">studentpayment</TEXTFIELD>
+				<TEXTFIELD w="20" title="Full Balance">fullfinalbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Balance">finalbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Closed" edit="true">financeclosed</TEXTFIELD>
+				<TEXTFIELD w="20" title="Finance Approval" edit="true">finaceapproval</TEXTFIELD>
+				<JASPER filtered="true" name="Receipt" keyfield="qstudentid" reportfile="studentreceipt.jasper"></JASPER>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="630" name="Semesters Students" key="17" h="520">
+		<GRID name="Semesters" keyfield="quarterid" orderby="quarterid desc" table="quarterview" noorg="true">
+			<TEXTFIELD w="240" title="Quarter ID">quarterid</TEXTFIELD>
+			<TEXTFIELD w="240" title="Start">qstart</TEXTFIELD>
+			<TEXTFIELD w="240" title="End">qend</TEXTFIELD>
+			<GRID auditid="sys_audit_trail_id" name="Students List" keyfield="qstudentid" updatetable="qstudents" linkfield="quarterid" table="vwqstudentbalances" noorg="true">
+				<TEXTFIELD w="10" title="Student ID">studentid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Student">studentname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Account Number">accountnumber</TEXTFIELD>
+				<TEXTFIELD w="20" title="Off Campus">offcampus</TEXTFIELD>
+				<TEXTFIELD w="20" title="Residence">residencename</TEXTFIELD>
+				<TEXTFIELD w="20" title="Part Payment">ispartpayment</TEXTFIELD>
+				<TEXTFIELD w="10" title="Meal Type">mealtype</TEXTFIELD>
+				<TEXTFIELD w="10" title="Study Level">studylevel</TEXTFIELD>
+				<TEXTFIELD w="20" title="Major">majorname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Opening Balance">currbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Full Fees">fullfees</TEXTFIELD>
+				<TEXTFIELD w="20" title="Fees">fees</TEXTFIELD>
+				<TEXTFIELD w="20" title="Scholarship">scholarship</TEXTFIELD>
+				<TEXTFIELD w="20" title="Receipts">studentpayment</TEXTFIELD>
+				<TEXTFIELD w="20" title="Full Balance">fullfinalbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Balance">finalbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Closed" edit="true">financeclosed</TEXTFIELD>
+				<TEXTFIELD w="20" title="Finance Approval">finaceapproval</TEXTFIELD>
+				<FORM name="Financial Narrative" keyfield="qstudentid" table="qstudents" noorg="true">
+					<TEXTFIELD w="150" title="Misc. Charges" y="10" h="20" x="10">charges</TEXTFIELD>
+					<TEXTAREA w="430" title="Narrative" y="30" h="220" x="10">financenarrative</TEXTAREA>
+				</FORM>
+				<GRID name="Approval List" keyfield="approvalid" linkfield="qstudentid" table="approvallist" noorg="true">
+					<TEXTFIELD w="40" title="Approved By">approvedby</TEXTFIELD>
+					<TEXTFIELD w="40" title="Approval Type">approvaltype</TEXTFIELD>
+					<TEXTFIELD w="40" title="Approve Date">approvedate</TEXTFIELD>
+					<TEXTFIELD w="40" title="Client IP">clientip</TEXTFIELD>
+				</GRID>
+			</GRID>
+			<GRID name="Scholarships" keyfield="scholarshipid" linkfield="quarterid" table="vwscholarships" noorg="true">
+				<TEXTFIELD w="40" title="Matric No">studentid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Student Name">studentname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Account Number">accountnumber</TEXTFIELD>
+				<TEXTFIELD w="40" title="Nationality">nationality</TEXTFIELD>
+				<TEXTFIELD w="40" title="Sex">sex</TEXTFIELD>
+				<TEXTFIELD w="40" title="Scholarship Type">scholarshiptypename</TEXTFIELD>
+				<TEXTFIELD w="40" title="Payment Date">paymentdate</TEXTFIELD>
+				<TEXTFIELD w="40" title="Amount">amount</TEXTFIELD>
+				<TEXTFIELD w="40" title="Approved">approved</TEXTFIELD>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="585" name="Bank Reconciliation" type="vert" key="23" h="500">
+		<GRID name="Bank Reconciliation" keyfield="banksuspenceid" updatetable="banksuspence" table="banksuspence" noorg="true" where="(Approved = false)">
+			<TEXTFIELD w="40" title="Entry Date">entrydate</TEXTFIELD>
+			<TEXTFIELD w="40" title="Customer Reference">customerreference</TEXTFIELD>
+			<TEXTFIELD w="40" title="Quarter">quarterid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Account Number">accountnumber</TEXTFIELD>
+			<TEXTFIELD w="40" title="Transaction Amount">transactionamount</TEXTFIELD>
+			<TEXTFIELD w="40" title="Narrative">narrative</TEXTFIELD>
+			<TEXTFIELD w="40" title="Trans. Comments" edit="true">transcomments</TEXTFIELD>
+			<TEXTFIELD w="40" title="Approved" edit="true">approved</TEXTFIELD>
+		</GRID>
+		<GRID name="Bank Upload" keyfield="banksuspenceid" table="banksuspence" noorg="true" where="(approved = true) AND (picked = false)">
+			<TEXTFIELD w="40" title="Entry Date">entrydate</TEXTFIELD>
+			<TEXTFIELD w="40" title="Customer Reference">customerreference</TEXTFIELD>
+			<TEXTFIELD w="40" title="Quarter">quarterid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Account Number">accountnumber</TEXTFIELD>
+			<TEXTFIELD w="40" title="Transaction Amount">transactionamount</TEXTFIELD>
+			<TEXTFIELD w="40" title="Narrative">narrative</TEXTFIELD>
+			<TEXTFIELD w="40" title="Approved">approved</TEXTFIELD>
+			<TEXTFIELD w="40" title="Trans. Comments">transcomments</TEXTFIELD>
+		</GRID>
+		<GRID name="Semesters" keyfield="quarterid" orderby="quarterid desc" table="quarterview" noorg="true">
+			<TEXTFIELD w="240" title="Quarter ID">quarterid</TEXTFIELD>
+			<TEXTFIELD w="240" title="Start">qstart</TEXTFIELD>
+			<TEXTFIELD w="240" title="End">qend</TEXTFIELD>
+			<GRID name="Student Payments" keyfield="studentpaymentid" updatetable="studentpayments" linkfield="quarterid" table="vwstudentpayments">
+				<TEXTFIELD w="40" title="Transaction ID">studentpaymentid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Student ID">studentid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Student Name">studentname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Account Number">accountnumber</TEXTFIELD>
+				<TEXTFIELD w="40" title="Apply Date">applydate</TEXTFIELD>
+				<TEXTFIELD w="40" title="Amount">amount</TEXTFIELD>
+				<TEXTFIELD w="40" title="Approved">approved</TEXTFIELD>
+				<TEXTFIELD w="40" title="Narrative">narrative</TEXTFIELD>
+				<TEXTFIELD w="40" title="Payment History">phistoryname</TEXTFIELD>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="585" name="Imports" type="vert" key="20" h="500">
+		<GRID process="updBalances" name="SUN Imports" keyfield="sunimportid" import="excel" table="sunimports" noorg="true" pos="bottom">
+			<TEXTFIELD w="40" title="Account Number">accountnumber</TEXTFIELD>
+			<TEXTFIELD w="40" title="Student Name">studentname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Balance">balance</TEXTFIELD>
+		</GRID>
+		<GRID process="updbankpicked" delimiter="," name="Etranzact Imports" keyfield="bankfileid" import="text" table="bankfile" noorg="true">
+			<TEXTFIELD w="40" title="Transaction Date">transactiondate</TEXTFIELD>
+			<TEXTFIELD w="40" title="Card Number">card_number</TEXTFIELD>
+			<TEXTFIELD w="40" title="Request ID">request_id</TEXTFIELD>
+			<TEXTFIELD w="40" title="Description">description</TEXTFIELD>
+			<TEXTFIELD w="40" title="Amount">amount</TEXTFIELD>
+			<TEXTFIELD w="40" title="Response Code">response_code</TEXTFIELD>
+		</GRID>
+		<GRID process="delBankPicked" name="Bank Imports" keyfield="BankreconID" import="excel" table="Bankrecons" noorg="true">
+			<TEXTFIELD w="40" title="Transaction Date">transactiondate</TEXTFIELD>
+			<TEXTFIELD w="40" title="Value Date">ValueDate</TEXTFIELD>
+			<TEXTFIELD w="40" title="Transaction Details">TransactionDetails</TEXTFIELD>
+			<TEXTFIELD w="40" title="Debit Value">DebitValue</TEXTFIELD>
+			<TEXTFIELD w="40" title="Credit Value">CreditValue</TEXTFIELD>
+		</GRID>
+	</DESK>
+	<DESK w="775" name="SUN Posting" key="22" h="595">
+		<GRID name="Semesters" keyfield="quarterid" orderby="quarterid desc" table="quarterview" noorg="true">
+			<TEXTFIELD w="240" title="Quarter ID">quarterid</TEXTFIELD>
+			<TEXTFIELD w="240" title="Start">qstart</TEXTFIELD>
+			<TEXTFIELD w="240" title="End">qend</TEXTFIELD>
+			<JASPER name="Student Charges" reportfile="sunchargepost.jasper"></JASPER>
+			<JASPER name="Student Banking" reportfile="studentbankview.jasper"></JASPER>
+			<JASPER name="Student Scholaship" reportfile="studentscholashipview.jasper"></JASPER>
+			<JASPER name="Late Registration" reportfile="lateregistrationa.jasper"></JASPER>
+			<ACTIONS>
+				<ACTION fnct="update_posting" title="Clear Quarter Posting" auditid="sys_audit_trail_id">Clear Quarter Posting</ACTION>
+			</ACTIONS>
+		</GRID>
+		<GRID name="Analysis" keyfield="quarterid" orderby="quarterid desc" table="quarterview" noorg="true">
+			<TEXTFIELD w="240" title="Quarter ID">quarterid</TEXTFIELD>
+			<TEXTFIELD w="240" title="Start">qstart</TEXTFIELD>
+			<TEXTFIELD w="240" title="End">qend</TEXTFIELD>
+			<JASPER name="Tuition Posting" reportfile="tuition_analysis_b.jasper"></JASPER>
+			<JASPER name="Residence" reportfile="qstudentresidenceview.jasper"></JASPER>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Charges" type="horl" key="150" h="500">
+		<FILTER location="250" name="Charges" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Semesters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" noorg="true" listfield="quarter"></DRILLDOWN>
+			</DRILLDOWN>
+			<DRILLDOWN name="Sub Levels" keyfield="sublevelid" table="sublevels" noorg="true" listfield="sublevelname" filter="sublevelid"></DRILLDOWN>
+			<JASPER name="Full Charges" reportfile="vwqmajorcharges.jasper"></JASPER>
+			<JASPER name="Semester Charges" reportfile="chargeview.jasper"></JASPER>
+			<JASPER name="Major Charges" reportfile="qmchargeview.jasper"></JASPER>
+			<JASPER name="Residence" reportfile="qresidenceview.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Charge Defination" type="horl" key="188" h="500">
+		<FILTER location="250" name="Charge Defination" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Semesters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" noorg="true" listfield="quarter"></DRILLDOWN>
+			</DRILLDOWN>
+			<DRILLDOWN name="Programmes" keyfield="majorid" table="majors" noorg="true" listfield="majorname" filter="majorid"></DRILLDOWN>
+			<DRILLDOWN name="Sub Levels" keyfield="sublevelid" table="sublevels" noorg="true" listfield="sublevelname" filter="sublevelid"></DRILLDOWN>
+			<JASPER name="Charge Summary" reportfile="vwqmajorchargesummary.jasper"></JASPER>
+			<JASPER name="Full Charge Defination" reportfile="vwqmajorchargelistsa.jasper"></JASPER>
+			<JASPER name="Charge Defination" reportfile="vwqmajorchargelists.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Semester Charges" type="horl" key="158" h="500">
+		<FILTER location="250" name="Semester Charges" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Semesters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" noorg="true" listfield="quarter"></DRILLDOWN>
+			</DRILLDOWN>
+			<DRILLDOWN name="Sub Levels" keyfield="sublevelid" table="sublevels" noorg="true" listfield="sublevelname" filter="sublevelid"></DRILLDOWN>
+			<JASPER name="Students Charges" reportfile="studentchargeview.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Calendar" type="horl" key="151" h="500">
+		<FILTER location="250" name="Calendar" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Semesters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" noorg="true" listfield="quarter"></DRILLDOWN>
+			</DRILLDOWN>
+			<JASPER filtered="true" name="Calendar" reportfile="qcalendarview.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="800" name="Course Registration" type="horl" key="162" h="500">
+		<GRID name="Student List" keyfield="qstudentid" orderby="quarteryear desc" table="qstudentview" where="(active = true)" filtername="qstudentid">
+			<TEXTFIELD w="25" title="Student ID">studentid</TEXTFIELD>
+			<TEXTFIELD w="35" title="Student Name">studentname</TEXTFIELD>
+			<TEXTFIELD w="35" title="Degree">degreename</TEXTFIELD>
+			<JASPER filtered="true" name="Student Details" reportfile="studentdetailsa.jasper"></JASPER>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Course List" type="horl" key="217" h="500">
+		<FILTER location="250" name="Course List" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Semesters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" noorg="true" listfield="quarter"></DRILLDOWN>
+			</DRILLDOWN>
+			<JASPER filtered="true" name="Course List" reportfile="courselist.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Withdrawn Courses List" type="horl" key="223" h="500">
+		<FILTER location="250" name="Withdrawn Courses List" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Semesters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" noorg="true" listfield="quarter"></DRILLDOWN>
+			</DRILLDOWN>
+			<JASPER filtered="true" name="Withdrawn Courses List" reportfile="withdrawncourses.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Semester Payments" type="horl" key="178" h="500">
+		<FILTER location="250" name="Semester Payments" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Semesters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" noorg="true" listfield="quarter"></DRILLDOWN>
+			</DRILLDOWN>
+			<JASPER filtered="true" name="Student Banking" reportfile="vwstudentpaymentsa.jasper"></JASPER>
+			<JASPER filtered="true" name="Finance Approved" reportfile="clearedapproved.jasper"></JASPER>
+			<JASPER filtered="true" name="Approved and Not Cleared" reportfile="unclearedapproved.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="715" name="Registration Statistics" type="vert" key="569" h="650">
+		<FILTER w="700" name="Statistics" split="250" type="vert">
+			<FILTERGRID name="Semester" keyfield="quarterid" orderby="quarteryear desc" table="quarterview" noorg="true">
+				<TEXTFIELD w="240" title="Semester ID">quarterid</TEXTFIELD>
+				<TEXTFIELD w="240" title="Start">qstart</TEXTFIELD>
+				<TEXTFIELD w="240" title="End">qend</TEXTFIELD>
+			</FILTERGRID>
+			<JASPER filtered="true" name="Registration Statistics" reportfile="quarterstats.jasper"></JASPER>
+			<JASPER filtered="true" name="Registration Level Statistics" reportfile="quarterstatsa.jasper"></JASPER>
+			<JASPER filtered="true" name="Meal Statistics" reportfile="melstats.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="650" name="Programme Statistics" type="vert" key="669" h="650">
+		<FILTER w="700" name="Statistics" split="250" type="vert">
+			<FILTERGRID name="Semester" keyfield="quarterid" orderby="quarteryear desc" table="quarterview" noorg="true">
+				<TEXTFIELD w="240" title="Semester ID">quarterid</TEXTFIELD>
+				<TEXTFIELD w="240" title="Start">qstart</TEXTFIELD>
+				<TEXTFIELD w="240" title="End">qend</TEXTFIELD>
+			</FILTERGRID>
+			<JASPER filtered="true" name="Registration programme Statistics" reportfile="quarterstats2.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Full Payment" type="horl" key="198" h="500">
+		<FILTER location="250" name="Full Payment" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Semesters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" noorg="true" listfield="quarter"></DRILLDOWN>
+			</DRILLDOWN>
+			<JASPER filtered="true" name="Full Payment" reportfile="paymenttype.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Bank Reconciliation" type="horl" key="199" h="500">
+		<JASPER name="Bank Reconciliation" reportfile="vwbankrecons.jasper"></JASPER>
+		<JASPER name="Bank Report" reportfile="vwbankreconsa.jasper"></JASPER>
+	</DESK>
+	<DESK w="700" name="Charges List" type="horl" key="211" h="500">
+		<FILTER location="250" name="Charges List" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Semesters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" noorg="true" listfield="quarter"></DRILLDOWN>
+			</DRILLDOWN>
+			<JASPER filtered="true" name="Charges List" reportfile="wvqstudentcharges.jasper"></JASPER>
+			<JASPER filtered="true" name="Charges Summary" reportfile="sunchargesumary.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Scholaships List" type="horl" key="212" h="500">
+		<FILTER location="250" name="Scholaships List" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Semesters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" noorg="true" listfield="quarter"></DRILLDOWN>
+			</DRILLDOWN>
+			<JASPER filtered="true" name="Scholaships List" reportfile="vwscholarships.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Late Registration" type="horl" key="214" h="500">
+		<FILTER location="250" name="Late Registration" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Semesters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" noorg="true" listfield="quarter"></DRILLDOWN>
+			</DRILLDOWN>
+			<JASPER filtered="true" name="Late Registration" reportfile="lateregistration.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Residence Report" type="horl" key="215" h="600">
+		<FILTER location="250" name="Full Residence List" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Semesters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" noorg="true" listfield="quarter"></DRILLDOWN>
+			</DRILLDOWN>
+			<JASPER name="Residence Summary" reportfile="vw_qresidence_summary.jasper"></JASPER>
+			<JASPER name="Residence Charge" reportfile="qstudentviewrs4.jasper"></JASPER>
+			<JASPER name="Full Residence List" reportfile="qstudentviewrs3.jasper"></JASPER>
+		</FILTER>
+		<FILTER w="700" name="Residence Report" split="250" type="vert">
+			<FILTERGRID name="Semesters" keyfield="quarterid" orderby="quarterid desc" table="quarters" noorg="true">
+				<TEXTFIELD w="240" title="Quarter ID">quarterid</TEXTFIELD>
+				<TEXTFIELD w="240" title="Start">qstart</TEXTFIELD>
+				<FILTERGRID name="Q Residence" keyfield="qresidenceid" linkfield="quarterid" table="qresidenceview" noorg="true">
+					<TEXTFIELD w="40" title="Residence">residencename</TEXTFIELD>
+					<TEXTFIELD w="40" title="Off Campus">offcampus</TEXTFIELD>
+				</FILTERGRID>
+			</FILTERGRID>
+			<JASPER name="Residence Report" reportfile="qstudentviewrs2.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Unapproved Payments" type="horl" key="241" h="500">
+		<FILTER location="250" name="Unapproved Payments" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Semesters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" noorg="true" listfield="quarter"></DRILLDOWN>
+			</DRILLDOWN>
+			<JASPER filtered="true" name="Finance unApproved" reportfile="unapproved.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="630" name="Reconcile Approval" type="vert" key="19" h="520">
+		<GRID name="Semesters" keyfield="quarterid" orderby="quarterid desc" table="quarterview" noorg="true">
+			<TEXTFIELD w="240" title="Quarter ID">quarterid</TEXTFIELD>
+			<TEXTFIELD w="240" title="Start">qstart</TEXTFIELD>
+			<TEXTFIELD w="240" title="End">qend</TEXTFIELD>
+			<GRID name="Students List" keyfield="qstudentid" updatetable="qstudents" linkfield="quarterid" table="vwqstudentbalances" noorg="true">
+				<TEXTFIELD w="10" title="Student ID">studentid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Student">studentname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Account Number">accountnumber</TEXTFIELD>
+				<TEXTFIELD w="20" title="Off Campus">offcampus</TEXTFIELD>
+				<TEXTFIELD w="20" title="Premium Hall">premiumhall</TEXTFIELD>
+				<TEXTFIELD w="20" title="Part Payment">ispartpayment</TEXTFIELD>
+				<TEXTFIELD w="10" title="Meal Type">mealtype</TEXTFIELD>
+				<TEXTFIELD w="10" title="Study Level">studylevel</TEXTFIELD>
+				<TEXTFIELD w="20" title="Major">majorname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Closed">financeclosed</TEXTFIELD>
+				<TEXTFIELD w="20" title="Opening Balance">currbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Full Fees">fullfees</TEXTFIELD>
+				<TEXTFIELD w="20" title="Fees">fees</TEXTFIELD>
+				<TEXTFIELD w="20" title="Scholarship">scholarship</TEXTFIELD>
+				<TEXTFIELD w="20" title="Receipts">studentpayment</TEXTFIELD>
+				<TEXTFIELD w="20" title="Full Balance">fullfinalbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Balance">finalbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Approval">finaceapproval</TEXTFIELD>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Semester Bank Payments" type="horl" key="179" h="500">
+		<FILTER location="250" name="Semester Bank Payments" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Semesters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" noorg="true" listfield="quarter"></DRILLDOWN>
+			</DRILLDOWN>
+			<DRILLDOWN name="Bank" keyfield="terminalid" table="vwbanks" noorg="true" listfield="bankname" filtername="terminalid"></DRILLDOWN>
+			<JASPER filtered="true" name="Student Banking" reportfile="vwstudentpaymentsb.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Difference" type="horl" key="251" h="500">
+		<FILTER location="250" name="Difference" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Semesters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" noorg="true" listfield="quarter"></DRILLDOWN>
+			</DRILLDOWN>
+			<JASPER name="Difference" reportfile="differences.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Semester Paid Students" type="horl" key="551" h="500">
+		<FILTER location="250" name="Semester Paid Students" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Semesters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" noorg="true" listfield="Quarter"></DRILLDOWN>
+			</DRILLDOWN>
+			<DRILLDOWN name="Schools" keyfield="schoolid" table="schools" noorg="true" listfield="schoolname">
+				<DRILLDOWN name="Departments" keyfield="departmentid" wherefield="schoolid" table="departments" noorg="true" listfield="departmentname">
+					<DRILLDOWN name="Programme" keyfield="majorid" wherefield="departmentid" table="majors" noorg="true" listfield="majorname" filter="majorid"></DRILLDOWN>
+				</DRILLDOWN>
+			</DRILLDOWN>
+			<JASPER name="Semester Students" reportfile="wvqstudentchargesbbc.jasper"></JASPER>
+			<JASPER name="Semester Students" reportfile="wvqstudentchargesbbb.jasper"></JASPER>
+			<JASPER name="Semester Programme Students" reportfile="wvqstudentchargesbba.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Semester Bank Audit" type="horl" key="552" h="500">
+		<FILTER location="250" name="Semester Bank Audit" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Semesters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" noorg="true" listfield="quarter"></DRILLDOWN>
+			</DRILLDOWN>
+			<JASPER filtered="true" name="Student Banking Audit" reportfile="vwstudentpaymentsc.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Semester Filtered Payments" type="vert" key="378" h="500">
+		<FILTER name="Date Range" table="quarters">
+			<FILTERFORM name="Date Range">
+				<TEXTDATE w="150" title="Starting From" defaultvalue="today" y="10" h="20" x="10">startdate</TEXTDATE>
+				<TEXTDATE w="150" title="Ending At" defaultvalue="today" y="10" h="20" x="290">enddate</TEXTDATE>
+			</FILTERFORM>
+			<JASPER filtered="true" name="Student Banking" reportfile="vwstudentpaymentsd.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Application Payments" type="vert" key="379" h="500">
+		<FILTER name="Date Range" table="quarters">
+			<FILTERFORM name="Date Range">
+				<TEXTDATE w="150" title="Starting From" defaultvalue="today" y="10" h="20" x="10">startdate</TEXTDATE>
+				<TEXTDATE w="150" title="Ending At" defaultvalue="today" y="10" h="20" x="290">enddate</TEXTDATE>
+			</FILTERFORM>
+			<JASPER filtered="true" name="Application Payments" reportfile="applications.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="800" name="Financial Clearance" type="horl" key="403" h="650">
+		<FILTER w="800" name="Exam Pass" split="250" type="vert" h="650">
+			<FILTERGRID name="Semesters" keyfield="quarterid" orderby="quarterid desc" table="quarterview" noorg="true">
+				<TEXTFIELD w="240" title="Semester ID">quarterid</TEXTFIELD>
+				<TEXTFIELD w="240" title="Start">qstart</TEXTFIELD>
+				<FILTERGRID name="Student List" keyfield="qstudentid" updatetable="qstudents" orderby="departmentname, studentname" linkfield="quarterid" table="vwqstudentbalances" where="(approved = true) and (finaceapproval = true)">
+					<TEXTFIELD w="20" title="Department">departmentname</TEXTFIELD>
+					<TEXTFIELD w="25" title="Student ID">studentid</TEXTFIELD>
+					<TEXTFIELD w="35" title="Student Name">studentname</TEXTFIELD>
+					<TEXTFIELD w="35" title="Degree">degreename</TEXTFIELD>
+					<TEXTFIELD w="20" title="Balance">currbalance</TEXTFIELD>
+				</FILTERGRID>
+			</FILTERGRID>
+			<JASPER filtered="true" name="Exam PASS" printcopies="1" reportfile="studentpass.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Financial Clearance List" type="horl" key="405" h="500">
+		<FILTER location="250" name="Exam Cleared List" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Semesters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" noorg="true" listfield="quarter"></DRILLDOWN>
+			</DRILLDOWN>
+			<JASPER filtered="true" name="Financial Cleared List" reportfile="qstudentviewcg.jasper"></JASPER>
+			<JASPER filtered="true" name="Financial UnCleared List" reportfile="qstudentviewcf.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Posting Variance" type="horl" key="415" h="500">
+		<FILTER location="250" name="Posting Variance" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Semesters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" noorg="true" listfield="quarter"></DRILLDOWN>
+			</DRILLDOWN>
+			<JASPER filtered="true" name="Posting Variance" reportfile="qposting_logs.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="630" name="Semesters Backdate Approval" key="36" h="520">
+		<GRID name="Semesters" keyfield="quarterid" orderby="quarterid desc" table="quarterview" noorg="true">
+			<TEXTFIELD w="240" title="Quarter ID">quarterid</TEXTFIELD>
+			<TEXTFIELD w="240" title="Start">qstart</TEXTFIELD>
+			<TEXTFIELD w="240" title="End">qend</TEXTFIELD>
+			<GRID auditid="sys_audit_trail_id" name="Students List" keyfield="qstudentid" updatetable="qstudents" linkfield="quarterid" table="vwqstudentbalances" noorg="true" where="(financeclosed = true) and (finaceapproval = false)">
+				<TEXTFIELD w="10" title="Student ID">studentid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Student">studentname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Account Number">accountnumber</TEXTFIELD>
+				<TEXTFIELD w="20" title="Off Campus">offcampus</TEXTFIELD>
+				<TEXTFIELD w="20" title="Residence">residencename</TEXTFIELD>
+				<TEXTFIELD w="10" title="Meal Type">mealtype</TEXTFIELD>
+				<TEXTFIELD w="10" title="Study Level">studylevel</TEXTFIELD>
+				<TEXTFIELD w="20" title="Major">majorname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Closed" edit="true">financeclosed</TEXTFIELD>
+				<TEXTFIELD w="20" title="Opening Balance">currbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Full Fees">fullfees</TEXTFIELD>
+				<TEXTFIELD w="20" title="Fees">fees</TEXTFIELD>
+				<TEXTFIELD w="20" title="Scholarship">scholarship</TEXTFIELD>
+				<TEXTFIELD w="20" title="Receipts">studentpayment</TEXTFIELD>
+				<TEXTFIELD w="20" title="Full Balance">fullfinalbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Balance">finalbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Approval" edit="true">finaceapproval</TEXTFIELD>
+				<FORM name="Financial Narrative" keyfield="qstudentid" table="qstudents" noorg="true">
+					<TEXTDECIMAL w="150" title="Misc. Charges" y="10" h="20" x="10">charges</TEXTDECIMAL>
+					<TEXTAREA w="430" title="Narrative" y="30" h="220" x="10">financenarrative</TEXTAREA>
+				</FORM>
+			</GRID>
+			<GRID name="Scholarships" keyfield="scholarshipid" linkfield="quarterid" table="vwscholarships" noorg="true">
+				<TEXTFIELD w="40" title="Matric No">studentid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Student Name">studentname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Account Number">accountnumber</TEXTFIELD>
+				<TEXTFIELD w="40" title="Nationality">nationality</TEXTFIELD>
+				<TEXTFIELD w="40" title="Sex">sex</TEXTFIELD>
+				<TEXTFIELD w="40" title="Scholarship Type">scholarshiptypename</TEXTFIELD>
+				<TEXTFIELD w="40" title="Payment Date">paymentdate</TEXTFIELD>
+				<TEXTFIELD w="40" title="Amount">amount</TEXTFIELD>
+				<TEXTFIELD w="40" title="Approved">approved</TEXTFIELD>
+				<FORM name="Scholarships" keyfield="scholarshipid" linkfield="quarterid" table="scholarships" noorg="true" inputkey="1">
+					<GRIDBOX w="350" title="Student " lptable="studentview" noorg="true" y="10" h="20" x="10" lpfield="studentid || ', ' || studentname">studentid
+						<GRID name="Students" keyfield="studentid" gridfilter="true" table="studentview" noorg="true" pos="top">
+							<TEXTFIELD w="10" title="Student ID">studentid</TEXTFIELD>
+							<TEXTFIELD w="40" title="Student">studentname</TEXTFIELD>
+							<TEXTFIELD w="40" title="Department">departmentname</TEXTFIELD>
+						</GRID>
+					</GRIDBOX>
+					<COMBOBOX w="150" title="Scholarship Type" lptable="scholarshiptypes" noorg="true" y="30" h="20" x="10" lpfield="scholarshiptypename">scholarshiptypeid</COMBOBOX>
+					<TEXTDECIMAL w="150" title="Amount" y="30" h="20" x="290">amount</TEXTDECIMAL>
+					<TEXTDATE w="150" title="Payment Date" y="50" h="20" x="10">paymentdate</TEXTDATE>
+					<CHECKBOX w="150" title="Approved" y="50" h="20" x="290">approved</CHECKBOX>
+					<TEXTAREA w="430" title="Details" y="70" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<GRID name="Payment Plan Request" keyfield="qstudentid" updatetable="qstudents" linkfield="quarterid" table="vwqstudentbalances" noorg="true" where="(paymenttype = 3)">
+				<TEXTFIELD w="10" title="Student ID">studentid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Student">studentname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Account Number">accountnumber</TEXTFIELD>
+				<TEXTFIELD w="20" title="Off Campus">offcampus</TEXTFIELD>
+				<TEXTFIELD w="20" title="Premium Hall">premiumhall</TEXTFIELD>
+				<TEXTFIELD w="10" title="Meal Type">mealtype</TEXTFIELD>
+				<TEXTFIELD w="10" title="Study Level">studylevel</TEXTFIELD>
+				<TEXTFIELD w="20" title="Major">majorname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Opening Balance">currbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Full Fees">fullfees</TEXTFIELD>
+				<TEXTFIELD w="20" title="Fees">fees</TEXTFIELD>
+				<TEXTFIELD w="20" title="Scholarship">scholarship</TEXTFIELD>
+				<TEXTFIELD w="20" title="Receipts">studentpayment</TEXTFIELD>
+				<TEXTFIELD w="20" title="Full Balance">fullfinalbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Balance">finalbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Part Payment" edit="true">ispartpayment</TEXTFIELD>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Tuition Analysis" key="674" h="550">
+		<FILTER location="250" name="Tuition Analysis" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Semesters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" noorg="true" listfield="quarter"></DRILLDOWN>
+			</DRILLDOWN>
+			<DRILLDOWN name="Sub Levels" keyfield="sublevelid" table="sublevels" noorg="true" listfield="sublevelname" filter="sublevelid"></DRILLDOWN>
+			<JASPER name="Tuition Analysis" reportfile="tuition_analysis.jasper"></JASPER>
+			<JASPER name="Full Tuition Analysis" reportfile="tuition_analysis_a.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Major Level Summary" key="679" h="550">
+		<FILTER location="250" name="Major Level Summary" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Semesters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" noorg="true" listfield="quarter"></DRILLDOWN>
+			</DRILLDOWN>
+			<JASPER name="Major Level Summary" reportfile="vw_major_level_count.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+</APP>

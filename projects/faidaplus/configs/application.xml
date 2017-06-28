@@ -1,0 +1,40 @@
+<APP name="Faida Plus" color="green" org="org_id" password="change_password">
+	<MENU name="Faida Plus">
+		<MENU name="Registration">1</MENU>
+
+	</MENU>
+	<DESK w="700" name="Registration" key="1" h="500">
+		<FORM  new="true" name="Applicant" keyfield="applicant_id" edit="false" delete="false" audit="false" table="applicants" fornew="true" save.button="Apply">
+			<DEFAULT default="0">org_id</DEFAULT>
+			<TEXTFIELD w="430" required="true" title="Email *" placeholder="Personal Email Address" y="50" h="20" x="10">applicant_email</TEXTFIELD>
+			<TEXTFIELD w="430" required="true" title="Username *" placeholder="Username" y="50" h="20" x="10">user_name</TEXTFIELD>
+			<TEXTFIELD w="430" required="true" title="Mobile Number *" placeholder="Mobile Number" y="50" h="20" x="10">phone_no</TEXTFIELD>
+			<TEXTFIELD w="150" required="true" title="Pseudo Code *" placeholder="PCC" h="20" y="30" x="290" span="true" fnct="upper(pseudo_code)">pseudo_code</TEXTFIELD>
+			<TEXTFIELD w="100" required="true" title="Sign On Code initials.* *" placeholder="Input initials without prefix Z" y="10" h="20" x="490" fnct="upper(son)" span="true">son</TEXTFIELD>
+			<TEXTDATE w="75" title="Date Of Birth" placeholder="Date Of Birth">consultant_dob</TEXTDATE>
+
+			<FORMVIEW name="Applicant" keyfield="applicant_id" linkfield="applicant_id" table="applicants">
+				<TEXTFIELD w="430" fnct="'Data submited, Email will be send once your data is approved'::text" title="Submit" y="110" h="20" x="10">disp</TEXTFIELD>
+				<TEXTFIELD w="430" required="true" title="Email *" y="50" h="20" x="10">applicant_email</TEXTFIELD>
+				<TEXTFIELD w="430" required="true" title="Username *" y="50" h="20" x="10">user_name</TEXTFIELD>
+				<TEXTFIELD w="430" required="true" title="Mobile Number *" y="50" h="20" x="10">phone_no</TEXTFIELD>
+				<TEXTFIELD w="150" required="true" title="Pseudo Code *" h="20" y="30" x="290" span="true">pseudo_code</TEXTFIELD>
+				<TEXTFIELD w="100" required="true" title="Sign On Code initials.* *" y="10" h="20" x="490" span="true">son</TEXTFIELD>
+
+			</FORMVIEW>
+		</FORM>
+	</DESK>
+
+
+	<DESK w="700" name="Reset Passwords" key="2" h="500">
+		<FORM name="Reset Passwords" keyfield="sys_reset_id" table="sys_reset" edit="false" delete="false" audit="false" fornew="true" noorg="true" save.button="Reset Password">
+			<TEXTFIELD w="430" title="Request Email" h="20" y="30" x="10">request_email</TEXTFIELD>
+			<FORMVIEW name="Sys Reset" keyfield="sys_reset_id" table="sys_reset" linkfield="sys_reset_id" display="form" noorg="true">
+				<TEXTFIELD w="430" fnct="'New Password has been sent to your email address.'::text" title="Submit" y="110" h="20" x="10">disp</TEXTFIELD>
+			</FORMVIEW>
+		</FORM>
+	</DESK>
+
+
+
+</APP>

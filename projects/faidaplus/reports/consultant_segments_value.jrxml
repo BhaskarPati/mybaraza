@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="consultant_segments_value" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4a85dc05-a0cb-4129-b529-735eba0352f4">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="start_date" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2016-02-01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="end_date" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2016-02-29"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT points.points_id,
+    points.period,
+    to_char(points.period::timestamp with time zone, 'mmyyyy'::text) AS ticket_period,
+    points.pcc,
+    points.son,
+    points.segments,
+    points.amount,
+    points.points,
+    points.bonus,
+    vw_entitys.org_name,
+    vw_entitys.entity_name,
+    vw_entitys.entity_id
+   FROM points
+     JOIN vw_entitys ON points.pcc::text = vw_entitys.pcc::text AND points.son = vw_entitys.son
+WHERE points.period BETWEEN '$P!{start_date}' AND '$P!{end_date}';]]>
+	</queryString>
+	<field name="points_id" class="java.lang.Integer"/>
+	<field name="period" class="java.sql.Date"/>
+	<field name="ticket_period" class="java.lang.String"/>
+	<field name="pcc" class="java.lang.String"/>
+	<field name="son" class="java.lang.String"/>
+	<field name="segments" class="java.lang.Float"/>
+	<field name="amount" class="java.lang.Float"/>
+	<field name="points" class="java.lang.Float"/>
+	<field name="bonus" class="java.lang.Float"/>
+	<field name="org_name" class="java.lang.String"/>
+	<field name="entity_name" class="java.lang.String"/>
+	<field name="entity_id" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="4" width="555" height="20" uuid="4d6704c1-e550-46e0-b3e6-d1a7624446ce"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[CONSULTANT SEGMENTS VALUE]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="11" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="682c17fa-55bb-4b94-9a38-d2ce2e81a049"/>
+				<text><![CDATA[Agency Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="100" height="20" uuid="dbb711e1-26a0-4b51-8f81-4ba479f44e21"/>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="100" height="20" uuid="ff9e8b69-5c64-4a14-9c34-c53f2797eac0"/>
+				<text><![CDATA[Total Segments]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="100" height="20" uuid="385023a7-73e6-4b6c-b278-e5de5e870145"/>
+				<text><![CDATA[Total KES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="0" width="81" height="20" uuid="54f41ab0-d057-477c-87a3-88559fee3e1d"/>
+				<text><![CDATA[Bonus]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="481" y="0" width="74" height="20" uuid="44a0289a-7185-4944-88cb-2bfef4671cb2"/>
+				<text><![CDATA[Period]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="21" width="555" height="1" uuid="f91bb859-5d31-40d6-bd17-c1822e014ce5"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="17324260-e487-4716-a684-5d3732571985"/>
+				<textFieldExpression><![CDATA[$F{org_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="100" height="20" uuid="09a6ff56-4ab6-465b-b9e3-9e6614c034e3"/>
+				<textFieldExpression><![CDATA[$F{segments}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="0" width="100" height="20" uuid="4b1bd6eb-7be5-455d-adfb-347bf4825297"/>
+				<textFieldExpression><![CDATA[$F{points}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="0" width="81" height="20" uuid="412df80d-a25f-472e-82e5-98fe7b641721"/>
+				<textFieldExpression><![CDATA[$F{bonus}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMM-yy" isBlankWhenNull="true">
+				<reportElement x="481" y="0" width="74" height="20" uuid="6efa8a4b-d1ce-4516-b0e2-694041d512de"/>
+				<textFieldExpression><![CDATA[$F{period}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="100" height="20" uuid="fde0c2ba-6c68-4120-946f-0c1007b5d9a4"/>
+				<textFieldExpression><![CDATA[$F{entity_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

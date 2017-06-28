@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="offer_letter" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="dc_tenders_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="BASE_DESIGN" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/opt/openbravo/modules/com.dewcis.ob/src"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/opt/openbravo/modules/com.dewcis.ob/src/com/dewcis/ob/ad_reports/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT dc_tenders.dc_tenders_id, dc_tenders.dc_td_types_id, dc_tenders.dc_tenders_name, dc_tenders.tender_number, dc_tenders.tender_date, dc_tenders.tender_end_date,
+	dc_tenders.iscompleted, dc_trd_suppliers.dc_trd_suppliers_id,
+	dc_trd_suppliers.tender_amount, dc_trd_suppliers.isawarded, dc_trd_suppliers.award_reference, dc_trd_suppliers.bidder_name, dc_trd_suppliers.bidder_address
+FROM dc_tenders INNER JOIN dc_trd_suppliers ON dc_tenders.dc_tenders_id = dc_trd_suppliers.dc_tenders_id
+WHERE (dc_tenders.isgenerate = 'Y') AND (dc_tenders.dc_tenders_id IN ($P{dc_tenders_id}))]]>
+	</queryString>
+	<field name="dc_tenders_id" class="java.lang.String"/>
+	<field name="dc_td_types_id" class="java.lang.String"/>
+	<field name="dc_tenders_name" class="java.lang.String"/>
+	<field name="tender_number" class="java.lang.String"/>
+	<field name="tender_date" class="java.sql.Timestamp"/>
+	<field name="tender_end_date" class="java.sql.Timestamp"/>
+	<field name="iscompleted" class="java.lang.String"/>
+	<field name="dc_trd_suppliers_id" class="java.lang.String"/>
+	<field name="tender_amount" class="java.math.BigDecimal"/>
+	<field name="isawarded" class="java.lang.String"/>
+	<field name="award_reference" class="java.lang.String"/>
+	<field name="bidder_name" class="java.lang.String"/>
+	<field name="bidder_address" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="115" splitType="Stretch">
+			<staticText>
+				<reportElement x="141" y="92" width="277" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TENDER ACCEPTANCE  NOTICE]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-22" y="111" width="598" height="1"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="490" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="164" width="555" height="1"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="41" width="307" height="16"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bidder_name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="0" y="21" width="100" height="16"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="131" width="499" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Dear Sir/Madam,"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="165" width="555" height="67">
+					<printWhenExpression><![CDATA[$F{isawarded}.equals("Y")]]></printWhenExpression>
+				</reportElement>
+				<textElement markup="html">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Please refer to the above tender Ref. No. " + $F{tender_number} + " and your subsequent bid submission.<br/><br/>"
++
+"We are pleased to inform you that the Commission considered your tender and it intends to award you the contract after the expiry of fourteen days (14) from the date of this letter.  Your contract will be for a total sum of Ksh. " + $F{tender_amount} + " inclusive of VAT broken down as follows:  "]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="1" width="87" height="16"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reference Number:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="89" y="2" width="100" height="16"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{award_reference}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="57" width="403" height="74"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bidder_address}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="147" width="499" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["RE: TENDER FOR " + $F{dc_tenders_name}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="275" width="555" height="57">
+					<printWhenExpression><![CDATA[$F{isawarded}.equals("Y")]]></printWhenExpression>
+				</reportElement>
+				<textElement markup="html">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Please confirm to us in writing, your acceptance of this offer, and conditions therein within fourteen days from the date of this letter to the undersigned.
+<br/><br/>
+The Commission will therefore draw up a contract agreement as per the terms and conditions stipulated in the tender document. ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="165" width="555" height="67">
+					<printWhenExpression><![CDATA[$F{isawarded}.equals("N")]]></printWhenExpression>
+				</reportElement>
+				<textElement markup="html">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Please refer to the above tender Ref. No. " + $F{tender_number} + " and your subsequent bid submission.<br/><br/>"
++
+"The tender evaluation process has now been completed and we regret to inform you that your tender was unsuccessful.<br/><br/>"
+
++
+
+"We would however like to thank you for participating in this very competitive tender and look forward to your continued support.<br/><br/>"]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="238" width="555" height="31">
+					<printWhenExpression><![CDATA[$F{isawarded}.equals("Y")]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="filterid">
+					<subreportParameterExpression><![CDATA[$F{dc_trd_suppliers_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="reportpath"/>
+				<subreportParameter name="SUBREPORT_DIR"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{BASE_DESIGN} + "/com/dewcis/ob/ad_reports/item_details.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement positionType="Float" x="13" y="341" width="165" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Thank  you and best regards,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="13" y="364" width="100" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Yours faithfully]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="13" y="386" width="247" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Communications Commission of Kenya]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="13" y="445" width="141" height="1"/>
+			</line>
+			<staticText>
+				<reportElement positionType="Float" x="13" y="449" width="186" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[For: DIRECTOR GENERAL.]]></text>
+			</staticText>
+			<break>
+				<reportElement x="0" y="483" width="555" height="1"/>
+			</break>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="22"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

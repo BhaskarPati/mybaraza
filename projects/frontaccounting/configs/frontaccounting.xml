@@ -1,0 +1,30 @@
+<APP name="Front Accounting">
+	<MENU name="Reports">
+		<MENU name="Petty Cash Requisition">1</MENU>
+		<MENU name="Cheque Voucher">5</MENU>
+	</MENU>
+	<DESK w="700" name="Petty Cash Requisition" key="1" h="550">
+		<GRID name="Requisition" keyfield="trans_no" orderby="trans_no desc" table="supp_trans" where="(supp_trans.type = 22)">
+			<TEXTFIELD w="75" title="Trans No">trans_no</TEXTFIELD>
+			<TEXTFIELD w="75" title="Supplier ID">supplier_id</TEXTFIELD>
+			<TEXTAREA w="75" title="Reference">reference</TEXTAREA>
+			<TEXTFIELD w="75" title="Supp Reference">supp_reference</TEXTFIELD>
+			<TEXTDATE w="75" title="Tran Date">tran_date</TEXTDATE>
+			<TEXTDECIMAL w="75" title="Ov Amount">ov_amount</TEXTDECIMAL>
+			<TEXTFIELD w="75" title="Cheque Number">cheque_number</TEXTFIELD>
+			<JASPER name="Petty Cash Requisition" reportfile="pettycash.jasper"></JASPER>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Cheque Voucher" key="5" h="550">
+		<GRID name="Requisition" keyfield="trans_no" orderby="trans_no desc" table="supp_trans" where="(supp_trans.type = 22)">
+			<TEXTFIELD w="75" title="Trans No">trans_no</TEXTFIELD>
+			<TEXTFIELD w="75" title="Supplier ID">supplier_id</TEXTFIELD>
+			<TEXTAREA w="75" title="Reference">reference</TEXTAREA>
+			<TEXTFIELD w="75" title="Supp Reference">supp_reference</TEXTFIELD>
+			<TEXTDATE w="75" title="Tran Date">tran_date</TEXTDATE>
+			<TEXTDECIMAL w="75" title="Ov Amount">ov_amount</TEXTDECIMAL>
+			<TEXTFIELD w="75" title="Cheque Number">cheque_number</TEXTFIELD>
+			<JASPER name="Cheque Voucher" reportfile="cheque_voucher.jasper"></JASPER>
+		</GRID>
+	</DESK>
+</APP>

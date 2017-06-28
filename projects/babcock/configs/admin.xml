@@ -1,0 +1,962 @@
+<APP name="UMIS" org="org_id" password="change_password">
+	<MENU name="Babcock Administrator" role="admin,superadmin">
+		<MENU name="Administration" role="admin,superadm">
+			<MENU name="Students Probations">5</MENU>
+			<MENU name="Semesters">12</MENU>
+			<MENU name="Selections">1</MENU>
+			<MENU name="Late Registration">16</MENU>
+			<MENU name="Reset Passwords">29</MENU>
+			<MENU name="New Student Password">159</MENU>
+			<MENU name="Cont. student Passwords">169</MENU>
+			<MENU name="lecturer Password">179</MENU>
+			<MENU name="Tentative Class List">254</MENU>
+			<MENU name="Semester Adjusments">25</MENU>
+			<MENU name="Semester Student Courses">14</MENU>
+			<MENU name="Semester Registration Audit">24</MENU>
+			<MENU name="Dean Approvals">215</MENU>
+			<MENU name="Admissions List">125</MENU>
+		</MENU>
+		<MENU name="Extra Admin" role="superadm">
+			<MENU name="Grade Changes">558</MENU>
+			<MENU name="Campuses">10</MENU>
+			<MENU name="Schools">7</MENU>
+			<MENU name="User management">15</MENU>
+			<MENU name="Forms">20</MENU>
+			<MENU name="Workflows">40</MENU>
+			<MENU name="Approvals">45</MENU>
+			<MENU name="All Approvals">50</MENU>
+		</MENU>
+		<MENU name="Web">
+			<MENU name="News">2</MENU>
+			<MENU name="EMails">60</MENU>
+			<MENU name="Menu Messages">70</MENU>
+			<MENU name="Error Messages">3</MENU>
+		</MENU>
+	</MENU>
+	<DESK w="585" name="Selections" type="vert" key="1" h="500">
+		<GRID name="Selections" keyfield="qselectionid" table="qselections" noorg="true">
+			<TEXTFIELD w="40" title="Selection ID">qselectionid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Stage">stage</TEXTFIELD>
+			<TEXTFIELD w="340" title="Selection">selection</TEXTFIELD>
+			<FORM name="Selections" keyfield="qselectionid" table="qselections" noorg="true">
+				<TEXTFIELD w="150" title="Selection" y="10" h="20" x="10">qselectionid</TEXTFIELD>
+				<TEXTFIELD w="150" title="Stage" y="10" h="20" x="290">stage</TEXTFIELD>
+				<TEXTFIELD w="430" title="Selection" y="30" h="20" x="10">selection</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="50" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="630" name="Semester Students Audit" key="24" h="750">
+		<GRID name="Semester" keyfield="quarterid" orderby="quarterid desc" table="quarterview">
+			<TEXTFIELD w="240" title="Semester ID">quarterid</TEXTFIELD>
+			<TEXTFIELD w="240" title="Start">qstart</TEXTFIELD>
+			<TEXTFIELD w="240" title="End">qend</TEXTFIELD>
+			<GRID name="Q. Students" keyfield="qstudentid" updatetable="qstudents" linkfield="quarterid" table="vwqstudentbalances" where="(finaceapproval = true) AND (printed = true)">
+				<TEXTFIELD w="10" title="Matrix Num">studentid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Student Name">studentname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Account Number">accountnumber</TEXTFIELD>
+				<TEXTFIELD w="20" title="Study Level">studylevel</TEXTFIELD>
+				<TEXTFIELD w="20" title="Programme">majorname</TEXTFIELD>
+				<TEXTFIELD w="20" title="registered">approved</TEXTFIELD>
+				<GRID name="Registered Courses" keyfield="qgradeid" linkfield="qstudentid" table="studentgradeview">
+					<TEXTFIELD w="10" title="Matrix Num">studentid</TEXTFIELD>
+					<TEXTFIELD w="20" title="Student">studentname</TEXTFIELD>
+					<TEXTFIELD w="10" title="Course ID">courseid</TEXTFIELD>
+					<TEXTFIELD w="100" title="Course Title">coursetitle</TEXTFIELD>
+					<TEXTFIELD w="100" title="Lecturer">instructorname</TEXTFIELD>
+					<TEXTFIELD w="10" title="Units">chargehours</TEXTFIELD>
+					<TEXTFIELD w="5" title="Dropped">dropped</TEXTFIELD>
+				</GRID>
+				<GRID name="Approval Trail" keyfield="approvalid" linkfield="qstudentid" table="approvallist">
+					<TEXTFIELD w="40" title="Approval Type">approvaltype</TEXTFIELD>
+					<TEXTFIELD w="40" title="Approved By">approvedby</TEXTFIELD>
+					<TEXTFIELD w="40" title="Approve Date">approvedate</TEXTFIELD>
+					<TEXTFIELD w="40" title="Approval Computer">clientip</TEXTFIELD>
+				</GRID>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="630" name="Semesters Reg Fees" type="vert" key="16" h="520">
+		<GRID name="Semesters" keyfield="quarterid" orderby="quarterid desc" table="quarterview" where="(active = true)">
+			<TEXTFIELD w="240" title="Quarter ID">quarterid</TEXTFIELD>
+			<TEXTFIELD w="240" title="Start">qstart</TEXTFIELD>
+			<TEXTFIELD w="240" title="End">qend</TEXTFIELD>
+			<GRID name="Students List" keyfield="qstudentid" updatetable="qstudents" linkfield="quarterid" table="vwqstudentbalances">
+				<TEXTFIELD w="10" title="Matric Num">studentid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Student Name">studentname</TEXTFIELD>
+				<TEXTFIELD w="10" title="Study Level">studylevel</TEXTFIELD>
+				<TEXTFIELD w="20" title="SchoolName">schoolname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Programme">majorname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Late Fees">charges</TEXTFIELD>
+				<FORM name="Late Registration" keyfield="qstudentid" table="qstudents">
+					<TEXTDECIMAL w="150" title="Late Reg Fees" y="10" h="20" x="10">charges</TEXTDECIMAL>
+					<CHECKBOX w="150" title="Approve Late Fee" y="10" h="20" x="290">lateFeePayment</CHECKBOX>
+					<TEXTAREA w="430" title="Narrative" y="30" h="220" x="10">financenarrative</TEXTAREA>
+				</FORM>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="New Student Password" type="horl" key="159" h="500">
+		<JASPER filtered="false" name="New Student Password" reportfile="newpswd.jasper"></JASPER>
+	</DESK>
+	<DESK w="700" name="Cont. student List" type="horl" key="169" h="500">
+		<JASPER filtered="false" name="Cont. Student Password" reportfile="oldpswd.jasper"></JASPER>
+	</DESK>
+	<DESK w="800" name="Tentative Class List" type="horl" key="254" h="500">
+		<GRID name="Semesters" keyfield="quarterid" orderby="quarterid desc" table="quarterview">
+			<TEXTFIELD w="240" title="Semester ID">quarterid</TEXTFIELD>
+			<TEXTFIELD w="240" title="Start">qstart</TEXTFIELD>
+			<GRID name="Q Courses" keyfield="qcourseid" orderby="departmentname" linkfield="quarterid" table="qcourseview">
+				<TEXTFIELD w="40" title="Code">courseid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Course">coursetitle</TEXTFIELD>
+				<TEXTFIELD w="40" title="Instructor">instructorname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Class">classoption</TEXTFIELD>
+				<TEXTFIELD w="40" title="Department">departmentname</TEXTFIELD>
+				<JASPER filtered="true" name="Tentative Class List" printcopies="1" reportfile="qgradeview2.jasper"></JASPER>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="585" name="Semester Adjusments" type="vert" key="25" h="500">
+		<GRID name="Semester" keyfield="quarterid" orderby="quarterid desc" table="quarterview">
+			<TEXTFIELD w="40" title="Semester ID">quarterid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Start">qstart</TEXTFIELD>
+			<TEXTFIELD w="40" title="Last Drop">qlastdrop</TEXTFIELD>
+			<TEXTFIELD w="40" title="End">qend</TEXTFIELD>
+			<TEXTFIELD w="40" title="Active">active</TEXTFIELD>
+			<ACTION name="Semester" keyfield="quarterid" table="quarters" isString="true">
+				<ACTION w="150" statement="Matriculate" title="Matriculate" y="90" h="30" x="10">quarterid</ACTION>
+				<ACTION w="150" statement="CloseQuarter" title="Close Semester" y="90" h="20" x="290">quarterid</ACTION>
+				<ACTION w="150" statement="OpenQuarter" title="Open Semester" y="90" h="20" x="290">quarterid</ACTION>
+			</ACTION>
+		</GRID>
+	</DESK>
+	<DESK w="585" name="Semesters" type="vert" key="12" h="500">
+		<GRID name="Semesters" keyfield="quarterid" orderby="quarterid desc" table="quarterview" noorg="true">
+			<TEXTFIELD w="40" title="Semester ID">quarterid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Start">qstart</TEXTFIELD>
+			<TEXTFIELD w="40" title="Last Drop">qlastdrop</TEXTFIELD>
+			<TEXTFIELD w="40" title="End">qend</TEXTFIELD>
+			<TEXTFIELD w="40" title="Active">active</TEXTFIELD>
+			<FORM name="Semesters" keyfield="quarterid" table="Quarters" noorg="true">
+				<COMBOBOX w="430" title="Divisions" lptable="orgs" noorg="true" y="10" h="20" x="10" lpfield="org_name">org_id</COMBOBOX>
+				<TEXTFIELD w="150" title="Semester ID" y="30" h="20" x="10">quarterid</TEXTFIELD>
+				<TEXTDATE w="150" title="Semester Start" y="30" h="20" x="290">qstart</TEXTDATE>
+				<TEXTDATE w="150" title="Last Drop" y="50" h="20" x="10">qlastdrop</TEXTDATE>
+				<TEXTDATE w="150" title="Semester End" y="50" h="20" x="290">qend</TEXTDATE>
+				<TEXTDATE w="150" title="Late Registration" y="70" h="20" x="10">qlatereg</TEXTDATE>
+				<TEXTDATE w="150" title="Late Change" y="70" h="20" x="290">qlatechange</TEXTDATE>
+				<CHECKBOX w="150" title="Active" y="90" h="20" x="10">active</CHECKBOX>
+				<CHECKBOX w="150" title="Publish Results" y="90" h="20" x="290">publishgrades</CHECKBOX>
+				<TEXTFIELD w="150" title="Minimum Credits" default="16" y="110" h="20" x="10">mincredits</TEXTFIELD>
+				<TEXTFIELD w="150" title="Maximum Credits" default="21" y="110" h="20" x="290">maxcredits</TEXTFIELD>
+				<CHECKBOX w="150" title="PostGraduate" y="130" h="20" x="10">postgraduate</CHECKBOX>
+				<TEXTAREA w="430" title="Details" y="150" h="70" x="10">details</TEXTAREA>
+			</FORM>
+			<GRID name="Semester Calendar" keyfield="qcalendarid" linkfield="quarterid" table="qcalendarview">
+				<TEXTFIELD w="40" title="Semester ID">quarterid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Degree Level">sublevelname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Sub Level">degreelevelname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Semester Date">qdate</TEXTFIELD>
+				<TEXTFIELD w="40" title="Event">event</TEXTFIELD>
+				<FORM name="Semester Calendar" keyfield="qcalendarid" linkfield="quarterid" table="qcalendar" inputkey="1">
+					<TEXTFIELD w="100" enabled="false" title="Semester ID" y="10" h="20" x="10">quarterid</TEXTFIELD>
+					<COMBOBOX w="210" title="Sub Level Name" lptable="sublevels" lw="110" y="10" h="20" x="240" lpfield="sublevelname">sublevelid</COMBOBOX>
+					<TEXTDATE w="150" title="Semester Date" y="30" h="20" x="10">qdate</TEXTDATE>
+					<TEXTDATE w="150" title="Ending" y="30" h="20" x="290">qenddate</TEXTDATE>
+					<TEXTFIELD w="430" title="Event" y="50" h="20" x="10">event</TEXTFIELD>
+					<TEXTAREA w="430" title="Details" y="70" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="News" key="2" h="500">
+		<GRID name="News" keyfield="sys_news_id" table="sys_news">
+			<TEXTFIELD w="75" title="News ID">sys_news_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="News Group">sys_news_group</TEXTFIELD>
+			<TEXTFIELD w="75" title="News Title">sys_news_title</TEXTFIELD>
+			<CHECKBOX w="75" title="Publish">publish</CHECKBOX>
+			<FORM name="News" keyfield="sys_news_id" table="sys_news" th="210">
+				<TEXTFIELD w="150" title="News Group" y="10" h="20" x="10">sys_news_group</TEXTFIELD>
+				<CHECKBOX w="150" title="Publish" y="10" h="20" x="290">publish</CHECKBOX>
+				<TEXTFIELD w="430" title="News Title" y="30" h="20" x="10">sys_news_title</TEXTFIELD>
+				<EDITOR w="530" tab="News" y="2" h="170" x="10">details</EDITOR>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Lecturer Password" type="horl" key="179" h="500">
+		<JASPER filtered="false" name="Lecturer Password" reportfile="newpswdl.jasper"></JASPER>
+	</DESK>
+	<DESK w="700" name="Guardian Password" type="horl" key="189" h="500">
+		<JASPER filtered="false" name="Lecturer Password" reportfile="newpswdg.jasper"></JASPER>
+	</DESK>
+	<DESK w="800" name="Error Messages" key="3" h="500">
+		<GRID name="Error Messages" keyfield="sys_error_id" table="sys_errors" noorg="true">
+			<TEXTFIELD w="75" title="Error ID">sys_error_id</TEXTFIELD>
+			<TEXTFIELD w="275" title="Error">sys_error</TEXTFIELD>
+			<FORM name="Error Messages" keyfield="sys_error_id" table="sys_errors" noorg="true">
+				<TEXTFIELD w="430" title="Error" y="10" h="20" x="10">sys_error</TEXTFIELD>
+				<TEXTAREA w="430" title="Message" y="30" h="70" x="10">error_message</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="585" name="Semester Student Courses" type="vert" key="14" h="570">
+		<GRID name="Semester" keyfield="quarterid" orderby="quarterid desc" table="quarterview">
+			<TEXTFIELD w="240" title="Quarter ID">quarterid</TEXTFIELD>
+			<TEXTFIELD w="240" title="Start">qstart</TEXTFIELD>
+			<TEXTFIELD w="240" title="End">qend</TEXTFIELD>
+			<GRID name="Course Offering" keyfield="qcourseid" orderby="courseid" linkfield="quarterid" table="qcourseview">
+				<TEXTFIELD w="40" title="Course ID">courseid</TEXTFIELD>
+				<TEXTFIELD w="100" title="Course">coursetitle</TEXTFIELD>
+				<TEXTFIELD w="100" title="Instructor">instructorname</TEXTFIELD>
+				<TEXTFIELD w="100" title="Class Option">classoption</TEXTFIELD>
+				<TEXTFIELD w="100" title="Credit Hours">credithours</TEXTFIELD>
+				<GRID name="Q. Grades" keyfield="qgradeid" orderby="studentid" linkfield="qcourseid" table="studentgradeview" where="(approved = true)">
+					<TEXTFIELD w="10" title="Student ID">studentid</TEXTFIELD>
+					<TEXTFIELD w="20" title="Student">studentname</TEXTFIELD>
+					<TEXTFIELD w="10" title="Course ID">courseid</TEXTFIELD>
+					<TEXTFIELD w="100" title="Course Title">coursetitle</TEXTFIELD>
+					<TEXTFIELD w="100" title="Instructor">instructorname</TEXTFIELD>
+					<TEXTFIELD w="10" title="Grade">gradeid</TEXTFIELD>
+					<TEXTFIELD w="5" title="Dropped">dropped</TEXTFIELD>
+					<GRID name="Grade Change List" keyfield="gradechangeid" delete="false" linkfield="qgradeid" table="vw_gradechangelist" noorg="true">
+						<TEXTFIELD w="40" title="Changed By">changed_by</TEXTFIELD>
+						<TEXTFIELD w="40" title="Old Grade">oldgrade</TEXTFIELD>
+						<TEXTFIELD w="40" title="New Grade">newgrade</TEXTFIELD>
+						<TEXTFIELD w="80" title="Change Date">changedate</TEXTFIELD>
+						<TEXTFIELD w="40" title="Client IP">clientip</TEXTFIELD>
+					</GRID>
+				</GRID>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Dean Approvals" type="horl" key="215" h="500">
+		<FILTER location="250" name="Dean Approvals" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Quarters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" listfield="quarter" pos="top"></DRILLDOWN>
+			</DRILLDOWN>
+			<JASPER filtered="true" name="All Off Campus" reportfile="approvalstudentdean.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Grade Changes" type="vert" key="558" h="700">
+		<FILTER w="700" name="Filter" split="150" type="vert" h="550">
+			<FILTERFORM name="Date Range">
+				<TEXTDATE w="150" title="Starting" y="10" h="20" x="10">startdate</TEXTDATE>
+				<TEXTDATE w="150" title="Ending" y="10" h="20" x="290">enddate</TEXTDATE>
+			</FILTERFORM>
+			<JASPER filtered="true" name="Grade Changes" reportfile="gradechanges.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Campuses" key="10" h="500">
+		<GRID name="Campuses" keyfield="org_id" table="orgs">
+			<TEXTFIELD w="75" title="Org ID">org_id</TEXTFIELD>
+			<TEXTFIELD w="275" title="Campus">org_name</TEXTFIELD>
+			<CHECKBOX w="75" title="Default">is_default</CHECKBOX>
+			<CHECKBOX w="75" title="Active">is_active</CHECKBOX>
+			<GRID wheresql="table_name = 'orgs'" name="Address" keyfield="address_id" linkfield="table_id" table="vw_address">
+				<TEXTFIELD w="140" title="Country">sys_country_name</TEXTFIELD>
+				<TEXTFIELD w="80" title="Postal Code">postal_code</TEXTFIELD>
+				<TEXTFIELD w="140" title="Town">town</TEXTFIELD>
+				<TEXTFIELD w="140" title="Phone Number">phone_number</TEXTFIELD>
+				<TEXTFIELD w="120" title="Mobile">mobile</TEXTFIELD>
+				<TEXTFIELD w="120" title="Email">email</TEXTFIELD>
+				<FORM name="Address" keyfield="address_id" linkfield="table_id" table="address">
+					<DEFAULT default="orgs">table_name</DEFAULT>
+					<COMBOBOX w="430" title="Country" default="KE" lptable="sys_countrys" noorg="true" y="10" h="20" x="10" lpfield="sys_country_name">sys_country_id</COMBOBOX>
+					<TEXTFIELD w="150" title="Post Office Box" y="30" h="20" x="10">post_office_box</TEXTFIELD>
+					<TEXTFIELD w="150" title="Postal Code" y="30" h="20" x="290">postal_code</TEXTFIELD>
+					<TEXTFIELD w="150" title="Town" y="50" h="20" x="10">town</TEXTFIELD>
+					<TEXTFIELD w="430" title="Premises" y="70" h="20" x="10">premises</TEXTFIELD>
+					<TEXTFIELD w="430" title="Street" y="90" h="20" x="10">street</TEXTFIELD>
+					<TEXTFIELD w="430" title="Phone Number" y="110" h="20" x="10">phone_number</TEXTFIELD>
+					<TEXTFIELD w="150" title="Extension" y="130" h="20" x="10">extension</TEXTFIELD>
+					<TEXTFIELD w="430" title="Mobile" y="150" h="20" x="10">mobile</TEXTFIELD>
+					<TEXTFIELD w="430" title="Fax" y="170" h="20" x="10">fax</TEXTFIELD>
+					<TEXTFIELD w="430" title="Email" y="190" h="20" x="10">email</TEXTFIELD>
+					<TEXTAREA w="430" title="Details" y="210" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<FORM name="Organisation" keyfield="org_id" table="orgs">
+				<TEXTFIELD w="350" title="Campus" y="10" h="20" x="10">org_name</TEXTFIELD>
+				<CHECKBOX w="150" title="Default" y="30" h="20" x="10">is_default</CHECKBOX>
+				<CHECKBOX w="150" title="Active" y="30" h="20" x="290">is_active</CHECKBOX>
+				<TEXTFIELD w="350" title="Logo" y="50" h="20" x="10">logo</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="70" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Password Reset" key="29" h="500">
+		<GRID limit="100" name="Students" keyfield="entity_id" table="vw_entitys" noorg="true" where="(entity_type_id = 21)">
+			<TEXTFIELD w="100" title="User Name">user_name</TEXTFIELD>
+			<TEXTFIELD w="140" title="Entity Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="100" title="Role">function_role</TEXTFIELD>
+			<CHECKBOX w="75" title="Active" format="boolean">is_active</CHECKBOX>
+			<TEXTFIELD w="75" title="First Password">first_password</TEXTFIELD>
+			<FORM new="false" name="Students" keyfield="entity_id" table="entitys" noorg="true">
+				<COMBOBOX w="350" title="Campus" lptable="orgs" noorg="true" y="10" h="20" x="10" lpfield="org_name">org_id</COMBOBOX>
+				<DEFAULT default="21">entity_type_id</DEFAULT>
+				<TEXTFIELD w="430" title="Entity Name" y="30" h="20" x="10">entity_name</TEXTFIELD>
+				<TEXTFIELD w="430" title="User Name" y="50" h="20" x="10">user_name</TEXTFIELD>
+				<TEXTFIELD w="430" title="Primary EMail" y="70" h="20" x="10">primary_email</TEXTFIELD>
+				<CHECKBOX w="50" title="Entity Leader" y="90" h="20" x="190">entity_leader</CHECKBOX>
+				<TEXTFIELD w="430" title="Function Role" y="110" h="20" x="10">function_role</TEXTFIELD>
+				<CHECKBOX w="150" title="Active" y="130" h="20" x="10">is_active</CHECKBOX>
+				<TEXTFIELD w="150" title="First Password" y="130" h="20" x="290">first_password</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="150" h="70" x="10">details</TEXTAREA>
+			</FORM>
+			<GRID name="Subscriptions" keyfield="entity_subscription_id" linkfield="entity_id" table="vw_entity_subscriptions" noorg="true">
+				<TEXTFIELD w="275" title="Entity Type">entity_type_name</TEXTFIELD>
+				<TEXTFIELD w="275" title="Level">subscription_level_name</TEXTFIELD>
+				<FORM name="Subscriptions" keyfield="entity_subscription_id" linkfield="entity_id" table="entity_subscriptions" noorg="true">
+					<COMBOBOX w="430" title="Entity Type" lptable="entity_types" y="10" h="20" x="10" lpfield="entity_type_name">entity_type_id</COMBOBOX>
+					<COMBOBOX w="430" title="Subscription Level" lptable="subscription_levels" y="30" h="20" x="10" lpfield="subscription_level_name">subscription_level_id</COMBOBOX>
+					<TEXTAREA w="430" title="Details" y="50" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<ACTIONS>
+				<ACTION fnct="reset_password">Reset Password</ACTION>
+			</ACTIONS>
+		</GRID>
+		<GRID limit="100" name="Applicants" keyfield="entity_id" table="vw_entitys" noorg="true" where="(entity_type_id = 20)">
+			<TEXTFIELD w="100" title="User Name">user_name</TEXTFIELD>
+			<TEXTFIELD w="140" title="Entity Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="100" title="Role">function_role</TEXTFIELD>
+			<CHECKBOX w="75" title="Active" format="boolean">is_active</CHECKBOX>
+			<TEXTFIELD w="75" title="First Password">first_password</TEXTFIELD>
+			<FORM new="false" name="Applicants" keyfield="entity_id" table="entitys" noorg="true">
+				<COMBOBOX w="350" title="Campus" lptable="orgs" noorg="true" y="10" h="20" x="10" lpfield="org_name">org_id</COMBOBOX>
+				<DEFAULT default="20">entity_type_id</DEFAULT>
+				<TEXTFIELD w="430" title="Entity Name" y="30" h="20" x="10">entity_name</TEXTFIELD>
+				<TEXTFIELD w="430" title="User Name" y="50" h="20" x="10">user_name</TEXTFIELD>
+				<TEXTFIELD w="430" title="Primary EMail" y="70" h="20" x="10">primary_email</TEXTFIELD>
+				<CHECKBOX w="50" title="Entity Leader" y="90" h="20" x="190">entity_leader</CHECKBOX>
+				<TEXTFIELD w="430" title="Function Role" y="110" h="20" x="10">function_role</TEXTFIELD>
+				<CHECKBOX w="150" title="Active" y="130" h="20" x="10">is_active</CHECKBOX>
+				<TEXTFIELD w="150" title="First Password" y="130" h="20" x="290">first_password</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="150" h="70" x="10">details</TEXTAREA>
+			</FORM>
+			<GRID name="Subscriptions" keyfield="entity_subscription_id" linkfield="entity_id" table="vw_entity_subscriptions" noorg="true">
+				<TEXTFIELD w="275" title="Entity Type">entity_type_name</TEXTFIELD>
+				<TEXTFIELD w="275" title="Level">subscription_level_name</TEXTFIELD>
+				<FORM name="Subscriptions" keyfield="entity_subscription_id" linkfield="entity_id" table="entity_subscriptions" noorg="true">
+					<COMBOBOX w="430" title="Entity Type" lptable="entity_types" y="10" h="20" x="10" lpfield="entity_type_name">entity_type_id</COMBOBOX>
+					<COMBOBOX w="430" title="Subscription Level" lptable="subscription_levels" y="30" h="20" x="10" lpfield="subscription_level_name">subscription_level_id</COMBOBOX>
+					<TEXTAREA w="430" title="Details" y="50" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<ACTIONS>
+				<ACTION fnct="reset_password">Reset Password</ACTION>
+			</ACTIONS>
+		</GRID>
+		<GRID limit="100" name="Guardians" keyfield="entity_id" table="vw_entitys" noorg="true" where="(entity_type_id = 22)">
+			<TEXTFIELD w="100" title="User Name">user_name</TEXTFIELD>
+			<TEXTFIELD w="140" title="Entity Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="100" title="Role">function_role</TEXTFIELD>
+			<CHECKBOX w="75" title="Active" format="boolean">is_active</CHECKBOX>
+			<TEXTFIELD w="75" title="First Password">first_password</TEXTFIELD>
+			<FORM new="false" name="Guardians" keyfield="entity_id" table="entitys" noorg="true">
+				<COMBOBOX w="350" title="Campus" lptable="orgs" noorg="true" y="10" h="20" x="10" lpfield="org_name">org_id</COMBOBOX>
+				<DEFAULT default="22">entity_type_id</DEFAULT>
+				<TEXTFIELD w="430" title="Entity Name" y="30" h="20" x="10">entity_name</TEXTFIELD>
+				<TEXTFIELD w="430" title="User Name" y="50" h="20" x="10">user_name</TEXTFIELD>
+				<TEXTFIELD w="430" title="Primary EMail" y="70" h="20" x="10">primary_email</TEXTFIELD>
+				<CHECKBOX w="50" title="Entity Leader" y="90" h="20" x="190">entity_leader</CHECKBOX>
+				<TEXTFIELD w="430" title="Function Role" y="110" h="20" x="10">function_role</TEXTFIELD>
+				<CHECKBOX w="150" title="Active" y="130" h="20" x="10">is_active</CHECKBOX>
+				<TEXTFIELD w="150" title="First Password" y="130" h="20" x="290">first_password</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="150" h="70" x="10">details</TEXTAREA>
+			</FORM>
+			<GRID name="Subscriptions" keyfield="entity_subscription_id" linkfield="entity_id" table="vw_entity_subscriptions" noorg="true">
+				<TEXTFIELD w="275" title="Entity Type">entity_type_name</TEXTFIELD>
+				<TEXTFIELD w="275" title="Level">subscription_level_name</TEXTFIELD>
+				<FORM name="Subscriptions" keyfield="entity_subscription_id" linkfield="entity_id" table="entity_subscriptions" noorg="true">
+					<COMBOBOX w="430" title="Entity Type" lptable="entity_types" y="10" h="20" x="10" lpfield="entity_type_name">entity_type_id</COMBOBOX>
+					<COMBOBOX w="430" title="Subscription Level" lptable="subscription_levels" y="30" h="20" x="10" lpfield="subscription_level_name">subscription_level_id</COMBOBOX>
+					<TEXTAREA w="430" title="Details" y="50" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<ACTIONS>
+				<ACTION fnct="reset_password">Reset Password</ACTION>
+			</ACTIONS>
+		</GRID>
+		<GRID limit="100" name="Lecturers" keyfield="entity_id" table="vw_entitys" noorg="true" where="(entity_type_id = 23)">
+			<TEXTFIELD w="100" title="User Name">user_name</TEXTFIELD>
+			<TEXTFIELD w="140" title="Entity Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="100" title="Role">function_role</TEXTFIELD>
+			<CHECKBOX w="75" title="Active" format="boolean">is_active</CHECKBOX>
+			<TEXTFIELD w="75" title="First Password">first_password</TEXTFIELD>
+			<FORM new="false" name="Lecturers" keyfield="entity_id" table="entitys" noorg="true">
+				<COMBOBOX w="350" title="Campus" lptable="orgs" noorg="true" y="10" h="20" x="10" lpfield="org_name">org_id</COMBOBOX>
+				<DEFAULT default="23">entity_type_id</DEFAULT>
+				<TEXTFIELD w="430" title="Entity Name" y="30" h="20" x="10">entity_name</TEXTFIELD>
+				<TEXTFIELD w="430" title="User Name" y="50" h="20" x="10">user_name</TEXTFIELD>
+				<TEXTFIELD w="430" title="Primary EMail" y="70" h="20" x="10">primary_email</TEXTFIELD>
+				<CHECKBOX w="50" title="Entity Leader" y="90" h="20" x="190">entity_leader</CHECKBOX>
+				<TEXTFIELD w="430" title="Function Role" y="110" h="20" x="10">function_role</TEXTFIELD>
+				<CHECKBOX w="150" title="Active" y="130" h="20" x="10">is_active</CHECKBOX>
+				<TEXTFIELD w="150" title="First Password" y="130" h="20" x="290">first_password</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="150" h="70" x="10">details</TEXTAREA>
+			</FORM>
+			<GRID name="Subscriptions" keyfield="entity_subscription_id" linkfield="entity_id" table="vw_entity_subscriptions" noorg="true">
+				<TEXTFIELD w="275" title="Entity Type">entity_type_name</TEXTFIELD>
+				<TEXTFIELD w="275" title="Level">subscription_level_name</TEXTFIELD>
+				<FORM name="Subscriptions" keyfield="entity_subscription_id" linkfield="entity_id" table="entity_subscriptions" noorg="true">
+					<COMBOBOX w="430" title="Entity Type" lptable="entity_types" y="10" h="20" x="10" lpfield="entity_type_name">entity_type_id</COMBOBOX>
+					<COMBOBOX w="430" title="Subscription Level" lptable="subscription_levels" y="30" h="20" x="10" lpfield="subscription_level_name">subscription_level_id</COMBOBOX>
+					<TEXTAREA w="430" title="Details" y="50" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<ACTIONS>
+				<ACTION fnct="reset_password">Reset Password</ACTION>
+			</ACTIONS>
+		</GRID>
+		<GRID limit="100" name="Industry" keyfield="entity_id" table="vw_entitys" noorg="true" where="(entity_type_id = 24)">
+			<TEXTFIELD w="100" title="User Name">user_name</TEXTFIELD>
+			<TEXTFIELD w="140" title="Entity Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="100" title="Role">function_role</TEXTFIELD>
+			<CHECKBOX w="75" title="Active" format="boolean">is_active</CHECKBOX>
+			<TEXTFIELD w="75" title="First Password">first_password</TEXTFIELD>
+			<FORM new="false" name="Industry" keyfield="entity_id" table="entitys" noorg="true">
+				<COMBOBOX w="350" title="Campus" lptable="orgs" noorg="true" y="10" h="20" x="10" lpfield="org_name">org_id</COMBOBOX>
+				<DEFAULT default="24">entity_type_id</DEFAULT>
+				<TEXTFIELD w="430" title="Entity Name" y="30" h="20" x="10">entity_name</TEXTFIELD>
+				<TEXTFIELD w="430" title="User Name" y="50" h="20" x="10">user_name</TEXTFIELD>
+				<TEXTFIELD w="430" title="Primary EMail" y="70" h="20" x="10">primary_email</TEXTFIELD>
+				<CHECKBOX w="50" title="Entity Leader" y="90" h="20" x="190">entity_leader</CHECKBOX>
+				<TEXTFIELD w="430" title="Function Role" y="110" h="20" x="10">function_role</TEXTFIELD>
+				<CHECKBOX w="150" title="Active" y="130" h="20" x="10">is_active</CHECKBOX>
+				<TEXTFIELD w="150" title="First Password" y="130" h="20" x="290">first_password</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="150" h="70" x="10">details</TEXTAREA>
+			</FORM>
+			<GRID name="Subscriptions" keyfield="entity_subscription_id" linkfield="entity_id" table="vw_entity_subscriptions" noorg="true">
+				<TEXTFIELD w="275" title="Entity Type">entity_type_name</TEXTFIELD>
+				<TEXTFIELD w="275" title="Level">subscription_level_name</TEXTFIELD>
+				<FORM name="Subscriptions" keyfield="entity_subscription_id" linkfield="entity_id" table="entity_subscriptions" noorg="true">
+					<COMBOBOX w="430" title="Entity Type" lptable="entity_types" y="10" h="20" x="10" lpfield="entity_type_name">entity_type_id</COMBOBOX>
+					<COMBOBOX w="430" title="Subscription Level" lptable="subscription_levels" y="30" h="20" x="10" lpfield="subscription_level_name">subscription_level_id</COMBOBOX>
+					<TEXTAREA w="430" title="Details" y="50" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<ACTIONS>
+				<ACTION fnct="reset_password">Reset Password</ACTION>
+			</ACTIONS>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="User Management" key="15" h="500">
+		<GRID limit="100" name="Entities" keyfield="entity_id" table="vw_entitys" where="(use_key = 0)">
+			<TEXTFIELD w="140" title="Entity Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="100" title="User Name">user_name</TEXTFIELD>
+			<TEXTFIELD w="100" title="Role">function_role</TEXTFIELD>
+			<CHECKBOX w="100" title="Super User" format="boolean">super_user</CHECKBOX>
+			<CHECKBOX w="75" title="Active" format="boolean">is_active</CHECKBOX>
+			<TEXTFIELD w="100" title="Type">entity_type_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Entity ID">entity_id</TEXTFIELD>
+			<GRID wheresql="table_name = 'entitys'" name="Address" keyfield="address_id" linkfield="table_id" table="vw_address">
+				<TEXTFIELD w="100" title="Country">sys_country_name</TEXTFIELD>
+				<TEXTFIELD w="100" title="Postal Code">postal_code</TEXTFIELD>
+				<TEXTFIELD w="100" title="Town">town</TEXTFIELD>
+				<TEXTFIELD w="100" title="Phone Number">phone_number</TEXTFIELD>
+				<TEXTFIELD w="100" title="Mobile">mobile</TEXTFIELD>
+				<TEXTFIELD w="140" title="Email">email</TEXTFIELD>
+				<TEXTFIELD w="140" title="Default">is_default</TEXTFIELD>
+				<FORM name="Address" keyfield="address_id" linkfield="table_id" table="address">
+					<DEFAULT default="entitys">table_name</DEFAULT>
+					<COMBOBOX w="430" title="Country" default="KE" lptable="sys_countrys" noorg="true" y="10" h="20" x="10" lpfield="sys_country_name">sys_country_id</COMBOBOX>
+					<TEXTFIELD w="150" title="Post Office Box" y="30" h="20" x="10">post_office_box</TEXTFIELD>
+					<TEXTFIELD w="150" title="Postal Code" y="30" h="20" x="290">postal_code</TEXTFIELD>
+					<TEXTFIELD w="150" title="Town" y="50" h="20" x="10">town</TEXTFIELD>
+					<TEXTFIELD w="430" title="Premises" y="70" h="20" x="10">premises</TEXTFIELD>
+					<TEXTFIELD w="430" title="Street" y="90" h="20" x="10">street</TEXTFIELD>
+					<TEXTFIELD w="430" title="Phone Number" y="110" h="20" x="10">phone_number</TEXTFIELD>
+					<TEXTFIELD w="150" title="Extension" y="130" h="20" x="10">extension</TEXTFIELD>
+					<TEXTFIELD w="430" title="Mobile" y="150" h="20" x="10">mobile</TEXTFIELD>
+					<TEXTFIELD w="430" title="Fax" y="170" h="20" x="10">fax</TEXTFIELD>
+					<TEXTFIELD w="430" title="Email" y="190" h="20" x="10">email</TEXTFIELD>
+					<CHECKBOX w="30" title="Default" y="210" h="20" x="10">is_default</CHECKBOX>
+					<TEXTAREA w="430" title="Details" y="230" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<GRID limit="100" name="Subscriptions" keyfield="entity_subscription_id" linkfield="entity_id" table="vw_entity_subscriptions">
+				<TEXTFIELD w="275" title="Entity Type">entity_type_name</TEXTFIELD>
+				<TEXTFIELD w="275" title="Level">subscription_level_name</TEXTFIELD>
+				<FORM name="Subscriptions" keyfield="entity_subscription_id" linkfield="entity_id" table="entity_subscriptions">
+					<COMBOBOX w="430" title="Entity Type" lptable="entity_types" y="10" h="20" x="10" lpfield="entity_type_name">entity_type_id</COMBOBOX>
+					<COMBOBOX w="430" title="Subscription Level" lptable="subscription_levels" y="30" h="20" x="10" lpfield="subscription_level_name">subscription_level_id</COMBOBOX>
+					<TEXTAREA w="430" title="Details" y="50" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<FORM name="Entitys" keyfield="entity_id" table="entitys">
+				<COMBOBOX w="150" title="Campus" lptable="orgs" y="10" h="20" x="10" lpfield="org_name">org_id</COMBOBOX>
+				<COMBOBOX w="150" title="Entity Type" lptable="entity_types" where="(use_key = 0)" y="10" h="20" x="290" lpfield="entity_type_name">entity_type_id</COMBOBOX>
+				<TEXTFIELD w="430" title="Entity Name" y="30" h="20" x="10">entity_name</TEXTFIELD>
+				<TEXTFIELD w="430" title="User Name" y="50" h="20" x="10">user_name</TEXTFIELD>
+				<TEXTFIELD w="430" title="Primary EMail" y="70" h="20" x="10">primary_email</TEXTFIELD>
+				<CHECKBOX w="50" title="Super User" y="90" h="20" x="10">super_user</CHECKBOX>
+				<CHECKBOX w="50" title="Entity Leader" y="90" h="20" x="190">entity_leader</CHECKBOX>
+				<CHECKBOX w="50" title="No Org" y="90" h="20" x="390">no_org</CHECKBOX>
+				<TEXTFIELD w="430" title="Function Role" y="110" h="20" x="10">function_role</TEXTFIELD>
+				<CHECKBOX w="150" title="Active" y="130" h="20" x="10">is_active</CHECKBOX>
+				<TEXTFIELD w="150" title="First Password" y="130" h="20" x="290">first_password</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="150" h="70" x="10">details</TEXTAREA>
+			</FORM>
+			<ACTIONS>
+				<ACTION fnct="reset_password">Reset Password</ACTION>
+			</ACTIONS>
+		</GRID>
+		<GRID name="Entity Types" keyfield="entity_type_id" table="entity_types">
+			<TEXTFIELD w="75" title="Entity Type ID">entity_type_id</TEXTFIELD>
+			<TEXTFIELD w="175" title="Entity Type Name">entity_type_name</TEXTFIELD>
+			<TEXTFIELD w="175" title="Entity Role">entity_role</TEXTFIELD>
+			<TEXTFIELD w="175" title="Group EMail">group_email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Use Key">use_key</TEXTFIELD>
+			<FORM name="Entity Types" keyfield="entity_type_id" table="entity_types" th="210">
+				<TEXTFIELD w="430" title="Entity Type Name" y="10" h="20" x="10">entity_type_name</TEXTFIELD>
+				<TEXTFIELD w="430" title="Entity Role" y="30" h="20" x="10">entity_role</TEXTFIELD>
+				<TEXTFIELD w="150" title="Use Key" y="50" h="20" x="10">use_key</TEXTFIELD>
+				<TEXTFIELD w="150" title="Start View" y="50" h="20" x="290">start_view</TEXTFIELD>
+				<TEXTFIELD w="430" title="Group EMail" y="70" h="20" x="10">group_email</TEXTFIELD>
+				<TEXTAREA w="530" tab="Description" y="2" h="170" x="10">description</TEXTAREA>
+				<TEXTAREA w="530" tab="Details" y="2" h="170" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+		<GRID name="Subscription Levels" keyfield="subscription_level_id" table="subscription_levels">
+			<TEXTFIELD w="75" title="Level ID">subscription_level_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Level Name">subscription_level_name</TEXTFIELD>
+			<FORM name="Subscription Levels" keyfield="subscription_level_id" table="subscription_levels">
+				<TEXTFIELD w="430" title="Level" y="10" h="20" x="10">subscription_level_name</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="30" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Forms" key="20" h="500">
+		<GRID name="Forms" keyfield="form_id" orderby="form_number, form_id" table="forms">
+			<TEXTFIELD w="75" title="Form ID">form_id</TEXTFIELD>
+			<TEXTFIELD w="240" title="Form Name">form_name</TEXTFIELD>
+			<TEXTFIELD w="120" title="Form Number">form_number</TEXTFIELD>
+			<TEXTFIELD w="75" title="Version">version</TEXTFIELD>
+			<CHECKBOX w="75" title="Completed" format="boolean" ischar="true">completed</CHECKBOX>
+			<CHECKBOX w="75" title="Active" format="boolean" ischar="true">is_active</CHECKBOX>
+			<BROWSER name="Entry Form" action="FORM" linkfield="actionvalue" baseurl="http://localhost:9090/form.jsp?action=FORM" blankpage="yes">form_id</BROWSER>
+			<GRID name="Fields" keyfield="field_id" orderby="field_order" linkfield="form_id" table="vw_fields">
+				<TEXTFIELD w="75" title="Field Order">field_order</TEXTFIELD>
+				<TEXTFIELD w="240" title="Question">question</TEXTFIELD>
+				<TEXTFIELD w="75" title="Field Type">field_type</TEXTFIELD>
+				<TEXTFIELD w="75" title="Share Line">share_line</TEXTFIELD>
+				<TEXTFIELD w="75" title="Field Size">field_size</TEXTFIELD>
+				<CHECKBOX w="75" title="Manditory">manditory</CHECKBOX>
+				<CHECKBOX w="75" title="Field Bold">field_bold</CHECKBOX>
+				<CHECKBOX w="75" title="Field Italics">field_italics</CHECKBOX>
+				<GRID name="Sub Fields" keyfield="sub_field_id" orderby="sub_field_order" linkfield="field_id" table="vw_sub_fields">
+					<TEXTFIELD w="75" title="Sub Field Order">sub_field_order</TEXTFIELD>
+					<TEXTFIELD w="240" title="Question">question</TEXTFIELD>
+					<TEXTFIELD w="75" title="Sub Title Share">sub_title_share</TEXTFIELD>
+					<TEXTFIELD w="75" title="Sub Field Type">sub_field_type</TEXTFIELD>
+					<TEXTFIELD w="75" title="Sub Field Size">sub_field_size</TEXTFIELD>
+					<CHECKBOX w="75" title="Manditory" format="boolean">manditory</CHECKBOX>
+					<FORM name="Sub Fields" keyfield="sub_field_id" linkfield="field_id" table="sub_fields">
+						<TEXTAREA w="530" tab="Question" y="2" h="70" x="10">question</TEXTAREA>
+						<TEXTAREA w="530" tab="Sub Field Lookup" y="2" h="70" x="10">sub_field_lookup</TEXTAREA>
+						<TEXTFIELD w="150" title="Sub Field Order" y="80" h="20" x="10">sub_field_order</TEXTFIELD>
+						<COMBOLIST w="150" title="Sub Field Type" y="80" h="20" x="290">sub_field_type
+							<NODE>TEXTFIELD</NODE>
+							<NODE>TITLE</NODE>
+							<NODE>SUBGRID</NODE>
+						</COMBOLIST>
+						<TEXTFIELD w="430" title="Sub Title Share" y="100" h="20" x="10">sub_title_share</TEXTFIELD>
+						<TEXTFIELD w="150" title="Sub Field Size" default="5" y="190" h="20" x="10">sub_field_size</TEXTFIELD>
+						<TEXTFIELD w="150" title="Sub Col Spans" y="190" h="20" x="290">sub_col_spans</TEXTFIELD>
+						<CHECKBOX w="150" title="Manditory" y="210" ischar="true" h="20" x="10">manditory</CHECKBOX>
+						<CHECKBOX w="150" title="Show" y="210" ischar="true" h="20" x="290">show</CHECKBOX>
+					</FORM>
+				</GRID>
+				<FORM name="Fields" keyfield="field_id" linkfield="form_id" table="fields">
+					<TEXTAREA w="530" tab="Question" y="10" h="80" x="10">question</TEXTAREA>
+					<TEXTAREA w="530" tab="Field Lookup" y="100" h="70" x="10">field_lookup</TEXTAREA>
+					<COMBOLIST w="150" title="Field Type" default="TEXTFIELD" y="170" h="20" x="10">field_type
+						<NODE>TEXTFIELD</NODE>
+						<NODE>TITLE</NODE>
+						<NODE>SUBGRID</NODE>
+						<NODE>DATE</NODE>
+						<NODE>TIME</NODE>
+						<NODE>LIST</NODE>
+						<NODE>SELECT</NODE>
+					</COMBOLIST>
+					<TEXTFIELD w="150" title="Field Order" y="170" h="20" x="290">field_order</TEXTFIELD>
+					<TEXTFIELD w="150" title="Share Line" y="190" h="20" x="10">share_line</TEXTFIELD>
+					<TEXTFIELD w="150" title="Field Size" default="25" y="190" h="20" x="290">field_size</TEXTFIELD>
+					<TEXTFIELD w="150" title="Field Class" y="210" h="20" x="10">field_class</TEXTFIELD>
+					<CHECKBOX w="150" title="Manditory" y="210" ischar="true" h="20" x="290">manditory</CHECKBOX>
+					<CHECKBOX w="150" title="Field Bold" y="230" ischar="true" h="20" x="10">field_bold</CHECKBOX>
+					<CHECKBOX w="150" title="Field Italics" y="230" ischar="true" h="20" x="290">field_italics</CHECKBOX>
+				</FORM>
+			</GRID>
+			<FORM name="Forms" keyfield="form_id" table="forms" th="210">
+				<TEXTFIELD w="430" title="Form Name" y="10" h="20" x="10">form_name</TEXTFIELD>
+				<TEXTFIELD w="150" title="Form Number" y="30" h="20" x="10">form_number</TEXTFIELD>
+				<TEXTFIELD w="150" title="Version" y="30" h="20" x="290">version</TEXTFIELD>
+				<CHECKBOX w="150" title="Completed" y="50" ischar="true" h="20" x="10">completed</CHECKBOX>
+				<CHECKBOX w="150" title="Active" y="50" ischar="true" h="20" x="290">is_active</CHECKBOX>
+				<EDITOR w="530" tab="Form Header" y="2" h="170" x="10">form_header</EDITOR>
+				<EDITOR w="530" tab="Form Footer" y="2" h="170" x="10">form_footer</EDITOR>
+				<TEXTAREA w="530" tab="Details" y="2" h="170" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="750" name="Workflows" key="40" h="570">
+		<GRID name="Workflows" keyfield="workflow_id" table="vw_workflows">
+			<TEXTFIELD w="75" title="Workflow ID">workflow_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Workflow Name">workflow_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Source">source_entity_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Table Name">table_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Table Link Field">table_link_field</TEXTFIELD>
+			<TEXTFIELD w="75" title="Table Link ID">table_link_id</TEXTFIELD>
+			<GRID name="Workflow Phases" keyfield="workflow_phase_id" linkfield="workflow_id" table="vw_workflow_phases">
+				<TEXTFIELD w="75" title="Approval Level">approval_level</TEXTFIELD>
+				<TEXTFIELD w="75" title="Return Level">return_level</TEXTFIELD>
+				<TEXTFIELD w="75" title="Approval Entity">approval_entity_name</TEXTFIELD>
+				<CHECKBOX w="75" title="Advice">advice</CHECKBOX>
+				<CHECKBOX w="75" title="Notice">notice</CHECKBOX>
+				<TEXTFIELD w="75" title="Approvals">required_approvals</TEXTFIELD>
+				<TEXTFIELD w="75" title="Phase Narrative">phase_narrative</TEXTFIELD>
+				<GRID name="Checklists" keyfield="checklist_id" linkfield="workflow_phase_id" table="checklists">
+					<TEXTFIELD w="75" title="Checklist Number">checklist_number</TEXTFIELD>
+					<CHECKBOX w="75" title="Manditory">manditory</CHECKBOX>
+					<TEXTFIELD w="240" title="Requirement">requirement</TEXTFIELD>
+					<FORM name="Checklists" keyfield="checklist_id" linkfield="workflow_phase_id" table="checklists" th="210">
+						<TEXTFIELD w="150" title="Checklist Number" y="10" h="20" x="10">checklist_number</TEXTFIELD>
+						<CHECKBOX w="150" title="Manditory" y="10" h="20" x="290">manditory</CHECKBOX>
+						<TEXTAREA w="530" tab="Requirement" y="2" h="170" x="10">requirement</TEXTAREA>
+						<TEXTAREA w="530" tab="Details" y="2" h="170" x="10">details</TEXTAREA>
+					</FORM>
+				</GRID>
+				<FORM name="Workflow Phases" keyfield="workflow_phase_id" linkfield="workflow_id" table="workflow_phases" th="225">
+					<COMBOBOX w="430" title="Approvals" lptable="entity_types" lpkey="entity_type_id" y="10" h="20" x="10" lpfield="entity_type_name">approval_entity_id</COMBOBOX>
+					<TEXTFIELD w="150" title="Approval Level" y="30" h="20" x="10">approval_level</TEXTFIELD>
+					<TEXTFIELD w="150" title="Return Level" y="30" h="20" x="290">return_level</TEXTFIELD>
+					<TEXTFIELD w="150" title="Escalation Days" default="0" y="50" h="20" x="10">escalation_days</TEXTFIELD>
+					<TEXTFIELD w="150" title="Escalation Hours" default="3" y="50" h="20" x="290">escalation_hours</TEXTFIELD>
+					<TEXTFIELD w="150" title="Approvals" default="1" y="70" h="20" x="10">required_approvals</TEXTFIELD>
+					<CHECKBOX w="150" title="Advice" y="90" h="20" x="10">advice</CHECKBOX>
+					<CHECKBOX w="150" title="Notice" y="90" h="20" x="290">notice</CHECKBOX>
+					<TEXTFIELD w="430" title="Narrative" y="110" h="20" x="10">phase_narrative</TEXTFIELD>
+					<EDITOR w="530" default="For your approval" tab="Advice Email" y="2" h="170" x="10">advice_email</EDITOR>
+					<TEXTFIELD w="400" title="Advice Report" tab="Advice Email" y="172" h="20" x="10">advice_file</TEXTFIELD>
+					<EDITOR w="530" default="Phase approved" tab="Notice Email" y="2" h="170" x="10">notice_email</EDITOR>
+					<TEXTFIELD w="400" title="Notice Report" tab="Notice Email" y="172" h="20" x="10">notice_file</TEXTFIELD>
+					<TEXTAREA w="530" tab="Details" y="2" h="170" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<FORM name="Workflows" keyfield="workflow_id" table="workflows" th="225">
+				<COMBOBOX w="430" title="Source" lptable="entity_types" lpkey="entity_type_id" y="10" h="20" x="10" lpfield="entity_type_name">source_entity_id</COMBOBOX>
+				<TEXTFIELD w="430" title="Workflow Name" y="30" h="20" x="10">workflow_name</TEXTFIELD>
+				<TEXTFIELD w="150" title="Table Name" y="50" h="20" x="10">table_name</TEXTFIELD>
+				<TEXTFIELD w="150" title="Table Link Field" y="50" h="20" x="290">table_link_field</TEXTFIELD>
+				<TEXTFIELD w="150" title="Table Link ID" y="70" h="20" x="10">table_link_id</TEXTFIELD>
+				<EDITOR w="530" default="Request approved" tab="Approve Email" y="2" h="170" x="10">approve_email</EDITOR>
+				<TEXTFIELD w="400" title="Approved Report" tab="Approve Email" y="175" h="20" x="10">approve_file</TEXTFIELD>
+				<EDITOR w="530" default="Request rejected" tab="Reject Email" y="2" h="170" x="10">reject_email</EDITOR>
+				<TEXTFIELD w="400" title="Rejected Report" tab="Reject Email" y="175" h="20" x="10">reject_file</TEXTFIELD>
+				<TEXTAREA w="530" tab="Details" y="2" h="170" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Approvals" key="45" h="500">
+		<GRID name="Approvals" keyfield="approval_id" table="vw_approvals_entitys" params="table_name, table_id" where="(approve_status = 'Completed')" user="entity_id">
+			<TEXTFIELD w="25" title="ID">approval_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Workflow">workflow_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="From">org_entity_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Group">source_entity_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Approval">approval_entity_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Level">approval_level</TEXTFIELD>
+			<TEXTFIELD w="175" title="Narrative">approval_narrative</TEXTFIELD>
+			<TEXTTIMESTAMP w="75" title="Date">completion_date</TEXTTIMESTAMP>
+			<ACTIONS>
+				<ACTION fnct="upd_approvals" phase="2">Approve</ACTION>
+				<ACTION fnct="upd_approvals" phase="3">Reject</ACTION>
+				<ACTION fnct="upd_approvals" phase="4">Review</ACTION>
+			</ACTIONS>
+			<GRID name="Completed Forms" keyfield="entry_form_id" table="vw_entry_forms" viewfilter="table_name=entry_forms" linkparams="table_id=workflow_table_id">
+				<TEXTFIELD w="150" title="Form Name">form_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Approve Status">approve_status</TEXTFIELD>
+				<TEXTTIMESTAMP w="100" title="Application Date">application_date</TEXTTIMESTAMP>
+				<TEXTTIMESTAMP w="100" title="Completion Date">completion_date</TEXTTIMESTAMP>
+				<TEXTTIMESTAMP w="100" title="Approve Date">action_date</TEXTTIMESTAMP>
+				<BROWSER name="View Form" action="ENTRYFORM" linkfield="actionvalue" baseurl="http://localhost:9090/form.jsp?action=ENTRYFORM" blankpage="true" disabled="yes">entry_form_id</BROWSER>
+				<FILES username="root" repository="http://localhost:8080/repository/webdav/files/" name="Documents" keyfield="sys_file_id" linkfield="table_id" table="sys_files" params="table_name" where="(table_name='entry_forms')" filetable="entry_forms" password="enter">
+					<TEXTFIELD w="75" title="File ID">sys_file_id</TEXTFIELD>
+					<TEXTFIELD w="175" title="File Name">file_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="File Type">file_type</TEXTFIELD>
+					<TEXTFIELD w="75" title="File Size">file_size</TEXTFIELD>
+				</FILES>
+			</GRID>
+			<GRID name="Forwards" keyfield="approval_id" linkfield="forward_id" table="vw_approvals">
+				<TEXTFIELD w="25" title="ID">approval_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Workflow">workflow_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="From">org_entity_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="To">app_entity_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Status">approve_status</TEXTFIELD>
+				<TEXTFIELD w="175" title="Narrative">approval_narrative</TEXTFIELD>
+				<FORM name="Forwards" keyfield="approval_id" linkfield="forward_id" table="approvals" th="210">
+					<USERFIELD>org_entity_id</USERFIELD>
+					<COMBOBOX w="430" title="Forward To" lptable="entitys" lpkey="entity_id" y="10" h="20" x="10" lpfield="entity_name">app_entity_id</COMBOBOX>
+					<TEXTFIELD w="150" title="Escalation Days" default="0" y="30" h="20" x="10">escalation_days</TEXTFIELD>
+					<TEXTFIELD w="150" title="Escalation Hours" default="3" y="30" h="20" x="290">escalation_hours</TEXTFIELD>
+					<TEXTFIELD w="430" title="Approval Narrative" y="50" h="20" x="10">approval_narrative</TEXTFIELD>
+					<TEXTAREA w="530" tab="To Be Done" y="2" h="170" x="10">to_be_done</TEXTAREA>
+					<TEXTAREA w="530" tab="What is Done" y="2" h="170" disabled="true" x="10">what_is_done</TEXTAREA>
+					<TEXTAREA w="530" tab="Details" y="2" h="170" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<GRID name="Checklists" keyfield="approval_checklist_id" linkfield="approval_id" table="approval_checklists">
+				<TEXTFIELD w="275" title="Requirement">requirement</TEXTFIELD>
+				<CHECKBOX w="75" title="Manditory">manditory</CHECKBOX>
+				<CHECKBOX w="75" title="Done">done</CHECKBOX>
+				<TEXTFIELD w="175" title="Narrative">narrative</TEXTFIELD>
+				<ACTIONS>
+					<ACTION fnct="upd_checklist" phase="1">Approve</ACTION>
+					<ACTION fnct="upd_checklist" phase="2">Reject</ACTION>
+				</ACTIONS>
+			</GRID>
+			<FORM name="Review" keyfield="approval_id" table="approvals">
+				<TEXTAREA w="530" tab="To Be Done" y="2" h="170" x="10">to_be_done</TEXTAREA>
+				<TEXTAREA w="530" tab="What Done" y="2" h="170" x="10">what_is_done</TEXTAREA>
+				<TEXTAREA w="530" tab="Review Advice" y="2" h="170" x="10">review_advice</TEXTAREA>
+				<TEXTAREA w="530" tab="Details" y="2" h="170" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+		<GRID name="Forwards" keyfield="approval_id" table="vw_approvals" params="table_name, table_id" where="(approve_status = 'Completed')" user="app_entity_id">
+			<TEXTFIELD w="25" title="ID">approval_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Workflow">workflow_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="From">org_entity_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Group">source_entity_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Approval">approval_entity_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Level">approval_level</TEXTFIELD>
+			<TEXTFIELD w="175" title="Narrative">approval_narrative</TEXTFIELD>
+			<TEXTTIMESTAMP w="75" title="Date">completion_date</TEXTTIMESTAMP>
+			<ACTIONS>
+				<ACTION fnct="upd_approvals" phase="2">Approve</ACTION>
+				<ACTION fnct="upd_approvals" phase="3">Reject</ACTION>
+				<ACTION fnct="upd_approvals" phase="4">Review</ACTION>
+			</ACTIONS>
+			<GRID name="Completed Forms" keyfield="entry_form_id" table="vw_entry_forms" viewfilter="table_name=entry_forms" linkparams="table_id=workflow_table_id">
+				<TEXTFIELD w="150" title="Form Name">form_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Approve Status">approve_status</TEXTFIELD>
+				<TEXTTIMESTAMP w="100" title="Application Date">application_date</TEXTTIMESTAMP>
+				<TEXTTIMESTAMP w="100" title="Completion Date">completion_date</TEXTTIMESTAMP>
+				<TEXTTIMESTAMP w="100" title="Approve Date">action_date</TEXTTIMESTAMP>
+				<BROWSER name="View Form" linkfield="actionvalue" baseurl="http://localhost:9090/form.jsp?action=ENTRYFORM" blankpage="true" disabled="yes"></BROWSER>
+			</GRID>
+			<GRID name="Forwards" keyfield="approval_id" linkfield="forward_id" table="vw_approvals">
+				<TEXTFIELD w="25" title="ID">approval_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Workflow">workflow_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="From">org_entity_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="To">app_entity_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Status">approve_status</TEXTFIELD>
+				<TEXTFIELD w="175" title="Narrative">approval_narrative</TEXTFIELD>
+				<FORM name="Forwards" keyfield="approval_id" linkfield="forward_id" table="approvals" th="210">
+					<USERFIELD>org_entity_id</USERFIELD>
+					<COMBOBOX w="430" title="Forward To" lptable="entitys" lpkey="entity_id" y="10" h="20" x="10" lpfield="entity_name">app_entity_id</COMBOBOX>
+					<TEXTFIELD w="150" title="Escalation Days" default="0" y="30" h="20" x="10">escalation_days</TEXTFIELD>
+					<TEXTFIELD w="150" title="Escalation Hours" default="3" y="30" h="20" x="290">escalation_hours</TEXTFIELD>
+					<TEXTFIELD w="430" title="Approval Narrative" y="50" h="20" x="10">approval_narrative</TEXTFIELD>
+					<TEXTAREA w="530" tab="To Be Done" y="2" h="170" x="10">to_be_done</TEXTAREA>
+					<TEXTAREA w="530" tab="What is Done" y="2" h="170" disabled="true" x="10">what_is_done</TEXTAREA>
+					<TEXTAREA w="530" tab="Details" y="2" h="170" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<GRID name="Checklists" keyfield="approval_checklist_id" linkfield="approval_id" table="approval_checklists">
+				<TEXTFIELD w="275" title="Requirement">requirement</TEXTFIELD>
+				<CHECKBOX w="75" title="Manditory">manditory</CHECKBOX>
+				<CHECKBOX w="75" title="Done">done</CHECKBOX>
+				<TEXTFIELD w="175" title="Narrative">narrative</TEXTFIELD>
+				<ACTIONS>
+					<ACTION fnct="upd_checklist" phase="1">Approve</ACTION>
+					<ACTION fnct="upd_checklist" phase="2">Reject</ACTION>
+				</ACTIONS>
+			</GRID>
+			<FORM name="Review" keyfield="approval_id" table="approvals">
+				<TEXTAREA w="530" tab="To Be Done" y="2" h="170" x="10">to_be_done</TEXTAREA>
+				<TEXTAREA w="530" tab="What Done" y="2" h="170" x="10">what_is_done</TEXTAREA>
+				<TEXTAREA w="530" tab="Review Advice" y="2" h="170" x="10">review_advice</TEXTAREA>
+				<TEXTAREA w="530" tab="Details" y="2" h="170" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="800" name="All Approvals" key="50" h="500">
+		<GRID name="All Approvals" keyfield="approval_id" table="vw_approvals_entitys" params="table_name, table_id">
+			<TEXTFIELD w="25" title="App. ID">approval_id</TEXTFIELD>
+			<TEXTFIELD w="25" title="ID">table_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Workflow">workflow_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="To">entity_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Source">source_entity_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Group">approval_entity_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Level">approval_level</TEXTFIELD>
+			<TEXTFIELD w="75" title="Narrative">phase_narrative</TEXTFIELD>
+			<TEXTFIELD w="75" title="Status">approve_status</TEXTFIELD>
+			<GRID name="Forwards" keyfield="approval_id" linkfield="forward_id" table="vw_approvals">
+				<TEXTFIELD w="25" title="ID">approval_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Workflow">workflow_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="From">org_entity_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="To">app_entity_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Status">approve_status</TEXTFIELD>
+				<TEXTFIELD w="175" title="Narrative">approval_narrative</TEXTFIELD>
+			</GRID>
+			<GRID name="Completed Forms" keyfield="entry_form_id" table="vw_entry_forms" viewfilter="table_name=entry_forms" linkparams="table_id=workflow_table_id">
+				<TEXTFIELD w="150" title="Form Name">form_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Approve Status">approve_status</TEXTFIELD>
+				<TEXTTIMESTAMP w="100" title="Application Date">application_date</TEXTTIMESTAMP>
+				<TEXTTIMESTAMP w="100" title="Completion Date">completion_date</TEXTTIMESTAMP>
+				<TEXTTIMESTAMP w="100" title="Approve Date">action_date</TEXTTIMESTAMP>
+				<BROWSER name="View Form" linkfield="actionvalue" baseurl="http://localhost:9090/form.jsp?action=ENTRYFORM" blankpage="true" disabled="yes"></BROWSER>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="EMails" key="60" h="500">
+		<GRID name="EMails" keyfield="sys_email_id" table="sys_emails">
+			<TEXTFIELD w="75" title="Email ID">sys_email_id</TEXTFIELD>
+			<TEXTFIELD w="275" title="Email Name">sys_email_name</TEXTFIELD>
+			<TEXTFIELD w="275" title="Title">title</TEXTFIELD>
+			<FORM name="EMails" keyfield="sys_email_id" table="sys_emails" th="210">
+				<TEXTFIELD w="350" title="Email Name" y="10" h="20" x="10">sys_email_name</TEXTFIELD>
+				<TEXTFIELD w="430" title="Title" y="30" h="20" x="10">title</TEXTFIELD>
+				<EDITOR w="530" tab="Details" y="2" h="170" x="10">details</EDITOR>
+			</FORM>
+		</GRID>
+		<GRID name="Email List" keyfield="sys_emailed_id" table="vw_sys_emailed">
+			<TEXTFIELD w="75" title="Email ID">sys_email_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Email Name">sys_email_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Emailed ID">sys_emailed_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Table ID">table_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Table Name">table_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Email Type">email_type</TEXTFIELD>
+			<CHECKBOX w="75" title="Emailed">emailed</CHECKBOX>
+			<TEXTFIELD w="75" title="Narrative">narrative</TEXTFIELD>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Menu Messages" key="70" h="500">
+		<GRID name="Menu Messages" keyfield="sys_menu_msg_id" table="sys_menu_msg" noorg="true">
+			<TEXTFIELD w="75" title="Menu ID">menu_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Menu Name">menu_name</TEXTFIELD>
+			<FORM name="Menu Messages" keyfield="sys_menu_msg_id" table="sys_menu_msg" noorg="true">
+				<TEXTFIELD w="150" title="Menu ID" y="10" h="20" x="10">menu_id</TEXTFIELD>
+				<TEXTFIELD w="150" title="Menu Name" y="10" h="20" x="290">menu_name</TEXTFIELD>
+				<EDITOR w="530" tab="Message" y="30" h="120" x="10">msg</EDITOR>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Admisions List" key="125" h="550">
+		<GRID name="Admisions List" keyfield="app_student_id" orderby="app_student_id" table="app_students">
+			<TEXTFIELD w="75" title="App ID">app_student_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Studentid">studentid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Departmentid">departmentid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Denominationid">denominationid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Org ID">org_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Surname">surname</TEXTFIELD>
+			<TEXTFIELD w="75" title="Firstname">firstname</TEXTFIELD>
+			<TEXTFIELD w="75" title="Othernames">othernames</TEXTFIELD>
+			<CHECKBOX w="75" title="Sex">sex</CHECKBOX>
+			<TEXTFIELD w="75" title="Nationality">nationality</TEXTFIELD>
+			<TEXTFIELD w="75" title="Maritalstatus">maritalstatus</TEXTFIELD>
+			<TEXTDATE w="75" title="Birthdate">birthdate</TEXTDATE>
+			<TEXTFIELD w="75" title="Address">address</TEXTFIELD>
+			<TEXTFIELD w="75" title="Zipcode">zipcode</TEXTFIELD>
+			<TEXTFIELD w="75" title="Town">town</TEXTFIELD>
+			<TEXTFIELD w="75" title="Countrycodeid">countrycodeid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Stateid">stateid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Telno">telno</TEXTFIELD>
+			<TEXTFIELD w="75" title="Mobile">mobile</TEXTFIELD>
+			<TEXTFIELD w="75" title="Email">email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Majorid">majorid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Account Number">account_number</TEXTFIELD>
+			<TEXTFIELD w="75" title="E Tranzact No">e_tranzact_no</TEXTFIELD>
+			<TEXTFIELD w="75" title="First Password">first_password</TEXTFIELD>
+		</GRID>
+	</DESK>
+	<DESK w="710" name="Schools" type="vert" key="7" h="590">
+		<GRID name="Schools" keyfield="schoolid" table="schools" noorg="true">
+			<TEXTFIELD w="40" title="School ID">schoolid</TEXTFIELD>
+			<TEXTFIELD w="240" title="School Name">schoolname</TEXTFIELD>
+			<CHECKBOX w="75" title="Active">is_active</CHECKBOX>
+			<FORM name="Schools" keyfield="schoolid" table="schools" noorg="true" th="210">
+				<TEXTFIELD w="100" title="School ID" y="10" h="20" x="10">schoolid</TEXTFIELD>
+				<COMBOBOX w="200" title="Campus" lptable="orgs" noorg="true" y="10" h="20" x="240" lpfield="org_name">org_id</COMBOBOX>
+				<TEXTFIELD w="350" title="School Name" y="30" h="20" x="10">schoolname</TEXTFIELD>
+				<CHECKBOX w="50" title="Active" y="50" h="20" x="10">is_active</CHECKBOX>
+				<TEXTAREA w="590" tab="Philosopy" y="2" h="170" x="10">philosopy</TEXTAREA>
+				<TEXTAREA w="590" tab="Vision" y="2" h="170" x="10">vision</TEXTAREA>
+				<TEXTAREA w="590" tab="Mission" y="2" h="170" x="10">mission</TEXTAREA>
+				<TEXTAREA w="590" tab="Objectives" y="2" h="170" x="10">objectives</TEXTAREA>
+				<TEXTAREA w="590" tab="Details" y="2" h="170" x="10">details</TEXTAREA>
+			</FORM>
+			<GRID name="Departments" keyfield="departmentid" linkfield="schoolid" table="departmentview">
+				<TEXTFIELD w="40" title="Department ID">departmentid</TEXTFIELD>
+				<TEXTFIELD w="240" title="School Name">schoolname</TEXTFIELD>
+				<TEXTFIELD w="240" title="Department Name">departmentname</TEXTFIELD>
+				<CHECKBOX w="75" title="Active">is_active</CHECKBOX>
+				<FORM name="Departments" keyfield="departmentid" linkfield="schoolid" table="departments" th="210">
+					<TEXTFIELD w="140" title="Department ID" y="10" h="20" x="10">departmentid</TEXTFIELD>
+					<TEXTFIELD w="390" title="Department Name" y="30" h="20" x="10">departmentname</TEXTFIELD>
+					<CHECKBOX w="150" title="Active" y="50" h="20" x="10">is_active</CHECKBOX>
+					<TEXTAREA w="590" tab="Philosopy" y="2" h="170" x="10">philosopy</TEXTAREA>
+					<TEXTAREA w="590" tab="Vision" y="2" h="170" x="10">vision</TEXTAREA>
+					<TEXTAREA w="590" tab="Mission" y="2" h="170" x="10">mission</TEXTAREA>
+					<TEXTAREA w="590" tab="Objectives" y="2" h="170" x="10">objectives</TEXTAREA>
+					<TEXTAREA w="590" tab="Exposures" y="2" h="170" x="10">exposures</TEXTAREA>
+					<TEXTAREA w="590" tab="Oppotunities" y="2" h="170" x="10">oppotunities</TEXTAREA>
+					<TEXTAREA w="590" tab="Details" y="2" h="170" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+		</GRID>
+		<GRID name="Departments" keyfield="departmentid" table="departmentview">
+			<TEXTFIELD w="40" title="Department ID">departmentid</TEXTFIELD>
+			<TEXTFIELD w="240" title="School Name">schoolname</TEXTFIELD>
+			<TEXTFIELD w="240" title="Department Name">departmentname</TEXTFIELD>
+			<CHECKBOX w="75" title="Active">is_active</CHECKBOX>
+			<FORM name="Departments" keyfield="departmentid" table="departments" th="210">
+				<TEXTFIELD w="140" title="Department ID" y="10" h="20" x="10">departmentid</TEXTFIELD>
+				<COMBOBOX w="150" title="School Name" lptable="schools" lw="90" y="10" h="20" x="280" lpfield="schoolname">schoolid</COMBOBOX>
+				<TEXTFIELD w="390" title="Department Name" y="30" h="20" x="10">departmentname</TEXTFIELD>
+				<CHECKBOX w="150" title="Active" y="50" h="20" x="10">is_active</CHECKBOX>
+				<TEXTAREA w="590" tab="Philosopy" y="2" h="170" x="10">philosopy</TEXTAREA>
+				<TEXTAREA w="590" tab="Vision" y="2" h="170" x="10">vision</TEXTAREA>
+				<TEXTAREA w="590" tab="Mission" y="2" h="170" x="10">mission</TEXTAREA>
+				<TEXTAREA w="590" tab="Objectives" y="2" h="170" x="10">objectives</TEXTAREA>
+				<TEXTAREA w="590" tab="Exposures" y="2" h="170" x="10">exposures</TEXTAREA>
+				<TEXTAREA w="590" tab="Oppotunities" y="2" h="170" x="10">oppotunities</TEXTAREA>
+				<TEXTAREA w="590" tab="Details" y="2" h="170" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Students Probations" key="5" h="560">
+		<GRID auditid="sys_audit_trail_id" name="Students" keyfield="studentid" updatetable="students" table="students" noorg="true">
+			<TEXTFIELD w="40" title="Student ID">studentid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Student Name">studentname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Off campus">offcampus</TEXTFIELD>
+			<TEXTFIELD w="40" title="See Security">seesecurity</TEXTFIELD>
+			<TEXTFIELD w="40" title="Student Support">seesss</TEXTFIELD>
+			<TEXTFIELD w="40" title="See SDC">seesdc</TEXTFIELD>
+			<TEXTFIELD w="40" title="Halls Probation">seehalls</TEXTFIELD>
+			<TEXTFIELD w="40" title="See Chaplain">seechaplain</TEXTFIELD>
+			<TEXTFIELD w="40" title="See Registrar">seeregistrar</TEXTFIELD>
+			<TEXTFIELD w="40" title="On Probation">onprobation</TEXTFIELD>
+			<GRID name="Probation List" keyfield="probation_list_id" linkfield="studentid" table="probation_list">
+				<TEXTFIELD w="75" title="Probation List ID">probation_list_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Student ID">studentid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Approved By">approvedby</TEXTFIELD>
+				<TEXTFIELD w="75" title="Approval Type">approvaltype</TEXTFIELD>
+				<TEXTTIMESTAMP w="75" title="Approvedate">approvedate</TEXTTIMESTAMP>
+				<TEXTFIELD w="75" title="Clientip">clientip</TEXTFIELD>
+			</GRID>
+			<GRID name="Student's Degree" keyfield="studentdegreeid" linkfield="studentid" table="studentdegreeview" noorg="true">
+				<TEXTFIELD w="140" title="Degree">degreename</TEXTFIELD>
+				<TEXTFIELD w="140" title="Sub Level">sublevelname</TEXTFIELD>
+				<TEXTFIELD w="140" title="Student">studentname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Completed">completed</TEXTFIELD>
+				<GRID name="Student's Programme" keyfield="studentmajorid" linkfield="studentdegreeid" table="studentmajorview" noorg="true">
+					<TEXTFIELD w="40" title="Programme Id">majorid</TEXTFIELD>
+					<TEXTFIELD w="140" title="Programme Name">majorname</TEXTFIELD>
+					<TEXTFIELD w="40" title="Core Programme">major</TEXTFIELD>
+				</GRID>
+			</GRID>
+		</GRID>
+	</DESK>
+</APP>

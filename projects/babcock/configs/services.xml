@@ -1,0 +1,121 @@
+<APP name="UMIS" org="org_id" password="change_password">
+	<MENU name="Services">
+		<MENU name="Food Services" role="foodservices">
+			<MENU name="Meal Tickets">16</MENU>
+			<MENU name="Reports">
+				<MENU name="Registred Student">515</MENU>
+				<MENU name="Student Meals List">159</MENU>
+				<MENU name="Registred Student List">160</MENU>
+				<MENU name="Students Audit">772</MENU>
+			</MENU>
+		</MENU>
+		<MENU name="ID Cards" role="idcard">
+			<MENU name="Students">511</MENU>
+			<MENU name="Semester Students">515</MENU>
+		</MENU>
+	</MENU>
+	<DESK w="630" name="Meal Tickets" type="vert" key="16" h="520">
+		<GRID name="Semesters" keyfield="quarterid" orderby="quarteryear desc" table="quarterview" noorg="true" where="(active = true)">
+			<TEXTFIELD w="240" title="Quarter ID">quarterid</TEXTFIELD>
+			<TEXTFIELD w="240" title="Start">qstart</TEXTFIELD>
+			<TEXTFIELD w="240" title="End">qend</TEXTFIELD>
+			<GRID name="Students List" keyfield="qstudentid" updatetable="qstudents" linkfield="quarterid" table="vwqstudentbalances" noorg="true" where="(finaceapproval = true)">
+				<TEXTFIELD w="10" title="Student ID">studentid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Student">studentname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Account Number">accountnumber</TEXTFIELD>
+				<TEXTFIELD w="20" title="Off Campus">offcampus</TEXTFIELD>
+				<TEXTFIELD w="20" title="Premium Hall">premiumhall</TEXTFIELD>
+				<TEXTFIELD w="20" title="Part Payment">ispartpayment</TEXTFIELD>
+				<TEXTFIELD w="10" title="Meal Type">mealtype</TEXTFIELD>
+				<TEXTFIELD w="10" title="Study Level">studylevel</TEXTFIELD>
+				<TEXTFIELD w="20" title="Major">majorname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Full Balance">fullfinalbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Balance">finalbalance</TEXTFIELD>
+				<TEXTFIELD w="80" title="Meal Ticket" edit="true">mealticket</TEXTFIELD>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Registered Student List" type="horl" key="160" h="500">
+		<FILTER location="250" name="Registered Student List" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Quarters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" noorg="true" listfield="quarter" pos="top"></DRILLDOWN>
+			</DRILLDOWN>
+			<JASPER filtered="true" name="Registred Student List" reportfile="foodservices5.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Student Meals List" type="horl" key="159" h="500">
+		<FILTER location="250" name="Student Meals List" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Quarters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" noorg="true" listfield="quarter" pos="top"></DRILLDOWN>
+			</DRILLDOWN>
+			<JASPER filtered="true" name="BLS List" reportfile="foodservices.jasper"></JASPER>
+			<JASPER filtered="true" name="BL List" reportfile="foodservices2.jasper"></JASPER>
+			<JASPER filtered="true" name="LS List" reportfile="foodservices3.jasper"></JASPER>
+			<JASPER filtered="true" name="BS List" reportfile="foodservices4.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="585" name="Students" type="vert" key="511" h="560">
+		<GRID name="Students" keyfield="studentid" updatetable="students" table="studentview" noorg="true" filterkey="10" key="1">
+			<TEXTFIELD w="40" title="Matric No.">studentid</TEXTFIELD>
+			<TEXTFIELD w="40" title="School">schoolname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Denomination">denominationname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Student Name">studentname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Sex">sex</TEXTFIELD>
+			<TEXTFIELD w="40" title="Nationality">Nationalitycountry</TEXTFIELD>
+			<TEXTFIELD w="40" title="Account Number" edit="true">accountnumber</TEXTFIELD>
+			<TEXTFIELD w="40" title="Department">departmentname</TEXTFIELD>
+			<TEXTFIELD w="40" title="School">schoolname</TEXTFIELD>
+			<GRID name="Student's Degree" keyfield="studentdegreeid" linkfield="studentid" table="studentdegreeview" noorg="true" key="3">
+				<TEXTFIELD w="140" title="Degree">degreename</TEXTFIELD>
+				<TEXTFIELD w="140" title="Sub Level">sublevelname</TEXTFIELD>
+				<TEXTFIELD w="140" title="Student">studentname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Completed">completed</TEXTFIELD>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="630" name="Semester Students" type="vert" key="515" h="520">
+		<GRID name="Semester" keyfield="quarterid" orderby="quarteryear desc" table="quarterview" noorg="true" where="(active = true)">
+			<TEXTFIELD w="240" title="Semester ID">quarterid</TEXTFIELD>
+			<TEXTFIELD w="240" title="Start">qstart</TEXTFIELD>
+			<TEXTFIELD w="240" title="End">qend</TEXTFIELD>
+			<GRID name="Q. Students" keyfield="qstudentid" updatetable="qstudents" linkfield="quarterid" table="vwqstudentbalances" noorg="true" where="(finaceapproval = true) " key="2">
+				<TEXTFIELD w="10" title="Matrix Num">studentid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Student Name">studentname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Account Number">accountnumber</TEXTFIELD>
+				<TEXTFIELD w="20" title="Study Level">studylevel</TEXTFIELD>
+				<TEXTFIELD w="20" title="Course">majorname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Registered">approved</TEXTFIELD>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="630" name="Students Audit" key="772" h="750">
+		<GRID name="Semester" keyfield="quarterid" orderby="quarterid desc" table="quarterview" noorg="true">
+			<TEXTFIELD w="240" title="Semester ID">quarterid</TEXTFIELD>
+			<TEXTFIELD w="240" title="Start">qstart</TEXTFIELD>
+			<TEXTFIELD w="240" title="End">qend</TEXTFIELD>
+			<GRID name="Q. Students" keyfield="qstudentid" updatetable="qstudents" linkfield="quarterid" table="vwqstudentbalances" noorg="true" where="(finaceapproval = true)">
+				<TEXTFIELD w="10" title="Matrix Num">studentid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Student Name">studentname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Account Number">accountnumber</TEXTFIELD>
+				<TEXTFIELD w="20" title="Study Level">studylevel</TEXTFIELD>
+				<TEXTFIELD w="20" title="Programme">majorname</TEXTFIELD>
+				<TEXTFIELD w="20" title="registered">approved</TEXTFIELD>
+				<GRID name="Registered Courses" keyfield="qgradeid" linkfield="qstudentid" table="studentgradeview" noorg="true">
+					<TEXTFIELD w="10" title="Matrix Num">studentid</TEXTFIELD>
+					<TEXTFIELD w="20" title="Student">studentname</TEXTFIELD>
+					<TEXTFIELD w="10" title="Course ID">courseid</TEXTFIELD>
+					<TEXTFIELD w="100" title="Course Title">coursetitle</TEXTFIELD>
+					<TEXTFIELD w="100" title="Lecturer">instructorname</TEXTFIELD>
+					<TEXTFIELD w="10" title="Units">chargehours</TEXTFIELD>
+					<TEXTFIELD w="5" title="Dropped">dropped</TEXTFIELD>
+				</GRID>
+				<GRID name="Approval Trail" keyfield="approvalid" linkfield="qstudentid" table="approvallist" noorg="true">
+					<TEXTFIELD w="40" title="Approval Type">approvaltype</TEXTFIELD>
+					<TEXTFIELD w="40" title="Approved By">approvedby</TEXTFIELD>
+					<TEXTFIELD w="40" title="Approve Date">approvedate</TEXTFIELD>
+					<TEXTFIELD w="40" title="Approval Computer">clientip</TEXTFIELD>
+				</GRID>
+			</GRID>
+		</GRID>
+	</DESK>
+</APP>

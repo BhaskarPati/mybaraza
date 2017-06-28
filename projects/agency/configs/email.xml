@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<ESCALATION title="Mail" processdelay="5"
+	host="mail.travelport.co.ke" mailuser="notifications@travelport.co.ke" mailpassword="rUm9Dund8E" 
+	mailfrom="notifications@travelport.co.ke" smtppauth="true" inbox="INBOX" sentbox="Sent" >
+	
+	<REPORT name="Travelport Notifications" keyfield="email_id" action="ticket_emailed" actioncount="1" 
+			table="sys_emails, email"
+			where="(sys_emails.sys_email_id = 1) AND (email.is_sent = false)">
+		<SUBJECT title="subject">sys_emails.title</SUBJECT>
+		<ADDRESS title="address">sys_emails.default_email</ADDRESS>
+		<BODYFIELD reference="{{message}}" basetable="email">message</BODYFIELD>
+		<BODYFIELD reference="{{consultant}}" basetable="email">consultant</BODYFIELD>
+		<FIELD title="Body" basetable="sys_emails">details</FIELD>
+	</REPORT>
+
+	<REPORT name="Travelport Notifications" keyfield="sys_emailed_id" action="Emailed" actioncount="1" 
+			table="sys_emails, sys_emailed"
+			where="(sys_emails.sys_email_id = sys_emailed.sys_email_id) AND (sys_emailed.emailed = false) AND (sys_emails.sys_email_id = 2)">
+		<SUBJECT title="subject">sys_emails.title</SUBJECT>
+		<ADDRESS title="address">sys_emails.default_email</ADDRESS>
+		<BODYFIELD reference="{{narrative}}" basetable="sys_emailed">narrative</BODYFIELD>
+		<FIELD title="Body" basetable="sys_emails">details</FIELD>
+	</REPORT>
+
+</ESCALATION>

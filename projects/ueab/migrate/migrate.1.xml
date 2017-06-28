@@ -1,0 +1,412 @@
+<MIGRATE dbpath="jdbc:postgresql://localhost/ueab_new" dbclass="org.postgresql.Driver" dbusername="root" dbpassword="invent">
+	<SOURCE dbpath="jdbc:postgresql://localhost/ueab" dbclass="org.postgresql.Driver" dbusername="root" dbpassword="invent">
+
+		<IMPORT noaudit="true" name="Gradechangelist" keyfield="gradechangeid" table="gradechangelist">
+			<TEXTFIELD w="75" title="Gradechangeid">gradechangeid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Qgradeid">qgradeid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Changedby">changedby</TEXTFIELD>
+			<TEXTFIELD w="75" title="Oldgrade">oldgrade</TEXTFIELD>
+			<TEXTFIELD w="75" title="Newgrade">newgrade</TEXTFIELD>
+			<TEXTTIMESTAMP w="75" title="Changedate">changedate</TEXTTIMESTAMP>
+			<TEXTFIELD w="75" title="Clientip">clientip</TEXTFIELD>
+			<EXPORT name="Gradechangelist" keyfield="gradechangeid" table="gradechangelist">
+				<TEXTFIELD w="75" title="Gradechangeid">gradechangeid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Qgradeid">qgradeid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Changedby">changedby</TEXTFIELD>
+				<TEXTFIELD w="75" title="Oldgrade">oldgrade</TEXTFIELD>
+				<TEXTFIELD w="75" title="Newgrade">newgrade</TEXTFIELD>
+				<TEXTTIMESTAMP w="75" title="Changedate">changedate</TEXTTIMESTAMP>
+				<TEXTFIELD w="75" title="Clientip">clientip</TEXTFIELD>
+			</EXPORT>
+		</IMPORT>
+		<IMPORT noaudit="true" name="Qcourseitems" keyfield="qcourseitemid" table="qcourseitems">
+			<TEXTFIELD w="75" title="Qcourseitemid">qcourseitemid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Qcourseid">qcourseid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Qcourseitemname">qcourseitemname</TEXTFIELD>
+			<TEXTDECIMAL w="75" title="Markratio">markratio</TEXTDECIMAL>
+			<TEXTFIELD w="75" title="Totalmarks">totalmarks</TEXTFIELD>
+			<TEXTDATE w="75" title="Given">given</TEXTDATE>
+			<TEXTDATE w="75" title="Deadline">deadline</TEXTDATE>
+			<TEXTFIELD w="75" title="Details">details</TEXTFIELD>
+			<EXPORT name="Qcourseitems" keyfield="qcourseitemid" table="qcourseitems">
+				<TEXTFIELD w="75" title="Qcourseitemid">qcourseitemid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Qcourseid">qcourseid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Qcourseitemname">qcourseitemname</TEXTFIELD>
+				<TEXTDECIMAL w="75" title="Markratio">markratio</TEXTDECIMAL>
+				<TEXTFIELD w="75" title="Totalmarks">totalmarks</TEXTFIELD>
+				<TEXTDATE w="75" title="Given">given</TEXTDATE>
+				<TEXTDATE w="75" title="Deadline">deadline</TEXTDATE>
+				<TEXTFIELD w="75" title="Details">details</TEXTFIELD>
+			</EXPORT>
+		</IMPORT>
+		<IMPORT noaudit="true" name="Qcoursemarks" keyfield="qcoursemarkid" table="qcoursemarks">
+			<TEXTFIELD w="75" title="Qcoursemarkid">qcoursemarkid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Qgradeid">qgradeid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Qcourseitemid">qcourseitemid</TEXTFIELD>
+			<CHECKBOX w="75" title="Approved">approved</CHECKBOX>
+			<TEXTDATE w="75" title="Submited">submited</TEXTDATE>
+			<TEXTDATE w="75" title="Markdate">markdate</TEXTDATE>
+			<TEXTDECIMAL w="75" title="Marks">marks</TEXTDECIMAL>
+			<TEXTFIELD w="75" title="Details">details</TEXTFIELD>
+			<EXPORT name="Qcoursemarks" keyfield="qcoursemarkid" table="qcoursemarks">
+				<TEXTFIELD w="75" title="Qcoursemarkid">qcoursemarkid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Qgradeid">qgradeid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Qcourseitemid">qcourseitemid</TEXTFIELD>
+				<CHECKBOX w="75" title="Approved">approved</CHECKBOX>
+				<TEXTDATE w="75" title="Submited">submited</TEXTDATE>
+				<TEXTDATE w="75" title="Markdate">markdate</TEXTDATE>
+				<TEXTDECIMAL w="75" title="Marks">marks</TEXTDECIMAL>
+				<TEXTFIELD w="75" title="Details">details</TEXTFIELD>
+			</EXPORT>
+		</IMPORT>
+		<IMPORT noaudit="true" name="Usergroups" keyfield="usergroupid" table="UserGroups">
+			<TEXTFIELD w="75" title="Usergroupid">usergroupid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Usergroupname">usergroupname</TEXTFIELD>
+			<TEXTFIELD w="75" title="Activities">activities</TEXTFIELD>
+			<TEXTFIELD w="75" title="Description">description</TEXTFIELD>
+			<EXPORT name="Usergroups" keyfield="usergroupid" table="UserGroups">
+				<TEXTFIELD w="75" title="Usergroupid">usergroupid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Usergroupname">usergroupname</TEXTFIELD>
+				<TEXTFIELD w="75" title="Activities">activities</TEXTFIELD>
+				<TEXTFIELD w="75" title="Description">description</TEXTFIELD>
+			</EXPORT>
+		</IMPORT>
+
+		<IMPORT noaudit="true" name="Users" keyfield="userid" table="Users">
+			<TEXTFIELD w="75" title="Userid">userid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Usergroupid">usergroupid</TEXTFIELD>
+			<CHECKBOX w="75" title="Superuser">superuser</CHECKBOX>
+			<TEXTFIELD w="75" title="Rolename">rolename</TEXTFIELD>
+			<TEXTFIELD w="75" title="Username">username</TEXTFIELD>
+			<TEXTFIELD w="75" title="Fullname">fullname</TEXTFIELD>
+			<TEXTFIELD w="75" title="Extension">extension</TEXTFIELD>
+			<TEXTFIELD w="75" title="Telno">telno</TEXTFIELD>
+			<TEXTFIELD w="75" title="Email">email</TEXTFIELD>
+			<CHECKBOX w="75" title="Accountmanager">accountmanager</CHECKBOX>
+			<CHECKBOX w="75" title="Groupleader">groupleader</CHECKBOX>
+			<CHECKBOX w="75" title="Isactive">isactive</CHECKBOX>
+			<CHECKBOX w="75" title="Groupuser">groupuser</CHECKBOX>
+			<TEXTFIELD w="75" title="Userpasswd">userpasswd</TEXTFIELD>
+			<TEXTFIELD w="75" title="Firstpasswd">firstpasswd</TEXTFIELD>
+			<TEXTFIELD w="75" title="Details">details</TEXTFIELD>
+			<EXPORT name="Users" keyfield="userid" table="Users">
+				<TEXTFIELD w="75" title="Userid">userid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Usergroupid">usergroupid</TEXTFIELD>
+				<CHECKBOX w="75" title="Superuser">superuser</CHECKBOX>
+				<TEXTFIELD w="75" title="Rolename">rolename</TEXTFIELD>
+				<TEXTFIELD w="75" title="Username">username</TEXTFIELD>
+				<TEXTFIELD w="75" title="Fullname">fullname</TEXTFIELD>
+				<TEXTFIELD w="75" title="Extension">extension</TEXTFIELD>
+				<TEXTFIELD w="75" title="Telno">telno</TEXTFIELD>
+				<TEXTFIELD w="75" title="Email">email</TEXTFIELD>
+				<CHECKBOX w="75" title="Accountmanager">accountmanager</CHECKBOX>
+				<CHECKBOX w="75" title="Groupleader">groupleader</CHECKBOX>
+				<CHECKBOX w="75" title="Isactive">isactive</CHECKBOX>
+				<CHECKBOX w="75" title="Groupuser">groupuser</CHECKBOX>
+				<TEXTFIELD w="75" title="userpass">userpass</TEXTFIELD>
+				<TEXTFIELD w="75" title="firstpasswd">firstpasswd</TEXTFIELD>
+				<TEXTFIELD w="75" title="Details">details</TEXTFIELD>
+			</EXPORT>
+		</IMPORT>
+
+		<IMPORT noaudit="true" name="Counties" keyfield="county_id" table="counties">
+			<TEXTFIELD w="75" title="County ID">county_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="County Name">county_name</TEXTFIELD>
+			<EXPORT name="Counties" keyfield="county_id" table="counties">
+				<TEXTFIELD w="75" title="County ID">county_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="County Name">county_name</TEXTFIELD>
+			</EXPORT>
+		</IMPORT>
+		<IMPORT noaudit="true" name="Registrations" keyfield="registrationid" table="registrations">
+			<TEXTFIELD w="75" title="Registrationid">registrationid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Markid">markid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Degreeid">degreeid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Majorid">majorid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Sublevelid">sublevelid</TEXTFIELD>
+			<TEXTFIELD w="75" title="County ID">county_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Email">email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Entrypass">entrypass</TEXTFIELD>
+			<TEXTFIELD w="75" title="Firstpass">firstpass</TEXTFIELD>
+			<TEXTFIELD w="75" title="Existingid">existingid</TEXTFIELD>
+			<TEXTDATE w="75" title="Scheduledate">scheduledate</TEXTDATE>
+			<TEXTDATE w="75" title="Applicationdate">applicationdate</TEXTDATE>
+			<CHECKBOX w="75" title="Accepted">accepted</CHECKBOX>
+			<CHECKBOX w="75" title="Premajor">premajor</CHECKBOX>
+			<TEXTDATE w="75" title="Accepteddate">accepteddate</TEXTDATE>
+			<CHECKBOX w="75" title="Reported">reported</CHECKBOX>
+			<TEXTDATE w="75" title="Reporteddate">reporteddate</TEXTDATE>
+			<TEXTFIELD w="75" title="Denominationid">denominationid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Mname">mname</TEXTFIELD>
+			<TEXTFIELD w="75" title="Fname">fname</TEXTFIELD>
+			<TEXTFIELD w="75" title="Fdenominationid">fdenominationid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Mdenominationid">mdenominationid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Foccupation">foccupation</TEXTFIELD>
+			<TEXTFIELD w="75" title="Fnationalityid">fnationalityid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Moccupation">moccupation</TEXTFIELD>
+			<TEXTFIELD w="75" title="Mnationalityid">mnationalityid</TEXTFIELD>
+			<CHECKBOX w="75" title="Parentchurch">parentchurch</CHECKBOX>
+			<TEXTFIELD w="75" title="Parentemployer">parentemployer</TEXTFIELD>
+			<TEXTDATE w="75" title="Birthdate">birthdate</TEXTDATE>
+			<TEXTDATE w="75" title="Baptismdate">baptismdate</TEXTDATE>
+			<TEXTFIELD w="75" title="Lastname">lastname</TEXTFIELD>
+			<TEXTFIELD w="75" title="Firstname">firstname</TEXTFIELD>
+			<TEXTFIELD w="75" title="Middlename">middlename</TEXTFIELD>
+			<TEXTFIELD w="75" title="Sex">sex</TEXTFIELD>
+			<TEXTFIELD w="75" title="Maritalstatus">maritalstatus</TEXTFIELD>
+			<TEXTFIELD w="75" title="Nationalityid">nationalityid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Citizenshipid">citizenshipid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Residenceid">residenceid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Firstlanguage">firstlanguage</TEXTFIELD>
+			<TEXTFIELD w="75" title="Otherlanguages">otherlanguages</TEXTFIELD>
+			<TEXTFIELD w="75" title="Churchname">churchname</TEXTFIELD>
+			<TEXTFIELD w="75" title="Churcharea">churcharea</TEXTFIELD>
+			<TEXTFIELD w="75" title="Churchaddress">churchaddress</TEXTFIELD>
+			<TEXTFIELD w="75" title="Handicap">handicap</TEXTFIELD>
+			<TEXTFIELD w="75" title="Personalhealth">personalhealth</TEXTFIELD>
+			<CHECKBOX w="75" title="Smoke">smoke</CHECKBOX>
+			<CHECKBOX w="75" title="Drink">drink</CHECKBOX>
+			<CHECKBOX w="75" title="Drugs">drugs</CHECKBOX>
+			<CHECKBOX w="75" title="Hsmoke">hsmoke</CHECKBOX>
+			<CHECKBOX w="75" title="Hdrink">hdrink</CHECKBOX>
+			<CHECKBOX w="75" title="Hdrugs">hdrugs</CHECKBOX>
+			<CHECKBOX w="75" title="Expelled">expelled</CHECKBOX>
+			<TEXTFIELD w="75" title="Previousrecord">previousrecord</TEXTFIELD>
+			<TEXTFIELD w="75" title="Workexperience">workexperience</TEXTFIELD>
+			<TEXTFIELD w="75" title="Employername">employername</TEXTFIELD>
+			<TEXTFIELD w="75" title="Postion">postion</TEXTFIELD>
+			<CHECKBOX w="75" title="Attendedueab">attendedueab</CHECKBOX>
+			<TEXTDATE w="75" title="Attendeddate">attendeddate</TEXTDATE>
+			<TEXTDATE w="75" title="Dateemployed">dateemployed</TEXTDATE>
+			<TEXTFIELD w="75" title="Campusresidence">campusresidence</TEXTFIELD>
+			<TEXTFIELD w="75" title="Details">details</TEXTFIELD>
+			<TEXTFIELD w="75" title="Session ID">session_id</TEXTFIELD>
+			<EXPORT name="Registrations" keyfield="registrationid" table="registrations">
+				<TEXTFIELD w="75" title="Registrationid">registrationid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Markid">markid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Degreeid">degreeid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Majorid">majorid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Sublevelid">sublevelid</TEXTFIELD>
+				<TEXTFIELD w="75" title="County ID">county_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Email">email</TEXTFIELD>
+				<TEXTFIELD w="75" title="Entrypass">entrypass</TEXTFIELD>
+				<TEXTFIELD w="75" title="Firstpass">firstpass</TEXTFIELD>
+				<TEXTFIELD w="75" title="Existingid">existingid</TEXTFIELD>
+				<TEXTDATE w="75" title="Scheduledate">scheduledate</TEXTDATE>
+				<TEXTDATE w="75" title="Applicationdate">applicationdate</TEXTDATE>
+				<CHECKBOX w="75" title="Accepted">accepted</CHECKBOX>
+				<CHECKBOX w="75" title="Premajor">premajor</CHECKBOX>
+				<TEXTDATE w="75" title="Accepteddate">accepteddate</TEXTDATE>
+				<CHECKBOX w="75" title="Reported">reported</CHECKBOX>
+				<TEXTDATE w="75" title="Reporteddate">reporteddate</TEXTDATE>
+				<TEXTFIELD w="75" title="Denominationid">denominationid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Mname">mname</TEXTFIELD>
+				<TEXTFIELD w="75" title="Fname">fname</TEXTFIELD>
+				<TEXTFIELD w="75" title="Fdenominationid">fdenominationid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Mdenominationid">mdenominationid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Foccupation">foccupation</TEXTFIELD>
+				<TEXTFIELD w="75" title="Fnationalityid">fnationalityid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Moccupation">moccupation</TEXTFIELD>
+				<TEXTFIELD w="75" title="Mnationalityid">mnationalityid</TEXTFIELD>
+				<CHECKBOX w="75" title="Parentchurch">parentchurch</CHECKBOX>
+				<TEXTFIELD w="75" title="Parentemployer">parentemployer</TEXTFIELD>
+				<TEXTDATE w="75" title="Birthdate">birthdate</TEXTDATE>
+				<TEXTDATE w="75" title="Baptismdate">baptismdate</TEXTDATE>
+				<TEXTFIELD w="75" title="Lastname">lastname</TEXTFIELD>
+				<TEXTFIELD w="75" title="Firstname">firstname</TEXTFIELD>
+				<TEXTFIELD w="75" title="Middlename">middlename</TEXTFIELD>
+				<TEXTFIELD w="75" title="Sex">sex</TEXTFIELD>
+				<TEXTFIELD w="75" title="Maritalstatus">maritalstatus</TEXTFIELD>
+				<TEXTFIELD w="75" title="Nationalityid">nationalityid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Citizenshipid">citizenshipid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Residenceid">residenceid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Firstlanguage">firstlanguage</TEXTFIELD>
+				<TEXTFIELD w="75" title="Otherlanguages">otherlanguages</TEXTFIELD>
+				<TEXTFIELD w="75" title="Churchname">churchname</TEXTFIELD>
+				<TEXTFIELD w="75" title="Churcharea">churcharea</TEXTFIELD>
+				<TEXTFIELD w="75" title="Churchaddress">churchaddress</TEXTFIELD>
+				<TEXTFIELD w="75" title="Handicap">handicap</TEXTFIELD>
+				<TEXTFIELD w="75" title="Personalhealth">personalhealth</TEXTFIELD>
+				<CHECKBOX w="75" title="Smoke">smoke</CHECKBOX>
+				<CHECKBOX w="75" title="Drink">drink</CHECKBOX>
+				<CHECKBOX w="75" title="Drugs">drugs</CHECKBOX>
+				<CHECKBOX w="75" title="Hsmoke">hsmoke</CHECKBOX>
+				<CHECKBOX w="75" title="Hdrink">hdrink</CHECKBOX>
+				<CHECKBOX w="75" title="Hdrugs">hdrugs</CHECKBOX>
+				<CHECKBOX w="75" title="Expelled">expelled</CHECKBOX>
+				<TEXTFIELD w="75" title="Previousrecord">previousrecord</TEXTFIELD>
+				<TEXTFIELD w="75" title="Workexperience">workexperience</TEXTFIELD>
+				<TEXTFIELD w="75" title="Employername">employername</TEXTFIELD>
+				<TEXTFIELD w="75" title="Postion">postion</TEXTFIELD>
+				<CHECKBOX w="75" title="Attendedueab">attendedueab</CHECKBOX>
+				<TEXTDATE w="75" title="Attendeddate">attendeddate</TEXTDATE>
+				<TEXTDATE w="75" title="Dateemployed">dateemployed</TEXTDATE>
+				<TEXTFIELD w="75" title="Campusresidence">campusresidence</TEXTFIELD>
+				<TEXTFIELD w="75" title="Details">details</TEXTFIELD>
+				<TEXTFIELD w="75" title="Session ID">application_semester_id</TEXTFIELD>
+			</EXPORT>
+		</IMPORT>
+
+		<IMPORT noaudit="true" name="Contacttypes" keyfield="contacttypeid" table="contacttypes">
+			<TEXTFIELD w="75" title="Contacttypeid">contacttypeid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Contacttypename">contacttypename</TEXTFIELD>
+			<CHECKBOX w="75" title="Primarycontact">primarycontact</CHECKBOX>
+			<TEXTFIELD w="75" title="Narrative">narrative</TEXTFIELD>
+			<EXPORT name="Contacttypes" keyfield="contacttypeid" table="contacttypes">
+				<TEXTFIELD w="75" title="Contacttypeid">contacttypeid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Contacttypename">contacttypename</TEXTFIELD>
+				<CHECKBOX w="75" title="Primarycontact">primarycontact</CHECKBOX>
+				<TEXTFIELD w="75" title="Narrative">narrative</TEXTFIELD>
+			</EXPORT>
+		</IMPORT>
+		<IMPORT noaudit="true" name="Regcontacts" keyfield="regcontactid" table="regcontacts">
+			<TEXTFIELD w="75" title="Regcontactid">regcontactid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Registrationid">registrationid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Contacttypeid">contacttypeid</TEXTFIELD>
+			<CHECKBOX w="75" title="Guardiancontact">guardiancontact</CHECKBOX>
+			<TEXTFIELD w="75" title="Regcontactname">regcontactname</TEXTFIELD>
+			<TEXTFIELD w="75" title="Telephone">telephone</TEXTFIELD>
+			<TEXTFIELD w="75" title="Fax">fax</TEXTFIELD>
+			<TEXTFIELD w="75" title="Address">address</TEXTFIELD>
+			<TEXTFIELD w="75" title="Zipcode">zipcode</TEXTFIELD>
+			<TEXTFIELD w="75" title="Town">town</TEXTFIELD>
+			<TEXTFIELD w="75" title="Countrycodeid">countrycodeid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Email">email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Details">details</TEXTFIELD>
+			<EXPORT name="Regcontacts" keyfield="regcontactid" table="regcontacts">
+				<TEXTFIELD w="75" title="Regcontactid">regcontactid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Registrationid">registrationid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Contacttypeid">contacttypeid</TEXTFIELD>
+				<CHECKBOX w="75" title="Guardiancontact">guardiancontact</CHECKBOX>
+				<TEXTFIELD w="75" title="Regcontactname">regcontactname</TEXTFIELD>
+				<TEXTFIELD w="75" title="Telephone">telephone</TEXTFIELD>
+				<TEXTFIELD w="75" title="Fax">fax</TEXTFIELD>
+				<TEXTFIELD w="75" title="Address">address</TEXTFIELD>
+				<TEXTFIELD w="75" title="Zipcode">zipcode</TEXTFIELD>
+				<TEXTFIELD w="75" title="Town">town</TEXTFIELD>
+				<TEXTFIELD w="75" title="Countrycodeid">countrycodeid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Email">email</TEXTFIELD>
+				<TEXTFIELD w="75" title="Details">details</TEXTFIELD>
+			</EXPORT>
+		</IMPORT>
+
+		<IMPORT noaudit="true" name="Healthitems" keyfield="healthitemid" table="healthitems">
+			<TEXTFIELD w="75" title="Healthitemid">healthitemid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Healthitemname">healthitemname</TEXTFIELD>
+			<TEXTFIELD w="75" title="Narrative">narrative</TEXTFIELD>
+			<EXPORT name="Healthitems" keyfield="healthitemid" table="healthitems">
+				<TEXTFIELD w="75" title="Healthitemid">healthitemid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Healthitemname">healthitemname</TEXTFIELD>
+				<TEXTFIELD w="75" title="Narrative">narrative</TEXTFIELD>
+			</EXPORT>
+		</IMPORT>
+		<IMPORT noaudit="true" name="Reghealth" keyfield="reghealthid" table="reghealth">
+			<TEXTFIELD w="75" title="Reghealthid">reghealthid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Registrationid">registrationid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Healthitemid">healthitemid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Narrative">narrative</TEXTFIELD>
+			<EXPORT name="Reghealth" keyfield="reghealthid" table="reghealth">
+				<TEXTFIELD w="75" title="Reghealthid">reghealthid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Registrationid">registrationid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Healthitemid">healthitemid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Narrative">narrative</TEXTFIELD>
+			</EXPORT>
+		</IMPORT>
+
+		<IMPORT noaudit="true" name="Evaluation" keyfield="evaluationid" table="evaluation">
+			<TEXTFIELD w="75" title="Evaluationid">evaluationid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Registrationid">registrationid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Respondentname">respondentname</TEXTFIELD>
+			<TEXTFIELD w="75" title="Organisationname">organisationname</TEXTFIELD>
+			<TEXTFIELD w="75" title="Respondentpostion">respondentpostion</TEXTFIELD>
+			<TEXTFIELD w="75" title="Address">address</TEXTFIELD>
+			<TEXTDATE w="75" title="Evaldate">evaldate</TEXTDATE>
+			<TEXTFIELD w="75" title="Influence">influence</TEXTFIELD>
+			<TEXTFIELD w="75" title="Honesty">honesty</TEXTFIELD>
+			<TEXTFIELD w="75" title="Reliabilty">reliabilty</TEXTFIELD>
+			<TEXTFIELD w="75" title="Coperation">coperation</TEXTFIELD>
+			<TEXTFIELD w="75" title="Punctuality">punctuality</TEXTFIELD>
+			<TEXTFIELD w="75" title="Appearance">appearance</TEXTFIELD>
+			<TEXTFIELD w="75" title="Moralstandards">moralstandards</TEXTFIELD>
+			<TEXTFIELD w="75" title="Religiouscommitment">religiouscommitment</TEXTFIELD>
+			<TEXTFIELD w="75" title="Churchactivities">churchactivities</TEXTFIELD>
+			<TEXTFIELD w="75" title="Overal">overal</TEXTFIELD>
+			<CHECKBOX w="75" title="Smoke">smoke</CHECKBOX>
+			<CHECKBOX w="75" title="Drink">drink</CHECKBOX>
+			<CHECKBOX w="75" title="Drugs">drugs</CHECKBOX>
+			<CHECKBOX w="75" title="Hsmoke">hsmoke</CHECKBOX>
+			<CHECKBOX w="75" title="Hdrink">hdrink</CHECKBOX>
+			<CHECKBOX w="75" title="Hdrugs">hdrugs</CHECKBOX>
+			<CHECKBOX w="75" title="Arrested">arrested</CHECKBOX>
+			<TEXTFIELD w="75" title="Schooldismissal">schooldismissal</TEXTFIELD>
+			<TEXTFIELD w="75" title="Recomendation">recomendation</TEXTFIELD>
+			<TEXTFIELD w="75" title="Details">details</TEXTFIELD>
+			<EXPORT name="Evaluation" keyfield="evaluationid" table="evaluation">
+				<TEXTFIELD w="75" title="Evaluationid">evaluationid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Registrationid">registrationid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Respondentname">respondentname</TEXTFIELD>
+				<TEXTFIELD w="75" title="Organisationname">organisationname</TEXTFIELD>
+				<TEXTFIELD w="75" title="Respondentpostion">respondentpostion</TEXTFIELD>
+				<TEXTFIELD w="75" title="Address">address</TEXTFIELD>
+				<TEXTDATE w="75" title="Evaldate">evaldate</TEXTDATE>
+				<TEXTFIELD w="75" title="Influence">influence</TEXTFIELD>
+				<TEXTFIELD w="75" title="Honesty">honesty</TEXTFIELD>
+				<TEXTFIELD w="75" title="Reliabilty">reliabilty</TEXTFIELD>
+				<TEXTFIELD w="75" title="Coperation">coperation</TEXTFIELD>
+				<TEXTFIELD w="75" title="Punctuality">punctuality</TEXTFIELD>
+				<TEXTFIELD w="75" title="Appearance">appearance</TEXTFIELD>
+				<TEXTFIELD w="75" title="Moralstandards">moralstandards</TEXTFIELD>
+				<TEXTFIELD w="75" title="Religiouscommitment">religiouscommitment</TEXTFIELD>
+				<TEXTFIELD w="75" title="Churchactivities">churchactivities</TEXTFIELD>
+				<TEXTFIELD w="75" title="Overal">overal</TEXTFIELD>
+				<CHECKBOX w="75" title="Smoke">smoke</CHECKBOX>
+				<CHECKBOX w="75" title="Drink">drink</CHECKBOX>
+				<CHECKBOX w="75" title="Drugs">drugs</CHECKBOX>
+				<CHECKBOX w="75" title="Hsmoke">hsmoke</CHECKBOX>
+				<CHECKBOX w="75" title="Hdrink">hdrink</CHECKBOX>
+				<CHECKBOX w="75" title="Hdrugs">hdrugs</CHECKBOX>
+				<CHECKBOX w="75" title="Arrested">arrested</CHECKBOX>
+				<TEXTFIELD w="75" title="Schooldismissal">schooldismissal</TEXTFIELD>
+				<TEXTFIELD w="75" title="Recomendation">recomendation</TEXTFIELD>
+				<TEXTFIELD w="75" title="Details">details</TEXTFIELD>
+			</EXPORT>
+		</IMPORT>
+		<IMPORT noaudit="true" name="Registryschools" keyfield="registryschoolid" table="registryschools">
+			<TEXTFIELD w="75" title="Registryschoolid">registryschoolid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Registrationid">registrationid</TEXTFIELD>
+			<CHECKBOX w="75" title="Primaryschool">primaryschool</CHECKBOX>
+			<CHECKBOX w="75" title="Olevelschool">olevelschool</CHECKBOX>
+			<TEXTFIELD w="75" title="Schoolname">schoolname</TEXTFIELD>
+			<TEXTFIELD w="75" title="Address">address</TEXTFIELD>
+			<TEXTDATE w="75" title="Sdate">sdate</TEXTDATE>
+			<TEXTDATE w="75" title="Edate">edate</TEXTDATE>
+			<TEXTFIELD w="75" title="Narrative">narrative</TEXTFIELD>
+			<EXPORT name="Registryschools" keyfield="registryschoolid" table="registryschools">
+				<TEXTFIELD w="75" title="Registryschoolid">registryschoolid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Registrationid">registrationid</TEXTFIELD>
+				<CHECKBOX w="75" title="Primaryschool">primaryschool</CHECKBOX>
+				<CHECKBOX w="75" title="Olevelschool">olevelschool</CHECKBOX>
+				<TEXTFIELD w="75" title="Schoolname">schoolname</TEXTFIELD>
+				<TEXTFIELD w="75" title="Address">address</TEXTFIELD>
+				<TEXTDATE w="75" title="Sdate">sdate</TEXTDATE>
+				<TEXTDATE w="75" title="Edate">edate</TEXTDATE>
+				<TEXTFIELD w="75" title="Narrative">narrative</TEXTFIELD>
+			</EXPORT>
+		</IMPORT>
+		<IMPORT noaudit="true" name="Registrymarks" keyfield="registrymarkid" table="registrymarks">
+			<TEXTFIELD w="75" title="Registrymarkid">registrymarkid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Registrationid">registrationid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Subjectid">subjectid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Markid">markid</TEXTFIELD>
+			<TEXTFIELD w="75" title="Narrative">narrative</TEXTFIELD>
+			<EXPORT name="Registrymarks" keyfield="registrymarkid" table="registrymarks">
+				<TEXTFIELD w="75" title="Registrymarkid">registrymarkid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Registrationid">registrationid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Subjectid">subjectid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Markid">markid</TEXTFIELD>
+				<TEXTFIELD w="75" title="Narrative">narrative</TEXTFIELD>
+			</EXPORT>
+		</IMPORT>
+
+	</SOURCE>
+</MIGRATE>
+

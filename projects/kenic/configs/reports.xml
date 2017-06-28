@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<REPORTS title="KENIC Batch Reports" delay="1" reportpath="/root/baraza/projects/kenic/reports/" output="/root/baraza/">
+	
+	<REPORT name="Invoices" table="ledger" keyfield="id" marker="isfilled" reportfile="payment_transaction.jasper" where="(total > 0)"
+		psql="INSERT INTO audit.master (audit_user, audit_login) VALUES ('automation', 'automation');">
+		<TEXTFIELD w="75" title="ID" filtername="ledger_id">id</TEXTFIELD>
+	</REPORT>
+
+</REPORTS>

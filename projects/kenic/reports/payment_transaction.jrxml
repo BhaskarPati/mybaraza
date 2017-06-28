@@ -1,0 +1,633 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="payment_transaction" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="354"/>
+	<parameter name="image_path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["https://registry.kenic.or.ke/resources/images/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="site_name" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["KENIC"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ledger_id" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["4679"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="image_servlet_url" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["https://registry.kenic.or.ke/dynImages/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="paper_type" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["A4"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reportpath" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT ledger.id AS ledger_id,
+       ledger.trans_type,
+       ledger.description,
+       ledger.total AS amount,
+       ledger.currency,
+       ledger.tax,
+       ledger.tax_label,
+       ledger.created AS date_actioned,
+       ledger.domain_name,
+       ledger.tld,
+       ledger.transf_roid,
+       ledger.exdate,
+       ledger.documentnumber,
+       ledger.vat_sign,
+       client.name AS client_name,
+       client.email AS client_email,
+       client.address AS client_address,
+       client.phone AS client_phone,
+       client.fax AS client_fax,
+       client.billing_contact,
+       client.billing_email,
+       processor_account_history.alias AS processor_alias,
+       processor_account_history.ownername AS processor_name,
+       processor_account_history.tax_id AS processor_tax_code,
+       processor_account_history.address1 AS processor_address1,
+       processor_account_history.address2 AS processor_address2,
+       processor_account_history.address3 AS processor_address3,
+       processor_account_history.city AS processor_city,
+       processor_account_history.state AS processor_state,
+       processor_account_history.countrycode AS processor_countrycode,
+       processor_account_history.postalcode AS processor_postalcode,
+       processor_account_history.voice AS processor_voice,
+       processor_account_history.voicex AS processor_voicex,
+       processor_account_history.fax AS processor_fax,
+       processor_account_history.faxx AS processor_faxx,
+       processor_account_history.email AS processor_email,
+       receipts.receiptid,
+       receipts.chequedate,
+       receipts.chequenumber,
+       receipts.drawername,
+       receipts.cash,
+       receipts.vatwithheld,
+       receipts.vatcertno,
+       receipts.inwords,
+       (CASE WHEN (trans_type = 'Renewal') OR (trans_type = 'Registration') OR (trans_type = 'Membership') OR (trans_type = 'Training') THEN 'Invoice No. :'
+       WHEN (trans_type = 'Refund') THEN 'Credit Note No. :'
+       WHEN (trans_type = 'Payment') THEN 'Receipt No . :'
+       WHEN (trans_type = 'Adjustment') THEN 'Adjustment' END) as numberlabel,
+       (CASE WHEN receipts.cash = true THEN 'Cash Receipt'
+	WHEN receipts.sms_trans_id is not null THEN 'MPESA Transfer No. : ' || receipts.chequenumber
+       	WHEN receipts.vatwithheld = true THEN 'VAT Witholding Cert No. : ' || receipts.vatcertno
+       ELSE 'Cheque Receipt for Cheque No. : ' || receipts.chequenumber END) as receiptlabel
+FROM
+   ledger INNER JOIN client ON client.roid = ledger.client_roid
+		LEFT OUTER JOIN processor_account_history ON ledger.processor_account_history_id = processor_account_history.id
+		LEFT OUTER JOIN receipts ON ledger.id = receipts.ledgerid
+WHERE ledger.id = '$P!{ledger_id}';]]>
+	</queryString>
+	<field name="ledger_id" class="java.lang.Integer"/>
+	<field name="trans_type" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="amount" class="java.math.BigDecimal"/>
+	<field name="currency" class="java.lang.String"/>
+	<field name="tax" class="java.math.BigDecimal"/>
+	<field name="tax_label" class="java.lang.String"/>
+	<field name="date_actioned" class="java.sql.Timestamp"/>
+	<field name="domain_name" class="java.lang.String"/>
+	<field name="tld" class="java.lang.String"/>
+	<field name="transf_roid" class="java.lang.String"/>
+	<field name="exdate" class="java.sql.Timestamp"/>
+	<field name="documentnumber" class="java.lang.Integer"/>
+	<field name="vat_sign" class="java.lang.String"/>
+	<field name="client_name" class="java.lang.String"/>
+	<field name="client_email" class="java.lang.String"/>
+	<field name="client_address" class="java.lang.String"/>
+	<field name="client_phone" class="java.lang.String"/>
+	<field name="client_fax" class="java.lang.String"/>
+	<field name="billing_contact" class="java.lang.String"/>
+	<field name="billing_email" class="java.lang.String"/>
+	<field name="processor_alias" class="java.lang.String"/>
+	<field name="processor_name" class="java.lang.String"/>
+	<field name="processor_tax_code" class="java.lang.String"/>
+	<field name="processor_address1" class="java.lang.String"/>
+	<field name="processor_address2" class="java.lang.String"/>
+	<field name="processor_address3" class="java.lang.String"/>
+	<field name="processor_city" class="java.lang.String"/>
+	<field name="processor_state" class="java.lang.String"/>
+	<field name="processor_countrycode" class="java.lang.String"/>
+	<field name="processor_postalcode" class="java.lang.String"/>
+	<field name="processor_voice" class="java.lang.String"/>
+	<field name="processor_voicex" class="java.lang.String"/>
+	<field name="processor_fax" class="java.lang.String"/>
+	<field name="processor_faxx" class="java.lang.String"/>
+	<field name="processor_email" class="java.lang.String"/>
+	<field name="receiptid" class="java.lang.Integer"/>
+	<field name="chequedate" class="java.sql.Date"/>
+	<field name="chequenumber" class="java.lang.String"/>
+	<field name="drawername" class="java.lang.String"/>
+	<field name="cash" class="java.lang.Boolean"/>
+	<field name="vatwithheld" class="java.lang.Boolean"/>
+	<field name="vatcertno" class="java.lang.String"/>
+	<field name="inwords" class="java.lang.String"/>
+	<field name="numberlabel" class="java.lang.String"/>
+	<field name="receiptlabel" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band/>
+	</title>
+	<pageHeader>
+		<band height="142">
+			<rectangle radius="10">
+				<reportElement mode="Opaque" x="24" y="33" width="531" height="72" forecolor="#FF7F00" backcolor="#550000"/>
+			</rectangle>
+			<staticText>
+				<reportElement key="staticText-5" x="99" y="33" width="395" height="21" forecolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="16" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[KENIC]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="101" y="61" width="394" height="27" forecolor="#FFFFFF">
+					<printWhenExpression><![CDATA[new Boolean($F{amount}.signum() == -1)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[($F{trans_type}.equals("Refund") ? "CREDIT NOTE" : "PAYMENT TRANSACTION RECEIPT" )]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="61" width="394" height="27" forecolor="#FFFFFF">
+					<printWhenExpression><![CDATA[new Boolean($F{amount}.signum() == 1)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[(($F{vat_sign} == null) ? "PROFORMA TRANSACTION INVOICE" : "TRANSACTION INVOICE" )]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band height="356">
+			<textField isBlankWhenNull="true">
+				<reportElement x="40" y="155" width="121" height="15" forecolor="#666666"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{trans_type}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="40" y="201" width="60" height="11" forecolor="#333333"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="201" width="437" height="22" forecolor="#666666"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="40" y="236" width="60" height="11" forecolor="#333333"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="223" width="60" height="11" forecolor="#333333"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy HH:mm" isBlankWhenNull="true">
+				<reportElement x="102" y="223" width="180" height="11" forecolor="#666666"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{date_actioned}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="40" y="190" width="60" height="11" forecolor="#333333"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TLD]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="190" width="180" height="11" forecolor="#666666"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tld}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="40" y="14" width="60" height="11" forecolor="#333333"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Registrar]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="14" width="180" height="11" forecolor="#333333"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{client_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="40" y="27" width="60" height="11" forecolor="#333333"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[email]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="27" width="180" height="11" forecolor="#666666"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{client_email}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="40" y="40" width="60" height="11" forecolor="#333333"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Address]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="100" y="40" width="180" height="44" forecolor="#666666"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{client_address}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="40" y="87" width="60" height="11" forecolor="#333333"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Phone]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="87" width="180" height="11" forecolor="#666666"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{client_phone}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="40" y="101" width="60" height="11" forecolor="#333333"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fax]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="101" width="180" height="11" forecolor="#666666"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{client_fax}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="40" y="114" width="60" height="11" forecolor="#333333"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Attention]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="114" width="180" height="11" forecolor="#666666"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{billing_contact}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="127" width="180" height="11" forecolor="#666666"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{billing_email}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="286" y="14" width="60" height="11" forecolor="#333333"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Issued by]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="347" y="14" width="180" height="11" forecolor="#666666"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{processor_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="286" y="127" width="60" height="11" forecolor="#333333"/>
+				<textElement markup="html">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[<b>PIN NO : </b>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="286" y="28" width="60" height="11" forecolor="#333333"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Address]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="347" y="28" width="180" height="11" forecolor="#666666"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{processor_address1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="347" y="38" width="180" height="11" forecolor="#666666"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{processor_address2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="347" y="48" width="180" height="11" forecolor="#666666"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{processor_address3}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="286" y="58" width="60" height="11" forecolor="#333333"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[City]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="347" y="58" width="180" height="11" forecolor="#666666"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{processor_city}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="286" y="68" width="60" height="11" forecolor="#333333"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[State]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="347" y="68" width="180" height="11" forecolor="#666666"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{processor_state}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="286" y="78" width="60" height="11" forecolor="#333333"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Postcode]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="347" y="78" width="180" height="11" forecolor="#666666"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{processor_postalcode}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="286" y="90" width="60" height="11" forecolor="#333333"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Phone]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="347" y="90" width="180" height="11" forecolor="#666666"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{processor_voice}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="286" y="101" width="60" height="11" forecolor="#333333"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fax]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="347" y="101" width="180" height="11" forecolor="#666666"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{processor_fax}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="286" y="114" width="60" height="11" forecolor="#333333"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[email]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="347" y="114" width="180" height="11" forecolor="#666666"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{processor_email}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="40" y="285" width="411" height="11" forecolor="#666666">
+					<printWhenExpression><![CDATA[new Boolean($F{receiptid} != null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{receiptlabel}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="40" y="296" width="499" height="36" forecolor="#666666">
+					<printWhenExpression><![CDATA[new Boolean($F{receiptid} != null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{inwords}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="368" y="170" width="59" height="15" forecolor="#666666"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{ledger_id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="286" y="170" width="82" height="15" forecolor="#333333"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Transaction Ref.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="40" y="152" width="515" height="1" forecolor="#FF7F00"/>
+			</line>
+			<staticText>
+				<reportElement x="40" y="274" width="88" height="11" forecolor="#000000">
+					<printWhenExpression><![CDATA[new Boolean($F{receiptid} != null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[Payment Details]]></text>
+			</staticText>
+			<line>
+				<reportElement x="40" y="348" width="515" height="1" forecolor="#FF7F00">
+					<printWhenExpression><![CDATA[new Boolean($F{receiptid} != null)]]></printWhenExpression>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="40" y="262" width="515" height="1" forecolor="#FF7F00"/>
+			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="102" y="236" width="196" height="11" forecolor="#666666"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[new DecimalFormat("#,##0.00").format($F{amount}.abs()) +
+" " + $F{currency} +
+($F{tax_label} != null ? " (inc " + $F{tax} + "% " + $F{tax_label} + ")" : "")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="286" y="140" width="60" height="11" forecolor="#333333"/>
+				<textElement markup="html">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[<b>VAT NO. : </b>]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="170" width="59" height="15" forecolor="#666666"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{documentnumber}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="347" y="140" width="180" height="11" forecolor="#333333"/>
+				<textElement markup="html">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[0127158M]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="347" y="127" width="180" height="11" forecolor="#333333"/>
+				<textElement markup="html">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[P051147513Q]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="40" y="170" width="59" height="15" forecolor="#666666"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numberlabel}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="285" y="223" width="106" height="11" forecolor="#333333">
+					<printWhenExpression><![CDATA[new Boolean($F{exdate} != null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Domain Expiry Date]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy" isBlankWhenNull="true">
+				<reportElement x="391" y="223" width="136" height="11" forecolor="#666666"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{exdate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="286" y="190" width="82" height="11" forecolor="#333333">
+					<printWhenExpression><![CDATA[new Boolean($F{transf_roid} != null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Transfered From]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="368" y="190" width="171" height="11" forecolor="#666666"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{transf_roid}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="244">
+			<staticText>
+				<reportElement key="staticText-5" x="77" y="151" width="394" height="21" forecolor="#1F1118">
+					<printWhenExpression><![CDATA[new Boolean($F{amount}.signum() == 1)]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[All Cheques payable to "KENYA NETWORK INFORMATION CENTRE"]]></text>
+			</staticText>
+			<line>
+				<reportElement x="24" y="207" width="531" height="1"/>
+			</line>
+			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle" isUsingCache="true">
+				<reportElement key="image-1" mode="Transparent" x="161" y="17" width="205" height="129"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<imageExpression class="java.lang.String"><![CDATA[$P{reportpath} + "startbg.gif"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="24" y="182" width="531" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{vat_sign}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

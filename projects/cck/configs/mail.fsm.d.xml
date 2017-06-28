@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<ESCALATION title="Baraza Mail" processdelay="1" functable="dual" reportpath="/opt/tomcat7/webapps/fsm/reports/"
+	host="172.100.3.12" mailuser="syncimis" mailpassword="cck123" mailfrom="imisadmin@cck.co.ke"
+	inbox="INBOX" sentbox="Sent" smtppauth="true" ntlm="true">
+	
+	<REPORT name="Approval Action" keyfield="sys_emailed_id" action="Emailed" actioncount="1" 
+			table="vw_sys_emailed, vw_approvals"			
+			where="(vw_approvals.approval_id = vw_sys_emailed.table_id) AND (vw_sys_emailed.emailed = '0') AND (vw_sys_emailed.table_name = 'APPROVALS') AND (vw_sys_emailed.email_type = 1)">
+		<ADDRESS title="address">vw_approvals.approving_entity_email</ADDRESS>
+		<SUBJECT title="subject">vw_approvals.phase_narrative</SUBJECT>
+		
+		<BODYFIELD reference="{{origin_entity_name}}" basetable="vw_approvals">origin_entity_name</BODYFIELD>
+		<BODYFIELD reference="{{approving_entity_name}}" basetable="vw_approvals">approving_entity_name</BODYFIELD>
+		<BODYFIELD reference="{{approval_id}}" basetable="vw_approvals">approval_id</BODYFIELD>
+		
+		<BODYFIELD reference="{{workflow_name}}" basetable="vw_approvals">workflow_name</BODYFIELD>
+		<BODYFIELD reference="{{phase_narrative}}" basetable="vw_approvals">phase_narrative</BODYFIELD>
+		
+		<BODYFIELD reference="{{escalation_time}}" basetable="vw_approvals">escalation_time</BODYFIELD>
+		<BODYFIELD reference="{{application_date}}" basetable="vw_approvals">application_date</BODYFIELD>
+		
+		<FIELD title="Body" basetable="vw_sys_emailed">details</FIELD>
+		
+		<PARAM basetable="vw_approvals">table_id</PARAM>
+        <REPORT basetable="vw_approvals">notice_file</REPORT>
+		
+	</REPORT>	
+	
+	<REPORT name="Application Ack" keyfield="sys_emailed_id" action="Emailed" actioncount="5" 
+			table="vw_sys_emailed, vw_client_license"
+			attachment="app_ack_attach.jasper"
+			where="(vw_client_license.workflow_table_id = vw_sys_emailed.table_id) AND 
+			(vw_sys_emailed.emailed = '0') AND (vw_sys_emailed.table_name = 'CLIENT_LICENSE') AND (vw_sys_emailed.email_type = 5) AND 
+			(vw_client_license.email IS NOT NULL)">
+		<ADDRESS title="address">email</ADDRESS>
+		<SUBJECT title="subject">vw_sys_emailed.title</SUBJECT>
+		
+		<BODYFIELD reference="{{client_name}}" basetable="vw_client_license">client_name</BODYFIELD>
+		<BODYFIELD reference="{{license_name}}" basetable="vw_client_license">license_name</BODYFIELD>
+				
+		<BODYFIELD reference="{{application_date}}" basetable="vw_client_license">application_date</BODYFIELD>
+				
+		<FIELD title="Body" basetable="vw_sys_emailed">details</FIELD>
+		
+		<PARAM title="Filter" basetable="vw_client_license">client_license_id</PARAM>	
+		
+	</REPORT>	
+	
+	<REPORT name="CLC emails" keyfield="sys_emailed_id" action="Emailed" actioncount="5" 
+			table="vw_sys_emailed, vw_client_license"
+			where="(vw_client_license.workflow_table_id = vw_sys_emailed.table_id) AND 
+			(vw_sys_emailed.emailed = '0') AND (vw_sys_emailed.table_name = 'CLIENT_LICENSE') AND (vw_sys_emailed.email_type = 5) AND 
+			(vw_client_license.email IS NOT NULL)">
+		<ADDRESS title="address">email</ADDRESS>
+		<SUBJECT title="subject">vw_sys_emailed.title</SUBJECT>
+		
+		<BODYFIELD reference="{{client_name}}" basetable="vw_client_license">client_name</BODYFIELD>
+		<BODYFIELD reference="{{license_name}}" basetable="vw_client_license">license_name</BODYFIELD>
+				
+		<BODYFIELD reference="{{application_date}}" basetable="vw_client_license">application_date</BODYFIELD>
+				
+		<FIELD title="Body" basetable="vw_sys_emailed">details</FIELD>
+		
+	</REPORT>	
+	
+	
+	<REPORT name="Payment Emails" keyfield="sys_emailed_id" action="Emailed" actioncount="10" 
+			table="vw_sys_emailed, vw_license_payment_header"
+			where="(vw_license_payment_header.workflow_table_id = vw_sys_emailed.table_id) AND 
+			(vw_sys_emailed.emailed = '0') AND (vw_sys_emailed.table_name = 'LICENSE_PAYMENT_HEADER') AND (vw_sys_emailed.email_type = 10) AND 
+			(vw_license_payment_header.email IS NOT NULL)">
+		<ADDRESS title="address">email</ADDRESS>
+		<SUBJECT title="subject">vw_sys_emailed.title</SUBJECT>
+		
+		<BODYFIELD reference="{{client_name}}" basetable="vw_license_payment_header">client_name</BODYFIELD>
+		<BODYFIELD reference="{{license_name}}" basetable="vw_license_payment_header">license_name</BODYFIELD>
+		<BODYFIELD reference="{{order_summary}}" basetable="vw_license_payment_header">order_summary</BODYFIELD>
+		
+		<FIELD title="Body" basetable="vw_sys_emailed">details</FIELD>
+		
+	</REPORT>	
+	
+	
+	<REPORT name="Payment Emails" keyfield="sys_emailed_id" action="Emailed" actioncount="50" 
+			table="vw_sys_emailed, vw_license_payment_header"
+			where="(vw_license_payment_header.workflow_table_id = vw_sys_emailed.table_id) AND 
+			(vw_sys_emailed.emailed = '0') AND (vw_sys_emailed.table_name = 'PERIOD_LICENSE') AND (vw_sys_emailed.email_type = 10) AND 
+			(vw_license_payment_header.email IS NOT NULL)">
+		<ADDRESS title="address">email</ADDRESS>
+		<SUBJECT title="subject">vw_sys_emailed.title</SUBJECT>
+		
+		<BODYFIELD reference="{{client_name}}" basetable="vw_license_payment_header">client_name</BODYFIELD>
+		<BODYFIELD reference="{{license_name}}" basetable="vw_license_payment_header">license_name</BODYFIELD>
+		<BODYFIELD reference="{{order_summary}}" basetable="vw_license_payment_header">order_summary</BODYFIELD>
+		
+		<FIELD title="Body" basetable="vw_sys_emailed">details</FIELD>
+		
+	</REPORT>	
+	
+	<REPORT name="License Activation" keyfield="sys_emailed_id" action="Emailed" actioncount="5" 
+			table="vw_sys_emailed, vw_period_license"
+			attachmentX="app_ack_attach.jasper"
+			where="(vw_period_license.workflow_table_id = vw_sys_emailed.table_id) AND 
+			(vw_sys_emailed.emailed = '0') AND (vw_sys_emailed.table_name = 'PERIOD_LICENSE') AND (vw_sys_emailed.email_type = 50) AND 
+			(vw_period_license.email IS NOT NULL)">
+		<ADDRESS title="address">email</ADDRESS>
+		<SUBJECT title="subject">vw_sys_emailed.title</SUBJECT>
+		
+		<BODYFIELD reference="{{client_name}}" basetable="vw_period_license">client_name</BODYFIELD>
+		<BODYFIELD reference="{{license_name}}" basetable="vw_period_license">license_name</BODYFIELD>						
+				
+		<FIELD title="Body" basetable="vw_sys_emailed">details</FIELD>
+		
+	</REPORT>
+
+	<REPORT name="Annual Renewal Notice LCS" keyfield="sys_emailed_id" action="Emailed" actioncount="5" 
+			table="vw_sys_emailed, vw_period_client"
+			where="(vw_period_client.period_client_id = vw_sys_emailed.table_id) AND 
+			(vw_sys_emailed.emailed = '0') AND (vw_sys_emailed.table_name = 'PERIOD_CLIENT')">
+		<ADDRESS title="address">vw_period_client.email</ADDRESS>
+		<SUBJECT title="subject">vw_sys_emailed.title</SUBJECT>
+		
+		<BODYFIELD reference="{{client_name}}" basetable="vw_period_client">client_name</BODYFIELD>
+				
+		<FIELD title="Body" basetable="vw_sys_emailed">details</FIELD>
+		
+	</REPORT>
+
+
+</ESCALATION>

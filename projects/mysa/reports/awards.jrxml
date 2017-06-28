@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="awards" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<parameter name="seasonid" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT memberid, membername, getPoints('$P!{seasonid}', memberid) as meetings, 
+getPoints2('$P!{seasonid}', memberid) as services, 
+getPoints3('$P!{seasonid}', memberid) as workshops, 
+getSportspoints('$P!{seasonid}', memberid) as sports, 
+(getPoints('$P!{seasonid}', memberid) + getPoints2('$P!{seasonid}', memberid) + getPoints3('$P!{seasonid}', memberid) + getSportspoints('$P!{seasonid}', memberid)) as total
+FROM vwmembers ORDER BY memberid]]>
+	</queryString>
+	<field name="memberid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="membername" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="meetings" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="services" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="workshops" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sports" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="46" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="9" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="48" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID #]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="0" width="138" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[MEMBER NAME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="186" y="0" width="73" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[MEETINGS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="259" y="0" width="85" height="30"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMMUNITY SERVICES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="344" y="0" width="73" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[WORKSHOPS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="417" y="0" width="60" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SPORTS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="477" y="0" width="78" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="48" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{memberid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="48" y="0" width="138" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{membername}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="186" y="0" width="73" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.Float"><![CDATA[$F{meetings}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="259" y="0" width="85" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.Float"><![CDATA[$F{services}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="344" y="0" width="73" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.Float"><![CDATA[$F{workshops}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="417" y="0" width="60" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.Float"><![CDATA[$F{sports}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="477" y="0" width="78" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.Float"><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="11" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="7" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="13" splitType="Stretch"/>
+	</summary>
+</jasperReport>

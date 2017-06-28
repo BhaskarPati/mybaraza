@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="annualschedule_subreport1" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="scheduletypeid" class="java.math.BigDecimal" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="scheduleid" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[20]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reportpath" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from vwschedules2 where scheduletypeid = $P!{scheduletypeid}]]>
+	</queryString>
+	<field name="SCHEDULETYPEID" class="java.math.BigDecimal"/>
+	<field name="PERIODID" class="java.lang.String"/>
+	<field name="ANNUAL" class="java.lang.String"/>
+	<field name="ADHOC" class="java.lang.String"/>
+	<field name="FORFSM" class="java.lang.String"/>
+	<field name="FORLCS" class="java.lang.String"/>
+	<field name="SCHEDULETYPENAME" class="java.lang.String"/>
+	<field name="DETAILS" class="oracle.sql.CLOB"/>
+	<field name="ACTIVE" class="java.lang.String"/>
+	<field name="SCHEDULTYPECOMP" class="java.lang.String"/>
+	<field name="PERIODNAME" class="java.lang.String"/>
+	<field name="SCHEDULEID" class="java.math.BigDecimal"/>
+	<field name="USERID" class="java.math.BigDecimal"/>
+	<field name="SCHEDULENAME" class="java.lang.String"/>
+	<field name="COMPLETE" class="java.lang.String"/>
+	<field name="SCHEDULEDETAILS" class="oracle.sql.CLOB"/>
+	<field name="QUARTER1" class="java.lang.String"/>
+	<field name="QUARTER2" class="java.lang.String"/>
+	<field name="QUARTER3" class="java.lang.String"/>
+	<field name="QUARTER4" class="java.lang.String"/>
+	<field name="STARTDATE" class="java.sql.Timestamp"/>
+	<field name="ENDDATE" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="1" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="85" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="258" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{SCHEDULENAME}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="0" y="20" width="258" height="65"/>
+				<subreportParameter name="SUBREPORT_DIR"/>
+				<subreportParameter name="scheduleid">
+					<subreportParameterExpression><![CDATA[$F{SCHEDULEID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="reportpath">
+					<subreportParameterExpression><![CDATA[$P{reportpath}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{reportpath} + "annualschedule_subreport2.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

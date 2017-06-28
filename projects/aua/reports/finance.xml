@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<APP database="aua" name="Finance" reportpath="/root/baraza/projects/aua/reports/">
+	<TREE name="Student Finance" role="finance">
+		<NODE name="Students">
+			<NODE key="11" name="Students"></NODE>
+			<NODE key="1" name="Scholarship Types"></NODE>
+		</NODE>
+
+		<NODE name="Semester">
+			<NODE key="17" name="Semesters Students"></NODE>
+		</NODE>
+		
+		<NODE name="Summaries">
+				<NODE key="241" name="Session Students"></NODE>
+				<NODE key="1242" name="Session Majors"></NODE>
+			</NODE>
+
+		
+	</TREE>
+
+	<DESK h="500" key="1" name="Scholarship Types" splitloc="250" splittype="vert" w="585">
+		<GRID gridfilter="true" key="1" keyfield="scholarshiptypeid" name="Scholarship Types" pos="top" table="scholarshiptypes">
+			<TEXTFIELD title="#" w="40">scholarshiptypeid</TEXTFIELD>
+			<TEXTFIELD title="Scholarship Type" w="240">scholarshiptypename</TEXTFIELD>
+			<TEXTFIELD title="Account Number" w="140">scholarshipaccount</TEXTFIELD>
+		</GRID>
+
+		<FORM autofield="scholarshiptypeid" key="2" linkfield="scholarshiptypeid" linkkey="1" name="Scholarship Types" pos="bottom" table="scholarshiptypes">
+			<TEXTFIELD h="20" title="Scholarship Type" w="150" x="10" y="10">scholarshiptypename</TEXTFIELD>
+			<TEXTFIELD h="20" title="Account Number" w="150" x="290" y="10">scholarshipaccount</TEXTFIELD>
+			<TEXTAREA h="70" title="Details" w="430" x="10" y="30">details</TEXTAREA>
+		</FORM>
+
+	</DESK>
+
+	<DESK h="560" key="11" name="Students" splitloc="400" splittype="vert" w="585">
+		<GRID filterkey="10" gridfilter="true" key="1" keyfield="studentid" name="Students" pos="top" table="vwstudents" updatetable="students">
+			<TEXTFIELD title="Student ID" w="40">studentid</TEXTFIELD>
+			<TEXTFIELD title="School" w="40">schoolname</TEXTFIELD>
+			<TEXTFIELD title="Denomination" w="40">denominationname</TEXTFIELD>
+			<TEXTFIELD title="Student Name" w="40">studentname</TEXTFIELD>
+			<TEXTFIELD title="Sex" w="40">sex</TEXTFIELD>
+			<TEXTFIELD title="Nationality" w="40">Nationality</TEXTFIELD>
+			<TEXTFIELD edit="true" title="Account Number" w="40">accountnumber</TEXTFIELD>
+			<TEXTFIELD title="On Probation" w="40">onprobation</TEXTFIELD>
+		</GRID>
+
+		<FILTER key="10" name="Students Search" pos="bottom">
+			<TEXTFIELD h="20" title="Student ID" w="150" x="10" y="10">studentid</TEXTFIELD>
+			<TEXTFIELD h="20" title="Student Name" w="150" x="10" y="30">studentname</TEXTFIELD>
+			<TEXTFIELD h="20" title="School Name" w="150" x="10" y="50">schoolname</TEXTFIELD>
+		</FILTER>
+
+		<GRID key="3" keyfield="studentdegreeid" linkfield="studentid" linkkey="1" name="Student's Degree" pos="top" table="vwstudentdegrees">
+			<TEXTFIELD title="Degree" w="140">degreename</TEXTFIELD>
+			<TEXTFIELD title="Student" w="140">studentname</TEXTFIELD>
+			<TEXTFIELD title="Completed" w="40">completed</TEXTFIELD>
+		</GRID>
+
+	</DESK>
+
+	<DESK h="520" key="17" name="Semesters Students" splitloc="200" splittype="vert" w="630">
+		<GRID gridfilter="true" key="1" keyfield="sessionid" name="Semesters" pos="top" table="vwactivesession">
+			<TEXTFIELD title="Session/Study center" w="240">sessionid</TEXTFIELD>
+			<TEXTFIELD title="Start" w="240">sstart</TEXTFIELD>
+			<TEXTFIELD title="End" w="240">send</TEXTFIELD>
+		</GRID>
+
+		<GRID gridfilter="true" key="2" keyfield="sstudentid" linkfield="sessionid" linkkey="1" name="Students List" pos="bottom" table="vwsstudents" updatetable="sstudents">
+			<TEXTFIELD title="Student ID" w="10">studentid</TEXTFIELD>
+			<TEXTFIELD title="Student Name" w="40">studentname</TEXTFIELD>
+			<TEXTFIELD title="Sponsor Name" w="10">sponsorname</TEXTFIELD>
+			<TEXTFIELD title="Course Department" w="20">departmentname</TEXTFIELD>
+		</GRID>
+		
+		<REPORT filtered="true" linkfield="studentid" linkkey="2" jasperfile="vwstudentdetailsa.jasper" name="Student Details" pos="bottom"></REPORT>
+		<REPORT filtered="true" linkfield="sessionid" linkkey="1" jasperfile="qstudentview.jasper" name="Session GPA Enrolment Students" pos="bottom"></REPORT>
+		
+		
+	</DESK>
+	
+	<DESK h="500" key="241" name="Session students" splitloc="120" splittype="horl" w="700">
+		<DRILLDOWN keyfield="sessionyear" listfield="sessionyear" name="Year" pos="top" table="vwyearview">
+			<DRILLDOWN keyfield="sessionid" listfield="sessionid" name="Sessions" pos="top" table="sessions" wherefield="sessionyear"></DRILLDOWN>
+		</DRILLDOWN>
+	
+
+		<REPORT filtered="true" jasperfile="vwsstudents.jasper" name="Finance Approved" pos="bottom"></REPORT>
+		
+	</DESK>
+	
+	<DESK h="500" key="242" name="Students Majors" splitloc="120" splittype="horl" w="700">
+
+	
+
+	<DRILLDOWN keyfield="sessionyear" listfield="sessionyear" name="Year" pos="top" table="vwyearview">
+			<DRILLDOWN keyfield="sessionid" listfield="sessionid" name="Sessions" pos="top" table="sessions" wherefield="sessionyear"></DRILLDOWN>
+		</DRILLDOWN>
+		
+		<DRILLDOWN filtername="majorid" keyfield="majorid" listfield="majorname" name="Programmes" pos="top" table="Majors"></DRILLDOWN>
+
+		<REPORT filtered="true" jasperfile="vwsstudentmajor.jasper" name="Students Programme" pos="bottom"></REPORT>
+	</DESK>
+	
+	
+	
+	<DESK h="500" key="1242" name="Enrolment By Major" splitloc="120" splittype="horl" w="700">
+		<DRILLDOWN keyfield="schoolid" listfield="schoolname" name="Schools" pos="top" table="schools">
+			<DRILLDOWN keyfield="departmentid" listfield="departmentname" name="Departments" pos="top" table="departments" wherefield="schoolid">
+				<DRILLDOWN filtername="majorid" keyfield="majorid" listfield="majorname" name="Majors" pos="top" table="majors" wherefield="departmentid"></DRILLDOWN>
+			</DRILLDOWN>
+		</DRILLDOWN>
+		
+		<DRILLDOWN keyfield="sessionyear" listfield="sessionyear" name="Year" pos="top" table="vwyearview">
+			<DRILLDOWN keyfield="sessionid" listfield="sessionid" name="Sessions" pos="top" table="sessions" wherefield="sessionyear"></DRILLDOWN>
+		</DRILLDOWN>
+		
+		<REPORT filtered="true" jasperfile="vwsstudentmajor.jasper" name="Students Programme" pos="bottom"></REPORT>
+	</DESK>
+	
+	
+	
+
+	
+
+</APP>
+

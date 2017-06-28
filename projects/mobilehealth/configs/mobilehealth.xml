@@ -1,0 +1,1097 @@
+<APP color="blue" name="Mobile Health" org="org_id" password="change_password" material="true">
+	<MENU name="Mobile Health">
+		<MENU icon="icon-book-open" name="Reports ( MOH 514 )">15</MENU>
+		<MENU icon="icon-book-open" name="Reports ( MOH 515 )">20</MENU>
+		<MENU icon="icon-book-open" name="Reports ( MOH 100 )">40</MENU>
+		<MENU icon="icon-settings" name="Configurations">
+			<MENU icon="icon-settings" name="Definitions">45</MENU>
+			<MENU icon="fa fa-sitemap" name="Organizations">5</MENU>
+			<MENU name="514 Indicators Definitions">50</MENU>
+			<MENU name="Link Health Facilities">55</MENU>
+		</MENU>
+	</MENU>
+	<DESK w="700" name="Dashboard" access="open" key="1" h="500">
+		<DASHBOARD w="700" name="Dashboard">
+			<TILE name="Health Workers" role="admin" noorg.query="true" table="health_workers" noorg="true">
+				<TEXTFIELD w="75" fnct="COALESCE(count(health_worker_id), 0)" title="Total CHVs">health_worker_id</TEXTFIELD>
+			</TILE>
+		</DASHBOARD>
+	</DESK>
+	<DESK w="700" name="Organizations" key="5" h="550">
+		<GRID name="Organizations" keyfield="org_id" table="vw_orgs" noorg="true">
+			<TEXTFIELD w="75" title="Organization ID">org_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Organization Name">org_name</TEXTFIELD>
+			<CHECKBOX w="75" title="Default">is_default</CHECKBOX>
+			<CHECKBOX w="75" title="Active">is_active</CHECKBOX>
+			<GRID name="Entitys" keyfield="entity_id" linkfield="org_id" table="vw_entitys">
+				<TEXTFIELD w="75" title="Org Name">org_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Entity ID">entity_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Entity Name">entity_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="User Name">user_name</TEXTFIELD>
+				<CHECKBOX w="75" title="Active">is_active</CHECKBOX>
+				<TEXTFIELD w="75" title="Primary Email">primary_email</TEXTFIELD>
+				<TEXTFIELD w="75" title="Entity Type Name">entity_type_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Entity Role">entity_role</TEXTFIELD>
+				<TEXTFIELD w="75" title="Use Key">use_key</TEXTFIELD>
+				<GRID name="Community Health Volunteers" keyfield="health_worker_id" linkfield="entity_id" table="vw_health_workers">
+					<TEXTFIELD w="75" title="Organization">org_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Supervisor">entity_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Device Name">device_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="CHV ID">health_worker_id</TEXTFIELD>
+					<TEXTFIELD w="75" title="CHV Name">worker_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="CHV National ID">worker_national_id</TEXTFIELD>
+					<TEXTFIELD w="75" title="CHV Mobile Num">worker_mobile_num</TEXTFIELD>
+					<CHECKBOX w="75" title="Active">is_active</CHECKBOX>
+					<TEXTTIMESTAMP w="75" title="Date Enrolled">date_enrolled</TEXTTIMESTAMP>
+					<FORM name="Community Health Volunteer" keyfield="health_worker_id" linkfield="entity_id" table="health_workers">
+						<TEXTFIELD w="150" title="CHV Name" y="10" h="20" x="10">worker_name</TEXTFIELD>
+						<TEXTFIELD w="150" title="CHV National ID" y="10" h="20" x="290">worker_national_id</TEXTFIELD>
+						<TEXTFIELD w="150" title="CHV Mobile Num" y="30" h="20" x="10">worker_mobile_num</TEXTFIELD>
+						<CHECKBOX w="150" title="First Login" y="50" h="20" x="10">is_first_login</CHECKBOX>
+						<TEXTFIELD w="150" title="Worker Pass" y="70" h="20" x="290">worker_pass</TEXTFIELD>
+						<CHECKBOX w="150" title="Active" y="50" h="20" x="290">is_active</CHECKBOX>
+						<COMBOBOX w="430" title="Device Name" lptable="devices" y="70" h="20" x="10" lpfield="device_name">device_id</COMBOBOX>
+					</FORM>
+				</GRID>
+				<FORM name="Supervisors" keyfield="entity_id" linkfield="org_id" table="entitys">
+					<COMBOBOX w="430" title="Entity Type ID" lptable="entity_types" y="10" h="20" x="10" lpfield="entity_type_name">entity_type_id</COMBOBOX>
+					<TEXTFIELD w="430" title="Entity Name" y="30" h="20" x="10">entity_name</TEXTFIELD>
+					<TEXTFIELD w="430" title="User Name" y="50" h="20" x="10">user_name</TEXTFIELD>
+					<TEXTFIELD w="430" title="Primary Email" y="70" h="20" x="10">primary_email</TEXTFIELD>
+					<TEXTFIELD w="150" title="Primary Telephone" y="90" h="20" x="10">primary_telephone</TEXTFIELD>
+					<CHECKBOX w="150" title="Super User" y="90" h="20" x="290">super_user</CHECKBOX>
+					<CHECKBOX w="150" title="No Org" y="110" h="20" x="290">no_org</CHECKBOX>
+					<TEXTFIELD w="430" title="Function Role" y="130" h="20" x="10">function_role</TEXTFIELD>
+					<CHECKBOX w="150" title="Active" y="150" h="20" x="290">is_active</CHECKBOX>
+					<TEXTFIELD w="150" title="First Password" y="170" h="20" x="290">first_password</TEXTFIELD>
+					<TEXTAREA w="430" title="Details" y="230" h="70" x="10">details</TEXTAREA>
+				</FORM>
+				<ACTIONS>
+					<ACTION fnct="change_password">Reset Password</ACTION>
+				</ACTIONS>
+			</GRID>
+			<GRID name="Unassigned Devices" keyfield="device_id" linkfield="org_id" table="devices" where="(is_assigned = false)">
+				<TEXTFIELD w="75" title="Device ID">device_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Org ID">org_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Device Name">device_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Device Model">device_model</TEXTFIELD>
+				<TEXTFIELD w="75" title="Device Imei 1">device_imei_1</TEXTFIELD>
+				<TEXTFIELD w="75" title="Device Imei 2">device_imei_2</TEXTFIELD>
+				<CHECKBOX w="75" title="Active">is_active</CHECKBOX>
+				<CHECKBOX w="75" title="Assigned">is_assigned</CHECKBOX>
+				<FORM name="Device" keyfield="device_id" linkfield="org_id" table="devices">
+					<TEXTFIELD w="150" title="Device Name" y="10" h="20" x="10">device_name</TEXTFIELD>
+					<TEXTFIELD w="150" title="Device Model" y="10" h="20" x="290">device_model</TEXTFIELD>
+					<TEXTFIELD w="150" title="Device Imei 1" y="30" h="20" x="10">device_imei_1</TEXTFIELD>
+					<TEXTFIELD w="150" title="Device Imei 2" y="30" h="20" x="290">device_imei_2</TEXTFIELD>
+					<TEXTFIELD w="150" title="Device Phone 1" y="50" h="20" x="10">device_phone_1</TEXTFIELD>
+					<TEXTFIELD w="150" title="Device Phone 2" y="50" h="20" x="290">device_phone_2</TEXTFIELD>
+					<CHECKBOX w="150" title="Active" y="70" h="20" x="290">is_active</CHECKBOX>
+				</FORM>
+			</GRID>
+			<GRID name="Assigned Devices" keyfield="device_id" linkfield="org_id" table="devices" where="(is_assigned = true)">
+				<TEXTFIELD w="75" title="Device ID">device_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Org ID">org_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Device Name">device_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Device Model">device_model</TEXTFIELD>
+				<TEXTFIELD w="75" title="Device Imei 1">device_imei_1</TEXTFIELD>
+				<TEXTFIELD w="75" title="Device Imei 2">device_imei_2</TEXTFIELD>
+				<CHECKBOX w="75" title="Active">is_active</CHECKBOX>
+				<CHECKBOX w="75" title="Assigned">is_assigned</CHECKBOX>
+				<FORM name="Device" keyfield="device_id" linkfield="org_id" table="devices">
+					<TEXTFIELD w="150" title="Device Name" y="10" h="20" x="10">device_name</TEXTFIELD>
+					<TEXTFIELD w="150" title="Device Model" y="10" h="20" x="290">device_model</TEXTFIELD>
+					<TEXTFIELD w="150" title="Device Imei 1" y="30" h="20" x="10">device_imei_1</TEXTFIELD>
+					<TEXTFIELD w="150" title="Device Imei 2" y="30" h="20" x="290">device_imei_2</TEXTFIELD>
+					<TEXTFIELD w="150" title="Device Phone 1" y="50" h="20" x="10">device_phone_1</TEXTFIELD>
+					<TEXTFIELD w="150" title="Device Phone 2" y="50" h="20" x="290">device_phone_2</TEXTFIELD>
+					<CHECKBOX w="150" title="Active" y="70" h="20" x="290">is_active</CHECKBOX>
+				</FORM>
+			</GRID>
+			<FORM name="Organization" keyfield="org_id" table="orgs" noorg="true">
+				<COMBOBOX w="430" title="Currency ID" lptable="currency" y="10" h="20" x="10" lpfield="currency_name">currency_id</COMBOBOX>
+				<COMBOBOX w="430" title="Parent Organization" lptable="orgs" lpkey="org_id" y="30" h="20" x="10" lpfield="org_name">parent_org_id</COMBOBOX>
+				<TEXTFIELD w="150" title="Org Name" y="50" h="20" x="10">org_name</TEXTFIELD>
+				<TEXTFIELD w="150" title="Org Sufix" y="50" h="20" x="290">org_sufix</TEXTFIELD>
+				<CHECKBOX w="150" title="Default" y="70" h="20" x="10">is_default</CHECKBOX>
+				<CHECKBOX w="150" title="Active" y="70" h="20" x="290">is_active</CHECKBOX>
+				<TEXTFIELD w="150" title="Logo" y="90" h="20" x="10">logo</TEXTFIELD>
+				<TEXTFIELD w="150" title="Pin" y="90" h="20" x="290">pin</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="110" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Reports 514" key="15" h="550">
+		<GRID name="Sub Countys" keyfield="sub_county_id" table="vw_sub_countys" noorg="true">
+			<TEXTFIELD w="75" title="County ID">county_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="County Name">county_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Sub County Name">sub_county_name</TEXTFIELD>
+			<GRID name="Villages" keyfield="village_id" linkfield="sub_county_id" table="vw_villages" noorg="true">
+				<TEXTFIELD w="75" title="County Name">county_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Sub County Name">sub_county_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Division Name">division_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Location Name">location_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Sub Location Name">sub_location_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Village Name">village_name</TEXTFIELD>
+				<GRID name="Pending Reports" keyfield="survey_id" linkfield="village_id" table="vw_surveys" tab.count="count(survey_id)" where="( survey_status='0' )">
+					<TEXTFIELD w="75" title="Survey ID">survey_id</TEXTFIELD>
+					<TEXTFIELD w="75" title="Worker Name">worker_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Org Name">org_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="County Name">county_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Sub County Name">sub_county_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Village Name">village_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Household Number">household_number</TEXTFIELD>
+					<TEXTFIELD w="75" title="Household Member">household_member</TEXTFIELD>
+					<TEXTTIMESTAMP w="75" title="Survey Time">survey_time</TEXTTIMESTAMP>
+					<TEXTFIELD w="75" title="Location Lat">location_lat</TEXTFIELD>
+					<TEXTFIELD w="75" title="Location Lng">location_lng</TEXTFIELD>
+					<GRID name="Mother Info" keyfield="survey_mother_id" linkfield="survey_id" table="vw_survey_mother" noorg="true">
+						<TEXTFIELD w="75" title="Variable">mother_info_def_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response_name</TEXTFIELD>
+						<FORM name="Mother Info" keyfield="survey_mother_id" linkfield="survey_id" table="survey_mother" noorg="true">
+							<COMBOBOX w="430" title="Mother Info Def ID" lptable="mother_info_defs" noorg="true" y="10" h="20" x="10" lpfield="question">mother_info_def_id</COMBOBOX>
+							<TEXTFIELD w="150" title="Response" y="30" h="20" x="10">response</TEXTFIELD>
+						</FORM>
+					</GRID>
+					<GRID name="Child Info" keyfield="survey_child_id" linkfield="survey_id" table="vw_survey_child" noorg="true">
+						<TEXTFIELD w="75" title="Variable">child_info_def_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response_name</TEXTFIELD>
+						<FORM name="Child Info" keyfield="survey_child_id" linkfield="survey_id" table="survey_child" noorg="true">
+							<COMBOBOX w="430" title="Child Info Def ID" lptable="child_info_defs" y="10" h="20" x="10" lpfield="question">child_info_def_id</COMBOBOX>
+							<TEXTFIELD w="150" title="Response" y="30" h="20" x="10">response</TEXTFIELD>
+						</FORM>
+					</GRID>
+					<GRID name="Referrals Info" keyfield="survey_referral_id" linkfield="survey_id" table="vw_survey_referrals" noorg="true">
+						<TEXTFIELD w="75" title="Variable">referral_info_def_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response Name">response_name</TEXTFIELD>
+						<FORM name="Survey Referrals" keyfield="survey_referral_id" linkfield="survey_id" table="survey_referrals" noorg="true">
+							<COMBOBOX w="430" title="Referral Info Defs ID" lptable="referral_info_defs" lpkey="referral_info_def_id" y="10" h="20" x="10" lpfield="question">referral_info_defs_id</COMBOBOX>
+							<TEXTFIELD w="430" title="Response" y="30" h="20" x="10">response</TEXTFIELD>
+						</FORM>
+					</GRID>
+					<GRID name="Defaulters Info" keyfield="survey_defaulter_id" linkfield="survey_id" table="vw_survey_defaulters" noorg="true">
+						<TEXTFIELD w="75" title="Variable">defaulters_info_def_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response_name</TEXTFIELD>
+						<FORM name="Survey Defaulters" keyfield="survey_defaulter_id" linkfield="survey_id" table="survey_defaulters" noorg="true">
+							<COMBOBOX w="430" title="Defaulters Info Def ID" lptable="defaulters_info_defs" y="10" h="20" x="10" lpfield="question">defaulters_info_def_id</COMBOBOX>
+							<TEXTFIELD w="150" title="Response" y="30" h="20" x="10">response</TEXTFIELD>
+						</FORM>
+					</GRID>
+					<GRID name="Household Info" keyfield="survey_household_id" linkfield="survey_id" table="vw_survey_household" noorg="true">
+						<TEXTFIELD w="75" title="Variable">household_info_def_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response_name</TEXTFIELD>
+						<FORM name="Survey Household" keyfield="survey_household_id" linkfield="survey_id" table="survey_household" noorg="true">
+							<COMBOBOX w="430" title="Household Info Def ID" lptable="household_info_defs" y="10" h="20" x="10" lpfield="question">household_info_def_id</COMBOBOX>
+							<TEXTFIELD w="150" title="Response" y="30" h="20" x="10">response</TEXTFIELD>
+						</FORM>
+					</GRID>
+					<GRID name="Death Info" keyfield="survey_death_id" linkfield="survey_id" table="vw_survey_death" noorg="true">
+						<TEXTFIELD w="75" title="Variable">death_info_def_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+						<TEXTFIELD w="75" title="Death Count">response</TEXTFIELD>
+						<FORM name="Survey Death" keyfield="survey_death_id" linkfield="survey_id" table="survey_death" noorg="true">
+							<COMBOBOX w="430" title="Death Info Def ID" lptable="death_info_defs" y="10" h="20" x="10" lpfield="question">death_info_def_id</COMBOBOX>
+							<TEXTFIELD w="430" title="Response" y="30" h="20" x="10">response</TEXTFIELD>
+						</FORM>
+					</GRID>
+					<FORM name="Report" keyfield="survey_id" linkfield="village_id" table="surveys">
+						<COMBOBOX w="430" title="Health Worker " lptable="health_workers" y="30" h="20" x="10" lpfield="worker_name">health_worker_id</COMBOBOX>
+						<COMBOBOX w="430" title="Village Name" lptable="villages" noorg="true" y="30" h="20" x="10" lpfield="village_name">village_id</COMBOBOX>
+						<TEXTFIELD w="150" title="Household Number" y="70" h="20" x="10">household_number</TEXTFIELD>
+						<TEXTFIELD w="430" title="Household Member" y="90" h="20" x="10">household_member</TEXTFIELD>
+						<TEXTFIELD w="150" title="Location Lat" y="110" h="20" x="290">location_lat</TEXTFIELD>
+						<TEXTFIELD w="150" title="Location Lng" y="130" h="20" x="10">location_lng</TEXTFIELD>
+						<COMBOLIST w="150" title="Status" y="70" h="20" x="10">survey_status
+							<DATA key="0">Pending</DATA>
+							<DATA key="1">Approved</DATA>
+							<DATA key="2">Returned</DATA>
+							<DATA key="3">Redone</DATA>
+						</COMBOLIST>
+						<TEXTAREA w="430" title="Remarks" y="150" h="70" x="10">remarks</TEXTAREA>
+						<TEXTAREA w="430" title="Return Reason" y="240" h="70" x="10">return_reason</TEXTAREA>
+						<TEXTAREA w="430" title="Supervisor Remarks" y="290" h="70" x="10">supervisor_remarks</TEXTAREA>
+					</FORM>
+					<ACTIONS>
+						<ACTION fnct="upd_514" approval="0">Pending</ACTION>
+						<ACTION fnct="upd_514" approval="1">Approve</ACTION>
+						<ACTION fnct="upd_514" approval="2">Return</ACTION>
+					</ACTIONS>
+				</GRID>
+				<GRID name="Approved Reports" keyfield="survey_id" linkfield="village_id" table="vw_surveys" tab.count="count(survey_id)" where="( survey_status='1' )">
+					<TEXTFIELD w="75" title="Survey ID">survey_id</TEXTFIELD>
+					<TEXTFIELD w="75" title="Worker Name">worker_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Org Name">org_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="County Name">county_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Sub County Name">sub_county_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Village Name">village_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Household Number">household_number</TEXTFIELD>
+					<TEXTFIELD w="75" title="Household Member">household_member</TEXTFIELD>
+					<TEXTTIMESTAMP w="75" title="Survey Time">survey_time</TEXTTIMESTAMP>
+					<TEXTFIELD w="75" title="Location Lat">location_lat</TEXTFIELD>
+					<TEXTFIELD w="75" title="Location Lng">location_lng</TEXTFIELD>
+					<GRID name="Mother Info" keyfield="survey_mother_id" linkfield="survey_id" table="vw_survey_mother" noorg="true">
+						<TEXTFIELD w="75" title="Variable">mother_info_def_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response_name</TEXTFIELD>
+						<FORM name="Mother Info" keyfield="survey_mother_id" linkfield="survey_id" table="survey_mother" noorg="true">
+							<COMBOBOX w="430" title="Mother Info Def ID" lptable="mother_info_defs" noorg="true" y="10" h="20" x="10" lpfield="question">mother_info_def_id</COMBOBOX>
+							<TEXTFIELD w="150" title="Response" y="30" h="20" x="10">response</TEXTFIELD>
+						</FORM>
+					</GRID>
+					<GRID name="Child Info" keyfield="survey_child_id" linkfield="survey_id" table="vw_survey_child" noorg="true">
+						<TEXTFIELD w="75" title="Variable">child_info_def_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response_name</TEXTFIELD>
+						<FORM name="Child Info" keyfield="survey_child_id" linkfield="survey_id" table="survey_child" noorg="true">
+							<COMBOBOX w="430" title="Child Info Def ID" lptable="child_info_defs" y="10" h="20" x="10" lpfield="question">child_info_def_id</COMBOBOX>
+							<TEXTFIELD w="150" title="Response" y="30" h="20" x="10">response</TEXTFIELD>
+						</FORM>
+					</GRID>
+					<GRID name="Referrals Info" keyfield="survey_referral_id" linkfield="survey_id" table="vw_survey_referrals" noorg="true">
+						<TEXTFIELD w="75" title="Variable">referral_info_def_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response Name">response_name</TEXTFIELD>
+						<FORM name="Survey Referrals" keyfield="survey_referral_id" linkfield="survey_id" table="survey_referrals" noorg="true">
+							<COMBOBOX w="430" title="Referral Info Defs ID" lptable="referral_info_defs" lpkey="referral_info_def_id" y="10" h="20" x="10" lpfield="question">referral_info_defs_id</COMBOBOX>
+							<TEXTFIELD w="430" title="Response" y="30" h="20" x="10">response</TEXTFIELD>
+						</FORM>
+					</GRID>
+					<GRID name="Defaulters Info" keyfield="survey_defaulter_id" linkfield="survey_id" table="vw_survey_defaulters" noorg="true">
+						<TEXTFIELD w="75" title="Variable">defaulters_info_def_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response_name</TEXTFIELD>
+						<FORM name="Survey Defaulters" keyfield="survey_defaulter_id" linkfield="survey_id" table="survey_defaulters" noorg="true">
+							<COMBOBOX w="430" title="Defaulters Info Def ID" lptable="defaulters_info_defs" y="10" h="20" x="10" lpfield="question">defaulters_info_def_id</COMBOBOX>
+							<TEXTFIELD w="150" title="Response" y="30" h="20" x="10">response</TEXTFIELD>
+						</FORM>
+					</GRID>
+					<GRID name="Household Info" keyfield="survey_household_id" linkfield="survey_id" table="vw_survey_household" noorg="true">
+						<TEXTFIELD w="75" title="Variable">household_info_def_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response_name</TEXTFIELD>
+						<FORM name="Survey Household" keyfield="survey_household_id" linkfield="survey_id" table="survey_household" noorg="true">
+							<COMBOBOX w="430" title="Household Info Def ID" lptable="household_info_defs" y="10" h="20" x="10" lpfield="question">household_info_def_id</COMBOBOX>
+							<TEXTFIELD w="150" title="Response" y="30" h="20" x="10">response</TEXTFIELD>
+						</FORM>
+					</GRID>
+					<GRID name="Death Info" keyfield="survey_death_id" linkfield="survey_id" table="vw_survey_death" noorg="true">
+						<TEXTFIELD w="75" title="Variable">death_info_def_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+						<TEXTFIELD w="75" title="Death Count">response</TEXTFIELD>
+						<FORM name="Survey Death" keyfield="survey_death_id" linkfield="survey_id" table="survey_death" noorg="true">
+							<COMBOBOX w="430" title="Death Info Def ID" lptable="death_info_defs" y="10" h="20" x="10" lpfield="question">death_info_def_id</COMBOBOX>
+							<TEXTFIELD w="430" title="Response" y="30" h="20" x="10">response</TEXTFIELD>
+						</FORM>
+					</GRID>
+					<FORM name="Report" keyfield="survey_id" linkfield="village_id" table="surveys">
+						<COMBOBOX w="430" title="Health Worker" lptable="health_workers" y="30" h="20" x="10" lpfield="worker_name">health_worker_id</COMBOBOX>
+						<COMBOBOX w="430" title="Village Name" lptable="villages" noorg="true" y="30" h="20" x="10" lpfield="village_name">village_id</COMBOBOX>
+						<TEXTFIELD w="150" title="Household Number" y="70" h="20" x="10">household_number</TEXTFIELD>
+						<TEXTFIELD w="430" title="Household Member" y="90" h="20" x="10">household_member</TEXTFIELD>
+						<TEXTFIELD w="150" title="Location Lat" y="110" h="20" x="290">location_lat</TEXTFIELD>
+						<TEXTFIELD w="150" title="Location Lng" y="130" h="20" x="10">location_lng</TEXTFIELD>
+						<COMBOLIST w="150" title="Status" y="70" h="20" x="10">survey_status
+							<DATA key="0">Pending</DATA>
+							<DATA key="1">Approved</DATA>
+							<DATA key="2">Returned</DATA>
+							<DATA key="3">Redone</DATA>
+						</COMBOLIST>
+						<TEXTAREA w="430" title="Remarks" y="150" h="70" x="10">remarks</TEXTAREA>
+						<TEXTAREA w="430" title="Return Reason" y="240" h="70" x="10">return_reason</TEXTAREA>
+						<TEXTAREA w="430" title="Supervisor Remarks" y="290" h="70" x="10">supervisor_remarks</TEXTAREA>
+					</FORM>
+					<ACTIONS>
+						<ACTION fnct="upd_514" approval="0">Pending</ACTION>
+						<ACTION fnct="upd_514" approval="1">Approve</ACTION>
+						<ACTION fnct="upd_514" approval="2">Return</ACTION>
+					</ACTIONS>
+				</GRID>
+				<GRID name="Returned Reports" keyfield="survey_id" linkfield="village_id" table="vw_surveys" tab.count="count(survey_id)" where="( survey_status='2' )">
+					<TEXTFIELD w="75" title="Survey ID">survey_id</TEXTFIELD>
+					<TEXTFIELD w="75" title="Worker Name">worker_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Org Name">org_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="County Name">county_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Sub County Name">sub_county_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Village Name">village_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Household Number">household_number</TEXTFIELD>
+					<TEXTFIELD w="75" title="Household Member">household_member</TEXTFIELD>
+					<TEXTTIMESTAMP w="75" title="Survey Time">survey_time</TEXTTIMESTAMP>
+					<TEXTFIELD w="75" title="Location Lat">location_lat</TEXTFIELD>
+					<TEXTFIELD w="75" title="Location Lng">location_lng</TEXTFIELD>
+					<GRID name="Mother Info" keyfield="survey_mother_id" linkfield="survey_id" table="vw_survey_mother" noorg="true">
+						<TEXTFIELD w="75" title="Variable">mother_info_def_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response_name</TEXTFIELD>
+						<FORM name="Mother Info" keyfield="survey_mother_id" linkfield="survey_id" table="survey_mother" noorg="true">
+							<COMBOBOX w="430" title="Mother Info Def ID" lptable="mother_info_defs" noorg="true" y="10" h="20" x="10" lpfield="question">mother_info_def_id</COMBOBOX>
+							<TEXTFIELD w="150" title="Response" y="30" h="20" x="10">response</TEXTFIELD>
+						</FORM>
+					</GRID>
+					<GRID name="Child Info" keyfield="survey_child_id" linkfield="survey_id" table="vw_survey_child" noorg="true">
+						<TEXTFIELD w="75" title="Variable">child_info_def_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response_name</TEXTFIELD>
+						<FORM name="Child Info" keyfield="survey_child_id" linkfield="survey_id" table="survey_child" noorg="true">
+							<COMBOBOX w="430" title="Child Info Def ID" lptable="child_info_defs" y="10" h="20" x="10" lpfield="question">child_info_def_id</COMBOBOX>
+							<TEXTFIELD w="150" title="Response" y="30" h="20" x="10">response</TEXTFIELD>
+						</FORM>
+					</GRID>
+					<GRID name="Referrals Info" keyfield="survey_referral_id" linkfield="survey_id" table="vw_survey_referrals" noorg="true">
+						<TEXTFIELD w="75" title="Variable">referral_info_def_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response Name">response_name</TEXTFIELD>
+						<FORM name="Survey Referrals" keyfield="survey_referral_id" linkfield="survey_id" table="survey_referrals" noorg="true">
+							<COMBOBOX w="430" title="Referral Info Defs ID" lptable="referral_info_defs" lpkey="referral_info_def_id" y="10" h="20" x="10" lpfield="question">referral_info_defs_id</COMBOBOX>
+							<TEXTFIELD w="430" title="Response" y="30" h="20" x="10">response</TEXTFIELD>
+						</FORM>
+					</GRID>
+					<GRID name="Defaulters Info" keyfield="survey_defaulter_id" linkfield="survey_id" table="vw_survey_defaulters" noorg="true">
+						<TEXTFIELD w="75" title="Variable">defaulters_info_def_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response_name</TEXTFIELD>
+						<FORM name="Survey Defaulters" keyfield="survey_defaulter_id" linkfield="survey_id" table="survey_defaulters" noorg="true">
+							<COMBOBOX w="430" title="Defaulters Info Def ID" lptable="defaulters_info_defs" y="10" h="20" x="10" lpfield="question">defaulters_info_def_id</COMBOBOX>
+							<TEXTFIELD w="150" title="Response" y="30" h="20" x="10">response</TEXTFIELD>
+						</FORM>
+					</GRID>
+					<GRID name="Household Info" keyfield="survey_household_id" linkfield="survey_id" table="vw_survey_household" noorg="true">
+						<TEXTFIELD w="75" title="Variable">household_info_def_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response_name</TEXTFIELD>
+						<FORM name="Survey Household" keyfield="survey_household_id" linkfield="survey_id" table="survey_household" noorg="true">
+							<COMBOBOX w="430" title="Household Info Def ID" lptable="household_info_defs" y="10" h="20" x="10" lpfield="question">household_info_def_id</COMBOBOX>
+							<TEXTFIELD w="150" title="Response" y="30" h="20" x="10">response</TEXTFIELD>
+						</FORM>
+					</GRID>
+					<GRID name="Death Info" keyfield="survey_death_id" linkfield="survey_id" table="vw_survey_death" noorg="true">
+						<TEXTFIELD w="75" title="Variable">death_info_def_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+						<TEXTFIELD w="75" title="Death Count">response</TEXTFIELD>
+						<FORM name="Survey Death" keyfield="survey_death_id" linkfield="survey_id" table="survey_death" noorg="true">
+							<COMBOBOX w="430" title="Death Info Def ID" lptable="death_info_defs" y="10" h="20" x="10" lpfield="question">death_info_def_id</COMBOBOX>
+							<TEXTFIELD w="430" title="Response" y="30" h="20" x="10">response</TEXTFIELD>
+						</FORM>
+					</GRID>
+					<FORM name="Report" keyfield="survey_id" linkfield="village_id" table="surveys">
+						<COMBOBOX w="430" title="Health Worker" lptable="health_workers" y="30" h="20" x="10" lpfield="worker_name">health_worker_id</COMBOBOX>
+						<COMBOBOX w="430" title="Village Name" lptable="villages" noorg="true" y="30" h="20" x="10" lpfield="village_name">village_id</COMBOBOX>
+						<TEXTFIELD w="150" title="Household Number" y="70" h="20" x="10">household_number</TEXTFIELD>
+						<TEXTFIELD w="430" title="Household Member" y="90" h="20" x="10">household_member</TEXTFIELD>
+						<TEXTFIELD w="150" title="Location Lat" y="110" h="20" x="290">location_lat</TEXTFIELD>
+						<TEXTFIELD w="150" title="Location Lng" y="130" h="20" x="10">location_lng</TEXTFIELD>
+						<COMBOLIST w="150" title="Status" y="70" h="20" x="10">survey_status
+							<DATA key="0">Pending</DATA>
+							<DATA key="1">Approved</DATA>
+							<DATA key="2">Returned</DATA>
+							<DATA key="3">Redone</DATA>
+						</COMBOLIST>
+						<TEXTAREA w="430" title="Remarks" y="150" h="70" x="10">remarks</TEXTAREA>
+						<TEXTAREA w="430" title="Return Reason" y="240" h="70" x="10">return_reason</TEXTAREA>
+						<TEXTAREA w="430" title="Supervisor Remarks" y="290" h="70" x="10">supervisor_remarks</TEXTAREA>
+					</FORM>
+					<ACTIONS>
+						<ACTION fnct="upd_514" approval="0">Pending</ACTION>
+						<ACTION fnct="upd_514" approval="1">Approve</ACTION>
+						<ACTION fnct="upd_514" approval="2">Return</ACTION>
+					</ACTIONS>
+				</GRID>
+				<GRID name="Redone Reports" keyfield="survey_id" linkfield="village_id" table="vw_surveys" tab.count="count(survey_id)" where="( survey_status='3' )">
+					<TEXTFIELD w="75" title="Survey ID">survey_id</TEXTFIELD>
+					<TEXTFIELD w="75" title="Worker Name">worker_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Org Name">org_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="County Name">county_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Sub County Name">sub_county_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Village Name">village_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Household Number">household_number</TEXTFIELD>
+					<TEXTFIELD w="75" title="Household Member">household_member</TEXTFIELD>
+					<TEXTTIMESTAMP w="75" title="Survey Time">survey_time</TEXTTIMESTAMP>
+					<TEXTFIELD w="75" title="Location Lat">location_lat</TEXTFIELD>
+					<TEXTFIELD w="75" title="Location Lng">location_lng</TEXTFIELD>
+					<GRID name="Mother Info" keyfield="survey_mother_id" linkfield="survey_id" table="vw_survey_mother" noorg="true">
+						<TEXTFIELD w="75" title="Variable">mother_info_def_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response_name</TEXTFIELD>
+						<FORM name="Mother Info" keyfield="survey_mother_id" linkfield="survey_id" table="survey_mother" noorg="true">
+							<COMBOBOX w="430" title="Mother Info Def ID" lptable="mother_info_defs" noorg="true" y="10" h="20" x="10" lpfield="question">mother_info_def_id</COMBOBOX>
+							<TEXTFIELD w="150" title="Response" y="30" h="20" x="10">response</TEXTFIELD>
+						</FORM>
+					</GRID>
+					<GRID name="Child Info" keyfield="survey_child_id" linkfield="survey_id" table="vw_survey_child" noorg="true">
+						<TEXTFIELD w="75" title="Variable">child_info_def_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response_name</TEXTFIELD>
+						<FORM name="Child Info" keyfield="survey_child_id" linkfield="survey_id" table="survey_child" noorg="true">
+							<COMBOBOX w="430" title="Child Info Def ID" lptable="child_info_defs" y="10" h="20" x="10" lpfield="question">child_info_def_id</COMBOBOX>
+							<TEXTFIELD w="150" title="Response" y="30" h="20" x="10">response</TEXTFIELD>
+						</FORM>
+					</GRID>
+					<GRID name="Referrals Info" keyfield="survey_referral_id" linkfield="survey_id" table="vw_survey_referrals" noorg="true">
+						<TEXTFIELD w="75" title="Variable">referral_info_def_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response Name">response_name</TEXTFIELD>
+						<FORM name="Survey Referrals" keyfield="survey_referral_id" linkfield="survey_id" table="survey_referrals" noorg="true">
+							<COMBOBOX w="430" title="Referral Info Defs ID" lptable="referral_info_defs" lpkey="referral_info_def_id" y="10" h="20" x="10" lpfield="question">referral_info_defs_id</COMBOBOX>
+							<TEXTFIELD w="430" title="Response" y="30" h="20" x="10">response</TEXTFIELD>
+						</FORM>
+					</GRID>
+					<GRID name="Defaulters Info" keyfield="survey_defaulter_id" linkfield="survey_id" table="vw_survey_defaulters" noorg="true">
+						<TEXTFIELD w="75" title="Variable">defaulters_info_def_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response_name</TEXTFIELD>
+						<FORM name="Survey Defaulters" keyfield="survey_defaulter_id" linkfield="survey_id" table="survey_defaulters" noorg="true">
+							<COMBOBOX w="430" title="Defaulters Info Def ID" lptable="defaulters_info_defs" y="10" h="20" x="10" lpfield="question">defaulters_info_def_id</COMBOBOX>
+							<TEXTFIELD w="150" title="Response" y="30" h="20" x="10">response</TEXTFIELD>
+						</FORM>
+					</GRID>
+					<GRID name="Household Info" keyfield="survey_household_id" linkfield="survey_id" table="vw_survey_household" noorg="true">
+						<TEXTFIELD w="75" title="Variable">household_info_def_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response</TEXTFIELD>
+						<TEXTFIELD w="75" title="Response">response_name</TEXTFIELD>
+						<FORM name="Survey Household" keyfield="survey_household_id" linkfield="survey_id" table="survey_household" noorg="true">
+							<COMBOBOX w="430" title="Household Info Def ID" lptable="household_info_defs" y="10" h="20" x="10" lpfield="question">household_info_def_id</COMBOBOX>
+							<TEXTFIELD w="150" title="Response" y="30" h="20" x="10">response</TEXTFIELD>
+						</FORM>
+					</GRID>
+					<GRID name="Death Info" keyfield="survey_death_id" linkfield="survey_id" table="vw_survey_death" noorg="true">
+						<TEXTFIELD w="75" title="Variable">death_info_def_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+						<TEXTFIELD w="75" title="Death Count">response</TEXTFIELD>
+						<FORM name="Survey Death" keyfield="survey_death_id" linkfield="survey_id" table="survey_death" noorg="true">
+							<COMBOBOX w="430" title="Death Info Def ID" lptable="death_info_defs" y="10" h="20" x="10" lpfield="question">death_info_def_id</COMBOBOX>
+							<TEXTFIELD w="430" title="Response" y="30" h="20" x="10">response</TEXTFIELD>
+						</FORM>
+					</GRID>
+					<FORM name="Report" keyfield="survey_id" linkfield="village_id" table="surveys">
+						<COMBOBOX w="430" title="Health Worker ID" lptable="health_workers" y="30" h="20" x="10" lpfield="worker_name">health_worker_id</COMBOBOX>
+						<COMBOBOX w="430" title="Village" lptable="villages" noorg="true" y="30" h="20" x="10" lpfield="village_name">village_id</COMBOBOX>
+						<TEXTFIELD w="150" title="Household Number" y="70" h="20" x="10">household_number</TEXTFIELD>
+						<TEXTFIELD w="430" title="Household Member" y="90" h="20" x="10">household_member</TEXTFIELD>
+						<TEXTFIELD w="150" title="Location Lat" y="110" h="20" x="290">location_lat</TEXTFIELD>
+						<TEXTFIELD w="150" title="Location Lng" y="130" h="20" x="10">location_lng</TEXTFIELD>
+						<COMBOLIST w="150" title="Status" y="70" h="20" x="10">survey_status
+							<DATA key="0">Pending</DATA>
+							<DATA key="1">Approved</DATA>
+							<DATA key="2">Returned</DATA>
+							<DATA key="3">Redone</DATA>
+						</COMBOLIST>
+						<TEXTAREA w="430" title="Remarks" y="150" h="70" x="10">remarks</TEXTAREA>
+						<TEXTAREA w="430" title="Return Reason" y="240" h="70" x="10">return_reason</TEXTAREA>
+						<TEXTAREA w="430" title="Supervisor Remarks" y="290" h="70" x="10">supervisor_remarks</TEXTAREA>
+					</FORM>
+					<ACTIONS>
+						<ACTION fnct="upd_514" approval="0">Pending</ACTION>
+						<ACTION fnct="upd_514" approval="1">Approve</ACTION>
+						<ACTION fnct="upd_514" approval="2">Return</ACTION>
+					</ACTIONS>
+				</GRID>
+			</GRID>
+		</GRID>
+		<FILTER w="700" name="CHV Reports" split="150" type="vert" h="550">
+			<FILTERFORM name="Worker">
+				<COMBOBOX w="430" title="CHV" lptable="health_workers" y="30" h="20" x="10" lpfield="worker_name">health_worker_id</COMBOBOX>
+				<TEXTDATE w="150" title="Start Date" y="50" h="20" x="10">start_date</TEXTDATE>
+				<TEXTDATE w="150" title="End Date" y="50" h="20" x="10">end_date</TEXTDATE>
+			</FILTERFORM>
+			<JASPER name="Health Worker Reports" reportfile="vw_surveys_summary.jasper"></JASPER>
+		</FILTER>
+		<FILTER w="700" name="MOH 514 CHV summary" split="150" type="vert" h="550">
+			<FILTERFORM name="Worker">
+				<COMBOBOX w="430" title="CHV" lptable="health_workers" y="30" h="20" x="10" lpfield="worker_name">health_worker_id</COMBOBOX>
+				<TEXTDATE w="150" title="Start Date" y="50" h="20" x="10">start_date</TEXTDATE>
+				<TEXTDATE w="150" title="End Date" y="50" h="20" x="10">end_date</TEXTDATE>
+			</FILTERFORM>
+			<JASPER name="Health Worker Reports " reportfile="vw_surveys_detailed.jasper"></JASPER>
+		</FILTER>
+		<FILTER w="700" name="MOH 514 Village summary" split="150" type="vert" h="550">
+			<FILTERFORM name="Worker">
+				<COMBOBOX w="430" title="Village" lptable="villages" noorg="true" y="30" h="20" x="10" lpfield="village_name">village_id</COMBOBOX>
+				<TEXTDATE w="150" title="Start Date" y="50" h="20" x="10">start_date</TEXTDATE>
+				<TEXTDATE w="150" title="End Date" y="50" h="20" x="10">end_date</TEXTDATE>
+			</FILTERFORM>
+			<JASPER name="Health Worker Reports " reportfile="vw_surveys_detailed_village.jasper"></JASPER>
+		</FILTER>
+		<FILTER w="700" name="MOH 514 Detailed Village Summary " split="150" type="vert" h="550">
+			<FILTERFORM name="Village Date Range">
+				<COMBOBOX w="430" title="Village" lptable="villages" noorg="true" y="30" h="20" x="10" lpfield="village_name">village_id</COMBOBOX>
+				<TEXTDATE w="150" title="Start Date" y="50" h="20" x="10">start_date</TEXTDATE>
+				<TEXTDATE w="150" title="End Date" y="50" h="20" x="10">end_date</TEXTDATE>
+			</FILTERFORM>
+			<JASPER name="MMOH 514 Detailed Village Summary " reportfile="vw_survey_514_village_summary.jasper"></JASPER>
+		</FILTER>
+		<FILTER w="700" name="MOH 514 summary For 515" split="150" type="vert" h="550">
+			<FILTERFORM name="Village Date Range">
+				<COMBOBOX w="430" title="Village" lptable="villages" noorg="true" y="30" h="20" x="10" lpfield="village_name">village_id</COMBOBOX>
+				<TEXTDATE w="150" title="Start Date" y="50" h="20" x="10">start_date</TEXTDATE>
+				<TEXTDATE w="150" title="End Date" y="50" h="20" x="10">end_date</TEXTDATE>
+			</FILTERFORM>
+			<JASPER name="MOH 514 summary For 515" reportfile="vw_survey_514_for_515.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Reports 515" key="20" h="550">
+		<GRID name="Sub Countys" keyfield="sub_county_id" table="vw_sub_countys" noorg="true">
+			<TEXTFIELD w="75" title="Sub County ID">sub_county_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="County ID">county_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="County Name">county_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Sub County Name">sub_county_name</TEXTFIELD>
+			<GRID name="Villages" keyfield="village_id" linkfield="sub_county_id" table="vw_villages" noorg="true">
+				<TEXTFIELD w="75" title="County Name">county_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Sub County Name">sub_county_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Division Name">division_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Location Name">location_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Sub Location Name">sub_location_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Village Name">village_name</TEXTFIELD>
+				<GRID name="Reports 515" keyfield="surveys_515_id" linkfield="village_id" table="vw_surveys_515">
+					<TEXTFIELD w="75" title="Surveys 515 ID">surveys_515_id</TEXTFIELD>
+					<TEXTFIELD w="75" title="Org Name">org_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="County Name">county_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Sub County Name">sub_county_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Division Name">division_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Location Name">location_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Sub Location Name">sub_location_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Village Name">village_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Chu Name">chu_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Mclu Code">mclu_code</TEXTFIELD>
+					<TEXTFIELD w="75" title="Link Facility">link_facility</TEXTFIELD>
+					<TEXTFIELD w="75" title="Chew Name">chew_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="No Of Chvs">no_of_chvs</TEXTFIELD>
+					<TEXTFIELD w="75" title="Total Chws Reported">total_chws_reported</TEXTFIELD>
+					<TEXTDATE w="75" title="Start Date">start_date</TEXTDATE>
+					<TEXTDATE w="75" title="End Date">end_date</TEXTDATE>
+					<TEXTTIMESTAMP w="75" title="Survey Date">survey_date</TEXTTIMESTAMP>
+					<FORMVIEW name="Details" keyfield="surveys_515_detail_id" linkfield="surveys_515_id" table="surveys_515_details">
+						<TEXTFIELD w="75" title="Surveys 515 Detail ID">surveys_515_detail_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Surveys 515 ID">surveys_515_id</TEXTFIELD>
+						<TEXTFIELD w="150" title="1 - Total households">indicator_1</TEXTFIELD>
+						<TEXTFIELD w="150" title="2 - Total number of households visited">indicator_2</TEXTFIELD>
+						<TEXTFIELD w="150" title="3 - Total population">indicator_3</TEXTFIELD>
+						<TEXTFIELD w="150" title="4 - Total women 15-49 years">indicator_4</TEXTFIELD>
+						<TEXTFIELD w="150" title="5 - Total pregnant women">indicator_5</TEXTFIELD>
+						<TEXTFIELD w="150" title="6 - Total children 0-28 days">indicator_6</TEXTFIELD>
+						<TEXTFIELD w="150" title="7 - Total children 29 days-11 months age">indicator_7</TEXTFIELD>
+						<TEXTFIELD w="150" title="8 - Total children 12-59 months age">indicator_8</TEXTFIELD>
+						<TEXTFIELD w="150" title="9 - Total children 5-12 years age">indicator_9</TEXTFIELD>
+						<TEXTFIELD w="150" title="10 - Total adolescent and youth - Girls (13 - 24 years)">indicator_10</TEXTFIELD>
+						<TEXTFIELD w="150" title="11 - Total adolescent and youth - Boys (13 - 24 years)">indicator_11</TEXTFIELD>
+						<TEXTFIELD w="150" title="12 - Total Females 25-59 years">indicator_12</TEXTFIELD>
+						<TEXTFIELD w="150" title="13 - Total Males 25-59 years">indicator_13</TEXTFIELD>
+						<TEXTFIELD w="150" title="14 - Total elderly females (60+ years)">indicator_14</TEXTFIELD>
+						<TEXTFIELD w="150" title="15 - Total elderly males(60+ years)">indicator_15</TEXTFIELD>
+						<TEXTFIELD w="150" title="16 - Number of households using  treated water">indicator_16</TEXTFIELD>
+						<TEXTFIELD w="150" title="17 - Number of households with hand washing facilities e.g. leaky tins in use">indicator_17</TEXTFIELD>
+						<TEXTFIELD w="150" title="18 - Number of households with functional latrines">indicator_18</TEXTFIELD>
+						<TEXTFIELD w="150" title="19 - Number of new-borns visited at home within 48 hours of birth">indicator_19</TEXTFIELD>
+						<TEXTFIELD w="150" title="20- Number of mothers with new-borns counselled on Exclusive Breastfeeding">indicator_20</TEXTFIELD>
+						<TEXTFIELD w="150" title="21 - Number of children of 0-59 months  participating in  growth monitoring">indicator_21</TEXTFIELD>
+						<TEXTFIELD w="150" title="22 - Total Deliveries">indicator_22</TEXTFIELD>
+						<TEXTFIELD w="150" title="23 - Number of deliveries by skilled birth attendants">indicator_23</TEXTFIELD>
+						<TEXTFIELD w="150" title="24 - Number of uder-age pregnancies (under 18 years)">indicator_24</TEXTFIELD>
+						<TEXTFIELD w="150" title="25 - Number of women (15-49yrs) provided with Family Planning commodities ">indicator_25</TEXTFIELD>
+						<TEXTFIELD w="150" title="26 - Number of children 12-59 months dewormed">indicator_26</TEXTFIELD>
+						<TEXTFIELD w="150" title="27 - Number of fever cases  managed">indicator_27</TEXTFIELD>
+						<TEXTFIELD w="150" title="28 - Number of fever cases less than 7 days with RDT done">indicator_28</TEXTFIELD>
+						<TEXTFIELD w="150" title="29 - Number of fever casesless than 7 days with RDT +ve">indicator_29</TEXTFIELD>
+						<TEXTFIELD w="150" title="30 - Number of under 5 years Malaria Cases (RDT +ve) treated with ACT">indicator_30</TEXTFIELD>
+						<TEXTFIELD w="150" title="31 - Number of over 5 years Malaria Cases (RDT +ve) treated with ACT">indicator_31</TEXTFIELD>
+						<TEXTFIELD w="150" title="32 - Number of cases of diarrhoea identified in children 0-59 months age">indicator_32</TEXTFIELD>
+						<TEXTFIELD w="150" title="33 - Number of children of 12-59 months with diarrhoea treated with Zinc and ORS">indicator_33</TEXTFIELD>
+						<TEXTFIELD w="150" title="34 - Number of children 0-59 months age presenting with fast breathing">indicator_34</TEXTFIELD>
+						<TEXTFIELD w="150" title="35 - Number of children 0-59 months age presenting with fast breathing treated with Amoxycillin">indicator_35</TEXTFIELD>
+						<TEXTFIELD w="150" title="36 -Number of injuries and wounds managed">indicator_36</TEXTFIELD>
+						<TEXTFIELD w="150" title="37 - Number of new referrals - ANC " y="370" h="20" x="10">indicator_37</TEXTFIELD>
+						<TEXTFIELD w="150" title="38 - Number of new referrals - Skilled delivery" y="370" h="20" x="290">indicator_38</TEXTFIELD>
+						<TEXTFIELD w="150" title="39 - Number of new referrals - New-borns with danger signs  referred" y="390" h="20" x="10">indicator_39</TEXTFIELD>
+						<TEXTFIELD w="150" title="40 - Number of new referrals - Children of 0-11 months referred for immunization" y="390" h="20" x="290">indicator_40</TEXTFIELD>
+						<TEXTFIELD w="150" title="41 - Number of new referrals - Children 6 - 59 Months referred for Vitamin A supplementation" y="410" h="20" x="10">indicator_41</TEXTFIELD>
+						<TEXTFIELD w="150" title="42 - Number of new referrals - Severe malnutrition" y="410" h="20" x="290">indicator_42</TEXTFIELD>
+						<TEXTFIELD w="150" title="43 - Number of new referrals - Moderate malnutrition" y="430" h="20" x="10">indicator_43</TEXTFIELD>
+						<TEXTFIELD w="150" title="44 - Number of new referrals - Cough for 2 or more weeks" y="430" h="20" x="290">indicator_44</TEXTFIELD>
+						<TEXTFIELD w="150" title="45 - Number of new referrals - HIV Counselling and Testing (HCT)" y="450" h="20" x="10">indicator_45</TEXTFIELD>
+						<TEXTFIELD w="150" title="46 - Number of new referrals - Routine check-ups for the elderly (60+)" y="450" h="20" x="290">indicator_46</TEXTFIELD>
+						<TEXTFIELD w="150" title="47 - Number of people with known chronic illness  referred - Diabetes" y="470" h="20" x="10">indicator_47</TEXTFIELD>
+						<TEXTFIELD w="150" title="48 - Number of people with known chronic illness  referred - Cancer" y="470" h="20" x="290">indicator_48</TEXTFIELD>
+						<TEXTFIELD w="150" title="49 - Number of people with known chronic illness  referred - Mental Illness" y="490" h="20" x="10">indicator_49</TEXTFIELD>
+						<TEXTFIELD w="150" title="50 - Number of people with known chronic illness  referred - Hypertension" y="490" h="20" x="290">indicator_50</TEXTFIELD>
+						<TEXTFIELD w="150" title="51 - Number of people with known chronic illness  referred - Chronic Cough" y="510" h="20" x="10">indicator_51</TEXTFIELD>
+						<TEXTFIELD w="150" title="52 - Number of people with known chronic illness  referred - Total of the others" y="510" h="20" x="10">indicator_52</TEXTFIELD>
+						<TEXTFIELD w="150" title="53 - Number of defaulters referred - ANC" y="510" h="20" x="290">indicator_53</TEXTFIELD>
+						<TEXTFIELD w="150" title="54 - Number of defaulters referred - Immunization" y="530" h="20" x="10">indicator_54</TEXTFIELD>
+						<TEXTFIELD w="150" title="55 - Number of defaulters referred - Tuberculosis treatment" y="530" h="20" x="290">indicator_55</TEXTFIELD>
+						<TEXTFIELD w="150" title="56 - Number of defaulters referred - ART" y="550" h="20" x="10">indicator_56</TEXTFIELD>
+						<TEXTFIELD w="150" title="57 - Number of deaths in the month - 0-28 days" y="550" h="20" x="290">indicator_57</TEXTFIELD>
+						<TEXTFIELD w="150" title="58 - Number of deaths in the month - 29 days-11 months" y="570" h="20" x="10">indicator_58</TEXTFIELD>
+						<TEXTFIELD w="150" title="59 - Number of deaths in the month - 12-59 months" y="570" h="20" x="290">indicator_59</TEXTFIELD>
+						<TEXTFIELD w="150" title="60 - Number of deaths in the month - Maternal " y="590" h="20" x="10">indicator_60</TEXTFIELD>
+						<TEXTFIELD w="150" title="61 - Number of deaths in the month - Other deaths" y="590" h="20" x="290">indicator_61</TEXTFIELD>
+						<TEXTFIELD w="150" title="62 - Number of deaths in the month - Total deaths" y="610" h="20" x="10">indicator_62</TEXTFIELD>
+						<TEXTFIELD w="150" title="63 - Total number of community dialogue days  held" y="630" h="20" x="10">indicator_63</TEXTFIELD>
+						<TEXTFIELD w="150" title="64 - Total number of community Action Days held" y="630" h="20" x="10">indicator_64</TEXTFIELD>
+						<TEXTFIELD w="150" title="65 - Total number of community monthly meetings held" y="630" h="20" x="290">indicator_65</TEXTFIELD>
+						<COMBOLIST w="150" title="66 - CHU issued with any commodities? " y="650" h="20" x="10">indicator_66
+							<DATA key="Yes">Yes</DATA>
+							<DATA key="No">No</DATA>
+						</COMBOLIST>
+						<COMBOLIST w="150" title="67 - Did the community health unit experience stock-outs of more than 7 days for any of the following commodities? - Antimalarial (ACTs 6s and 12s)" y="650" h="20" x="290">indicator_67_a
+							<DATA key="Yes">Yes</DATA>
+							<DATA key="No">No</DATA>
+							<DATA key="N/A">N/A</DATA>
+						</COMBOLIST>
+						<COMBOLIST w="150" title="b- Oral Rehydration Salt" y="670" h="20" x="10">indicator_67_b
+							<DATA key="Yes">Yes</DATA>
+							<DATA key="No">No</DATA>
+							<DATA key="N/A">N/A</DATA>
+						</COMBOLIST>
+						<COMBOLIST w="150" title="c - Zinc" y="670" h="20" x="290">indicator_67_c
+							<DATA key="Yes">Yes</DATA>
+							<DATA key="No">No</DATA>
+							<DATA key="N/A">N/A</DATA>
+						</COMBOLIST>
+						<COMBOLIST w="150" title="d - Rapid Diagnostic Test Kit" y="690" h="20" x="10">indicator_67_d
+							<DATA key="Yes">Yes</DATA>
+							<DATA key="No">No</DATA>
+							<DATA key="N/A">N/A</DATA>
+						</COMBOLIST>
+						<COMBOLIST w="150" title="e - Condoms" y="690" h="20" x="290">indicator_67_e
+							<DATA key="Yes">Yes</DATA>
+							<DATA key="No">No</DATA>
+							<DATA key="N/A">N/A</DATA>
+						</COMBOLIST>
+						<COMBOLIST w="150" title="f - Oral Contraceptives" y="710" h="20" x="10">indicator_67_f
+							<DATA key="Yes">Yes</DATA>
+							<DATA key="No">No</DATA>
+							<DATA key="N/A">N/A</DATA>
+						</COMBOLIST>
+						<COMBOLIST w="150" title="g - Iodine Solution" y="710" h="20" x="290">indicator_67_g
+							<DATA key="Yes">Yes</DATA>
+							<DATA key="No">No</DATA>
+							<DATA key="N/A">N/A</DATA>
+						</COMBOLIST>
+						<COMBOLIST w="150" title="h - Chlorine Tablets" y="730" h="20" x="10">indicator_67_h
+							<DATA key="Yes">Yes</DATA>
+							<DATA key="No">No</DATA>
+							<DATA key="N/A">N/A</DATA>
+						</COMBOLIST>
+						<COMBOLIST w="150" title="i - Albedazole Tablets" y="730" h="20" x="290">indicator_67_i
+							<DATA key="Yes">Yes</DATA>
+							<DATA key="No">No</DATA>
+							<DATA key="N/A">N/A</DATA>
+						</COMBOLIST>
+						<COMBOLIST w="150" title="j - Tetracycline Eye Ointment" y="750" h="20" x="10">indicator_67_j
+							<DATA key="Yes">Yes</DATA>
+							<DATA key="No">No</DATA>
+							<DATA key="N/A">N/A</DATA>
+						</COMBOLIST>
+						<COMBOLIST w="150" title="k- Paracetamol" y="750" h="20" x="290">indicator_67_k
+							<DATA key="Yes">Yes</DATA>
+							<DATA key="No">No</DATA>
+							<DATA key="N/A">N/A</DATA>
+						</COMBOLIST>
+						<TEXTAREA w="430" title="Remarks" y="770" h="70" x="10">remarks</TEXTAREA>
+						<FORM name="Indicators 1-36" keyfield="surveys_515_detail_id" linkfield="surveys_515_id" table="surveys_515_details">
+							<TEXTFIELD w="150" title="1 - Total households" y="30" h="20" x="10">indicator_1</TEXTFIELD>
+							<TEXTFIELD w="150" title="2 - Total number of households visited" y="30" h="20" x="290">indicator_2</TEXTFIELD>
+							<TEXTFIELD w="150" title="3 - Total population" y="50" h="20" x="10">indicator_3</TEXTFIELD>
+							<TEXTFIELD w="150" title="4 - Total women 15-49 years" y="50" h="20" x="290">indicator_4</TEXTFIELD>
+							<TEXTFIELD w="150" title="5 - Total pregnant women" y="70" h="20" x="10">indicator_5</TEXTFIELD>
+							<TEXTFIELD w="150" title="6 - Total children 0-28 days" y="70" h="20" x="290">indicator_6</TEXTFIELD>
+							<TEXTFIELD w="150" title="7 - Total children 29 days-11 months age" y="90" h="20" x="10">indicator_7</TEXTFIELD>
+							<TEXTFIELD w="150" title="8 - Total children 12-59 months age" y="90" h="20" x="290">indicator_8</TEXTFIELD>
+							<TEXTFIELD w="150" title="9 - Total children 5-12 years age" y="110" h="20" x="10">indicator_9</TEXTFIELD>
+							<TEXTFIELD w="150" title="10 - Total adolescent and youth - Girls (13 - 24 years)" y="110" h="20" x="290">indicator_10</TEXTFIELD>
+							<TEXTFIELD w="150" title="11 - Total adolescent and youth - Boys (13 - 24 years)" y="130" h="20" x="10">indicator_11</TEXTFIELD>
+							<TEXTFIELD w="150" title="12 - Total Females 25-59 years" y="130" h="20" x="290">indicator_12</TEXTFIELD>
+							<TEXTFIELD w="150" title="13 - Total Males 25-59 years" y="130" h="20" x="290">indicator_13</TEXTFIELD>
+							<TEXTFIELD w="150" title="14 - Total elderly females (60+ years)" y="150" h="20" x="10">indicator_14</TEXTFIELD>
+							<TEXTFIELD w="150" title="15 - Total elderly males (60+ years)" y="150" h="20" x="10">indicator_15</TEXTFIELD>
+							<TEXTFIELD w="150" title="16 - Number of households using  treated water" y="150" h="20" x="290">indicator_16</TEXTFIELD>
+							<TEXTFIELD w="150" title="17 - Number of households with hand washing facilities e.g. leaky tins in use" y="170" h="20" x="10">indicator_17</TEXTFIELD>
+							<TEXTFIELD w="150" title="18 - Number of households with functional latrines" y="170" h="20" x="290">indicator_18</TEXTFIELD>
+							<TEXTFIELD w="150" title="19 - Number of new-borns visited at home within 48 hours of birth" y="190" h="20" x="10">indicator_19</TEXTFIELD>
+							<TEXTFIELD w="150" title="20- Number of mothers with new-borns counselled on Exclusive Breastfeeding" y="190" h="20" x="290">indicator_20</TEXTFIELD>
+							<TEXTFIELD w="150" title="21 - Number of children of 0-59 months  participating in  growth monitoring" y="210" h="20" x="10">indicator_21</TEXTFIELD>
+							<TEXTFIELD w="150" title="22 - Total Deliveries" y="210" h="20" x="290">indicator_22</TEXTFIELD>
+							<TEXTFIELD w="150" title="23 - Number of deliveries by skilled birth attendants" y="230" h="20" x="10">indicator_23</TEXTFIELD>
+							<TEXTFIELD w="150" title="24 - Number of uder-age pregnancies (under 18 years)" y="230" h="20" x="290">indicator_24</TEXTFIELD>
+							<TEXTFIELD w="150" title="25 - Number of women (15-49yrs) provided with Family Planning commodities " y="250" h="20" x="10">indicator_25</TEXTFIELD>
+							<TEXTFIELD w="150" title="26 - Number of children 12-59 months dewormed" y="250" h="20" x="290">indicator_26</TEXTFIELD>
+							<TEXTFIELD w="150" title="27 - Number of fever cases  managed" y="270" h="20" x="10">indicator_27</TEXTFIELD>
+							<TEXTFIELD w="150" title="28 - Number of fever cases less than 7 days with RDT done" y="270" h="20" x="290">indicator_28</TEXTFIELD>
+							<TEXTFIELD w="150" title="29 - Number of fever casesless than 7 days with RDT +ve" y="290" h="20" x="10">indicator_29</TEXTFIELD>
+							<TEXTFIELD w="150" title="30 - Number of under 5 years Malaria Cases (RDT +ve) treated with ACT" y="290" h="20" x="290">indicator_30</TEXTFIELD>
+							<TEXTFIELD w="150" title="31 - Number of over 5 years Malaria Cases (RDT +ve) treated with ACT" y="310" h="20" x="10">indicator_31</TEXTFIELD>
+							<TEXTFIELD w="150" title="32 - Number of cases of diarrhoea identified in children 0-59 months age" y="310" h="20" x="290">indicator_32</TEXTFIELD>
+							<TEXTFIELD w="150" title="33 - Number of children of 12-59 months with diarrhoea treated with Zinc and ORS" y="330" h="20" x="10">indicator_33</TEXTFIELD>
+							<TEXTFIELD w="150" title="34 - Number of children 0-59 months age presenting with fast breathing" y="330" h="20" x="290">indicator_34</TEXTFIELD>
+							<TEXTFIELD w="150" title="35 - Number of children 0-59 months age presenting with fast breathing treated with Amoxycillin" y="350" h="20" x="10">indicator_35</TEXTFIELD>
+							<TEXTFIELD w="150" title="36 -Number of injuries and wounds managed" y="350" h="20" x="290">indicator_36</TEXTFIELD>
+						</FORM>
+						<FORM name="Indicators 37-46" keyfield="surveys_515_detail_id" linkfield="surveys_515_id" table="surveys_515_details">
+							<TEXTFIELD w="150" title="37 - Number of new referrals - ANC " y="370" h="20" x="10">indicator_37</TEXTFIELD>
+							<TEXTFIELD w="150" title="38 - Number of new referrals - Skilled delivery" y="370" h="20" x="290">indicator_38</TEXTFIELD>
+							<TEXTFIELD w="150" title="39 - Number of new referrals - New-borns with danger signs  referred" y="390" h="20" x="10">indicator_39</TEXTFIELD>
+							<TEXTFIELD w="150" title="40 - Number of new referrals - Children of 0-11 months referred for immunization" y="390" h="20" x="290">indicator_40</TEXTFIELD>
+							<TEXTFIELD w="150" title="41 - Number of new referrals - Children 6 - 59 Months referred for Vitamin A supplementation" y="410" h="20" x="10">indicator_41</TEXTFIELD>
+							<TEXTFIELD w="150" title="42 - Number of new referrals - Severe malnutrition" y="410" h="20" x="290">indicator_42</TEXTFIELD>
+							<TEXTFIELD w="150" title="43 - Number of new referrals - Moderate malnutrition" y="430" h="20" x="10">indicator_43</TEXTFIELD>
+							<TEXTFIELD w="150" title="44 - Number of new referrals - Cough for 2 or more weeks" y="430" h="20" x="290">indicator_44</TEXTFIELD>
+							<TEXTFIELD w="150" title="45 - Number of new referrals - HIV Counselling and Testing (HCT)" y="450" h="20" x="10">indicator_45</TEXTFIELD>
+							<TEXTFIELD w="150" title="46 - Number of new referrals - Routine check-ups for the elderly (60+)" y="450" h="20" x="290">indicator_46</TEXTFIELD>
+						</FORM>
+						<FORM name="Indicators 47-52" keyfield="surveys_515_detail_id" linkfield="surveys_515_id" table="surveys_515_details">
+							<TEXTFIELD w="150" title="47 - Number of people with known chronic illness  referred - Diabetes" y="470" h="20" x="10">indicator_47</TEXTFIELD>
+							<TEXTFIELD w="150" title="48 - Number of people with known chronic illness  referred - Cancer" y="470" h="20" x="290">indicator_48</TEXTFIELD>
+							<TEXTFIELD w="150" title="49 - Number of people with known chronic illness  referred - Mental Illness" y="490" h="20" x="10">indicator_49</TEXTFIELD>
+							<TEXTFIELD w="150" title="50 - Number of people with known chronic illness  referred - Hypertension" y="490" h="20" x="290">indicator_50</TEXTFIELD>
+							<TEXTFIELD w="150" title="51 - Number of people with known chronic illness  referred - Chronic Cough" y="510" h="20" x="10">indicator_51</TEXTFIELD>
+							<TEXTFIELD w="150" title="52 - Number of people with known chronic illness  referred - Total of the others" y="510" h="20" x="10">indicator_52</TEXTFIELD>
+						</FORM>
+						<FORM name="Indicators 53-56" keyfield="surveys_515_detail_id" linkfield="surveys_515_id" table="surveys_515_details">
+							<TEXTFIELD w="150" title="53 - Number of defaulters referred - ANC" y="510" h="20" x="290">indicator_53</TEXTFIELD>
+							<TEXTFIELD w="150" title="54 - Number of defaulters referred - Immunization" y="530" h="20" x="10">indicator_54</TEXTFIELD>
+							<TEXTFIELD w="150" title="55 - Number of defaulters referred - Tuberculosis treatment" y="530" h="20" x="290">indicator_55</TEXTFIELD>
+							<TEXTFIELD w="150" title="56 - Number of defaulters referred - ART" y="550" h="20" x="10">indicator_56</TEXTFIELD>
+						</FORM>
+						<FORM name="Indicators 57-62" keyfield="surveys_515_detail_id" linkfield="surveys_515_id" table="surveys_515_details">
+							<TEXTFIELD w="150" title="57 - Number of deaths in the month - 0-28 days" y="550" h="20" x="290">indicator_57</TEXTFIELD>
+							<TEXTFIELD w="150" title="58 - Number of deaths in the month - 29 days-11 months" y="570" h="20" x="10">indicator_58</TEXTFIELD>
+							<TEXTFIELD w="150" title="59 - Number of deaths in the month - 12-59 months" y="570" h="20" x="290">indicator_59</TEXTFIELD>
+							<TEXTFIELD w="150" title="60 - Number of deaths in the month - Maternal " y="590" h="20" x="10">indicator_60</TEXTFIELD>
+							<TEXTFIELD w="150" title="61 - Number of deaths in the month - Other deaths" y="590" h="20" x="290">indicator_61</TEXTFIELD>
+							<TEXTFIELD w="150" title="62 - Number of deaths in the month - Total deaths" y="610" h="20" x="10">indicator_62</TEXTFIELD>
+						</FORM>
+						<FORM name="Indicators 63-65" keyfield="surveys_515_detail_id" linkfield="surveys_515_id" table="surveys_515_details">
+							<TEXTFIELD w="150" title="63 - Total number of community dialogue days  held" y="630" h="20" x="10">indicator_63</TEXTFIELD>
+							<TEXTFIELD w="150" title="64 - Total number of community Action Days held" y="630" h="20" x="10">indicator_64</TEXTFIELD>
+							<TEXTFIELD w="150" title="65 - Total number of community monthly meetings held" y="630" h="20" x="290">indicator_65</TEXTFIELD>
+						</FORM>
+						<FORM name="Indicators 66-67" keyfield="surveys_515_detail_id" linkfield="surveys_515_id" table="surveys_515_details">
+							<COMBOLIST w="150" title="66 - CHU issued with any commodities? " y="650" h="20" x="10">indicator_66
+								<DATA key="Yes">Yes</DATA>
+								<DATA key="No">No</DATA>
+							</COMBOLIST>
+							<COMBOLIST w="150" title="67 - Did the community health unit experience stock-outs of more than 7 days for any of the following commodities? - Antimalarial (ACTs 6s and 12s)" y="650" h="20" x="290">indicator_67_a
+								<DATA key="Yes">Yes</DATA>
+								<DATA key="No">No</DATA>
+								<DATA key="N/A">N/A</DATA>
+							</COMBOLIST>
+							<COMBOLIST w="150" title="b- Oral Rehydration Salt" y="670" h="20" x="10">indicator_67_b
+								<DATA key="Yes">Yes</DATA>
+								<DATA key="No">No</DATA>
+								<DATA key="N/A">N/A</DATA>
+							</COMBOLIST>
+							<COMBOLIST w="150" title="c - Zinc" y="670" h="20" x="290">indicator_67_c
+								<DATA key="Yes">Yes</DATA>
+								<DATA key="No">No</DATA>
+								<DATA key="N/A">N/A</DATA>
+							</COMBOLIST>
+							<COMBOLIST w="150" title="d - Rapid Diagnostic Test Kit" y="690" h="20" x="10">indicator_67_d
+								<DATA key="Yes">Yes</DATA>
+								<DATA key="No">No</DATA>
+								<DATA key="N/A">N/A</DATA>
+							</COMBOLIST>
+							<COMBOLIST w="150" title="e - Condoms" y="690" h="20" x="290">indicator_67_e
+								<DATA key="Yes">Yes</DATA>
+								<DATA key="No">No</DATA>
+								<DATA key="N/A">N/A</DATA>
+							</COMBOLIST>
+							<COMBOLIST w="150" title="f - Oral Contraceptives" y="710" h="20" x="10">indicator_67_f
+								<DATA key="Yes">Yes</DATA>
+								<DATA key="No">No</DATA>
+								<DATA key="N/A">N/A</DATA>
+							</COMBOLIST>
+							<COMBOLIST w="150" title="g - Iodine Solution" y="710" h="20" x="290">indicator_67_g
+								<DATA key="Yes">Yes</DATA>
+								<DATA key="No">No</DATA>
+								<DATA key="N/A">N/A</DATA>
+							</COMBOLIST>
+							<COMBOLIST w="150" title="h - Chlorine Tablets" y="730" h="20" x="10">indicator_67_h
+								<DATA key="Yes">Yes</DATA>
+								<DATA key="No">No</DATA>
+								<DATA key="N/A">N/A</DATA>
+							</COMBOLIST>
+							<COMBOLIST w="150" title="i - Albedazole Tablets" y="730" h="20" x="290">indicator_67_i
+								<DATA key="Yes">Yes</DATA>
+								<DATA key="No">No</DATA>
+								<DATA key="N/A">N/A</DATA>
+							</COMBOLIST>
+							<COMBOLIST w="150" title="j - Tetracycline Eye Ointment" y="750" h="20" x="10">indicator_67_j
+								<DATA key="Yes">Yes</DATA>
+								<DATA key="No">No</DATA>
+								<DATA key="N/A">N/A</DATA>
+							</COMBOLIST>
+							<COMBOLIST w="150" title="k- Paracetamol" y="750" h="20" x="290">indicator_67_k
+								<DATA key="Yes">Yes</DATA>
+								<DATA key="No">No</DATA>
+								<DATA key="N/A">N/A</DATA>
+							</COMBOLIST>
+						</FORM>
+						<FORM name="Remarks/ Others " keyfield="surveys_515_detail_id" linkfield="surveys_515_id" table="surveys_515_details">
+							<TEXTAREA w="430" title="Remarks" y="770" h="70" x="10">remarks</TEXTAREA>
+						</FORM>
+					</FORMVIEW>
+					<FORM cols="2" name="Basic Info" keyfield="surveys_515_id" linkfield="village_id" table="surveys_515">
+						<TEXTFIELD w="430" title="Name of CHU" y="30" h="20" x="10">chu_name</TEXTFIELD>
+						<TEXTFIELD w="430" title="CHEW Name" y="90" h="20" x="10">chew_name</TEXTFIELD>
+						<TEXTFIELD w="430" title="Link Facility" y="70" h="20" x="10">link_facility</TEXTFIELD>
+						<TEXTFIELD w="430" title="MCUL Code" y="50" h="20" x="10">mclu_code</TEXTFIELD>
+						<TEXTFIELD w="150" title="Total CHVs Reported" y="110" h="20" x="290">total_chws_reported</TEXTFIELD>
+						<TEXTFIELD w="150" title="No Of CHVs" y="110" h="20" x="10">no_of_chvs</TEXTFIELD>
+						<TEXTDATE w="150" title="Start Date" y="130" h="20" x="10">start_date</TEXTDATE>
+						<TEXTDATE w="150" title="End Date" y="130" h="20" x="290">end_date</TEXTDATE>
+					</FORM>
+					<JASPER name="Report 515 Report " reportfile="vw_surveys_515_details.jasper"></JASPER>
+				</GRID>
+			</GRID>
+		</GRID>
+		<FILTER w="700" name="Sub County - Report 515 Report " split="150" linkfield="sub_county_id" type="vert" h="550">
+			<FILTERFORM name="Date Range">
+				<COMBOBOX w="430" title="Sub County " lptable="sub_countys" noorg="true" y="10" h="20" x="10" lpfield="sub_county_name">sub_county_id</COMBOBOX>
+				<TEXTDATE w="150" title="Start Date" y="50" h="20" x="10">start_date</TEXTDATE>
+				<TEXTDATE w="150" title="End Date" y="50" h="20" x="10">end_date</TEXTDATE>
+			</FILTERFORM>
+			<JASPER name="Report 515 Report " reportfile="vw_surveys_515_details_sub_county.jasper"></JASPER>
+		</FILTER>
+		<FILTER w="700" name="Division- Report 515 Report " split="150" linkfield="sub_county_id" type="vert" h="550">
+			<FILTERFORM name="Date Range">
+				<COMBOBOX w="430" title="Division " lptable="divisions" noorg="true" y="10" h="20" x="10" lpfield="division_name">division_id</COMBOBOX>
+				<TEXTDATE w="150" title="Start Date" y="50" h="20" x="10">start_date</TEXTDATE>
+				<TEXTDATE w="150" title="End Date" y="50" h="20" x="10">end_date</TEXTDATE>
+			</FILTERFORM>
+			<JASPER name="Report 515 Report " reportfile="vw_surveys_515_details_division.jasper"></JASPER>
+		</FILTER>
+		<FILTER w="700" name="Location - Report 515 Report " split="150" linkfield="sub_county_id" type="vert" h="550">
+			<FILTERFORM name="Date Range">
+				<COMBOBOX w="430" title="Location" lptable="locations" noorg="true" lpkey="location_id" y="10" h="20" x="10" lpfield="location_name">location_id</COMBOBOX>
+				<TEXTDATE w="150" title="Start Date" y="50" h="20" x="10">start_date</TEXTDATE>
+				<TEXTDATE w="150" title="End Date" y="50" h="20" x="10">end_date</TEXTDATE>
+			</FILTERFORM>
+			<JASPER name="Report 515 Report " reportfile="vw_surveys_515_details_sub_county.jasper"></JASPER>
+		</FILTER>
+		<FILTER w="700" name="Sub Location - Report 515 Report " split="150" linkfield="sub_county_id" type="vert" h="550">
+			<FILTERFORM name="Date Range">
+				<COMBOBOX w="430" title="Sub Location" lptable="sub_locations" noorg="true" y="10" h="20" x="10" lpfield="sub_location_name">sub_location_id</COMBOBOX>
+				<TEXTDATE w="150" title="Start Date" y="50" h="20" x="10">start_date</TEXTDATE>
+				<TEXTDATE w="150" title="End Date" y="50" h="20" x="10">end_date</TEXTDATE>
+			</FILTERFORM>
+			<JASPER name="Report 515 Report " reportfile="vw_surveys_515_details_sub_county.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Reports 100" key="40" h="550">
+		<GRID name="Sub Countys" keyfield="sub_county_id" table="vw_sub_countys" noorg="true">
+			<TEXTFIELD w="75" title="County Name">county_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Sub County Name">sub_county_name</TEXTFIELD>
+			<GRID name="Villages" keyfield="village_id" linkfield="sub_county_id" table="vw_villages" noorg="true">
+				<TEXTFIELD w="75" title="County Name">county_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Sub County Name">sub_county_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Division Name">division_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Location Name">location_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Sub Location Name">sub_location_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Village Name">village_name</TEXTFIELD>
+				<GRID name="Survey 100" keyfield="survey_100_id" linkfield="village_id" table="vw_survey_100">
+					<TEXTFIELD w="75" title="Survey 100 ID">survey_100_id</TEXTFIELD>
+					<TEXTFIELD w="75" title="Worker Name">worker_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Link Health Facility Name">link_health_facility_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Org Name">org_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Village Name">village_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Form Serial">form_serial</TEXTFIELD>
+					<TEXTFIELD w="75" title="Patient Gender">patient_gender</TEXTFIELD>
+					<TEXTFIELD w="75" title="Patient Name">patient_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Patient Age">patient_age</TEXTFIELD>
+					<TEXTFIELD w="75" title="Community Healt Unit">community_healt_unit</TEXTFIELD>
+					<TEXTFIELD w="75" title="Referral Reason">referral_reason</TEXTFIELD>
+					<TEXTFIELD w="75" title="Community Unit">community_unit</TEXTFIELD>
+					<TEXTFIELD w="75" title="Receiving Officer Name">receiving_officer_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Receiving Officer Profession">receiving_officer_profession</TEXTFIELD>
+					<TEXTFIELD w="75" title="Health Facility Name">health_facility_name</TEXTFIELD>
+					<TEXTDATE w="75" title="Receiving Officer Date">receiving_officer_date</TEXTDATE>
+					<SPINTIME w="75" title="Receiving Officer Time">receiving_officer_time</SPINTIME>
+					<TEXTTIMESTAMP w="75" title="Referral Time">referral_time</TEXTTIMESTAMP>
+					<FORM name="Survey 100" keyfield="survey_100_id" linkfield="village_id" table="survey_100">
+						<TEXTFIELD w="150" title="Form Serial" y="70" h="20" x="10">form_serial</TEXTFIELD>
+						<TEXTFIELD w="150" title="Patient Gender" y="70" h="20" x="290">patient_gender</TEXTFIELD>
+						<TEXTFIELD w="430" title="Patient Name" y="90" h="20" x="10">patient_name</TEXTFIELD>
+						<TEXTFIELD w="150" title="Patient Age" y="110" h="20" x="10">patient_age</TEXTFIELD>
+						<TEXTFIELD w="430" title="Community Healt Unit" y="130" h="20" x="10">community_healt_unit</TEXTFIELD>
+						<TEXTFIELD w="430" title="Referral Reason" y="150" h="20" x="10">referral_reason</TEXTFIELD>
+						<TEXTAREA w="430" title="Treatment" y="170" h="70" x="10">treatment</TEXTAREA>
+						<TEXTAREA w="430" title="Comments" y="240" h="70" x="10">comments</TEXTAREA>
+						<TEXTFIELD w="430" title="Community Unit" y="310" h="20" x="10">community_unit</TEXTFIELD>
+						<TEXTFIELD w="430" title="Receiving Officer Name" y="330" h="20" x="10">receiving_officer_name</TEXTFIELD>
+						<TEXTFIELD w="430" title="Receiving Officer Profession" y="350" h="20" x="10">receiving_officer_profession</TEXTFIELD>
+						<TEXTFIELD w="430" title="Health Facility Name" y="370" h="20" x="10">health_facility_name</TEXTFIELD>
+						<TEXTAREA w="430" title="Action Taken" y="390" h="70" x="10">action_taken</TEXTAREA>
+						<TEXTDATE w="150" title="Receiving Officer Date" y="460" h="20" x="10">receiving_officer_date</TEXTDATE>
+						<SPINTIME w="150" title="Receiving Officer Time" y="460" h="20" x="290">receiving_officer_time</SPINTIME>
+					</FORM>
+					<JASPER name="Report 100 report" reportfile="vw_survey_100.jasper"></JASPER>
+				</GRID>
+			</GRID>
+		</GRID>
+		<FILTER w="700" name="MOH 100 Village Summary" split="150" type="vert" h="550">
+			<FILTERFORM name="Village Date Range">
+				<COMBOBOX w="430" title="Village" lptable="villages" noorg="true" y="30" h="20" x="10" lpfield="village_name">village_id</COMBOBOX>
+				<TEXTDATE w="150" title="Start Date" y="50" h="20" x="10">start_date</TEXTDATE>
+				<TEXTDATE w="150" title="End Date" y="50" h="20" x="10">end_date</TEXTDATE>
+			</FILTERFORM>
+			<JASPER name="MOH 100 Village Summary" reportfile="vw_survey_100_village.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" icon="icon-settings" name="Configurations" key="45" h="550">
+		<GRID name="Countys" keyfield="county_id" table="countys" noorg="true">
+			<TEXTFIELD w="75" title="County ID">county_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="County Name">county_name</TEXTFIELD>
+			<GRID name="Sub Countys" keyfield="sub_county_id" linkfield="county_id" table="sub_countys" noorg="true">
+				<TEXTFIELD w="75" title="Sub County ID">sub_county_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Sub County Name">sub_county_name</TEXTFIELD>
+				<GRID name="Divisions" keyfield="division_id" linkfield="sub_county_id" table="divisions" noorg="true">
+					<TEXTFIELD w="75" title="Division ID">division_id</TEXTFIELD>
+					<TEXTFIELD w="75" title="Division Name">division_name</TEXTFIELD>
+					<GRID name="Locations" keyfield="location_id" linkfield="division_id" table="locations" noorg="true">
+						<TEXTFIELD w="75" title="Location ID">location_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Location Name">location_name</TEXTFIELD>
+						<GRID name="Sub Locations" keyfield="sub_location_id" linkfield="location_id" table="sub_locations" noorg="true">
+							<TEXTFIELD w="75" title="Sub Location ID">sub_location_id</TEXTFIELD>
+							<TEXTFIELD w="75" title="Sub Location Name">sub_location_name</TEXTFIELD>
+							<GRID name="Villages" keyfield="village_id" linkfield="sub_location_id" table="villages" noorg="true">
+								<TEXTFIELD w="75" title="Village ID">village_id</TEXTFIELD>
+								<TEXTFIELD w="75" title="Village Name">village_name</TEXTFIELD>
+								<FORM name="Village" keyfield="village_id" linkfield="sub_location_id" table="villages" noorg="true">
+									<TEXTFIELD w="430" title="Village Name" y="10" h="20" x="10">village_name</TEXTFIELD>
+								</FORM>
+							</GRID>
+							<FORM name="Sub Location" keyfield="sub_location_id" linkfield="location_id" table="sub_locations" noorg="true">
+								<TEXTFIELD w="430" title="Location Name" y="10" h="20" x="10">sub_location_name</TEXTFIELD>
+							</FORM>
+						</GRID>
+						<FORM name="Location" keyfield="location_id" linkfield="division_id" table="locations" noorg="true">
+							<TEXTFIELD w="430" title="Location Name" y="10" h="20" x="10">location_name</TEXTFIELD>
+						</FORM>
+					</GRID>
+					<FORM name="Divisions" keyfield="division_id" linkfield="sub_county_id" table="divisions" noorg="true">
+						<TEXTFIELD w="430" title="Division Name" y="10" h="20" x="10">division_name</TEXTFIELD>
+					</FORM>
+				</GRID>
+				<FORM name="Sub Countys" keyfield="sub_county_id" linkfield="county_id" table="sub_countys" noorg="true">
+					<TEXTFIELD w="150" title="Sub County Name" y="10" h="20" x="10">sub_county_name</TEXTFIELD>
+				</FORM>
+			</GRID>
+			<FORM name="Countys" keyfield="county_id" table="countys" noorg="true">
+				<TEXTFIELD w="150" title="County Name" y="10" h="20" x="10">county_name</TEXTFIELD>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="514 Indicators Definitions" key="50" h="550">
+		<GRID name="Mother Info Defs" keyfield="mother_info_def_id" table="mother_info_defs" noorg="true">
+			<TEXTFIELD w="75" title="Mother Info Def ID">mother_info_def_id</TEXTFIELD>
+			<CHECKBOX w="75" title="For 515">for_515</CHECKBOX>
+			<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+			<TEXTFIELD w="75" title="Details">details</TEXTFIELD>
+			<FORM name="Mother Info Defs" keyfield="mother_info_def_id" table="mother_info_defs" noorg="true">
+				<CHECKBOX w="150" title="For 515" y="150" h="20" x="10">for_515</CHECKBOX>
+				<TEXTAREA w="430" title="Question" y="10" h="70" x="10">question</TEXTAREA>
+				<TEXTAREA w="430" title="Details" y="80" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+		<GRID name="Child Info Defs" keyfield="child_info_def_id" table="child_info_defs" noorg="true">
+			<TEXTFIELD w="75" title="Child Info Def ID">child_info_def_id</TEXTFIELD>
+			<CHECKBOX w="75" title="For 515">for_515</CHECKBOX>
+			<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+			<TEXTFIELD w="75" title="Details">details</TEXTFIELD>
+			<FORM name="Child Info Defs" keyfield="child_info_def_id" table="child_info_defs" noorg="true">
+				<CHECKBOX w="150" title="For 515" y="150" h="20" x="10">for_515</CHECKBOX>
+				<TEXTAREA w="430" title="Question" y="10" h="70" x="10">question</TEXTAREA>
+				<TEXTAREA w="430" title="Details" y="80" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+		<GRID name="Referral Info Defs" keyfield="referral_info_def_id" table="referral_info_defs" noorg="true">
+			<TEXTFIELD w="75" title="Referral Info Def ID">referral_info_def_id</TEXTFIELD>
+			<CHECKBOX w="75" title="For 515">for_515</CHECKBOX>
+			<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+			<TEXTFIELD w="75" title="Details">details</TEXTFIELD>
+			<FORM name="Referral Info Defs" keyfield="referral_info_def_id" table="referral_info_defs" noorg="true">
+				<CHECKBOX w="150" title="For 515" y="150" h="20" x="10">for_515</CHECKBOX>
+				<TEXTAREA w="430" title="Question" y="10" h="70" x="10">question</TEXTAREA>
+				<TEXTAREA w="430" title="Details" y="80" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+		<GRID name="Defaulters Info Defs" keyfield="defaulters_info_def_id" table="defaulters_info_defs" noorg="true">
+			<TEXTFIELD w="75" title="Defaulters Info Def ID">defaulters_info_def_id</TEXTFIELD>
+			<CHECKBOX w="75" title="For 515">for_515</CHECKBOX>
+			<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+			<TEXTFIELD w="75" title="Details">details</TEXTFIELD>
+			<FORM name="Defaulters Info Defs" keyfield="defaulters_info_def_id" table="defaulters_info_defs" noorg="true">
+				<CHECKBOX w="150" title="For 515" y="150" h="20" x="10">for_515</CHECKBOX>
+				<TEXTAREA w="430" title="Question" y="10" h="70" x="10">question</TEXTAREA>
+				<TEXTAREA w="430" title="Details" y="80" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+		<GRID name="Death Info Defs" keyfield="death_info_def_id" table="death_info_defs" noorg="true">
+			<TEXTFIELD w="75" title="Death Info Def ID">death_info_def_id</TEXTFIELD>
+			<CHECKBOX w="75" title="For 515">for_515</CHECKBOX>
+			<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+			<TEXTFIELD w="75" title="Details">details</TEXTFIELD>
+			<FORM name="Death Info Defs" keyfield="death_info_def_id" table="death_info_defs" noorg="true">
+				<CHECKBOX w="150" title="For 515" y="150" h="20" x="10">for_515</CHECKBOX>
+				<TEXTAREA w="430" title="Question" y="10" h="70" x="10">question</TEXTAREA>
+				<TEXTAREA w="430" title="Details" y="80" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+		<GRID name="Household Info Defs" keyfield="household_info_def_id" table="household_info_defs" noorg="true">
+			<TEXTFIELD w="75" title="Household Info Def ID">household_info_def_id</TEXTFIELD>
+			<CHECKBOX w="75" title="For 515">for_515</CHECKBOX>
+			<TEXTFIELD w="75" title="Question">question</TEXTFIELD>
+			<TEXTFIELD w="75" title="Details">details</TEXTFIELD>
+			<FORM name="Household Info Defs" keyfield="household_info_def_id" table="household_info_defs" noorg="true">
+				<CHECKBOX w="150" title="For 515" y="150" h="20" x="10">for_515</CHECKBOX>
+				<TEXTAREA w="430" title="Question" y="10" h="70" x="10">question</TEXTAREA>
+				<TEXTAREA w="430" title="Details" y="80" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Link Health Facilities" key="55" h="550">
+		<GRID name="Sub Countys" keyfield="sub_county_id" table="vw_sub_countys" noorg="true">
+			<TEXTFIELD w="75" title="County ID">county_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="County Name">county_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Sub County Name">sub_county_name</TEXTFIELD>
+			<GRID name="Sub Locations" keyfield="sub_location_id" linkfield="sub_county_id" table="vw_sub_locations" noorg="true">
+				<TEXTFIELD w="75" title="County Name">county_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Sub County Name">sub_county_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Division Name">division_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Location Name">location_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Sub Location Name">sub_location_name</TEXTFIELD>
+				<GRID name="Link Health Facilities" keyfield="link_health_facility_id" linkfield="sub_location_id" table="link_health_facilities">
+					<TEXTFIELD w="75" title="Link Health Facility ID">link_health_facility_id</TEXTFIELD>
+					<TEXTFIELD w="75" title="Link Health Facility Name">link_health_facility_name</TEXTFIELD>
+					<FORM name="Link Health Facilities" keyfield="link_health_facility_id" linkfield="sub_location_id" table="link_health_facilities">
+						<TEXTFIELD w="430" title="Link Health Facility Name" y="30" h="20" x="10">link_health_facility_name</TEXTFIELD>
+						<TEXTAREA w="430" title="Details" y="50" h="70" x="10">details</TEXTAREA>
+					</FORM>
+				</GRID>
+			</GRID>
+		</GRID>
+	</DESK>
+</APP>

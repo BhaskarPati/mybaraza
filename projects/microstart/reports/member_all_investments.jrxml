@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="member_all_investments" language="groovy" pageWidth="752" pageHeight="572" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="752" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="c581d155-1c9f-44b2-a345-02aec4426e11">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="entity_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="organd" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""
+]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from vw_investments
+where entity_id = '$P!{entity_id}'
+$P!{organd}
+order by application_date asc]]>
+	</queryString>
+	<field name="entity_id" class="java.lang.Integer"/>
+	<field name="entity_name" class="java.lang.String"/>
+	<field name="org_id" class="java.lang.Integer"/>
+	<field name="investment_id" class="java.lang.Integer"/>
+	<field name="investment_type_id" class="java.lang.Integer"/>
+	<field name="maturity_date" class="java.sql.Date"/>
+	<field name="invest_amount" class="java.lang.Float"/>
+	<field name="yearly_dividend" class="java.lang.Float"/>
+	<field name="withdrawal_date" class="java.sql.Date"/>
+	<field name="withdrwal_amount" class="java.lang.Float"/>
+	<field name="period_years" class="java.lang.Float"/>
+	<field name="default_interest" class="java.lang.Float"/>
+	<field name="return_on_investment" class="java.lang.Float"/>
+	<field name="application_date" class="java.sql.Timestamp"/>
+	<field name="approve_status" class="java.lang.String"/>
+	<field name="workflow_table_id" class="java.lang.Integer"/>
+	<field name="action_date" class="java.sql.Timestamp"/>
+	<field name="details" class="java.lang.String"/>
+	<field name="investment_type_name" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="6" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="48" splitType="Stretch">
+			<staticText>
+				<reportElement x="4" y="0" width="100" height="20" uuid="b60050f0-cbe7-4417-afb4-1a17c0bb49ec"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Investment Type]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="115" y="0" width="150" height="20" uuid="29dd43c6-d601-46e2-9e10-0ae5b5b82690"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{investment_type_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="20" width="100" height="20" uuid="40f6c84f-6a88-450f-914b-740e82fca677"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="114" y="20" width="150" height="20" uuid="5ad11897-937f-4501-817c-0d0b32e905f0"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{invest_amount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="287" y="20" width="100" height="20" uuid="d11ed4b9-ac83-461e-b053-4c26507b7d67"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Yearly Amount]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="410" y="20" width="150" height="20" uuid="13da2726-b53f-4e84-a5ce-da9b9fd71eb8"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{yearly_dividend}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="287" y="0" width="100" height="20" uuid="28fd75dd-9060-437f-84a1-7a34df81e3a5"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<textField pattern="dd-MMM-yy" isBlankWhenNull="true">
+				<reportElement x="410" y="0" width="150" height="20" uuid="fa8c84d6-67fe-488d-b161-a44568749cb9"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{action_date}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="46" width="800" height="1" uuid="f3fe8e07-137f-4f7d-afc3-59dabd1d667b"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,720 @@
+<APP name="UMIS" org="org_id" password="change_password">
+	<MENU name="Babcock Admissions" role="admissions,centers,marketing">
+		<MENU name="Admissions" role="admissions,centers,marketing">
+			<MENU name="Applicants List">1</MENU>
+			<MENU name="Applications" role="admissions,marketing">21</MENU>
+			<MENU name="Applicants Check" role="admissions,marketing">11</MENU>
+			<MENU name="Unsubmitted Applicantions" role="admissions,marketing">14</MENU>
+			<MENU name="Submitted Applications" role="admissions,marketing">15</MENU>
+			<MENU name="Admit Applications" role="admissions,marketing">16</MENU>
+			<MENU name="Admited Applicants" role="admissions,marketing">17</MENU>
+		</MENU>
+		<MENU name="Control Panel" role="admissions">
+			<MENU name="Entrance Exams">6</MENU>
+			<MENU name="Entrance Marks">2</MENU>
+			<MENU name="Entrance Subjects">3</MENU>
+			<MENU name="Exam Centers">4</MENU>
+			<MENU name="States">5</MENU>
+			<MENU name="Programmes">10</MENU>
+			<MENU name="Semesters">12</MENU>
+		</MENU>
+		<MENU name="Reports" role="admissions,marketing">
+			<MENU name="Applications" role="admissions,marketing">
+				<MENU name="Statistics">105</MENU>
+				<MENU name="Applications">110</MENU>
+				<MENU name="Unsubmitted Applications">120</MENU>
+				<MENU name="Submitted Applications">130</MENU>
+				<MENU name="Admited Applicants">140</MENU>
+				<MENU name="Chosen Exam Centers">145</MENU>
+				<MENU name="Paid Applications">150</MENU>
+			</MENU>
+			<MENU name="Admisions" role="admissions">
+				<MENU name="Submited Registration">107</MENU>
+				<MENU name="Registrations Form">106</MENU>
+				<MENU name="New Students">209</MENU>
+				<MENU name="New Students By Year">210</MENU>
+				<MENU name="New Applicants By Year">310</MENU>
+				<MENU name="New Applicants By Programme">320</MENU>
+			</MENU>
+			<MENU name="Control Panel" role="admissions">
+				<MENU name="Marks List">101</MENU>
+				<MENU name="Subjects List">102</MENU>
+				<MENU name="States">104</MENU>
+			</MENU>
+		</MENU>
+	</MENU>
+	<DESK w="765" name="Applicants List" key="1" h="595">
+		<GRID limit="100" new="false" name="Submitted Applications" keyfield="registrationid" delete="false" table="registrationview" where="(submitapplication= true) and (isaccepted = false)">
+			<TEXTFIELD w="80" title="Application ID">registrationid</TEXTFIELD>
+			<TEXTFIELD w="100" title="Application Date">applicationdate</TEXTFIELD>
+			<TEXTFIELD w="100" title="First Name">firstname</TEXTFIELD>
+			<TEXTFIELD w="100" title="Middle name">othernames</TEXTFIELD>
+			<TEXTFIELD w="100" title="Last Name">surname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Gender">sex</TEXTFIELD>
+			<TEXTFIELD w="100" title="Programme">majorname</TEXTFIELD>
+			<CHECKBOX w="75" title="Rejected">isrejected</CHECKBOX>
+			<FORM new="false" name="Picture" keyfield="entity_id" edit="false" delete="false" audit="false" linkfield="entity_id" table="entitys">
+				<PICTURE w="550" username="root" repository="http://localhost:8080/repository/webdav/pictures/" tab="Picture" pictures="../repository/barazapictures" access="enter2012" password="enter" y="1" h="150" x="10">picture_file</PICTURE>
+			</FORM>
+			<JASPER name="Registration Report" reportfile="registration.jasper"></JASPER>
+		</GRID>
+	</DESK>
+	<DESK w="585" name="Applicant List" type="vert" key="11" h="500">
+		<GRID name="Applicants" keyfield="entity_id" orderby="completed_form desc, paid desc, submitapplication desc" table="vw_applicants" noorg="true">
+			<TEXTFIELD w="75" title="Application ID">entity_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Applicant Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="User Name">user_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Primary Telephone">primary_telephone</TEXTFIELD>
+			<TEXTFIELD w="75" title="First Password">first_password</TEXTFIELD>
+			<CHECKBOX w="75" title="Completed Form">completed_form</CHECKBOX>
+			<CHECKBOX w="75" title="Paid">paid</CHECKBOX>
+			<CHECKBOX w="75" title="Submited">submitapplication</CHECKBOX>
+			<BROWSER title="View Form" action="ENTRYFORM" linkfield="actionvalue" baseurl="http://localhost:9090/form.jsp?action=ENTRYFORM" blankpage="true">entry_form_id</BROWSER>
+		</GRID>
+	</DESK>
+	<DESK w="585" name="Applications" type="vert" key="21" h="500">
+		<GRID limit="100" name="Applications" keyfield="applicationid" orderby="applicationid desc" table="applicationview">
+			<TEXTFIELD w="40" title="Application ID">applicationid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="40" title="Email">primary_email</TEXTFIELD>
+			<CHECKBOX w="40" title="Open">openapplication</CHECKBOX>
+			<CHECKBOX w="40" title="Paid">paid</CHECKBOX>
+			<TEXTFIELD w="40" title="Receipt No.">receiptnumber</TEXTFIELD>
+			<TEXTFIELD w="40" title="Amount">amount</TEXTFIELD>
+			<TEXTFIELD w="40" title="Date">applicationdate</TEXTFIELD>
+		</GRID>
+	</DESK>
+	<DESK w="765" name="Unsubmitted Applicantions" type="vert" key="14" h="595">
+		<GRID limit="100" new="false" name="Unsubmitted Applicantions" keyfield="registrationid" delete="false" table="registrationview" where="(submitapplication= false)">
+			<TEXTFIELD w="80" title="Application ID">registrationid</TEXTFIELD>
+			<TEXTFIELD w="100" title="Application Date">applicationdate</TEXTFIELD>
+			<TEXTFIELD w="100" title="First Name">firstname</TEXTFIELD>
+			<TEXTFIELD w="100" title="Middle name">othernames</TEXTFIELD>
+			<TEXTFIELD w="100" title="Last Name">surname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Gender">sex</TEXTFIELD>
+			<BROWSER title="View Form" action="ENTRYFORM" linkfield="actionvalue" baseurl="http://localhost:9090/form.jsp?action=ENTRYFORM" blankpage="true" disabled="yes">entry_form_id</BROWSER>
+			<ACTIONS>
+				<ACTION fnct="submitapplication">Submit Application</ACTION>
+				<ACTION fnct="manage_application" approval="3">Open Form</ACTION>
+			</ACTIONS>
+			<FORM new="false" name="Personal Information" keyfield="registrationid" delete="false" table="registrations">
+				<TEXTFIELD w="100" title="First Name" lw="100" y="20" h="20" x="10">firstname</TEXTFIELD>
+				<TEXTFIELD w="100" title="Surname" lw="100" y="20" h="20" x="220">surname</TEXTFIELD>
+				<TEXTFIELD w="90" title="Other Names" lw="100" y="20" h="20" x="430">othernames</TEXTFIELD>
+				<TEXTFIELD w="150" title="Maiden Name" lw="110" y="20" h="20" x="640">maidenname</TEXTFIELD>
+				<TEXTFIELD w="100" title="Former Names" lw="100" y="40" h="20" x="10">formernames</TEXTFIELD>
+				<TEXTFIELD w="100" title="Phone Number" lw="100" y="60" h="20" x="10">phonenumber</TEXTFIELD>
+				<TEXTFIELD w="100" title="Home Number" lw="100" y="80" h="20" x="10">homenumber</TEXTFIELD>
+				<TEXTFIELD w="100" title="Mobile Number" lw="100" y="100" h="20" x="10">mobilenumber</TEXTFIELD>
+				<TEXTFIELD w="100" title="Town" lw="100" y="40" h="20" x="220">town</TEXTFIELD>
+				<TEXTAREA w="100" title="Home Address" lw="100" y="60" h="60" x="220">homeaddress</TEXTAREA>
+				<TEXTFIELD w="90" title="Zip Code" lw="100" y="40" h="20" x="430">zipcode</TEXTFIELD>
+				<TEXTAREA w="90" title="Mail Address" lw="100" y="60" h="60" x="430">address</TEXTAREA>
+				<COMBOBOX w="150" title="Place of Birth" lptable="states" lw="110" noorg="true" lpkey="stateid" y="40" h="20" x="640" lpfield="statename">birthstateid</COMBOBOX>
+				<COMBOBOX w="150" title="Origin State/LGA" lptable="states" lw="110" noorg="true" lpkey="stateid" y="60" h="20" x="640" lpfield="statename">originstateid</COMBOBOX>
+				<COMBOBOX w="150" title="Nationality" lptable="countrys" lw="110" noorg="true" lpkey="countryid" y="80" h="20" x="640" lpfield="countryname">nationalityid</COMBOBOX>
+				<COMBOBOX w="150" title="Country of Origin" lptable="countrys" lw="110" noorg="true" lpkey="countryid" y="100" h="20" x="640" lpfield="countryname">origincountryid</COMBOBOX>
+				<TEXTDATE w="100" title="Birth Date" lw="100" y="120" h="20" x="10">birthdate</TEXTDATE>
+				<TEXTFIELD w="210" title="Email Address" lw="100" y="120" h="20" x="220">email</TEXTFIELD>
+				<CHECKBOX w="150" title="Prefer Off Campus" lw="120" y="120" h="20" x="640">offcampus</CHECKBOX>
+				<COMBOBOX w="200" title="Denomination" lptable="denominations" lw="100" noorg="true" lpkey="denominationid" y="140" h="20" x="10" lpfield="denominationname">denominationid</COMBOBOX>
+				<COMBOLIST w="60" title="Gender" lw="100" y="140" h="20" x="320">sex
+					<DATA>M</DATA>
+					<DATA>F</DATA>
+				</COMBOLIST>
+				<COMBOLIST w="60" title="Marital Status" lw="100" y="160" h="20" x="320">MaritalStatus
+					<DATA>S</DATA>
+					<DATA>M</DATA>
+					<DATA>W</DATA>
+					<DATA>D</DATA>
+				</COMBOLIST>
+				<TEXTFIELD w="100" title="Existing" lw="100" y="160" h="20" x="10">existingid</TEXTFIELD>
+				<COMBOBOX w="200" title="First Choice" lptable="majors" lw="120" noorg="true" lpkey="majorid" y="140" h="20" x="580" lpfield="majorname">firstchoiceid</COMBOBOX>
+				<COMBOBOX vw="200" title="Second Choice" lptable="majors" lw="120" noorg="true" lpkey="majorid" y="160" h="20" x="580" lpfield="majorname">secondchoiceid</COMBOBOX>
+				<CHECKBOX w="150" title="Previously Applied" lw="140" y="190" h="20" x="10">previousapplications</CHECKBOX>
+				<CHECKBOX w="150" title="Previously Admitted" lw="130" y="190" h="20" x="180">previousadmitted</CHECKBOX>
+				<COMBOBOX w="120" title="School Year" lptable="quarters" lw="80" noorg="true" lpkey="quarterid" y="190" h="20" x="340" lpfield="quarterid">admittedyear</COMBOBOX>
+				<COMBOBOX w="200" title="Major Admitted" lptable="majors" lw="120" noorg="true" lpkey="majorid" y="190" h="20" x="580" lpfield="majorname">admitttedmajorid</COMBOBOX>
+				<CHECKBOX w="150" title="Previously Suspended" lw="140" y="210" h="20" x="10">previoussuspended</CHECKBOX>
+				<TEXTFIELD w="40" title="Suspended Period" lw="120" y="210" h="20" x="190">suspendedperiod</TEXTFIELD>
+				<CHECKBOX w="20" title="Drug Abuse Victim" lw="120" y="210" h="20" x="380">drugabuse</CHECKBOX>
+				<TEXTAREA w="340" title="Drug Therapies" lw="120" y="230" h="60" x="380">drugtherapies</TEXTAREA>
+				<CHECKBOX w="150" title="Cult Involvement" lw="140" y="230" h="20" x="10">cultmemeber</CHECKBOX>
+				<TEXTFIELD w="40" title="Period in Cult" lw="120" y="230" h="20" x="190">cultperiod</TEXTFIELD>
+				<TEXTAREA w="200" title="Cult Therapies" lw="140" y="250" h="40" x="10">culttherapies</TEXTAREA>
+				<TEXTAREA w="180" title="Unhealthy Social Problem" lw="160" y="300" h="100" x="10">socialproblems</TEXTAREA>
+				<TEXTAREA w="340" title="Other Details" lw="120" y="300" h="100" x="380">details</TEXTAREA>
+			</FORM>
+			<FORM new="false" name="Picture" keyfield="entity_id" edit="false" delete="false" linkfield="entity_id" table="entitys">
+				<PICTURE w="550" username="root" repository="http://localhost:8080/repository/webdav/pictures/" tab="Picture" pictures="../repository/barazapictures" access="enter2012" password="enter" y="1" h="150" x="10">picture_file</PICTURE>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="765" name="Submitted Applications" key="15" h="595">
+		<GRID limit="100" new="false" name="Submitted Applications" keyfield="registrationid" delete="false" table="registrationview" where="(submitapplication= true) and (isaccepted = false)">
+			<TEXTFIELD w="80" title="Application ID">registrationid</TEXTFIELD>
+			<TEXTFIELD w="100" title="Application Date">applicationdate</TEXTFIELD>
+			<TEXTFIELD w="100" title="First Name">firstname</TEXTFIELD>
+			<TEXTFIELD w="100" title="Middle name">othernames</TEXTFIELD>
+			<TEXTFIELD w="100" title="Last Name">surname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Gender">sex</TEXTFIELD>
+			<TEXTFIELD w="100" title="Programme">majorname</TEXTFIELD>
+			<CHECKBOX w="75" title="Rejected">isrejected</CHECKBOX>
+			<BROWSER title="View Form" action="ENTRYFORM" linkfield="actionvalue" baseurl="http://localhost:9090/form.jsp?action=ENTRYFORM" blankpage="true" disabled="yes">entry_form_id</BROWSER>
+			<ACTIONS>
+				<ACTION fnct="manage_application" approval="1">Accept Application</ACTION>
+				<ACTION fnct="manage_application" approval="2">Reject Application</ACTION>
+				<ACTION fnct="manage_application" approval="3">Open Application</ACTION>
+			</ACTIONS>
+			<FORM new="false" name="Personal Information" keyfield="registrationid" delete="false" table="registrations">
+				<TEXTFIELD w="100" title="First Name" lw="100" y="20" h="20" x="10">firstname</TEXTFIELD>
+				<TEXTFIELD w="100" title="Surname" lw="100" y="20" h="20" x="220">surname</TEXTFIELD>
+				<TEXTFIELD w="90" title="Other Names" lw="100" y="20" h="20" x="430">othernames</TEXTFIELD>
+				<TEXTFIELD w="150" title="Maiden Name" lw="110" y="20" h="20" x="640">maidenname</TEXTFIELD>
+				<TEXTFIELD w="100" title="Former Names" lw="100" y="40" h="20" x="10">formernames</TEXTFIELD>
+				<TEXTFIELD w="100" title="Phone Number" lw="100" y="60" h="20" x="10">phonenumber</TEXTFIELD>
+				<TEXTFIELD w="100" title="Home Number" lw="100" y="80" h="20" x="10">homenumber</TEXTFIELD>
+				<TEXTFIELD w="100" title="Mobile Number" lw="100" y="100" h="20" x="10">mobilenumber</TEXTFIELD>
+				<TEXTFIELD w="100" title="Town" lw="100" y="40" h="20" x="220">town</TEXTFIELD>
+				<TEXTAREA w="100" title="Home Address" lw="100" y="60" h="60" x="220">homeaddress</TEXTAREA>
+				<TEXTFIELD w="90" title="Zip Code" lw="100" y="40" h="20" x="430">zipcode</TEXTFIELD>
+				<TEXTAREA w="90" title="Mail Address" lw="100" y="60" h="60" x="430">address</TEXTAREA>
+				<COMBOBOX w="150" title="Place of Birth" lptable="states" lw="110" noorg="true" lpkey="stateid" y="40" h="20" x="640" lpfield="statename">birthstateid</COMBOBOX>
+				<COMBOBOX w="150" title="Origin State/LGA" lptable="states" lw="110" noorg="true" lpkey="stateid" y="60" h="20" x="640" lpfield="statename">originstateid</COMBOBOX>
+				<COMBOBOX w="150" title="Nationality" lptable="countrys" lw="110" noorg="true" lpkey="countryid" y="80" h="20" x="640" lpfield="countryname">nationalityid</COMBOBOX>
+				<COMBOBOX w="150" title="Country of Origin" lptable="countrys" lw="110" noorg="true" lpkey="countryid" y="100" h="20" x="640" lpfield="countryname">origincountryid</COMBOBOX>
+				<TEXTDATE w="100" title="Birth Date" lw="100" y="120" h="20" x="10">birthdate</TEXTDATE>
+				<TEXTFIELD w="210" title="Email Address" lw="100" y="120" h="20" x="220">email</TEXTFIELD>
+				<CHECKBOX w="150" title="Prefer Off Campus" lw="120" y="120" h="20" x="640">offcampus</CHECKBOX>
+				<COMBOBOX w="200" title="Denomination" lptable="denominations" lw="100" noorg="true" lpkey="denominationid" y="140" h="20" x="10" lpfield="denominationname">denominationid</COMBOBOX>
+				<COMBOLIST w="60" title="Gender" lw="100" y="140" h="20" x="320">sex
+					<DATA>M</DATA>
+					<DATA>F</DATA>
+				</COMBOLIST>
+				<COMBOLIST w="60" title="Marital Status" lw="100" y="160" h="20" x="320">MaritalStatus
+					<DATA>S</DATA>
+					<DATA>M</DATA>
+					<DATA>W</DATA>
+					<DATA>D</DATA>
+				</COMBOLIST>
+				<TEXTFIELD w="100" title="Existing" lw="100" y="160" h="20" x="10">existingid</TEXTFIELD>
+				<COMBOBOX w="200" title="First Choice" lptable="majors" lw="120" noorg="true" lpkey="majorid" y="140" h="20" x="580" lpfield="majorname">firstchoiceid</COMBOBOX>
+				<COMBOBOX vw="200" title="Second Choice" lptable="majors" lw="120" noorg="true" lpkey="majorid" y="160" h="20" x="580" lpfield="majorname">secondchoiceid</COMBOBOX>
+				<CHECKBOX w="150" title="Previously Applied" lw="140" y="190" h="20" x="10">previousapplications</CHECKBOX>
+				<CHECKBOX w="150" title="Previously Admitted" lw="130" y="190" h="20" x="180">previousadmitted</CHECKBOX>
+				<COMBOBOX w="120" title="School Year" lptable="quarters" lw="80" noorg="true" lpkey="quarterid" y="190" h="20" x="340" lpfield="quarterid">admittedyear</COMBOBOX>
+				<CHECKBOX w="150" title="Previously Suspended" lw="140" y="210" h="20" x="10">previoussuspended</CHECKBOX>
+				<TEXTFIELD w="40" title="Suspended Period" lw="120" y="210" h="20" x="190">suspendedperiod</TEXTFIELD>
+				<CHECKBOX w="20" title="Drug Abuse Victim" lw="120" y="210" h="20" x="380">drugabuse</CHECKBOX>
+				<TEXTAREA w="340" title="Drug Therapies" lw="120" y="230" h="60" x="380">drugtherapies</TEXTAREA>
+				<CHECKBOX w="150" title="Cult Involvement" lw="140" y="230" h="20" x="10">cultmemeber</CHECKBOX>
+				<TEXTFIELD w="40" title="Period in Cult" lw="120" y="230" h="20" x="190">cultperiod</TEXTFIELD>
+				<TEXTAREA w="200" title="Cult Therapies" lw="140" y="250" h="40" x="10">culttherapies</TEXTAREA>
+				<TEXTAREA w="180" title="Unhealthy Social Problem" lw="160" y="300" h="100" x="10">socialproblems</TEXTAREA>
+				<TEXTAREA w="340" title="Other Details" lw="120" y="300" h="100" x="380">details</TEXTAREA>
+			</FORM>
+			<FORM new="false" name="Picture" keyfield="entity_id" edit="false" delete="false" linkfield="entity_id" table="entitys">
+				<PICTURE w="550" username="root" repository="http://localhost:8080/repository/webdav/pictures/" tab="Picture" pictures="../repository/barazapictures" access="enter2012" password="enter" y="1" h="150" x="10">picture_file</PICTURE>
+			</FORM>
+			<FORM new="false" name="Official Details" keyfield="registrationid" delete="false" table="registrations">
+				<COMBOLIST w="150" title="Admission Status" lw="130" y="20" h="20" x="10">admissionstatus
+					<DATA>Regular</DATA>
+					<DATA>Provisional</DATA>
+					<DATA>Transfer</DATA>
+				</COMBOLIST>
+				<COMBOBOX w="200" title="Programme Admitted" lptable="majors" lw="120" noorg="true" lpkey="majorid" y="190" h="20" x="580" lpfield="majorname">majorid</COMBOBOX>
+				<TEXTFIELD w="50" title="GCE Credits" lw="130" y="40" h="20" x="10">gcemarks</TEXTFIELD>
+				<TEXTFIELD w="50" title="SSCE Credits" lw="100" y="40" h="20" x="220">sscemarks</TEXTFIELD>
+				<TEXTFIELD w="50" title="Other Credits" lw="100" y="40" h="20" x="410">othermarks</TEXTFIELD>
+				<TEXTDATE w="120" title="Application Date" lw="110" y="40" h="20" x="580">applicationdate</TEXTDATE>
+				<CHECKBOX w="150" title="Accepted" lw="130" y="70" h="20" x="10">isaccepted</CHECKBOX>
+				<CHECKBOX w="150" title="Deferred" lw="70" y="70" h="20" x="190">isdeferred</CHECKBOX>
+				<CHECKBOX w="150" title="Rejected" lw="70" y="70" h="20" x="320">isrejected</CHECKBOX>
+				<CHECKBOX w="150" title="Reported" lw="70" y="70" h="20" x="450">reported</CHECKBOX>
+				<TEXTDATE w="120" title="Reported Date" lw="110" y="70" h="20" x="580">reporteddate</TEXTDATE>
+				<TEXTFIELD w="150" title="Evaluation Officer" lw="130" y="90" h="20" x="10">evaluationofficer</TEXTFIELD>
+				<TEXTDATE w="120" title="Evaluation Date" lw="120" y="90" h="20" x="320">evaluationdate</TEXTDATE>
+			</FORM>
+			<JASPER name="Registration Report" showpdf="true" linkfield="filterid" reportfile="registration.jasper"></JASPER>
+		</GRID>
+	</DESK>
+	<DESK w="765" name="Admit Applications" key="16" h="595">
+		<GRID limit="100" new="false" name="Admit Applications" keyfield="registrationid" delete="false" table="registrationview" where="(submitapplication= true) and (isaccepted = true)">
+			<TEXTFIELD w="80" title="Application ID">registrationid</TEXTFIELD>
+			<TEXTFIELD w="100" title="Application Date">applicationdate</TEXTFIELD>
+			<TEXTFIELD w="100" title="First Name">firstname</TEXTFIELD>
+			<TEXTFIELD w="100" title="Middle name">othernames</TEXTFIELD>
+			<TEXTFIELD w="100" title="Last Name">surname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Gender">sex</TEXTFIELD>
+			<TEXTFIELD w="100" title="Programme">majorname</TEXTFIELD>
+			<CHECKBOX w="75" title="Reported">isreported</CHECKBOX>
+			<JASPER name="Admision Letter" reportfile="admissions_letter.jasper"></JASPER>
+			<BROWSER title="View Form" action="ENTRYFORM" linkfield="actionvalue" baseurl="http://localhost:9090/form.jsp?action=ENTRYFORM" blankpage="true" disabled="yes">entry_form_id</BROWSER>
+			<FORM new="false" name="Official Details" keyfield="registrationid" delete="false" table="registrations">
+				<COMBOBOX w="200" title="Programme" lptable="majors" lw="120" noorg="true" lpkey="majorid" y="10" h="20" x="10" lpfield="majorname">majorid</COMBOBOX>
+				<COMBOLIST w="150" title="Admission Status" lw="130" y="30" h="20" x="10">admissionstatus
+					<DATA>Regular</DATA>
+					<DATA>Provisional</DATA>
+					<DATA>Transfer</DATA>
+				</COMBOLIST>
+				<TEXTFIELD w="50" title="GCE Credits" lw="130" y="50" h="20" x="10">gcemarks</TEXTFIELD>
+				<TEXTFIELD w="50" title="SSCE Credits" lw="100" y="50" h="20" x="220">sscemarks</TEXTFIELD>
+				<TEXTFIELD w="50" title="Other Credits" lw="100" y="50" h="20" x="410">othermarks</TEXTFIELD>
+				<TEXTDATE w="120" title="Application Date" lw="110" y="50" h="20" x="580">applicationdate</TEXTDATE>
+				<CHECKBOX w="150" title="Accepted" lw="130" y="70" h="20" x="10">isaccepted</CHECKBOX>
+				<CHECKBOX w="150" title="Deferred" lw="70" y="70" h="20" x="190">isdeferred</CHECKBOX>
+				<CHECKBOX w="150" title="Rejected" lw="70" y="70" h="20" x="320">isrejected</CHECKBOX>
+				<CHECKBOX w="150" title="Reported" lw="70" y="70" h="20" x="450">reported</CHECKBOX>
+				<TEXTDATE w="120" title="Reported Date" lw="110" y="70" h="20" x="580">reporteddate</TEXTDATE>
+				<TEXTFIELD w="150" title="Evaluation Officer" lw="130" y="90" h="20" x="10">evaluationofficer</TEXTFIELD>
+				<TEXTDATE w="120" title="Evaluation Date" lw="120" y="90" h="20" x="320">evaluationdate</TEXTDATE>
+			</FORM>
+			<FORM new="false" name="Personal Information" keyfield="registrationid" delete="false" table="registrations">
+				<TEXTFIELD w="100" title="First Name" lw="100" y="20" h="20" x="10">firstname</TEXTFIELD>
+				<TEXTFIELD w="100" title="Surname" lw="100" y="20" h="20" x="220">surname</TEXTFIELD>
+				<TEXTFIELD w="90" title="Other Names" lw="100" y="20" h="20" x="430">othernames</TEXTFIELD>
+				<TEXTFIELD w="150" title="Maiden Name" lw="110" y="20" h="20" x="640">maidenname</TEXTFIELD>
+				<TEXTFIELD w="100" title="Former Names" lw="100" y="40" h="20" x="10">formernames</TEXTFIELD>
+				<TEXTFIELD w="100" title="Phone Number" lw="100" y="60" h="20" x="10">phonenumber</TEXTFIELD>
+				<TEXTFIELD w="100" title="Home Number" lw="100" y="80" h="20" x="10">homenumber</TEXTFIELD>
+				<TEXTFIELD w="100" title="Mobile Number" lw="100" y="100" h="20" x="10">mobilenumber</TEXTFIELD>
+				<TEXTFIELD w="100" title="Town" lw="100" y="40" h="20" x="220">town</TEXTFIELD>
+				<TEXTAREA w="100" title="Home Address" lw="100" y="60" h="60" x="220">homeaddress</TEXTAREA>
+				<TEXTFIELD w="90" title="Zip Code" lw="100" y="40" h="20" x="430">zipcode</TEXTFIELD>
+				<TEXTAREA w="90" title="Mail Address" lw="100" y="60" h="60" x="430">address</TEXTAREA>
+				<COMBOBOX w="150" title="Place of Birth" lptable="states" lw="110" noorg="true" lpkey="stateid" y="40" h="20" x="640" lpfield="statename">birthstateid</COMBOBOX>
+				<COMBOBOX w="150" title="Origin State/LGA" lptable="states" lw="110" noorg="true" lpkey="stateid" y="60" h="20" x="640" lpfield="statename">originstateid</COMBOBOX>
+				<COMBOBOX w="150" title="Nationality" lptable="countrys" lw="110" noorg="true" lpkey="countryid" y="80" h="20" x="640" lpfield="countryname">nationalityid</COMBOBOX>
+				<COMBOBOX w="150" title="Country of Origin" lptable="countrys" lw="110" noorg="true" lpkey="countryid" y="100" h="20" x="640" lpfield="countryname">origincountryid</COMBOBOX>
+				<TEXTDATE w="100" title="Birth Date" lw="100" y="120" h="20" x="10">birthdate</TEXTDATE>
+				<TEXTFIELD w="210" title="Email Address" lw="100" y="120" h="20" x="220">email</TEXTFIELD>
+				<CHECKBOX w="150" title="Prefer Off Campus" lw="120" y="120" h="20" x="640">offcampus</CHECKBOX>
+				<COMBOBOX w="200" title="Denomination" lptable="denominations" lw="100" noorg="true" lpkey="denominationid" y="140" h="20" x="10" lpfield="denominationname">denominationid</COMBOBOX>
+				<COMBOLIST w="60" title="Gender" lw="100" y="140" h="20" x="320">sex
+					<DATA>M</DATA>
+					<DATA>F</DATA>
+				</COMBOLIST>
+				<COMBOLIST w="60" title="Marital Status" lw="100" y="160" h="20" x="320">MaritalStatus
+					<DATA>S</DATA>
+					<DATA>M</DATA>
+					<DATA>W</DATA>
+					<DATA>D</DATA>
+				</COMBOLIST>
+				<TEXTFIELD w="100" title="Existing" lw="100" y="160" h="20" x="10">existingid</TEXTFIELD>
+				<COMBOBOX w="200" title="First Choice" lptable="majors" lw="120" noorg="true" lpkey="majorid" y="140" h="20" x="580" lpfield="majorname">firstchoiceid</COMBOBOX>
+				<COMBOBOX vw="200" title="Second Choice" lptable="majors" lw="120" noorg="true" lpkey="majorid" y="160" h="20" x="580" lpfield="majorname">secondchoiceid</COMBOBOX>
+				<CHECKBOX w="150" title="Previously Applied" lw="140" y="190" h="20" x="10">previousapplications</CHECKBOX>
+				<CHECKBOX w="150" title="Previously Admitted" lw="130" y="190" h="20" x="180">previousadmitted</CHECKBOX>
+				<COMBOBOX w="120" title="School Year" lptable="quarters" lw="80" noorg="true" lpkey="quarterid" y="190" h="20" x="340" lpfield="quarterid">admittedyear</COMBOBOX>
+				<COMBOBOX w="200" title="Major Admitted" lptable="majors" lw="120" noorg="true" lpkey="majorid" y="190" h="20" x="580" lpfield="majorname">admitttedmajorid</COMBOBOX>
+				<CHECKBOX w="150" title="Previously Suspended" lw="140" y="210" h="20" x="10">previoussuspended</CHECKBOX>
+				<TEXTFIELD w="40" title="Suspended Period" lw="120" y="210" h="20" x="190">suspendedperiod</TEXTFIELD>
+				<CHECKBOX w="20" title="Drug Abuse Victim" lw="120" y="210" h="20" x="380">drugabuse</CHECKBOX>
+				<TEXTAREA w="340" title="Drug Therapies" lw="120" y="230" h="60" x="380">drugtherapies</TEXTAREA>
+				<CHECKBOX w="150" title="Cult Involvement" lw="140" y="230" h="20" x="10">cultmemeber</CHECKBOX>
+				<TEXTFIELD w="40" title="Period in Cult" lw="120" y="230" h="20" x="190">cultperiod</TEXTFIELD>
+				<TEXTAREA w="200" title="Cult Therapies" lw="140" y="250" h="40" x="10">culttherapies</TEXTAREA>
+				<TEXTAREA w="180" title="Unhealthy Social Problem" lw="160" y="300" h="100" x="10">socialproblems</TEXTAREA>
+				<TEXTAREA w="340" title="Other Details" lw="120" y="300" h="100" x="380">details</TEXTAREA>
+			</FORM>
+			<FORM new="false" name="Picture" keyfield="entity_id" edit="false" delete="false" linkfield="entity_id" table="entitys">
+				<PICTURE w="550" username="root" repository="http://localhost:8080/repository/webdav/pictures/" tab="Picture" pictures="../repository/barazapictures" access="enter2012" password="enter" y="1" h="150" x="10">picture_file</PICTURE>
+			</FORM>
+		</GRID>
+		<GRID limit="100" new="false" name="Application Paid" keyfield="registrationid" delete="false" table="registrationview" where="(isaccepted = true) and (af_success = '0')">
+			<TEXTFIELD w="80" title="Application ID">registrationid</TEXTFIELD>
+			<TEXTFIELD w="100" title="Application Date">applicationdate</TEXTFIELD>
+			<TEXTFIELD w="100" title="First Name">firstname</TEXTFIELD>
+			<TEXTFIELD w="100" title="Middle name">othernames</TEXTFIELD>
+			<TEXTFIELD w="100" title="Last Name">surname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Gender">sex</TEXTFIELD>
+			<TEXTFIELD w="100" title="Programme">majorname</TEXTFIELD>
+			<CHECKBOX w="75" title="Reported">isreported</CHECKBOX>
+			<JASPER name="Admision Letter" reportfile="admissions_letter.jasper"></JASPER>
+			<BROWSER title="View Form" action="ENTRYFORM" linkfield="actionvalue" baseurl="http://localhost:9090/form.jsp?action=ENTRYFORM" blankpage="true" disabled="yes">entry_form_id</BROWSER>
+			<FORM new="false" name="Official Details" keyfield="registrationid" delete="false" table="registrations">
+				<COMBOBOX w="200" title="Programme" lptable="majors" lw="120" noorg="true" lpkey="majorid" y="10" h="20" x="10" lpfield="majorname">majorid</COMBOBOX>
+				<COMBOLIST w="150" title="Admission Status" lw="130" y="30" h="20" x="10">admissionstatus
+					<DATA>Regular</DATA>
+					<DATA>Provisional</DATA>
+					<DATA>Transfer</DATA>
+				</COMBOLIST>
+				<TEXTFIELD w="50" title="GCE Credits" lw="130" y="50" h="20" x="10">gcemarks</TEXTFIELD>
+				<TEXTFIELD w="50" title="SSCE Credits" lw="100" y="50" h="20" x="220">sscemarks</TEXTFIELD>
+				<TEXTFIELD w="50" title="Other Credits" lw="100" y="50" h="20" x="410">othermarks</TEXTFIELD>
+				<TEXTDATE w="120" title="Application Date" lw="110" y="50" h="20" x="580">applicationdate</TEXTDATE>
+				<CHECKBOX w="150" title="Accepted" lw="130" y="70" h="20" x="10">isaccepted</CHECKBOX>
+				<CHECKBOX w="150" title="Deferred" lw="70" y="70" h="20" x="190">isdeferred</CHECKBOX>
+				<CHECKBOX w="150" title="Rejected" lw="70" y="70" h="20" x="320">isrejected</CHECKBOX>
+				<CHECKBOX w="150" title="Reported" lw="70" y="70" h="20" x="450">reported</CHECKBOX>
+				<TEXTDATE w="120" title="Reported Date" lw="110" y="70" h="20" x="580">reporteddate</TEXTDATE>
+				<TEXTFIELD w="150" title="Evaluation Officer" lw="130" y="90" h="20" x="10">evaluationofficer</TEXTFIELD>
+				<TEXTDATE w="120" title="Evaluation Date" lw="120" y="90" h="20" x="320">evaluationdate</TEXTDATE>
+			</FORM>
+			<FORM new="false" name="Personal Information" keyfield="registrationid" delete="false" table="registrations">
+				<TEXTFIELD w="100" title="First Name" lw="100" y="20" h="20" x="10">firstname</TEXTFIELD>
+				<TEXTFIELD w="100" title="Surname" lw="100" y="20" h="20" x="220">surname</TEXTFIELD>
+				<TEXTFIELD w="90" title="Other Names" lw="100" y="20" h="20" x="430">othernames</TEXTFIELD>
+				<TEXTFIELD w="150" title="Maiden Name" lw="110" y="20" h="20" x="640">maidenname</TEXTFIELD>
+				<TEXTFIELD w="100" title="Former Names" lw="100" y="40" h="20" x="10">formernames</TEXTFIELD>
+				<TEXTFIELD w="100" title="Phone Number" lw="100" y="60" h="20" x="10">phonenumber</TEXTFIELD>
+				<TEXTFIELD w="100" title="Home Number" lw="100" y="80" h="20" x="10">homenumber</TEXTFIELD>
+				<TEXTFIELD w="100" title="Mobile Number" lw="100" y="100" h="20" x="10">mobilenumber</TEXTFIELD>
+				<TEXTFIELD w="100" title="Town" lw="100" y="40" h="20" x="220">town</TEXTFIELD>
+				<TEXTAREA w="100" title="Home Address" lw="100" y="60" h="60" x="220">homeaddress</TEXTAREA>
+				<TEXTFIELD w="90" title="Zip Code" lw="100" y="40" h="20" x="430">zipcode</TEXTFIELD>
+				<TEXTAREA w="90" title="Mail Address" lw="100" y="60" h="60" x="430">address</TEXTAREA>
+				<COMBOBOX w="150" title="Place of Birth" lptable="states" lw="110" noorg="true" lpkey="stateid" y="40" h="20" x="640" lpfield="statename">birthstateid</COMBOBOX>
+				<COMBOBOX w="150" title="Origin State/LGA" lptable="states" lw="110" noorg="true" lpkey="stateid" y="60" h="20" x="640" lpfield="statename">originstateid</COMBOBOX>
+				<COMBOBOX w="150" title="Nationality" lptable="countrys" lw="110" noorg="true" lpkey="countryid" y="80" h="20" x="640" lpfield="countryname">nationalityid</COMBOBOX>
+				<COMBOBOX w="150" title="Country of Origin" lptable="countrys" lw="110" noorg="true" lpkey="countryid" y="100" h="20" x="640" lpfield="countryname">origincountryid</COMBOBOX>
+				<TEXTDATE w="100" title="Birth Date" lw="100" y="120" h="20" x="10">birthdate</TEXTDATE>
+				<TEXTFIELD w="210" title="Email Address" lw="100" y="120" h="20" x="220">email</TEXTFIELD>
+				<CHECKBOX w="150" title="Prefer Off Campus" lw="120" y="120" h="20" x="640">offcampus</CHECKBOX>
+				<COMBOBOX w="200" title="Denomination" lptable="denominations" lw="100" noorg="true" lpkey="denominationid" y="140" h="20" x="10" lpfield="denominationname">denominationid</COMBOBOX>
+				<COMBOLIST w="60" title="Gender" lw="100" y="140" h="20" x="320">sex
+					<DATA>M</DATA>
+					<DATA>F</DATA>
+				</COMBOLIST>
+				<COMBOLIST w="60" title="Marital Status" lw="100" y="160" h="20" x="320">MaritalStatus
+					<DATA>S</DATA>
+					<DATA>M</DATA>
+					<DATA>W</DATA>
+					<DATA>D</DATA>
+				</COMBOLIST>
+				<TEXTFIELD w="100" title="Existing" lw="100" y="160" h="20" x="10">existingid</TEXTFIELD>
+				<COMBOBOX w="200" title="First Choice" lptable="majors" lw="120" noorg="true" lpkey="majorid" y="140" h="20" x="580" lpfield="majorname">firstchoiceid</COMBOBOX>
+				<COMBOBOX vw="200" title="Second Choice" lptable="majors" lw="120" noorg="true" lpkey="majorid" y="160" h="20" x="580" lpfield="majorname">secondchoiceid</COMBOBOX>
+				<CHECKBOX w="150" title="Previously Applied" lw="140" y="190" h="20" x="10">previousapplications</CHECKBOX>
+				<CHECKBOX w="150" title="Previously Admitted" lw="130" y="190" h="20" x="180">previousadmitted</CHECKBOX>
+				<COMBOBOX w="120" title="School Year" lptable="quarters" lw="80" noorg="true" lpkey="quarterid" y="190" h="20" x="340" lpfield="quarterid">admittedyear</COMBOBOX>
+				<COMBOBOX w="200" title="Major Admitted" lptable="majors" lw="120" noorg="true" lpkey="majorid" y="190" h="20" x="580" lpfield="majorname">admitttedmajorid</COMBOBOX>
+				<CHECKBOX w="150" title="Previously Suspended" lw="140" y="210" h="20" x="10">previoussuspended</CHECKBOX>
+				<TEXTFIELD w="40" title="Suspended Period" lw="120" y="210" h="20" x="190">suspendedperiod</TEXTFIELD>
+				<CHECKBOX w="20" title="Drug Abuse Victim" lw="120" y="210" h="20" x="380">drugabuse</CHECKBOX>
+				<TEXTAREA w="340" title="Drug Therapies" lw="120" y="230" h="60" x="380">drugtherapies</TEXTAREA>
+				<CHECKBOX w="150" title="Cult Involvement" lw="140" y="230" h="20" x="10">cultmemeber</CHECKBOX>
+				<TEXTFIELD w="40" title="Period in Cult" lw="120" y="230" h="20" x="190">cultperiod</TEXTFIELD>
+				<TEXTAREA w="200" title="Cult Therapies" lw="140" y="250" h="40" x="10">culttherapies</TEXTAREA>
+				<TEXTAREA w="180" title="Unhealthy Social Problem" lw="160" y="300" h="100" x="10">socialproblems</TEXTAREA>
+				<TEXTAREA w="340" title="Other Details" lw="120" y="300" h="100" x="380">details</TEXTAREA>
+			</FORM>
+			<FORM new="false" name="Picture" keyfield="entity_id" edit="false" delete="false" linkfield="entity_id" table="entitys">
+				<PICTURE w="550" username="root" repository="http://localhost:8080/repository/webdav/pictures/" tab="Picture" pictures="../repository/barazapictures" access="enter2012" password="enter" y="1" h="150" x="10">picture_file</PICTURE>
+			</FORM>
+		</GRID>
+		<GRID name="Application Fee List" keyfield="registrationid" delete="false" table="registrationview" where="(af_success = '0')">
+			<TEXTFIELD w="80" title="Application ID">registrationid</TEXTFIELD>
+			<TEXTFIELD w="100" title="Application Date">applicationdate</TEXTFIELD>
+			<TEXTFIELD w="100" title="First Name">firstname</TEXTFIELD>
+			<TEXTFIELD w="100" title="Middle name">othernames</TEXTFIELD>
+			<TEXTFIELD w="100" title="Last Name">surname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Gender">sex</TEXTFIELD>
+			<TEXTFIELD w="100" title="Acc Number">account_number</TEXTFIELD>
+			<TEXTFIELD w="100" title="Provider">af_card_type</TEXTFIELD>
+			<TEXTFIELD w="100" title="Acceptance Fees">acceptance_fees</TEXTFIELD>
+		</GRID>
+		<GRID name="SUN Application Fee" keyfield="registrationid" delete="false" table="registrationview" where="(af_success = '0') AND (af_picked = false)">
+			<TEXTFIELD w="80" title="Application ID">registrationid</TEXTFIELD>
+			<TEXTFIELD w="100" title="Application Date">applicationdate</TEXTFIELD>
+			<TEXTFIELD w="100" title="First Name">firstname</TEXTFIELD>
+			<TEXTFIELD w="100" title="Middle name">othernames</TEXTFIELD>
+			<TEXTFIELD w="100" title="Last Name">surname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Gender">sex</TEXTFIELD>
+			<TEXTFIELD w="100" title="Acc Number">account_number</TEXTFIELD>
+			<TEXTFIELD w="100" title="Provider">af_card_type</TEXTFIELD>
+			<TEXTFIELD w="100" title="Acceptance Fees">acceptance_fees</TEXTFIELD>
+			<ACTIONS>
+				<ACTION fnct="pick_appfees">Clear</ACTION>
+			</ACTIONS>
+		</GRID>
+	</DESK>
+	<DESK w="695" name="Admited Applicants" key="17" h="585">
+		<GRID name="Admited Applicants" keyfield="registrationid" updatetable="registrations" table="registrations" where="(existingid is not null)">
+			<TEXTFIELD w="80" title="Application ID">registrationid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Student ID">existingid</TEXTFIELD>
+			<TEXTFIELD w="100" title="Application Date">applicationdate</TEXTFIELD>
+			<TEXTFIELD w="100" title="Surame">surname</TEXTFIELD>
+			<TEXTFIELD w="100" title="First name">firstname</TEXTFIELD>
+			<TEXTFIELD w="100" title="Other Names">othernames</TEXTFIELD>
+			<TEXTFIELD w="40" title="Sex">sex</TEXTFIELD>
+			<CHECKBOX w="40" title="Reported">isreported</CHECKBOX>
+			<ACTIONS>
+				<ACTION fnct="manage_application" approval="4">Report</ACTION>
+				<ACTION fnct="manage_application" approval="5">Defer</ACTION>
+			</ACTIONS>
+		</GRID>
+	</DESK>
+	<DESK w="585" name="Registry Exams" type="vert" key="6" h="500">
+		<GRID name="Registry Exams" keyfield="registryexamid" table="registryexams" noorg="true">
+			<TEXTFIELD w="40" title="Registry Exam ID">registryexamid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Exam Number">examnumber</TEXTFIELD>
+			<TEXTFIELD w="40" title="Exam Name">examname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Internal Exam">internalexam</TEXTFIELD>
+			<TEXTFIELD w="40" title="Exam Date">examdate</TEXTFIELD>
+			<FORM name="Registryexams" keyfield="registryexamid" table="registryexams" noorg="true">
+				<TEXTFIELD w="150" title="Exam Number" y="10" h="20" x="10">examnumber</TEXTFIELD>
+				<TEXTFIELD w="150" title="Exam Name" y="10" h="20" x="290">examname</TEXTFIELD>
+				<CHECKBOX w="150" title="Internalexam" y="30" h="20" x="10">internalexam</CHECKBOX>
+				<TEXTDATE w="150" title="Exam Date" y="30" h="20" x="290">examdate</TEXTDATE>
+				<TEXTAREA w="430" title="Narrative" y="50" h="60" x="10">narrative</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="585" name="Entrance Marks" type="vert" key="2" h="500">
+		<GRID name="Marks" keyfield="markid" table="marks" noorg="true">
+			<TEXTFIELD w="40" title="Mark ID">markid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Grade">grade</TEXTFIELD>
+			<TEXTFIELD w="40" title="Mark Weight">markweight</TEXTFIELD>
+			<TEXTFIELD w="240" title="Narrative">narrative</TEXTFIELD>
+			<FORM name="Marks" keyfield="markid" table="marks" noorg="true">
+				<TEXTFIELD w="50" title="Mark ID" y="10" h="20" x="10">markid</TEXTFIELD>
+				<TEXTFIELD w="50" title="Grade" y="10" h="20" x="190">grade</TEXTFIELD>
+				<TEXTFIELD w="50" title="Mark Weight" y="10" h="20" x="390">markweight</TEXTFIELD>
+				<TEXTAREA w="430" title="Narrative" y="30" h="70" x="10">narrative</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="585" name="Entrance Subjects" type="vert" key="3" h="500">
+		<GRID name="subjects" keyfield="subjectid" table="subjects" noorg="true">
+			<TEXTFIELD w="40" title="Subject ID">subjectid</TEXTFIELD>
+			<TEXTFIELD w="140" title="Subject Name">subjectname</TEXTFIELD>
+			<TEXTFIELD w="140" title="Narrative">narrative</TEXTFIELD>
+			<FORM name="Subjects" keyfield="subjectid" table="subjects" noorg="true">
+				<TEXTFIELD w="150" title="Subject ID" y="10" h="20" x="10">subjectid</TEXTFIELD>
+				<TEXTFIELD w="150" title="Subject Name" y="10" h="20" x="290">subjectname</TEXTFIELD>
+				<TEXTAREA w="430" title="Narrative" y="30" h="70" x="10">narrative</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="585" name="Semesters" key="12" h="500">
+		<GRID name="Semesters" keyfield="quarterid" orderby="quarterid desc" table="quarterview" noorg="true">
+			<TEXTFIELD w="40" title="Semester ID">quarterid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Start">qstart</TEXTFIELD>
+			<TEXTFIELD w="40" title="Last Drop">qlastdrop</TEXTFIELD>
+			<TEXTFIELD w="40" title="End">qend</TEXTFIELD>
+			<CHECKBOX w="40" title="Active">active</CHECKBOX>
+			<FORM name="Semesters" keyfield="quarterid" table="Quarters" noorg="true">
+				<COMBOBOX w="430" title="Divisions" lptable="orgs" noorg="true" y="10" h="20" x="10" lpfield="org_name">org_id</COMBOBOX>
+				<TEXTFIELD w="150" title="Semester ID" y="30" h="20" x="10">quarterid</TEXTFIELD>
+				<TEXTDATE w="150" title="Semester Start" y="30" h="20" x="290">qstart</TEXTDATE>
+				<TEXTDATE w="150" title="Last Drop" y="50" h="20" x="10">qlastdrop</TEXTDATE>
+				<TEXTDATE w="150" title="Semester End" y="50" h="20" x="290">qend</TEXTDATE>
+				<TEXTDATE w="150" title="Late Registration" y="70" h="20" x="10">qlatereg</TEXTDATE>
+				<TEXTDATE w="150" title="Late Change" y="70" h="20" x="290">qlatechange</TEXTDATE>
+				<CHECKBOX w="150" title="Active" y="90" h="20" x="10">active</CHECKBOX>
+				<CHECKBOX w="150" title="Publish Results" y="90" h="20" x="290">publishgrades</CHECKBOX>
+				<TEXTDECIMAL w="150" title="Application Fees" y="110" h="20" x="10">applicationfees</TEXTDECIMAL>
+				<TEXTDECIMAL w="150" title="Acceptance Fees" y="110" h="20" x="290">acceptance_fee</TEXTDECIMAL>
+				<CHECKBOX w="150" title="Post Graduate" y="130" h="20" x="10">postgraduate</CHECKBOX>
+				<TEXTAREA w="430" title="Details" y="150" h="70" x="10">details</TEXTAREA>
+			</FORM>
+			<GRID name="Semester Calendar" keyfield="qcalendarid" linkfield="quarterid" table="qcalendarview">
+				<TEXTFIELD w="40" title="Semester ID">quarterid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Degree Level">sublevelname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Sub Level">degreelevelname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Semester Date">qdate</TEXTFIELD>
+				<TEXTFIELD w="40" title="Event">event</TEXTFIELD>
+				<FORM name="Semester Calendar" keyfield="qcalendarid" linkfield="quarterid" table="qcalendar" inputkey="1">
+					<TEXTFIELD w="100" enabled="false" title="Semester ID" y="10" h="20" x="10">quarterid</TEXTFIELD>
+					<COMBOBOX w="210" title="Sub Level Name" lptable="sublevels" lw="110" y="10" h="20" x="240" lpfield="sublevelname">sublevelid</COMBOBOX>
+					<TEXTDATE w="150" title="Semester Date" y="30" h="20" x="10">qdate</TEXTDATE>
+					<TEXTDATE w="150" title="Ending" y="30" h="20" x="290">qenddate</TEXTDATE>
+					<TEXTFIELD w="430" title="Event" y="50" h="20" x="10">event</TEXTFIELD>
+					<TEXTAREA w="430" title="Details" y="70" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="585" name="States" type="vert" key="5" h="500">
+		<GRID name="States" keyfield="stateid" table="states" noorg="true">
+			<TEXTFIELD w="40" title="State Name">statename</TEXTFIELD>
+			<FORM name="States" keyfield="stateid" table="states" noorg="true">
+				<TEXTFIELD w="150" title="State Name" y="10" h="20" x="10">statename</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="30" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Exam Centers" key="4" h="550">
+		<GRID name="Exam Centers" keyfield="exam_center_id" table="exam_centers" noorg="true">
+			<TEXTFIELD w="75" title="Exam Center ID">exam_center_id</TEXTFIELD>
+			<TEXTFIELD w="275" title="Exam Center Name">exam_center_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Capacity">center_capacity</TEXTFIELD>
+			<CHECKBOX w="75" title="Active">is_active</CHECKBOX>
+			<GRID name="Exam Dates" keyfield="exam_date_id" linkfield="exam_center_id" table="vw_exam_dates" noorg="true">
+				<TEXTFIELD w="75" title="Exam Date ID">exam_date_id</TEXTFIELD>
+				<TEXTDATE w="75" title="Exam Date">exam_date</TEXTDATE>
+				<CHECKBOX w="75" title="Active">date_active</CHECKBOX>
+				<FORM name="Exam Dates" keyfield="exam_date_id" linkfield="exam_center_id" table="exam_dates" noorg="true">
+					<TEXTDATE w="150" title="Exam Date" y="10" h="20" x="10">exam_date</TEXTDATE>
+					<CHECKBOX w="150" title="Active" y="10" h="20" x="290">is_active</CHECKBOX>
+				</FORM>
+			</GRID>
+			<FORM name="Exam Centers" keyfield="exam_center_id" table="exam_centers" noorg="true">
+				<TEXTFIELD w="430" title="Exam Center Name" y="10" h="20" x="10">exam_center_name</TEXTFIELD>
+				<CHECKBOX w="150" title="Active" y="30" h="20" x="10">is_active</CHECKBOX>
+				<TEXTFIELD w="150" title="Center Capacity" y="30" h="20" x="290">center_capacity</TEXTFIELD>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="705" name="Programmes" type="vert" key="10" h="500">
+		<GRID name="Programe" keyfield="majorid" table="majorview" params="majorid">
+			<TEXTFIELD w="75" title="Major ID">majorid</TEXTFIELD>
+			<TEXTFIELD w="150" title="Programme Name">majorname</TEXTFIELD>
+			<TEXTFIELD w="150" title="Department">departmentname</TEXTFIELD>
+			<CHECKBOX w="75" title="Active">is_active</CHECKBOX>
+			<TEXTFIELD w="150" title="Major Title">major_title</TEXTFIELD>
+			<FORM name="Programmes" keyfield="majorid" table="majors">
+				<TEXTFIELD w="50" title="Programme ID" y="10" h="20" x="10">majorid</TEXTFIELD>
+				<TEXTFIELD w="250" title="Programme Name" y="10" h="20" x="190">majorname</TEXTFIELD>
+				<COMBOBOX w="250" title="Department Name" lptable="departments" y="30" h="20" x="10" lpfield="departmentname">departmentid</COMBOBOX>
+				<CHECKBOX w="30" title="Major" lw="50" y="30" h="20" x="390">major</CHECKBOX>
+				<CHECKBOX w="30" title="Minor" lw="50" y="30" h="20" x="480">minor</CHECKBOX>
+				<TEXTFIELD w="50" title="Major Elective Credit" lw="140" y="50" h="20" x="10">electivecredit</TEXTFIELD>
+				<TEXTFIELD w="50" title="Minor Elective Credit" lw="140" y="50" h="20" x="210">minorelectivecredit</TEXTFIELD>
+				<TEXTFIELD w="50" title="Semester Load" lw="100" y="50" h="20" x="410">quarterload</TEXTFIELD>
+				<TEXTFIELD w="150" title="Full Credit" y="70" h="20" x="10">fullcredit</TEXTFIELD>
+				<TEXTFIELD w="150" title="Major Minimal" y="70" h="20" x="290">majorminimal</TEXTFIELD>
+				<TEXTFIELD w="150" title="Minor Minimum" y="90" h="20" x="10">minorminimum</TEXTFIELD>
+				<TEXTFIELD w="150" title="Core Minimum" y="90" h="20" x="290">coreminimum</TEXTFIELD>
+				<TEXTFIELD w="150" title="Minimum Level" y="110" h="20" x="10">minlevel</TEXTFIELD>
+				<TEXTFIELD w="150" title="Maximum Level" y="110" h="20" x="290">maxlevel</TEXTFIELD>
+				<CHECKBOX w="50" title="Active" y="130" h="20" x="10">is_active</CHECKBOX>
+				<TEXTFIELD w="250" title="Major Title" y="130" h="20" x="190">major_title</TEXTFIELD>
+				<COMBOBOX w="250" title="Degree Level" lptable="Degreelevels" noorg="true" y="150" h="20" x="10" lpfield="Degreelevelname">Degreelevelid</COMBOBOX>
+				<TEXTAREA w="430" title="Details" y="170" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Marks List" type="horl" key="101" h="500">
+		<JASPER filtered="false" name="Marks" reportfile="marks.jasper"></JASPER>
+	</DESK>
+	<DESK w="700" name="Subjects List" type="horl" key="102" h="500">
+		<JASPER filtered="false" name="Subjects" reportfile="subject.jasper"></JASPER>
+	</DESK>
+	<DESK w="700" name="States" type="horl" key="104" h="500">
+		<JASPER filtered="false" name="States List" reportfile="states.jasper"></JASPER>
+	</DESK>
+	<DESK w="700" name="Registration Form" type="vert" key="106" h="500">
+		<GRID name="Registration Information" keyfield="registrationid" table="vw_registrations" where="(submitapplication = true)">
+			<TEXTFIELD w="80" title="Reg. ID">registrationid</TEXTFIELD>
+			<TEXTFIELD w="100" title="Application Date">applicationdate</TEXTFIELD>
+			<TEXTFIELD w="100" title="First Name">firstname</TEXTFIELD>
+			<TEXTFIELD w="100" title="Middle name">othernames</TEXTFIELD>
+			<TEXTFIELD w="100" title="Last Name">surname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Sex">sex</TEXTFIELD>
+			<JASPER filtered="true" name="Registration List" keyfield="registrationid" reportfile="registration.jasper"></JASPER>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="New Students Enrolment" type="horl" key="209" h="500">
+		<FILTER location="250" name="New Students Enrolment" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Semisters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" listfield="quarter" pos="top"></DRILLDOWN>
+			</DRILLDOWN>
+			<JASPER filtered="true" name="Semester Students" reportfile="qstudentviewn.jasper"></JASPER>
+			<JASPER filtered="true" name="Students without address" reportfile="qstudentviewnad.jasper"></JASPER>
+			<JASPER filtered="true" name="Students address" reportfile="qstudentviewnadd.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Admission Marks Summary" type="horl" key="441" h="500">
+		<JASPER filtered="false" name="Admision Marks Summary" reportfile="studentmarks.jasper"></JASPER>
+	</DESK>
+	<DESK w="700" name="Admission Marks List" type="horl" key="442" h="500">
+		<FILTER location="250" name="Admission Marks List" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Semisters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" listfield="quarter" pos="top"></DRILLDOWN>
+			</DRILLDOWN>
+			<JASPER filtered="true" name="Admision Marks List" reportfile="studentmarkview.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="New Students By Year" type="horl" key="210" h="500">
+		<FILTER location="250" name="New Students By Year" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear"></DRILLDOWN>
+			<JASPER filtered="true" name="Quater Students" reportfile="qstudentviewna.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Students Progress" type="horl" key="443" h="500">
+		<FILTER location="250" name="Students Progress" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear"></DRILLDOWN>
+			<JASPER filtered="true" name="Students Progress" reportfile="studentmarkviewa.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="New Students By Year" type="horl" key="210" h="500">
+		<FILTER location="250" name="New Students By Year" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear"></DRILLDOWN>
+			<JASPER filtered="true" name="Quater Students" reportfile="qstudentviewna.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="New Students Progress" type="horl" key="211" h="500">
+		<FILTER location="250" name="New Students Progress" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear"></DRILLDOWN>
+			<JASPER filtered="true" name="Semester Students" reportfile="qstudentviewnb.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="New Applicatnts By Year" type="horl" key="310" h="500">
+		<FILTER location="250" name="New Applicatnts By Year" type="horl">
+			<DRILLDOWN name="Year" keyfield="applicationyear" table="vwapplicantyear" listfield="applicationyear"></DRILLDOWN>
+			<JASPER filtered="true" name="Semester Students" reportfile="vwregistration.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Enrolment By Programme" type="horl" key="320" h="500">
+		<FILTER location="250" name="Enrolment By Programme" type="horl">
+			<DRILLDOWN name="Year" keyfield="applicationyear" table="vwapplicantyear" listfield="applicationyear"></DRILLDOWN>
+			<DRILLDOWN name="Schools" keyfield="schoolid" table="schools" listfield="schoolname">
+				<DRILLDOWN name="Departments" keyfield="departmentid" wherefield="schoolid" table="departments" listfield="departmentname" pos="top">
+					<DRILLDOWN name="Majors" keyfield="majorid" wherefield="departmentid" table="majors" listfield="majorname" filtername="majorid" pos="top"></DRILLDOWN>
+				</DRILLDOWN>
+			</DRILLDOWN>
+			<JASPER filtered="true" name="Semester Students" reportfile="wvregistrationb.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Submited Registration" type="vert" key="107" h="700">
+		<GRID name="Registration Information" keyfield="registrationid" table="vw_registrations" where="(submitapplication = true)">
+			<TEXTFIELD w="80" title="Reg. ID">registrationid</TEXTFIELD>
+			<TEXTFIELD w="100" title="Submit Date">submitdate</TEXTFIELD>
+			<TEXTFIELD w="100" title="First Name">firstname</TEXTFIELD>
+			<TEXTFIELD w="100" title="Surname">surname</TEXTFIELD>
+			<TEXTFIELD w="100" title="Middle name">othernames</TEXTFIELD>
+			<TEXTFIELD w="40" title="Gender">sex</TEXTFIELD>
+			<TEXTFIELD w="40" title="email">EMail</TEXTFIELD>
+			<TEXTFIELD w="40" title="Mobile Number">mobilenumber</TEXTFIELD>
+			<TEXTFIELD w="100" title="Exam Center">exam_center_name</TEXTFIELD>
+			<TEXTFIELD w="40" title="Exam Date">exam_date_name</TEXTFIELD>
+			<TEXTFIELD w="40" title="First Choice">firstchoice</TEXTFIELD>
+			<TEXTFIELD w="40" title="Second Choice">secondchoice</TEXTFIELD>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Statistics" key="105" h="700">
+		<JASPER name="Statistics" reportfile="stastics_applicants_rpt.jasper"></JASPER>
+	</DESK>
+	<DESK w="700" name="All Applications" key="110" h="700">
+		<JASPER name="All Applicantions" reportfile="allapplications.jasper"></JASPER>
+	</DESK>
+	<DESK w="700" name="Unsubmitted Applications" key="120" h="700">
+		<JASPER name="All Applicantions" reportfile="unsubmittedapplication.jasper"></JASPER>
+	</DESK>
+	<DESK w="700" name="Submitted Applications" key="130" h="700">
+		<JASPER name="Submitted Applicantions" reportfile="submittedapplication.jasper"></JASPER>
+	</DESK>
+	<DESK w="700" name="Admitted Applications" key="140" h="700">
+		<JASPER name="All Applicantions" reportfile="admitted_applicants.jasper"></JASPER>
+	</DESK>
+	<DESK w="700" name="Exam Centers" key="145" h="700">
+		<JASPER name="Exam Centers" reportfile="chosen_exam_centers.jasper"></JASPER>
+		<JASPER name="Exam Centers List" reportfile="all_applications_details.jasper"></JASPER>
+		<GRID name="Exam Center Export" keyfield="applicationid" table="vw_applicant_exam_center" where="(paid = true)">
+			<TEXTFIELD w="75" title="ID">applicationid</TEXTFIELD>
+			<TEXTDATE w="175" title="Application Date">applicationdate</TEXTDATE>
+			<TEXTFIELD w="175" title="Email">email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Gender">sex</TEXTFIELD>
+			<TEXTFIELD w="75" title="Phone Number">phonenumber</TEXTFIELD>
+			<TEXTFIELD w="175" title="Exam Center Name">exam_center_name</TEXTFIELD>
+			<TEXTDATE w="75" title="Exam Date">exam_date</TEXTDATE>
+			<TEXTFIELD w="175" title="First Choise">first_choise</TEXTFIELD>
+			<TEXTFIELD w="175" title="Second Choise">second_choise</TEXTFIELD>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Paid Applications" key="150" h="700">
+		<JASPER name="Paid Applications" reportfile="paid_applications.jasper"></JASPER>
+	</DESK>
+</APP>

@@ -1,0 +1,265 @@
+<APP name="Tickets" password="change_password" material="true">
+	<MENU name="Tickets">
+		<MENU name="Entries">
+			<MENU name="Logs">1</MENU>
+			<MENU name="Tickets">2</MENU>
+			<MENU name="Segments">3</MENU>
+			<MENU name="Imports">4</MENU>
+			<MENU name="Analysis">5</MENU>
+			<MENU name="Comparison">6</MENU>
+			<MENU name="Entitys">15</MENU>
+		</MENU>
+		<MENU name="Report">
+			<MENU name="Ticket Summary">101</MENU>
+		</MENU>
+	</MENU>
+	<DESK w="585" name="Logs" type="vert" key="1" h="500">
+		<GRID name="PCCs" keyfield="pcc" orderby="agencyname" table="pccs" key="1">
+			<TEXTFIELD w="40" title="PCC">pcc</TEXTFIELD>
+			<TEXTFIELD w="240" title="Agency Name">agencyname</TEXTFIELD>
+			<GRID name="Logs" keyfield="logid" orderby="logdate desc" linkfield="pcc" table="vwlogs" key="2">
+				<TEXTFIELD w="80" title="Ticket Date">logdate</TEXTFIELD>
+				<TEXTFIELD w="40" title="PCC">pcc</TEXTFIELD>
+				<TEXTFIELD w="140" title="Agency">agencyname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Currency">currency</TEXTFIELD>
+				<TEXTFIELD w="40" title="Process Date">processdate</TEXTFIELD>
+				<FORM name="Logs" layout="grid" keyfield="logid" table="logdetails" key="3">
+					<TEXTAREA w="430" title="" y="30" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="585" name="Tickets" type="vert" key="2" h="500">
+		<GRID name="PCCs" keyfield="pcc" table="pccs" key="1">
+			<TEXTFIELD w="40" title="PCC">pcc</TEXTFIELD>
+			<TEXTFIELD w="40" title="Agency Name">agencyname</TEXTFIELD>
+			<GRID name="Tickets" keyfield="ticketid" orderby="ticketdate desc" linkfield="pcc" table="vwtickets" key="2">
+				<TEXTFIELD w="40" title="Ticket Date">ticketdate</TEXTFIELD>
+				<TEXTFIELD w="140" title="Ticket">ticketid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Ticket PCC">ticketpcc</TEXTFIELD>
+				<TEXTFIELD w="40" title="Book PCC">bookpcc</TEXTFIELD>
+				<TEXTFIELD w="40" title="PCC">pcc</TEXTFIELD>
+				<TEXTFIELD w="40" title="segs">segs</TEXTFIELD>
+				<TEXTFIELD w="40" title="Active Segs">activesegs</TEXTFIELD>
+				<FORM name="Ticket Details" layout="grid" keyfield="ticketid" table="tes" key="3">
+					<TEXTAREA w="430" title="" y="30" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Segments" type="vert" key="3" h="550">
+		<GRID name="Month" keyfield="ticketperiod" orderby="ticketperiod desc" table="vwperiods" key="1">
+			<TEXTFIELD w="40" title="Year">ticketyear</TEXTFIELD>
+			<TEXTFIELD w="40" title="Month">ticketmonth</TEXTFIELD>
+			<TEXTFIELD w="40" title="Tickets">totalsegs</TEXTFIELD>
+			<GRID name="Agency Segments" keyfield="pcc" linkfield="ticketperiod" table="vwbookedsegs" key="2">
+				<TEXTFIELD w="40" title="PCC">pcc</TEXTFIELD>
+				<TEXTFIELD w="140" title="Agency Name">agencyname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Ticket Segments">totalsegs</TEXTFIELD>
+			</GRID>
+			<GRID name="Consultant Segments" keyfield="pcc" linkfield="ticketperiod" table="vwsonsegs" key="3">
+				<TEXTFIELD w="40" title="PCC">pcc</TEXTFIELD>
+				<TEXTFIELD w="140" title="Agency Name">agencyname</TEXTFIELD>
+				<TEXTFIELD w="40" title="SON">son</TEXTFIELD>
+				<TEXTFIELD w="40" title="Ticket Segments">totalsegs</TEXTFIELD>
+			</GRID>
+			<GRID name="Export Segments" keyfield="pcc" linkfield="ticketperiod" table="vwsonsegs" key="4">
+				<TEXTFIELD w="40" title="PCC">pcc</TEXTFIELD>
+				<TEXTFIELD w="40" title="SON">son</TEXTFIELD>
+				<TEXTFIELD w="40" title="Ticket Segments">totalsegs</TEXTFIELD>
+			</GRID>
+			<GRID name="Un Allocated Segments" keyfield="bpcc" linkfield="ticketperiod" table="vwunallocated" key="5">
+				<TEXTFIELD w="40" title="PCC">bpcc</TEXTFIELD>
+				<TEXTFIELD w="40" title="Ticket Segments">segements</TEXTFIELD>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="675" name="Imports" type="vert" key="4" h="500">
+		<IMPORT name="Segments" keyfield="segmentid" autofield="segmentid" filetype="text" table="Segments" procedure="insTransactions" key="1">
+			<TEXTFIELD w="40" title="YearMonth">YearMonth</TEXTFIELD>
+			<TEXTFIELD w="40" title="City">City</TEXTFIELD>
+			<TEXTFIELD w="40" title="ISO">ISO</TEXTFIELD>
+			<TEXTFIELD w="40" title="PCC">PCC</TEXTFIELD>
+			<TEXTFIELD w="40" title="Agency">Agency</TEXTFIELD>
+			<TEXTFIELD w="40" title="NASegs">NASegs</TEXTFIELD>
+			<TEXTFIELD w="40" title="NPSegs">NPSegs</TEXTFIELD>
+			<TEXTFIELD w="40" title="NFASegs">NFASegs</TEXTFIELD>
+			<TEXTFIELD w="40" title="NBBSegs">NBBSegs</TEXTFIELD>
+			<TEXTFIELD w="40" title="NRSegs">NRSegs</TEXTFIELD>
+			<TEXTFIELD w="40" title="BCT">BCT</TEXTFIELD>
+			<TEXTFIELD w="40" title="AOTSegs">AOTSegs</TEXTFIELD>
+			<TEXTFIELD w="40" title="PTSegs">PTSegs</TEXTFIELD>
+		</IMPORT>
+	</DESK>
+	<DESK w="585" name="Analysis" type="vert" key="5" h="500">
+		<GRID name="Month" keyfield="ticketperiod" orderby="ticketperiod desc" table="vwperiods" key="1">
+			<TEXTFIELD w="40" title="Year">ticketyear</TEXTFIELD>
+			<TEXTFIELD w="40" title="Month">ticketmonth</TEXTFIELD>
+			<TEXTFIELD w="40" title="Tickets">totalsegs</TEXTFIELD>
+			<GRID name="Days Tickets" keyfield="ticketdate" orderby="ticketdate" linkfield="ticketperiod" table="vwdayssegs" key="2">
+				<TEXTFIELD w="40" title="Ticket Date">ticketdate</TEXTFIELD>
+				<TEXTFIELD w="40" title="Segments">totalsegs</TEXTFIELD>
+				<GRID name="Agency Days Tickets" keyfield="pcc" orderby="agencyname" linkfield="ticketdate" table="vwdaysagencysegs" key="3">
+					<TEXTFIELD w="40" title="PCC">pcc</TEXTFIELD>
+					<TEXTFIELD w="40" title="Agency Name">agencyname</TEXTFIELD>
+					<TEXTFIELD w="40" title="Tickets">totalsegs</TEXTFIELD>
+				</GRID>
+				<GRID name="Tickets" keyfield="ticketid" orderby="pcc" linkfield="ticketdate" table="vwtickets" key="4">
+					<TEXTFIELD w="40" title="PCC">pcc</TEXTFIELD>
+					<TEXTFIELD w="140" title="Ticket">ticketid</TEXTFIELD>
+					<TEXTFIELD w="40" title="Ticket PCC">ticketpcc</TEXTFIELD>
+					<TEXTFIELD w="40" title="Book PCC">bookpcc</TEXTFIELD>
+					<TEXTFIELD w="40" title="segs">segs</TEXTFIELD>
+					<TEXTFIELD w="40" title="Active Segs">activesegs</TEXTFIELD>
+					<FORM name="Ticket Details" layout="grid" keyfield="ticketid" table="tes" key="5">
+						<TEXTAREA w="430" title="" y="30" h="70" x="10">details</TEXTAREA>
+					</FORM>
+				</GRID>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="585" name="Comparison" type="vert" key="6" h="500">
+		<GRID name="Month" keyfield="segperiod" orderby="ticketperiod desc" table="vwperiods" key="1">
+			<TEXTFIELD w="40" title="Year">ticketyear</TEXTFIELD>
+			<TEXTFIELD w="40" title="Month">ticketmonth</TEXTFIELD>
+			<TEXTFIELD w="40" title="Tickets">totalsegs</TEXTFIELD>
+			<GRID name="Segements" keyfield="yearmonth" table="vwsegements" key="2">
+				<TEXTFIELD w="40" title="Segment PCC">spcc</TEXTFIELD>
+				<TEXTFIELD w="40" title="Segment Agency">agency</TEXTFIELD>
+				<TEXTFIELD w="40" title="PCC">pcc</TEXTFIELD>
+				<TEXTFIELD w="40" title="Agency Name">agencyname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Tp Tickets">aotsegs</TEXTFIELD>
+				<TEXTFIELD w="40" title="Tickets">totalsegs</TEXTFIELD>
+				<TEXTFIELD w="40" title="Variance">variance</TEXTFIELD>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Entitys" key="15" h="500">
+		<GRID name="Entitys" keyfield="entity_id" table="vw_entitys">
+			<TEXTFIELD w="75" title="Entity ID">entity_id</TEXTFIELD>
+			<TEXTFIELD w="140" title="Entity Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="100" title="User Name">user_name</TEXTFIELD>
+			<TEXTFIELD w="100" title="Role">function_role</TEXTFIELD>
+			<CHECKBOX w="100" title="Super User" format="boolean">super_user</CHECKBOX>
+			<CHECKBOX w="75" title="Active" format="boolean">is_active</CHECKBOX>
+			<TEXTFIELD w="100" title="Type">entity_type_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Email">primary_email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Telephone">primary_telephone</TEXTFIELD>
+			<GRID name="Address" keyfield="address_id" linkfield="table_id" table="vw_address" where="table_name = 'entitys'">
+				<TEXTFIELD w="100" title="Country">sys_country_name</TEXTFIELD>
+				<TEXTFIELD w="100" title="Postal Code">postal_code</TEXTFIELD>
+				<TEXTFIELD w="100" title="Town">town</TEXTFIELD>
+				<TEXTFIELD w="100" title="Phone Number">phone_number</TEXTFIELD>
+				<TEXTFIELD w="100" title="Mobile">mobile</TEXTFIELD>
+				<TEXTFIELD w="140" title="Email">email</TEXTFIELD>
+				<TEXTFIELD w="140" title="Default">is_default</TEXTFIELD>
+				<FORM name="Address" keyfield="address_id" linkfield="table_id" table="address">
+					<DEFAULT default="entitys">table_name</DEFAULT>
+					<COMBOBOX w="430" title="Country" default="KE" lptable="sys_countrys" noorg="true" y="10" h="20" x="10" lpfield="sys_country_name">sys_country_id</COMBOBOX>
+					<TEXTFIELD w="150" title="Post Office Box" y="30" h="20" x="10">post_office_box</TEXTFIELD>
+					<TEXTFIELD w="150" title="Postal Code" y="30" h="20" x="290">postal_code</TEXTFIELD>
+					<TEXTFIELD w="150" title="Town" y="50" h="20" x="10">town</TEXTFIELD>
+					<TEXTFIELD w="430" title="Premises" y="70" h="20" x="10">premises</TEXTFIELD>
+					<TEXTFIELD w="430" title="Street" y="90" h="20" x="10">street</TEXTFIELD>
+					<TEXTFIELD w="430" title="Phone Number" y="110" h="20" x="10">phone_number</TEXTFIELD>
+					<TEXTFIELD w="150" title="Extension" y="130" h="20" x="10">extension</TEXTFIELD>
+					<TEXTFIELD w="430" title="Mobile" y="150" h="20" x="10">mobile</TEXTFIELD>
+					<TEXTFIELD w="430" title="Fax" y="170" h="20" x="10">fax</TEXTFIELD>
+					<TEXTFIELD w="430" title="Email" y="190" h="20" x="10">email</TEXTFIELD>
+					<CHECKBOX w="30" title="Default" y="210" h="20" x="10">is_default</CHECKBOX>
+					<TEXTAREA w="430" title="Details" y="230" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<GRID name="Subscriptions" keyfield="entity_subscription_id" linkfield="entity_id" table="vw_entity_subscriptions">
+				<TEXTFIELD w="75" title="Entity Type Name">entity_type_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Subscription Level Name">subscription_level_name</TEXTFIELD>
+				<FORM name="Subscriptions" keyfield="entity_subscription_id" linkfield="entity_id" table="entity_subscriptions">
+					<COMBOBOX w="430" title="Entity Type" lptable="entity_types" y="10" h="20" x="10" lpfield="entity_type_name">entity_type_id</COMBOBOX>
+					<COMBOBOX w="430" title="Subscription Level" lptable="subscription_levels" y="30" h="20" x="10" lpfield="subscription_level_name">subscription_level_id</COMBOBOX>
+					<TEXTAREA w="430" title="Details" y="50" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<FORM name="Entitys" keyfield="entity_id" table="entitys">
+				<COMBOBOX w="430" title="Org" lptable="orgs" y="10" h="20" x="10" lpfield="org_name">org_id</COMBOBOX>
+				<COMBOBOX w="430" title="Entity Type" lptable="entity_types" y="30" h="20" x="10" lpfield="entity_type_name">entity_type_id</COMBOBOX>
+				<TEXTFIELD w="150" title="Entity Name" y="50" h="20" x="10">entity_name</TEXTFIELD>
+				<TEXTFIELD w="150" title="User Name" y="50" h="20" x="290">user_name</TEXTFIELD>
+				<TEXTFIELD w="430" title="Primary Email" y="70" h="20" x="10">primary_email</TEXTFIELD>
+				<TEXTFIELD w="250" title="Primary Telephone" y="90" h="20" x="10">primary_telephone</TEXTFIELD>
+				<CHECKBOX w="150" title="Super User" y="110" h="20" x="10">super_user</CHECKBOX>
+				<CHECKBOX w="150" title="Entity Leader" y="110" h="20" x="290">entity_leader</CHECKBOX>
+				<CHECKBOX w="150" title="No Org" y="130" h="20" x="10">no_org</CHECKBOX>
+				<TEXTFIELD w="150" title="Function Role" y="130" h="20" x="290">function_role</TEXTFIELD>
+				<CHECKBOX w="150" title="Active" y="150" h="20" x="10">is_active</CHECKBOX>
+				<TEXTFIELD w="150" title="First Password" y="150" h="20" x="290">first_password</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="170" h="70" x="10">details</TEXTAREA>
+			</FORM>
+			<GRID name="Reporting" keyfield="reporting_id" linkfield="entity_id" table="vw_reporting">
+				<TEXTFIELD w="75" title="Rpt Name">rpt_name</TEXTFIELD>
+				<TEXTDATE w="75" title="Date From">date_from</TEXTDATE>
+				<TEXTDATE w="75" title="Date To">date_to</TEXTDATE>
+				<CHECKBOX w="75" title="Primary Report">primary_report</CHECKBOX>
+				<CHECKBOX w="75" title="Active">is_active</CHECKBOX>
+				<TEXTDECIMAL w="75" title="% Reporting">ps_reporting</TEXTDECIMAL>
+				<FORM name="Reporting" keyfield="reporting_id" linkfield="entity_id" table="reporting">
+					<COMBOBOX w="430" title="Report To" lptable="entitys" lpkey="entity_id" y="10" h="20" x="10" lpfield="entity_name">report_to_id</COMBOBOX>
+					<TEXTDATE w="150" title="Date From" y="30" h="20" x="10">date_from</TEXTDATE>
+					<TEXTDATE w="150" title="Date To" y="30" h="20" x="290">date_to</TEXTDATE>
+					<CHECKBOX w="150" title="Primary Report" y="50" h="20" x="10">primary_report</CHECKBOX>
+					<CHECKBOX w="150" title="Active" y="50" h="20" x="290">is_active</CHECKBOX>
+					<TEXTDECIMAL w="150" title="% Reporting" y="70" h="20" x="10">ps_reporting</TEXTDECIMAL>
+					<TEXTAREA w="430" title="Details" y="90" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<ACTIONS>
+				<ACTION fnct="change_password">Reset Password</ACTION>
+			</ACTIONS>
+		</GRID>
+		<GRID name="Entity Types" keyfield="entity_type_id" table="entity_types">
+			<TEXTFIELD w="75" title="Entity Type ID">entity_type_id</TEXTFIELD>
+			<TEXTFIELD w="175" title="Entity Type Name">entity_type_name</TEXTFIELD>
+			<TEXTFIELD w="175" title="Entity Role">entity_role</TEXTFIELD>
+			<TEXTFIELD w="175" title="Group EMail">group_email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Use Key">use_key</TEXTFIELD>
+			<GRID name="Entity Subscriptions" keyfield="entity_subscription_id" linkfield="entity_type_id" table="vw_entity_subscriptions">
+				<TEXTFIELD w="75" title="Entity ID">entity_id</TEXTFIELD>
+				<TEXTFIELD w="275" title="Entity Name">entity_name</TEXTFIELD>
+				<TEXTFIELD w="275" title="Level">subscription_level_name</TEXTFIELD>
+				<FORM name="Entity Subscriptions" keyfield="entity_subscription_id" linkfield="entity_type_id" table="entity_subscriptions">
+					<COMBOBOX w="430" title="Entity" lptable="entitys" y="10" h="20" x="10" lpfield="entity_name">entity_id</COMBOBOX>
+					<COMBOBOX w="430" title="Subscription Level" lptable="subscription_levels" y="30" h="20" x="10" lpfield="subscription_level_name">subscription_level_id</COMBOBOX>
+					<TEXTAREA w="430" title="Details" y="50" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<FORM name="Entity Types" keyfield="entity_type_id" table="entity_types" th="210">
+				<TEXTFIELD w="430" title="Entity Type Name" y="10" h="20" x="10">entity_type_name</TEXTFIELD>
+				<TEXTFIELD w="430" title="Entity Role" y="30" h="20" x="10">entity_role</TEXTFIELD>
+				<TEXTFIELD w="150" title="Use Key" y="50" h="20" x="10">use_key</TEXTFIELD>
+				<TEXTFIELD w="150" title="Start View" y="50" h="20" x="290">start_view</TEXTFIELD>
+				<TEXTFIELD w="430" title="Group EMail" y="70" h="20" x="10">group_email</TEXTFIELD>
+				<TEXTAREA w="530" tab="Description" y="2" h="170" x="10">description</TEXTAREA>
+				<TEXTAREA w="530" tab="Details" y="2" h="170" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+		<GRID name="Subscription Levels" keyfield="subscription_level_id" table="subscription_levels">
+			<TEXTFIELD w="75" title="Level ID">subscription_level_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Level Name">subscription_level_name</TEXTFIELD>
+			<FORM name="Subscription Levels" keyfield="subscription_level_id" table="subscription_levels">
+				<TEXTFIELD w="430" title="Level" y="10" h="20" x="10">subscription_level_name</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="30" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="585" name="Ticket Summary" type="vert" key="101" h="500">
+		<GRID name="Month" keyfield="ticketperiod" orderby="ticketperiod desc" table="vwperiods" key="1">
+			<TEXTFIELD w="40" title="Year">ticketyear</TEXTFIELD>
+			<TEXTFIELD w="40" title="Month">ticketmonth</TEXTFIELD>
+			<TEXTFIELD w="40" title="Tickets">totalsegs</TEXTFIELD>
+			<GRID name="Days Tickets" keyfield="ticketdate" orderby="ticketdate" linkfield="ticketperiod" table="vwdayssegs" key="2">
+				<TEXTFIELD w="40" title="Ticket Date">ticketdate</TEXTFIELD>
+				<TEXTFIELD w="40" title="Segments">totalsegs</TEXTFIELD>
+				<JASPER filtered="true" name="Transactions Report" keyfield="id" reportfile="tickets.jasper" key="3"></JASPER>
+			</GRID>
+		</GRID>
+	</DESK>
+</APP>

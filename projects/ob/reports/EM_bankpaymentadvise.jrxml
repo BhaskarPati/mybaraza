@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="EM_bankpaymentadvise" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="filterid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["000"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     C_BANKSTATEMENT.STATEMENTDATE AS STATEMENTDATE,
+     C_BANKSTATEMENT.NAME AS DESCRIPTION,
+     C_BANKSTATEMENT.EM_HT_CHEQUENUMBER AS EM_CHEQUENUMBER,
+     C_BANKSTATEMENT.EM_HT_VATCERTIFICATENO AS VATCERTIFICATE,
+     (0-C_BANKSTATEMENTLINE.TRXAMT) AS TRXAMT,
+     C_REMITTANCE.DOCUMENTNO AS DOCUMENTNO,
+	C_BPARTNER.NAME AS NAME,
+C_BPARTNER.TAXID AS VATNO,
+C_BPARTNER.REFERENCENO AS PINNO,
+	C_BPARTNER_LOCATION.NAME AS LOCATION,
+	C_CURRENCY.CURSYMBOL AS CURRENCY,
+AD_ORGINFO.TAXID AS TAXID,
+AD_ORGINFO.DUNS AS AGENTNO,
+AD_CLIENT.NAME AS ORG,
+(0-C_INVOICETAX.TAXAMT) AS TAXAMT
+
+FROM
+     C_BANKSTATEMENT INNER JOIN C_BANKSTATEMENTLINE ON C_BANKSTATEMENT.C_BANKSTATEMENT_ID = C_BANKSTATEMENTLINE.C_BANKSTATEMENT_ID
+     INNER JOIN C_DEBT_PAYMENT ON C_BANKSTATEMENTLINE.C_BANKSTATEMENTLINE_ID = C_DEBT_PAYMENT.C_BANKSTATEMENTLINE_ID
+     INNER JOIN C_REMITTANCELINE ON C_DEBT_PAYMENT.C_DEBT_PAYMENT_ID = C_REMITTANCELINE.C_DEBT_PAYMENT_ID
+     INNER JOIN C_BPARTNER ON C_DEBT_PAYMENT.C_BPARTNER_ID = C_BPARTNER.C_BPARTNER_ID
+     INNER JOIN C_BPARTNER_LOCATION ON C_BPARTNER.C_BPARTNER_ID = C_BPARTNER_LOCATION.C_BPARTNER_ID
+     INNER JOIN C_REMITTANCE ON C_REMITTANCELINE.C_REMITTANCE_ID = C_REMITTANCE.C_REMITTANCE_ID
+	INNER JOIN C_CURRENCY ON C_BANKSTATEMENTLINE.C_CURRENCY_ID = C_CURRENCY.C_CURRENCY_ID
+	INNER JOIN AD_ORGINFO ON C_BANKSTATEMENT.AD_ORG_ID = AD_ORGINFO.AD_ORG_ID
+	INNER JOIN AD_CLIENT ON AD_ORGINFO.AD_CLIENT_ID = AD_CLIENT.AD_CLIENT_ID
+INNER JOIN C_INVOICETAX ON C_DEBT_PAYMENT.C_INVOICE_ID = C_INVOICETAX.C_INVOICE_ID
+
+WHERE (C_BANKSTATEMENT.C_BANKSTATEMENT_ID = '$P!{filterid}')]]>
+	</queryString>
+	<field name="STATEMENTDATE" class="java.sql.Timestamp"/>
+	<field name="DESCRIPTION" class="java.lang.String"/>
+	<field name="EM_CHEQUENUMBER" class="java.lang.String"/>
+	<field name="VATCERTIFICATE" class="java.lang.String"/>
+	<field name="TRXAMT" class="java.math.BigDecimal"/>
+	<field name="DOCUMENTNO" class="java.lang.String"/>
+	<field name="NAME" class="java.lang.String"/>
+	<field name="VATNO" class="java.lang.String"/>
+	<field name="PINNO" class="java.lang.String"/>
+	<field name="LOCATION" class="java.lang.String"/>
+	<field name="CURRENCY" class="java.lang.String"/>
+	<field name="TAXID" class="java.lang.String"/>
+	<field name="AGENTNO" class="java.lang.String"/>
+	<field name="ORG" class="java.lang.String"/>
+	<field name="TAXAMT" class="java.math.BigDecimal"/>
+	<variable name="totalpayment" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{TRXAMT}]]></variableExpression>
+	</variable>
+	<variable name="totaltax" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{TAXAMT}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="183" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="435" y="165" width="100" height="18"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{EM_CHEQUENUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MMM-yy" isBlankWhenNull="false">
+				<reportElement key="textField" x="435" y="147" width="100" height="18"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{STATEMENTDATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-2" x="0" y="147" width="75" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Payment To:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="75" y="147" width="179" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NAME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="75" y="163" width="179" height="18"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{LOCATION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-5" x="348" y="165" width="88" height="18"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Cheque Number:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-6" x="348" y="147" width="88" height="18"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Payment Date:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-7" x="0" y="104" width="535" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="24" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Payment]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-3" x="0" y="17" width="126" height="18"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Voucher Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="400" y="1" width="101" height="18"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Amount Paid]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="400" y="19" width="100" height="16"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CURRENCY}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-1" x="0" y="34" width="535" height="1"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="19" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="0" y="1" width="126" height="18"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DOCUMENTNO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="false">
+				<reportElement key="textField" x="400" y="1" width="101" height="18"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{TRXAMT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="466" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-1" x="0" y="38" width="535" height="18"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRIPTION}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="false">
+				<reportElement key="textField" x="400" y="2" width="100" height="18"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{totalpayment}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-8" x="0" y="3" width="202" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Total Payment]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-10" x="373" y="192" width="61" height="18"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Certificate No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-11" x="136" y="192" width="237" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[DOMESTIC TAXES DEPARTMENT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-12" x="0" y="212" width="535" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[WITHHOLDING VAT CERTIFICATE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-13" x="119" y="230" width="89" height="13"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[PAYMENT PERIOD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-14" x="0" y="245" width="535" height="18"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[This certificate entitles supplier named below to deduct the amount of Tax shown here on the next VAT Return to the Commissioner]]></text>
+			</staticText>
+			<line direction="BottomUp">
+				<reportElement key="line-2" x="208" y="243" width="269" height="1"/>
+				<graphicElement fill="Solid">
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<textField pattern="dd-MMM-yy" isBlankWhenNull="false">
+				<reportElement key="textField-2" x="208" y="230" width="269" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{STATEMENTDATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-15" x="0" y="270" width="103" height="18"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[NAME OF SUPPLIER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-16" x="254" y="270" width="43" height="18"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[VAT NO.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-17" x="414" y="270" width="20" height="18"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[PIN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-18" x="0" y="289" width="53" height="18"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[ADDRESS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-19" x="0" y="384" width="535" height="18"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Certify that the tax indicated above has been paid over to the commissioner of DOMESTIC TAXES, Nairobi.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-20" x="0" y="405" width="131" height="18"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[NAME OF WITHHOLDING AGENT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-21" x="0" y="424" width="62" height="18"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[DESIGNATION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-22" x="203" y="424" width="51" height="18"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[SIGNATURE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-23" x="362" y="424" width="30" height="17"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[DATE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-24" x="0" y="444" width="111" height="18"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[WITHHOLDING AGENT NO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-25" x="301" y="443" width="18" height="18"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[PIN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-26" x="477" y="167" width="56" height="18"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[VAT 32A]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-3" x="131" y="422" width="325" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<rectangle>
+				<reportElement key="rectangle-1" x="0" y="314" width="535" height="59"/>
+			</rectangle>
+			<line>
+				<reportElement key="line-4" x="0" y="342" width="535" height="1"/>
+			</line>
+			<line>
+				<reportElement key="line-5" x="267" y="315" width="1" height="58"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-27" x="5" y="318" width="136" height="22"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[TAX DEDUCTED]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-3" x="147" y="318" width="79" height="22"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CURRENCY}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-28" x="276" y="318" width="257" height="22"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[PAYMENT REFERENCE NO.]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField-4" x="103" y="270" width="151" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NAME}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MMM-yy" isBlankWhenNull="false">
+				<reportElement key="textField-5" x="392" y="424" width="64" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{STATEMENTDATE}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-6" x="103" y="288" width="151" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement key="line-7" x="297" y="288" width="117" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement key="line-8" x="434" y="288" width="101" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement key="line-9" x="48" y="307" width="346" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement key="line-10" x="64" y="441" width="138" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement key="line-11" x="254" y="441" width="108" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement key="line-12" x="392" y="441" width="63" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement key="line-13" x="111" y="460" width="190" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement key="line-14" x="323" y="460" width="133" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-6" x="53" y="289" width="341" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{LOCATION}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" x="434" y="270" width="101" height="18"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PINNO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" x="297" y="270" width="117" height="18"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{VATNO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="319" y="442" width="137" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{TAXID}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField" x="131" y="404" width="325" height="18"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ORG}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" x="434" y="192" width="101" height="18"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{VATCERTIFICATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-29" x="467" y="410" width="60" height="50"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[PAYER'S
+STAMP]]></text>
+			</staticText>
+			<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="false">
+				<reportElement key="textField" x="5" y="349" width="226" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{TAXAMT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-7" x="276" y="349" width="257" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DOCUMENTNO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-15" x="136" y="193" width="237" height="1"/>
+			</line>
+			<line>
+				<reportElement key="line-16" x="136" y="210" width="237" height="1"/>
+			</line>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="111" y="444" width="190" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{AGENTNO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-30" x="0" y="24" width="87" height="14"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-17" x="-59" y="65" width="667" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

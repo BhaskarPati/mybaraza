@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="letterToEmbassy" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" scriptletClass="net.sf.jasperreports.engine.JRDefaultScriptlet" whenResourceMissingType="Empty" uuid="01ac051a-bdf8-47ed-a470-8666b23c63a7">
+	<property name="ireport.zoom" value="1.1000000000000003"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="291"/>
+	<parameter name="filterid" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[$P{passenger_id}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="passenger_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT regexp_replace(to_char(vw_corporate_passengers.days_from,'DD'|| case when (EXTRACT(DAY FROM vw_corporate_passengers.days_from) IN (01,1,21,31)) then '<sup>ST</sup>'
+when (EXTRACT(DAY FROM vw_corporate_passengers.days_from) IN (03,3,23)) then '"<sup>RD</sup>"'
+when (EXTRACT(DAY FROM vw_corporate_passengers.days_from) IN (02,2,22)) then '"<sup>ND</sup>"'
+ELSE  '<sup>TH</sup>' end ||' MONTH YYYY'),'\s+', ' ','g') || ' TO ' ||(regexp_replace(to_char(vw_corporate_passengers.days_to,'DD '|| case when (EXTRACT(DAY FROM vw_corporate_passengers.days_to) IN (01,1,21,31)) then '<sup>ST</sup>'
+when (EXTRACT(DAY FROM vw_corporate_passengers.days_to) IN (03,3,23)) then '"<sup>RD</sup>"'
+when (EXTRACT(DAY FROM vw_corporate_passengers.days_to) IN (02,2,22)) then '"<sup>ND</sup>"'
+ELSE  '<sup>TH</sup>' end || ' MONTH YYYY'),'\s+', ' ','g') ||'.') as p1,
+vw_corporate_passengers.passenger_id,vw_corporate_passengers.passenger_name,vw_corporate_passengers.rate_type_id as rate_type_id,regexp_replace(to_char(vw_corporate_passengers.approved_date::date,'DD'|| case when (EXTRACT(DAY FROM vw_corporate_passengers.approved_date) IN (01,1,21,31)) then '<sup>ST</sup>'
+when (EXTRACT(DAY FROM vw_corporate_passengers.approved_date::date) IN (03,3,23)) then '"<sup>RD</sup>"'
+when (EXTRACT(DAY FROM vw_corporate_passengers.approved_date) IN (02,2,22)) then '"<sup>ND</sup>"'
+ELSE  '<sup>TH</sup>' end ||'  MONTH YYYY'),'\s+', ' ','g') as approved_date,vw_corporate_passengers.passenger_id_no,vw_corporate_passengers.destown ||',' as destown,'EMBASSY OF '|| vw_corporate_passengers.destown as embassy,vw_corporate_passengers.policy_number,vw_corporate_passengers.passport_num,
+( regexp_replace(to_char(vw_corporate_passengers.days_from,'DD'|| case when (EXTRACT(DAY FROM vw_corporate_passengers.days_from) IN (01,1,21,31)) then '<sup>ST</sup>'
+when (EXTRACT(DAY FROM vw_corporate_passengers.days_from) IN (03,3,23)) then '"<sup>RD</sup>"'
+when (EXTRACT(DAY FROM vw_corporate_passengers.days_from) IN (02,2,22)) then '"<sup>ND</sup>"'
+ELSE  '<sup>TH</sup>' end ||' MONTH YYYY'),'\s+', ' ','g'))as days_from,
+(regexp_replace(to_char(vw_corporate_passengers.days_to,'DD'|| case when (EXTRACT(DAY FROM vw_corporate_passengers.days_to) IN (01,1,21,31)) then '<sup>ST</sup>'
+when (EXTRACT(DAY FROM vw_corporate_passengers.days_to) IN (03,3,23)) then '"<sup>RD</sup>"'
+when (EXTRACT(DAY FROM vw_corporate_passengers.days_to) IN (02,2,22)) then '"<sup>ND</sup>"'
+ELSE  '<sup>TH</sup>' end || ' MONTH YYYY'),'\s+', ' ','g') ||'.')as days_to,
+
+'The cover includes emergency medical and evacuation benefits of up to US$ ' ||get_cop_benefit_section_a(rate_type_id)|| ' and US$ ' ||get_cop_benefit_section_b(rate_type_id)||' respectively and is inclusive of 24 hours emergency medical assistance anywhere in the world including ' || upper(vw_corporate_passengers.countries) || '.' as benefit
+
+
+FROM vw_corporate_passengers
+WHERE passenger_id = '$P!{passenger_id}']]>
+	</queryString>
+	<field name="p1" class="java.lang.String"/>
+	<field name="passenger_id" class="java.lang.Integer"/>
+	<field name="passenger_name" class="java.lang.String"/>
+	<field name="rate_type_id" class="java.lang.Integer"/>
+	<field name="approved_date" class="java.lang.String"/>
+	<field name="passenger_id_no" class="java.lang.String"/>
+	<field name="destown" class="java.lang.String"/>
+	<field name="embassy" class="java.lang.String"/>
+	<field name="policy_number" class="java.lang.String"/>
+	<field name="passport_num" class="java.lang.String"/>
+	<field name="days_from" class="java.lang.String"/>
+	<field name="days_to" class="java.lang.String"/>
+	<field name="benefit" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="120" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="1" width="224" height="118" uuid="083b1a43-d937-46ef-99c9-a10553844715"/>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR} + "Heritage-Logo.jpeg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="363" y="43" width="191" height="15" uuid="9345d4aa-cc11-4fca-a4ce-cfe7034268d5"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[P.O Box 30390-00100, Nairobi, Kenya]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="363" y="28" width="191" height="15" uuid="ffc43238-4709-4421-8558-aea362084107"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Liberty House, Mamlaka Road]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="363" y="103" width="191" height="15" uuid="af0bb0a9-2106-440e-bf80-b53250837d1b"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[(w)www.heritageinsurance.co.ke]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="363" y="88" width="191" height="15" uuid="79483fd8-feba-48fb-a700-212d12f1db8c"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[(e)info@heritage.co.ke]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="363" y="13" width="191" height="15" uuid="462dffca-6e51-4a42-9075-5369cd747f4d"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[The Heritage Insurance Company Kenya LImited]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="363" y="73" width="191" height="15" uuid="16390b97-da26-48a5-ad85-4b6801ccbc74"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[(m)0711039 000, 0734101000]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="363" y="58" width="191" height="15" uuid="77f5cd8a-2827-4661-8e08-2f1464921c09"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[(t)+254 20 278 3000 (f)+254 20 2727800]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="4" splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="577" splitType="Stretch">
+			<staticText>
+				<reportElement x="109" y="134" width="424" height="20" uuid="287aaefb-0cd4-4376-9489-3ad75d78a690"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OVERSEAS TRAVEL INSURANCE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="109" y="154" width="98" height="20" uuid="501283b1-0159-4764-976b-0cda7f37996d"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[POLICY NUMBER:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="109" y="174" width="59" height="20" uuid="2e3a6bcb-c812-4e9e-8e3e-0609b441a975"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INSURED:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="207" y="154" width="326" height="20" uuid="00c2565f-f68d-441b-991a-af9a19e9649e"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{policy_number}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="168" y="174" width="365" height="20" uuid="4413232b-798d-4950-b766-c41c183bc7a0"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{passenger_name}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="544" width="268" height="33" uuid="ee72dfbd-6c74-4b9e-b283-9a8f8787dc8a"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[VALERIE MURIITHI
+SALES & DISTRIBUTION DEPARTMENT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="134" width="35" height="20" uuid="04a37615-9faa-4030-b500-2fadc4c93212"/>
+				<textElement>
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RE: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="360" width="555" height="27" uuid="b0299be3-28b1-402c-b529-e8c3483c3e94"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[For any inquiries, please contact the undersigned.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="307" y="296" width="0" height="20" uuid="18175208-1087-4b31-b115-cc39a9b33f61"/>
+				<text><![CDATA[.]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="258" width="555" height="72" isPrintWhenDetailOverflows="true" uuid="e5038bf7-5e09-40ba-87f7-a074e2fc4e4b"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{benefit}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="412" width="218" height="132" uuid="3aabf701-7e0e-419f-afe7-a8706c9d38dd"/>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR} + "sign.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="387" width="290" height="24" uuid="6ec8729c-cdf1-4fb5-a2ba-e55d9fd91f12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Yours faithfully,]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="49" width="199" height="20" uuid="282c3ca1-c2cb-4987-a1aa-0afff0d4786b"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{embassy}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="29" width="199" height="20" uuid="0c23925d-44a2-4fc3-8567-1a60d7e7c393"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[THE VISA CONSULAR,]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="0" y="2" width="199" height="27" uuid="9ab508ff-aa49-40a3-98f2-1ae8ff73db64"/>
+				<textElement markup="styled">
+					<font fontName="Calibri" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{approved_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="69" width="199" height="20" uuid="fab07009-7425-44b0-b05e-c157863206d1"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NAIROBI.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="100" width="199" height="20" uuid="74309e3a-61b6-4a88-8b7e-45ee4e6cba08"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Dear Sir/Madam,]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="213" width="555" height="33" isPrintWhenDetailOverflows="true" uuid="9fd4d325-0f4a-4094-9333-6f02d51ff3c6"/>
+				<textElement verticalAlignment="Bottom" markup="styled">
+					<font fontName="Times New Roman" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["This is to confirm we have issued overseas travel insurance to the above named person who is scheduled to travel from  <style isBold=\"true\">" +$F{p1}+ " </style>"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="330" width="555" height="20" isPrintWhenDetailOverflows="true" uuid="15f01230-1fd1-46c7-afde-56442eddb593"/>
+				<textElement verticalAlignment="Bottom" markup="styled">
+					<font fontName="Times New Roman" size="12" isBold="false"/>
+					<paragraph spacingAfter="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA["The policy is valid from <style isBold=\"true\">" +$F{days_from} + " TO "+$F{days_to} + " </style>"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="33" splitType="Stretch">
+			<image>
+				<reportElement x="1" y="0" width="554" height="33" uuid="dc670fc3-42ef-47dc-951d-9c6879456281"/>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR} + "heritage_footer.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vw_loyalty_points" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="BlankPage" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="74edce83-815c-4120-92aa-0387ade42e16">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="filterid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="orgid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="orgwhere" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="organd" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT vw_loyalty_points.client_code,
+
+SUM(case when local_inter = 'L' AND is_return = false then
+	vw_loyalty_points.points else 0
+end) as l_one_way_points,
+SUM(case when local_inter = 'L' AND is_return = true then
+	vw_loyalty_points.points else 0
+end) as l_return_points,
+
+SUM(case when local_inter = 'G' AND is_return = false then
+	vw_loyalty_points.points else 0
+end ) as r_one_way_points,
+
+SUM(case when local_inter = 'G' AND is_return = true then
+	vw_loyalty_points.points else 0
+end ) as r_return_points,
+
+SUM(case when local_inter = 'I' AND is_return = false then
+	vw_loyalty_points.points else 0
+end) as i_one_way_points,
+
+SUM(case when local_inter = 'I' AND is_return = true then
+	vw_loyalty_points.points else 0
+end) as i_return_points,
+sum(vw_loyalty_points.tours_amount) as tours,
+
+sum(vw_loyalty_points.points) as points,  sum(vw_loyalty_points.bonus) as bonus, vw_loyalty_points.entity_name,  sum(vw_loyalty_points.refunds ) as refunds,  sum(vw_loyalty_points.bonus+vw_loyalty_points.tours_amount+vw_loyalty_points.points-vw_loyalty_points.refunds ) as total
+FROM vw_loyalty_points
+GROUP BY vw_loyalty_points.client_code, vw_loyalty_points.entity_name]]>
+	</queryString>
+	<field name="client_code" class="java.lang.String"/>
+	<field name="l_one_way_points" class="java.lang.Float"/>
+	<field name="l_return_points" class="java.lang.Float"/>
+	<field name="r_one_way_points" class="java.lang.Float"/>
+	<field name="r_return_points" class="java.lang.Float"/>
+	<field name="i_one_way_points" class="java.lang.Float"/>
+	<field name="i_return_points" class="java.lang.Float"/>
+	<field name="tours" class="java.lang.Float"/>
+	<field name="points" class="java.lang.Float"/>
+	<field name="bonus" class="java.lang.Float"/>
+	<field name="entity_name" class="java.lang.String"/>
+	<field name="refunds" class="java.lang.Float"/>
+	<field name="total" class="java.lang.Float"/>
+	<variable name="v_bonus" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{bonus}]]></variableExpression>
+	</variable>
+	<variable name="v_lo_points" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{l_one_way_points}]]></variableExpression>
+	</variable>
+	<variable name="v_lr_points" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{l_return_points}]]></variableExpression>
+	</variable>
+	<variable name="v_go_points" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{r_one_way_points}]]></variableExpression>
+	</variable>
+	<variable name="v_gr_points" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{r_return_points}]]></variableExpression>
+	</variable>
+	<variable name="v_io_points" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{i_one_way_points}]]></variableExpression>
+	</variable>
+	<variable name="v_ir_points" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{i_return_points}]]></variableExpression>
+	</variable>
+	<variable name="v_refunds" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{refunds}]]></variableExpression>
+	</variable>
+	<variable name="v_totals" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{total}]]></variableExpression>
+	</variable>
+	<variable name="v_tours" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{tours}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="57" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="0" y="19" width="193" height="21" uuid="75e2387f-88fe-4e2a-b5ba-ade1d542bf67"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[LOYALY PROGRAM POINTS ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="193" height="19" uuid="fcea2a97-9856-4c78-9687-b54348070579"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TRAVEL CREATIONS LTD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="193" height="17" uuid="83f18b77-8d7e-49c4-bfdc-59df9bfbc21c"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FOR THE PERIOD ENDED]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="30" width="802" height="1" uuid="7bdc5eb8-ae31-4c69-a996-7b6bea889e9a"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" stretchType="RelativeToTallestObject" x="0" y="15" width="193" height="15" forecolor="#000000" uuid="51dcf8a9-313c-4576-b1fc-b36ce8f37289"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Client Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" stretchType="RelativeToTallestObject" x="257" y="0" width="128" height="15" forecolor="#000000" uuid="47e1a9eb-60f6-4542-b11c-da8f56e83922"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[LOCAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" stretchType="RelativeToTallestObject" x="385" y="0" width="128" height="15" forecolor="#000000" uuid="250c36da-964d-46c3-bf1e-85ab6069d812"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[REGIONAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" stretchType="RelativeToTallestObject" x="513" y="0" width="128" height="15" forecolor="#000000" uuid="85cad1bd-af70-4438-8ac1-7f214d54e2cd"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[INTERNATIONAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" stretchType="RelativeToTallestObject" x="641" y="15" width="50" height="15" forecolor="#000000" uuid="9ba8ce6d-fc1e-4795-bdab-e738a4ba83b7"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Refunds]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" stretchType="RelativeToTallestObject" x="738" y="15" width="64" height="15" forecolor="#000000" uuid="80e20c58-00c1-4de4-97e4-56254c87d218"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Totals]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="513" y="15" width="64" height="15" uuid="bcf0d5eb-4886-4d7d-a4a3-ea2f44931742"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[One-Way]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="577" y="15" width="64" height="15" uuid="08eb23b9-f63c-470a-9b63-a23b41c1ab40"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Return]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="449" y="15" width="64" height="15" uuid="7229df05-4c17-4fb4-a525-d7361e5a4226"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Return]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="385" y="15" width="64" height="15" uuid="d4d2e4ff-fd1c-4c4e-b0eb-07552abffef9"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[One-Way]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="321" y="15" width="64" height="15" uuid="ca9b78fb-ce59-47c6-a903-8e895b8b939e"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Return]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="257" y="15" width="64" height="15" uuid="a8b7ab5a-2241-4837-bdd3-065a01007149"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[One-Way]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="193" y="15" width="63" height="15" uuid="f167caa5-d106-4d6f-837d-01731ae0cd7d"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bonus]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="691" y="15" width="47" height="15" uuid="569ed8f8-19fe-4665-9a2b-69ffc4b3c892"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tours]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" stretchType="RelativeToTallestObject" x="257" y="0" width="64" height="15" isPrintWhenDetailOverflows="true" uuid="688ad4e6-5963-46a6-8539-5584c3b01131"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{l_one_way_points}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" stretchType="RelativeToTallestObject" x="449" y="0" width="64" height="15" isPrintWhenDetailOverflows="true" uuid="396239e6-e5d1-49ce-a203-c6300c8cfe7e"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{r_return_points}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" stretchType="RelativeToTallestObject" x="513" y="0" width="64" height="15" isPrintWhenDetailOverflows="true" uuid="b136a1a4-07bd-488d-a5cc-bb2f5aa0be64"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{i_one_way_points}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" stretchType="RelativeToTallestObject" x="577" y="0" width="64" height="15" isPrintWhenDetailOverflows="true" uuid="b4f7d36d-936b-4e83-9179-e1050bd8e162"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{i_return_points}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" stretchType="RelativeToTallestObject" x="641" y="0" width="50" height="15" isPrintWhenDetailOverflows="true" uuid="e686eacd-ba1a-44f1-8006-3a96048562d9"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{refunds}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" stretchType="RelativeToTallestObject" x="738" y="0" width="64" height="15" isPrintWhenDetailOverflows="true" uuid="7d2a1ae8-753f-4d39-a9f5-a29b40a3bff8"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="193" height="15" isPrintWhenDetailOverflows="true" uuid="991d34c2-95b3-4abb-8caa-a24e7f71c830"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entity_name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" stretchType="RelativeToTallestObject" x="193" y="0" width="64" height="15" isPrintWhenDetailOverflows="true" uuid="d8e5945e-b7fe-4a14-89e0-1c10041e9bb8"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bonus}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" stretchType="RelativeToTallestObject" x="321" y="0" width="64" height="15" isPrintWhenDetailOverflows="true" uuid="88bfcc39-77f6-4454-90dc-798619e55b1e"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{l_return_points}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" stretchType="RelativeToTallestObject" x="385" y="0" width="64" height="15" isPrintWhenDetailOverflows="true" uuid="1a011a0f-ea99-4339-9ba0-971ea54df301"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{r_one_way_points}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="691" y="0" width="47" height="15" isPrintWhenDetailOverflows="true" uuid="57fe4882-74b6-4441-a41a-dc898e336f3f"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tours}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="1" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="0" width="802" height="1" uuid="d6df9a9b-0164-41ed-8737-610042023755"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="1" width="802" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="b782e9b1-ff39-45e2-8bda-c53df897c2c0"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="738" y="1" width="64" height="20" forecolor="#736343" uuid="75661f12-2d6f-446e-9765-b4a6c835a026"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="691" y="1" width="47" height="20" forecolor="#736343" uuid="e72c6273-2da6-4661-9eed-8eb6df81d803"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE, d MMMMM yyyy HH:mm:ss Z">
+					<reportElement style="Column header" x="0" y="1" width="193" height="20" forecolor="#736343" uuid="f9c67c17-09f4-4189-9cb0-018ec1c39983"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="21" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="641" y="1" width="50" height="20" isPrintWhenDetailOverflows="true" uuid="9567440c-3d47-477f-b36b-1e1068ee78f5"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{v_refunds}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="577" y="1" width="64" height="20" isPrintWhenDetailOverflows="true" uuid="03294128-7e42-458a-a4ab-d9daba0a631d"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{v_ir_points}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="738" y="1" width="64" height="20" isPrintWhenDetailOverflows="true" uuid="9ee23cd6-bf07-49c3-952e-e56343bc37ca"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{v_totals}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="513" y="1" width="64" height="20" isPrintWhenDetailOverflows="true" uuid="cc1f4816-ba1f-4c57-80b2-500483ac0ec6"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{v_io_points}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="449" y="1" width="64" height="20" isPrintWhenDetailOverflows="true" uuid="a915f919-633d-4f36-bc0c-91fdfd954a1c"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{v_gr_points}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="385" y="1" width="64" height="20" isPrintWhenDetailOverflows="true" uuid="ef83b8d0-62be-44f7-9b16-965016d483b8"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{v_go_points}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="320" y="1" width="65" height="20" isPrintWhenDetailOverflows="true" uuid="35624044-e305-449b-b6b3-1ca212a4f3a9"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{v_lr_points}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="257" y="1" width="63" height="20" isPrintWhenDetailOverflows="true" uuid="38f50912-5565-499e-8982-92ba9982c284"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{v_lo_points}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="193" y="1" width="64" height="20" isPrintWhenDetailOverflows="true" uuid="32772704-0912-4f22-9724-13459715636d"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{v_bonus}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="193" y="0" width="609" height="1" uuid="f7690256-1344-403b-902b-5e93b9c5baca"/>
+			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="691" y="1" width="47" height="20" uuid="ae4b3352-3a7f-4b52-b1ce-15ba5975eef5"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{v_tours}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

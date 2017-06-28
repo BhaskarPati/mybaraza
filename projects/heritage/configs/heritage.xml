@@ -1,0 +1,753 @@
+<APP password="change_password" color="green" material="true" org="org_id" name="Heritage">
+	<MENU name="Heritage">
+		<MENU role="manager,finance,consultant" name="My Insurance">65</MENU>
+		<MENU role="manager,finance,consultant" name="Consultant Profile">4</MENU>
+		<MENU role="admin" name="Insurance Sold">35</MENU>
+		<MENU role="manager,finance" name="Agency Insurance Sold">36</MENU>
+		<MENU role="admin" name="Entities">2</MENU>
+		<MENU role="manager" name="My Agency">10</MENU>
+		<MENU role="admin" name="Agency">11</MENU>
+		<MENU role="admin" name="Configurations">
+			<MENU name="Rates">30</MENU>
+			<MENU name="Subscription Levels">15</MENU>
+			<MENU name="Entity Subscriptions">20</MENU>
+			<MENU name="Entity Types">25</MENU>
+			<MENU name="Emails">60</MENU>
+			<MENU role="admin" name="Exchange Rates">201</MENU>
+		</MENU>
+		<MENU role="manager,admin,finance,director" name="Reports">
+			<MENU role="admin,director" name="Sales Report">40</MENU>
+			<MENU role="admin" name="Transaction invoice">206</MENU>
+			<MENU name="Travel schedule">211</MENU>
+		</MENU>
+	</MENU>
+	<DESK w="700" h="500" name="Dashboard" key="1">
+		<DASHBOARD w="650" name="Dashboard">
+			<TILE noorg.query="true" role="consultant,user,manager,finance" w="60" h="25" name="Today Sales" where="(DATE(approved_date)=CURRENT_DATE) AND approved is true" table="passengers">
+				<TEXTFIELD w="75" fnct="COALESCE(count(passenger_id),0)" title="Total Sales">total_passengers</TEXTFIELD>
+			</TILE>
+			<TILE noorg.query="true" role="consultant,user,manager,finance" name="Total Amount" where="approved is true" user="entity_id" table="vw_passengers">
+				<TEXTFIELD w="75" fnct="ROUND(sum(totalamount_covered)::numeric,2)" title="Total Amount">Total_covered</TEXTFIELD>
+			</TILE>
+			<TILE noorg="true" noorg.query="true" role="admin" w="60" h="25" name="Today Sales" where="(DATE(approved_date)=CURRENT_DATE) AND approved is true" table="vw_allpassengers">
+				<TEXTFIELD w="75" fnct="COALESCE(count(passenger_id), 0)" title="Total Members">total_passengers</TEXTFIELD>
+			</TILE>
+			<TILE noorg="true" noorg.query="true" role="admin,director" name="Total Amount" where="approved is true" table="vw_allpassengers">
+				<TEXTFIELD w="75" fnct="ROUND(sum(totalamount_covered)::numeric,2)" title="Total Amount">Total_covered</TEXTFIELD>
+			</TILE>
+			<TILE noorg="true" noorg.query="true" role="admin,director" name="Total Sales" where="approved is true" table="vw_allpassengers">
+				<TEXTFIELD w="75" fnct="COALESCE(count(passenger_id),0)" title="Total sales">Total_sales</TEXTFIELD>
+			</TILE>
+			<TILELIST noorg="true" noorg.query="true" role="admin,director" name="Individual Insurance Sales" orderby="(org_name)" where="(approved is true)" groupby="org_name" table="vw_passengers">
+				<TEXTFIELD w="75" title="Organisation">org_name</TEXTFIELD>
+				<TEXTFIELD w="75" fnct="ROUND(sum(totalamount_covered)::numeric, 2)" title="Total Amount">totalamount_covered</TEXTFIELD>
+			</TILELIST>
+			<TILELIST noorg="true" noorg.query="true" role="admin,director" name="Corporate Insurance Sales" orderby="(org_name)" where="(approved is true)" groupby="org_name" table="vw_corporate_passengers">
+				<TEXTFIELD w="75" title="Organisation">org_name</TEXTFIELD>
+				<TEXTFIELD w="75" fnct="ROUND(sum(totalamount_covered)::numeric, 2)" title="Total Amount">totalamount_covered</TEXTFIELD>
+			</TILELIST>
+		</DASHBOARD>
+	</DESK>
+	<DESK role="consultant" w="700" h="500" name="Consultant Profile" key="4">
+		<FORMVIEW new="false" role="consultant" keyfield="entity_id" name="Update Contact Details" delete="false" user="entity_id" key="5" table="vw_entitys" gohint="Click on button to edit your Profile">
+			<TEXTFIELD w="75" title="User ID">entity_id</TEXTFIELD>
+			<TEXTFIELD w="140" title="Full Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="100" title="User Name">user_name</TEXTFIELD>
+			<CHECKBOX w="75" format="boolean" title="Active">is_active</CHECKBOX>
+			<TEXTFIELD w="75" title="Email">primary_email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Telephone">primary_telephone</TEXTFIELD>
+			<TEXTFIELD w="150" h="20" x="290" y="30" title="PCCs" required="true" span="true">pcc</TEXTFIELD>
+			<TEXTFIELD w="100" h="20" x="490" y="10" title="Sign On Code initials" required="true" span="true">son</TEXTFIELD>
+			<FORM new="false" keyfield="entity_id" name="Contact Details" delete="false" key="2" table="entitys">
+				<TEXTFIELD w="150" h="20" x="10" y="50" title="Entity Name">entity_name</TEXTFIELD>
+				<TEXTFIELD w="430" h="20" x="10" y="70" title="Primary Email">primary_email</TEXTFIELD>
+				<TEXTFIELD w="250" h="20" x="10" y="90" title="Primary Telephone">primary_telephone</TEXTFIELD>
+				<TEXTDATE w="70" h="70" x="10" y="170" title="Date of Birth">birth_date</TEXTDATE>
+			</FORM>
+		</FORMVIEW>
+	</DESK>
+	<DESK w="700" h="550" name="Entities" key="2">
+		<GRID noorg="true" keyfield="entity_id" name="Entities" where="entity_id not in (0,1)" table="vw_entitys">
+			<TEXTFIELD w="75" title="Agency ID">org_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Agency Name">org_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="PCC">pcc</TEXTFIELD>
+			<TEXTFIELD w="75" title="SON">son</TEXTFIELD>
+			<TEXTFIELD w="75" title="Entity ID">entity_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Entity Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="User Name">user_name</TEXTFIELD>
+			<CHECKBOX w="75" title="Active">is_active</CHECKBOX>
+			<TEXTFIELD w="75" title="Function Role">function_role</TEXTFIELD>
+			<TEXTFIELD w="75" title="Primary Email">primary_email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Primary Telephone">primary_telephone</TEXTFIELD>
+			<TEXTTIMESTAMP w="75" title="Date Enroled">date_enroled</TEXTTIMESTAMP>
+			<FORM noorg="true" keyfield="entity_id" name="Entities" linkfield="entity_id" table="entitys">
+				<COMBOBOX w="430" h="20" lpfield="entity_type_name" x="10" y="10" lptable="entity_types" title="Entity Type ID">entity_type_id</COMBOBOX>
+				<COMBOBOX w="430" h="20" lpfield="org_name" x="10" y="10" lptable="orgs" title="Agency Name">org_id</COMBOBOX>
+				<TEXTFIELD w="430" h="20" x="10" y="30" title="Entity Name">entity_name</TEXTFIELD>
+				<TEXTFIELD w="430" h="20" x="10" y="50" title="User Name">user_name</TEXTFIELD>
+				<TEXTFIELD w="430" h="20" x="10" y="50" title="SON">son</TEXTFIELD>
+				<TEXTFIELD w="430" h="20" x="10" y="70" title="Primary Email">primary_email</TEXTFIELD>
+				<TEXTFIELD w="150" h="20" x="10" y="90" title="Primary Telephone">primary_telephone</TEXTFIELD>
+				<COMBOLIST w="150" h="20" x="10" y="50" title="Function Role">function_role
+					<DATA key="director">Director</DATA>
+					<DATA key="manager">Manager</DATA>
+					<DATA key="finance">Finance</DATA>
+					<DATA key="consultant">Consultant</DATA>
+					<DATA key="user">User</DATA>
+				</COMBOLIST>
+				<CHECKBOX w="150" h="20" x="290" y="150" title="Active">is_active</CHECKBOX>
+				<TEXTFIELD w="150" h="20" x="290" y="170" title="First Password">first_password</TEXTFIELD>
+				<TEXTAREA w="430" h="70" x="10" y="230" title="Details">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" h="550" name="Agency" key="10">
+		<GRID keyfield="org_id" name="Agency" where="org_id not in (0)" table="vw_orgs">
+			<TEXTFIELD w="75" title="Agency ID">org_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Agency Name">org_name</TEXTFIELD>
+			<CHECKBOX w="75" title="Active">is_active</CHECKBOX>
+			<TEXTFIELD w="75" title="Logo">logo</TEXTFIELD>
+			<TEXTFIELD w="75" title="Credit Limit">credit_limit</TEXTFIELD>
+			<TEXTFIELD w="75" title="PCC">pcc</TEXTFIELD>
+			<TEXTFIELD w="75" title="Agency Website">org_website</TEXTFIELD>
+			<GRID noorg="true" keyfield="entity_id" name="Consultant" linkfield="org_id" table="vw_entitys">
+				<TEXTFIELD w="75" title="Agency ID">org_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Agency Name">org_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Consultant ID">entity_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Consultant Name">entity_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="PCC">pcc</TEXTFIELD>
+				<TEXTFIELD w="75" title="SON">son</TEXTFIELD>
+				<TEXTFIELD w="75" title="User Name">user_name</TEXTFIELD>
+				<CHECKBOX w="75" title="Active">is_active</CHECKBOX>
+				<TEXTFIELD w="75" title="Function Role">function_role</TEXTFIELD>
+				<TEXTFIELD w="75" title="Primary Email">primary_email</TEXTFIELD>
+				<TEXTFIELD w="75" title="Primary Telephone">primary_telephone</TEXTFIELD>
+				<TEXTTIMESTAMP w="75" title="Date Enroled">date_enroled</TEXTTIMESTAMP>
+				<FORM noorg="true" keyfield="entity_id" name="Consultant" linkfield="org_id" table="entitys">
+					<COMBOBOX w="430" h="20" lpfield="entity_type_name" x="10" y="10" lptable="entity_types" title="Entity Type ID">entity_type_id</COMBOBOX>
+					<TEXTFIELD w="430" h="20" x="10" y="30" title="Consultant Name">entity_name</TEXTFIELD>
+					<TEXTFIELD w="430" h="20" x="10" y="50" title="SON">son</TEXTFIELD>
+					<TEXTFIELD w="430" h="20" x="10" y="50" title="User Name">user_name</TEXTFIELD>
+					<TEXTFIELD w="430" h="20" x="10" y="70" title="Primary Email">primary_email</TEXTFIELD>
+					<TEXTFIELD w="150" h="20" x="10" y="90" title="Primary Telephone">primary_telephone</TEXTFIELD>
+					<COMBOLIST w="150" h="20" x="10" y="50" title="Function Role">function_role
+						<DATA key="manager">Manager</DATA>
+						<DATA key="finance">Finance Manager</DATA>
+						<DATA key="consultant">Consultant</DATA>
+						<DATA key="user">User</DATA>
+					</COMBOLIST>
+					<CHECKBOX w="150" h="20" x="290" y="150" title="Active">is_active</CHECKBOX>
+					<TEXTFIELD w="150" h="20" x="290" y="170" title="First Password">first_password</TEXTFIELD>
+					<TEXTAREA w="430" h="70" x="10" y="230" title="Details">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<FORM new="false" keyfield="org_id" name="Orgs" table="orgs">
+				<COMBOBOX w="430" h="20" lpfield="currency_name" x="10" y="10" lptable="currency" title="Currency ID">currency_id</COMBOBOX>
+				<TEXTFIELD w="150" h="20" x="10" y="50" title="Org Name">org_name</TEXTFIELD>
+				<TEXTFIELD w="150" h="20" x="290" y="50" title="Org Sufix">org_sufix</TEXTFIELD>
+				<TEXTFIELD w="150" h="20" x="10" y="70" title="PCC">pcc</TEXTFIELD>
+				<CHECKBOX w="150" h="20" x="290" y="70" title="Active">is_active</CHECKBOX>
+				<TEXTFIELD w="150" h="20" x="10" y="90" title="Logo">logo</TEXTFIELD>
+				<TEXTFIELD w="150" h="20" x="290" y="90" title="Pin">pin</TEXTFIELD>
+				<TEXTAREA w="430" h="70" x="10" y="110" title="Details">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" h="550" name="Organization" key="11">
+		<GRID noorg="true" keyfield="org_id" name="Agency" where="org_id not in (0)" table="vw_orgs">
+			<TEXTFIELD w="75" title="Agency ID">org_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Agency Name">org_name</TEXTFIELD>
+			<CHECKBOX w="75" title="Active">is_active</CHECKBOX>
+			<TEXTFIELD w="75" title="Logo">logo</TEXTFIELD>
+			<TEXTFIELD w="75" title="Credit Limit">credit_limit</TEXTFIELD>
+			<TEXTFIELD w="75" title="PCC">pcc</TEXTFIELD>
+			<TEXTFIELD w="75" title="Agency Website">org_website</TEXTFIELD>
+			<GRID noorg="true" keyfield="entity_id" name="Entitys" linkfield="org_id" table="vw_entitys">
+				<TEXTFIELD w="75" title="Agency ID">org_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Agency Name">org_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Entity ID">entity_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Entity Name">entity_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="PCC">pcc</TEXTFIELD>
+				<TEXTFIELD w="75" title="SON">son</TEXTFIELD>
+				<TEXTFIELD w="75" title="User Name">user_name</TEXTFIELD>
+				<CHECKBOX w="75" title="Active">is_active</CHECKBOX>
+				<TEXTFIELD w="75" title="Function Role">function_role</TEXTFIELD>
+				<TEXTFIELD w="75" title="Primary Email">primary_email</TEXTFIELD>
+				<TEXTFIELD w="75" title="Primary Telephone">primary_telephone</TEXTFIELD>
+				<TEXTTIMESTAMP w="75" title="Date Enroled">date_enroled</TEXTTIMESTAMP>
+				<FORM noorg="true" keyfield="entity_id" name="Entities" linkfield="org_id" table="entitys">
+					<COMBOBOX w="430" h="20" lpfield="entity_type_name" x="10" y="10" lptable="entity_types" title="Entity Type ID">entity_type_id</COMBOBOX>
+					<TEXTFIELD w="430" h="20" x="10" y="30" title="Entity Name">entity_name</TEXTFIELD>
+					<TEXTFIELD w="430" h="20" x="10" y="50" title="SON">son</TEXTFIELD>
+					<TEXTFIELD w="430" h="20" x="10" y="50" title="User Name">user_name</TEXTFIELD>
+					<TEXTFIELD w="430" h="20" x="10" y="70" title="Primary Email">primary_email</TEXTFIELD>
+					<TEXTFIELD w="150" h="20" x="10" y="90" title="Primary Telephone">primary_telephone</TEXTFIELD>
+					<COMBOLIST w="150" h="20" x="10" y="50" title="Function Role">function_role
+						<DATA key="director">Director</DATA>
+						<DATA key="manager">Manager</DATA>
+						<DATA key="finance">Finance Manager</DATA>
+						<DATA key="consultant">Consultant</DATA>
+						<DATA key="user">User</DATA>
+					</COMBOLIST>
+					<CHECKBOX w="150" h="20" x="290" y="150" title="Active">is_active</CHECKBOX>
+					<TEXTFIELD w="150" h="20" x="290" y="170" title="First Password">first_password</TEXTFIELD>
+					<TEXTAREA w="430" h="70" x="10" y="230" title="Details">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<FORM noorg="true" keyfield="org_id" name="Orgs" table="orgs">
+				<COMBOBOX w="430" h="20" lpfield="currency_name" x="10" y="10" lptable="currency" title="Currency ID">currency_id</COMBOBOX>
+				<TEXTFIELD w="150" h="20" x="10" y="50" title="Org Name">org_name</TEXTFIELD>
+				<TEXTFIELD w="150" h="20" x="290" y="50" title="Org Sufix">org_sufix</TEXTFIELD>
+				<TEXTFIELD w="150" h="20" x="10" y="70" title="PCC">pcc</TEXTFIELD>
+				<CHECKBOX w="150" h="20" x="290" y="70" title="Active">is_active</CHECKBOX>
+				<TEXTFIELD w="150" h="20" x="10" y="50" title="Credit Limit">credit_limit</TEXTFIELD>
+				<TEXTFIELD w="150" h="20" x="10" y="90" title="Logo">logo</TEXTFIELD>
+				<TEXTFIELD w="150" h="20" x="290" y="90" title="Pin">pin</TEXTFIELD>
+				<TEXTAREA w="430" h="70" x="10" y="110" title="Details">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" h="550" name="Subscription Levels" key="15">
+		<GRID noorg="true" keyfield="subscription_level_id" name="Subscription Levels" table="subscription_levels">
+			<TEXTFIELD w="75" title="Subscription Level ID">subscription_level_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Org ID">org_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Subscription Level Name">subscription_level_name</TEXTFIELD>
+			<FORM keyfield="subscription_level_id" name="Subscription Levels" table="subscription_levels">
+				<TEXTFIELD w="150" h="20" x="10" y="10" title="Subscription Level Name">subscription_level_name</TEXTFIELD>
+				<TEXTAREA w="430" h="70" x="10" y="30" title="Details">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" h="550" name="Entity Subscriptions" key="20">
+		<GRID noorg="true" keyfield="entity_subscription_id" name="Entity Subscriptions" table="vw_entity_subscriptions">
+			<TEXTFIELD w="75" title="Entity Type ID">entity_type_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Entity Type Name">entity_type_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Entity ID">entity_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Entity Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Subscription Level ID">subscription_level_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Subscription Level Name">subscription_level_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Entity Subscription ID">entity_subscription_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Org ID">org_id</TEXTFIELD>
+			<FORM noorg="true" keyfield="entity_subscription_id" name="Entity Subscriptions" linkfield="entity_subscription_id" table="entity_subscriptions">
+				<COMBOBOX w="430" h="20" lpfield="entity_type_name" x="10" y="10" lptable="entity_types" title="Entity Type ID">entity_type_id</COMBOBOX>
+				<COMBOBOX w="430" h="20" lpfield="entity_name" x="10" y="30" lptable="entitys" title="Entity ID">entity_id</COMBOBOX>
+				<COMBOBOX w="430" h="20" lpfield="subscription_level_name" x="10" y="50" lptable="subscription_levels" title="Subscription Level ID">subscription_level_id</COMBOBOX>
+				<TEXTAREA w="430" h="70" x="10" y="70" title="Details">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" h="550" name="Entity Types" key="25">
+		<GRID keyfield="entity_type_id" name="Entity Types" table="entity_types">
+			<TEXTFIELD w="75" title="Entity Type ID">entity_type_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Org ID">org_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Entity Type Name">entity_type_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Entity Role">entity_role</TEXTFIELD>
+			<TEXTFIELD w="75" title="Use Key">use_key</TEXTFIELD>
+			<TEXTFIELD w="75" title="Start View">start_view</TEXTFIELD>
+			<TEXTFIELD w="75" title="Group Email">group_email</TEXTFIELD>
+			<FORM keyfield="entity_type_id" name="Entity Types" table="entity_types">
+				<TEXTFIELD w="150" h="20" x="10" y="10" title="Entity Type Name">entity_type_name</TEXTFIELD>
+				<TEXTFIELD w="430" h="20" x="10" y="30" title="Entity Role">entity_role</TEXTFIELD>
+				<TEXTFIELD w="150" h="20" x="10" y="50" title="Use Key">use_key</TEXTFIELD>
+				<TEXTFIELD w="430" h="20" x="10" y="70" title="Start View">start_view</TEXTFIELD>
+				<TEXTFIELD w="430" h="20" x="10" y="90" title="Group Email">group_email</TEXTFIELD>
+				<TEXTAREA w="430" h="70" x="10" y="110" title="Description">description</TEXTAREA>
+				<TEXTAREA w="430" h="70" x="10" y="180" title="Details">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" h="550" name="Rate Category" key="30">
+		<GRID noorg="true" keyfield="rate_category_id" name="Rate Category" table="rate_category">
+			<TEXTFIELD w="75" title="Rate Category ID">rate_category_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Category Name">rate_category_name</TEXTFIELD>
+			<CHECKBOX w="75" title="Group Rates">group_rates</CHECKBOX>
+			<FORM keyfield="rate_category_id" name="Rate Category" table="rate_category">
+				<TEXTFIELD w="430" h="20" x="10" y="10" title="Rate Category Name">rate_category_name</TEXTFIELD>
+				<CHECKBOX w="150" h="20" x="10" y="30" title="Group Rates">group_rates</CHECKBOX>
+			</FORM>
+		</GRID>
+		<GRID noorg="true" keyfield="rate_plan_id" name="Rate Plan" tab.count="count(rate_plan_id)" table="vw_rate_plan">
+			<TEXTFIELD w="75" title="Rate Plan ID">rate_plan_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Plan">rate_plan_name</TEXTFIELD>
+			<FORM noorg="true" keyfield="rate_plan_id" name="Rate Plan" linkfield="rate_plan_id" table="rate_plan">
+				<TEXTFIELD w="150" h="20" x="10" y="10" title="Rate Plan">rate_plan_name</TEXTFIELD>
+			</FORM>
+		</GRID>
+		<GRID noorg="true" keyfield="rate_type_id" name="Rate Types" tab.count="count(rate_type_id)" table="vw_rate_types">
+			<TEXTFIELD w="75" title="Rate Type ID">rate_type_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Category">rate_category_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Type">rate_plan_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Age From">age_from</TEXTFIELD>
+			<TEXTFIELD w="75" title="Age To">age_to</TEXTFIELD>
+			<GRID noorg="true" keyfield="rate_id" name="Rates" tab.count="count(rate_id)" linkfield="rate_type_id" table="vw_rates">
+				<TEXTFIELD w="75" title="Rate Type">rate_plan_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Days From">days_from</TEXTFIELD>
+				<TEXTFIELD w="75" title="Days To">days_to</TEXTFIELD>
+				<TEXTDECIMAL w="75" title="Excluding USA and Canada">standard_rate</TEXTDECIMAL>
+				<TEXTDECIMAL w="75" title="Including USA and Canada">north_america_rate</TEXTDECIMAL>
+				<TEXTDECIMAL w="75" title="In Country Rates">incountry_rate</TEXTDECIMAL>
+				<FORM noorg="true" keyfield="rate_id" name="Rates" linkfield="rate_type_id" table="rates">
+					<TEXTFIELD w="150" h="20" x="10" y="10" title="Days From">days_from</TEXTFIELD>
+					<TEXTFIELD w="150" h="20" x="290" y="10" title="Days To">days_to</TEXTFIELD>
+					<TEXTDECIMAL w="150" h="20" x="10" y="30" title="Excluding USA and Canada">standard_rate</TEXTDECIMAL>
+					<TEXTDECIMAL w="150" h="20" x="290" y="30" title="Including USA and Canada">north_america_rate</TEXTDECIMAL>
+					<TEXTDECIMAL w="150" h="20" x="290" y="30" title="InCountry rates">incountry_rate</TEXTDECIMAL>
+				</FORM>
+			</GRID>
+			<GRID noorg="true" keyfield="benefit_id" name="Benefits" tab.count="count(benefit_id)" linkfield="rate_type_id" table="vw_benefits">
+				<TEXTFIELD w="75" title="Benefit Type">benefit_type_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Rate Type">rate_plan_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="individual">individual</TEXTFIELD>
+				<TEXTFIELD w="75" title="Others">others</TEXTFIELD>
+				<FORM noorg="true" keyfield="benefit_id" name="Benefits" linkfield="rate_type_id" table="benefits">
+					<COMBOBOX w="430" h="20" lpfield="benefit_type_name" x="10" y="10" lptable="benefit_types" title="Benefit Type ID">benefit_type_id</COMBOBOX>
+					<TEXTAREA w="430" h="70" x="10" y="30" title="Individual">individual</TEXTAREA>
+					<TEXTAREA w="430" h="70" x="10" y="100" title="Others">others</TEXTAREA>
+				</FORM>
+			</GRID>
+			<FORM noorg="true" keyfield="rate_type_id" name="Rate Types" table="rate_types">
+				<COMBOBOX w="150" h="20" lpfield="rate_plan_name" x="10" y="30" lptable="rate_plan" title="Rate Type">rate_plan_id</COMBOBOX>
+				<COMBOBOX w="150" h="20" lpfield="rate_category_name" x="10" y="30" lptable="rate_category" title="Rate Category">rate_category_id</COMBOBOX>
+				<TEXTFIELD w="150" h="20" x="10" y="10" title="Age From">age_from</TEXTFIELD>
+				<TEXTFIELD w="150" h="20" x="10" y="10" title="Age To">age_to</TEXTFIELD>
+				<TEXTAREA w="430" h="70" x="10" y="30" title="Details">details</TEXTAREA>
+			</FORM>
+		</GRID>
+		<GRID noorg="true" keyfield="benefit_type_id" name="Benefit Types" tab.count="count(benefit_type_id)" table="benefit_types">
+			<TEXTFIELD w="75" title="Benefit Type ID">benefit_type_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Benefit Type Name">benefit_type_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Benefit Section">benefit_section</TEXTFIELD>
+			<FORM noorg="true" keyfield="benefit_type_id" name="Benefit Types" table="benefit_types">
+				<TEXTFIELD w="150" h="20" x="10" y="10" title="Benefit Section">benefit_section</TEXTFIELD>
+				<TEXTFIELD w="150" h="20" x="10" y="10" title="Benefit Type Name">benefit_type_name</TEXTFIELD>
+				<TEXTAREA w="430" h="70" x="10" y="30" title="Details">details</TEXTAREA>
+			</FORM>
+		</GRID>
+		<GRID noorg="true" keyfield="corporate_rate_category_id" name="Corporate Rate Category" tab.count="count(corporate_rate_category_id)" table="corporate_rate_category">
+			<TEXTFIELD w="75" title="Category ID">corporate_rate_category_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Category Name">corporate_rate_category_name</TEXTFIELD>
+			<FORM noorg="true" keyfield="corporate_rate_category_id" name="Rate Categories" table="corporate_rate_category">
+				<TEXTFIELD w="150" h="20" x="10" y="10" title="Rate Category Name">corporate_rate_category_name</TEXTFIELD>
+			</FORM>
+		</GRID>
+		<GRID noorg="true" keyfield="rate_plan_id" name="Corporate Rate Plans" tab.count="count(rate_plan_id)" table="vw_corporate_rate_plan">
+			<TEXTFIELD w="75" title="Corporate Rate Plan ID">rate_plan_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Corporate Rate Plan">rate_plan_name</TEXTFIELD>
+			<FORM noorg="true" keyfield="rate_plan_id" name="Corporate Rate Plan" linkfield="rate_plan_id" table="corporate_rate_plan">
+				<TEXTFIELD w="150" h="20" x="10" y="10" title="Corporate Rate Plan">rate_plan_name</TEXTFIELD>
+			</FORM>
+		</GRID>
+		<GRID noorg="true" keyfield="rate_type_id" name="Corporate Rate Types" tab.count="count(rate_type_id)" table="vw_corporate_rate_types">
+			<TEXTFIELD w="75" title="Rate Type ID">rate_type_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Plan">rate_plan_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Age Limit">age_limit</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Category">corporate_rate_category_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Details">details</TEXTFIELD>
+			<GRID noorg="true" keyfield="corporate_rate_id" name="Rates" tab.count="count(corporate_rate_id)" linkfield="rate_type_id" table="vw_corporate_rates">
+				<TEXTFIELD w="75" title="Rate Type">rate_plan_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Days From">days_from</TEXTFIELD>
+				<TEXTFIELD w="75" title="Days To">days_to</TEXTFIELD>
+				<TEXTDECIMAL w="75" title="Excluding USA and Canada">standard_rate</TEXTDECIMAL>
+				<TEXTDECIMAL w="75" title="Including USA and Canada">north_america_rate</TEXTDECIMAL>
+				<FORM noorg="true" keyfield="corporate_rate_id" name="Rates" linkfield="rate_type_id" table="corporate_rates">
+					<TEXTFIELD w="150" h="20" x="10" y="10" title="Days From">days_from</TEXTFIELD>
+					<TEXTFIELD w="150" h="20" x="290" y="10" title="Days To">days_to</TEXTFIELD>
+					<TEXTDECIMAL w="150" h="20" x="10" y="30" title="Excluding USA and Canada">standard_rate</TEXTDECIMAL>
+					<TEXTDECIMAL w="150" h="20" x="290" y="30" title="Including USA and Canada">north_america_rate</TEXTDECIMAL>
+				</FORM>
+			</GRID>
+			<GRID noorg="true" keyfield="benefit_id" name="Benefits" tab.count="count(benefit_id)" linkfield="rate_type_id" table="vw_corporate_benefits">
+				<TEXTFIELD w="75" title="Benefit Type">corporate_benefit_type_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Rate Type">rate_type_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="individual">individual</TEXTFIELD>
+				<TEXTFIELD w="75" title="Others">others</TEXTFIELD>
+				<FORM noorg="true" keyfield="benefit_id" name="Benefits" linkfield="rate_type_id" table="corporate_benefits">
+					<COMBOBOX w="430" h="20" lpfield="corporate_benefit_type_name" x="10" y="10" lptable="corporate_benefit_types" title="Benefit Type ID">corporate_benefit_type_id</COMBOBOX>
+					<TEXTAREA w="430" h="70" x="10" y="30" title="Individual">individual</TEXTAREA>
+					<TEXTAREA w="430" h="70" x="10" y="100" title="Others">others</TEXTAREA>
+				</FORM>
+			</GRID>
+			<FORM noorg="true" keyfield="rate_type_id" name="Corporate Rate Types" table="corporate_rate_types">
+				<COMBOBOX w="150" h="20" lpfield="rate_plan_name" x="10" y="30" lptable="corporate_rate_plan" title="Rate Type">rate_plan_id</COMBOBOX>
+				<COMBOBOX w="150" h="20" lpfield="corporate_rate_category_name" x="10" y="30" lptable="corporate_rate_category" title="Rate Category">corporate_rate_category_id</COMBOBOX>
+				<TEXTAREA w="430" h="70" x="10" y="30" title="Details">details</TEXTAREA>
+			</FORM>
+		</GRID>
+		<GRID noorg="true" keyfield="corporate_benefit_type_id" name="Corporate Benefit Types" tab.count="count(corporate_benefit_type_id)" table="corporate_benefit_types">
+			<TEXTFIELD w="75" title="Benefit Type ID">corporate_benefit_type_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Benefit Type Name">corporate_benefit_type_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Benefits Section">corporate_section</TEXTFIELD>
+			<FORM noorg="true" keyfield="corporate_benefit_type_id" name="Benefit Types" table="corporate_benefit_types">
+				<TEXTFIELD w="150" h="20" x="10" y="10" title="Section">corporate_section</TEXTFIELD>
+				<TEXTFIELD w="150" h="20" x="10" y="10" title="Benefit Type Name">corporate_benefit_type_name</TEXTFIELD>
+				<TEXTAREA w="430" h="70" x="10" y="30" title="Details">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" h="550" name="Exchange Rate" key="201">
+		<GRID noorg="true" keyfield="currency_id" name="Currency" table="currency">
+			<TEXTFIELD w="75" title="Currency ID">currency_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Currency Name">currency_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Currency Symbol">currency_symbol</TEXTFIELD>
+			<GRID noorg="true" keyfield="currency_rate_id" name="Currency Rates" linkfield="currency_id" table="currency_rates">
+				<TEXTFIELD w="75" title="Currency Rate ID">currency_rate_id</TEXTFIELD>
+				<TEXTDATE w="75" title="Exchange Date">exchange_date</TEXTDATE>
+				<TEXTDECIMAL w="75" title="Exchange Rate">exchange_rate</TEXTDECIMAL>
+				<FORM keyfield="currency_rate_id" name="Currency Rates" linkfield="currency_id" table="currency_rates">
+					<TEXTDATE w="150" h="20" x="10" y="10" title="Exchange Date">exchange_date</TEXTDATE>
+					<TEXTDECIMAL w="150" h="20" x="290" y="10" title="Exchange Rate">exchange_rate</TEXTDECIMAL>
+				</FORM>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK role="consultant" w="700" h="550" name="My Insurance" key="65">
+		<GRID keyfield="passenger_id" name="Insurance Sold" where="approved is true AND incountry is false AND customer_code is  null " tab.count="count(passenger_id)" user="entity_id" table="vw_passengers">
+			<TEXTFIELD w="75" title="Policy Number">policy_number</TEXTFIELD>
+			<TEXTFIELD w="75" title="Agency Name">org_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Category Name">rate_category_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Plan Name">rate_plan_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date From">days_from</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date To">days_to</TEXTFIELD>
+			<TEXTFIELD w="75" title="Name">passenger_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Mobile Number">passenger_mobile</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passenger Email">passenger_email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passport Number">passport_num</TEXTFIELD>
+			<TEXTFIELD w="75" title="Destown">destown</TEXTFIELD>
+			<TEXTDECIMAL w="75" title="Totalamount Covered">totalamount_covered</TEXTDECIMAL>
+			<JASPER reportfile="certificate.jasper" name="Emergency Card" linkfield="passenger_id"></JASPER>
+			<JASPER reportfile="letterToEmbassy.jasper" name="Letter To Embassy" linkfield="passenger_id"></JASPER>
+		</GRID>
+		<GRID keyfield="passenger_id" name="Corporate Insurance" where="approved is true AND incountry is false AND customer_code is not null" tab.count="count(passenger_id)" user="entity_id" table="vw_corporate_passengers">
+			<TEXTFIELD w="75" title="Policy Number">policy_number</TEXTFIELD>
+			<TEXTFIELD w="75" title="Agency Name">org_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Category Name">corporate_rate_category_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Plan Name">rate_plan_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date From">days_from</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date To">days_to</TEXTFIELD>
+			<TEXTFIELD w="75" title="Name">passenger_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Mobile Number">passenger_mobile</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passenger Email">passenger_email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passport Number">passport_num</TEXTFIELD>
+			<TEXTFIELD w="75" title="Destown">destown</TEXTFIELD>
+			<TEXTDECIMAL w="75" title="Total Amount Covered">totalamount_covered</TEXTDECIMAL>
+			<JASPER reportfile="corporate_certificate.jasper" name="Emergency Card" linkfield="passenger_id"></JASPER>
+			<JASPER reportfile="corporate_letterToEmbassy.jasper" name="Letter To Embassy" linkfield="passenger_id"></JASPER>
+		</GRID>
+		<GRID keyfield="passenger_id" name="In Country Insurance Sold" where="approved is true AND customer_code is  null AND incountry is true " tab.count="count(passenger_id)" user="entity_id" table="vw_passengers">
+			<TEXTFIELD w="75" title="Policy Number">policy_number</TEXTFIELD>
+			<TEXTFIELD w="75" title="Agency Name">org_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Category Name">rate_category_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Plan Name">rate_plan_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date From">days_from</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date To">days_to</TEXTFIELD>
+			<TEXTFIELD w="75" title="Name">passenger_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Mobile Number">passenger_mobile</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passenger Email">passenger_email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passport Number">passport_num</TEXTFIELD>
+			<TEXTFIELD w="75" title="Destown">destown</TEXTFIELD>
+			<TEXTDECIMAL w="75" title="Totalamount Covered">totalamount_covered</TEXTDECIMAL>
+			<JASPER reportfile="certificate.jasper" name="Emergency Card" linkfield="passenger_id"></JASPER>
+		</GRID>
+		<GRID keyfield="passenger_id" name="In Country Corporate Insurance" where="approved is true AND incountry is true AND customer_code is not null" tab.count="count(passenger_id)" user="entity_id" table="vw_corporate_passengers">
+			<TEXTFIELD w="75" title="Policy Number">policy_number</TEXTFIELD>
+			<TEXTFIELD w="75" title="Agency Name">org_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Category Name">corporate_rate_category_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Plan Name">rate_plan_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date From">days_from</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date To">days_to</TEXTFIELD>
+			<TEXTFIELD w="75" title="Name">passenger_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Mobile Number">passenger_mobile</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passenger Email">passenger_email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passport Number">passport_num</TEXTFIELD>
+			<TEXTFIELD w="75" title="Destown">destown</TEXTFIELD>
+			<TEXTDECIMAL w="75" title="Total Amount Covered">totalamount_covered</TEXTDECIMAL>
+			<JASPER reportfile="corporate_certificate.jasper" name="Emergency Card" linkfield="passenger_id"></JASPER>
+		</GRID>
+		<GRID keyfield="passenger_id" name="Insurance Canceled" where="approved is false" tab.count="count(passenger_id)" user="entity_id" table="vw_passengers">
+			<TEXTFIELD w="75" title="Policy Number">policy_number</TEXTFIELD>
+			<TEXTFIELD w="75" title="Agency Name">org_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Category Name">rate_category_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Plan Name">rate_plan_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date From">days_from</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date To">days_to</TEXTFIELD>
+			<TEXTFIELD w="75" title="Name">passenger_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Mobile Number">passenger_mobile</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passenger Email">passenger_email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passport Number">passport_num</TEXTFIELD>
+			<TEXTFIELD w="75" title="Destown">destown</TEXTFIELD>
+			<TEXTDECIMAL w="75" title="Totalamount Covered">totalamount_covered</TEXTDECIMAL>
+		</GRID>
+	</DESK>
+	<DESK w="700" h="550" name="Insurance Sold" key="35">
+		<GRID noorg="true" role="admin" keyfield="passenger_id" name="Individual Insurance Sold" orderby="passenger_id DESC" where="approved is true AND incountry is false AND customer_code is  null " tab.count="count(passenger_id)" table="vw_passengers">
+			<TEXTFIELD w="75" title="Policy Number">policy_number</TEXTFIELD>
+			<TEXTFIELD w="75" title="Agency Name">org_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Consultant Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Category Name">rate_category_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Plan Name">rate_plan_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date From">days_from</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date To">days_to</TEXTFIELD>
+			<TEXTFIELD w="75" title="Name">passenger_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Mobile Number">passenger_mobile</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passenger Email">passenger_email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passport Number">passport_num</TEXTFIELD>
+			<TEXTFIELD w="75" title="Destown">destown</TEXTFIELD>
+			<TEXTDECIMAL w="75" title="Totalamount Covered">totalamount_covered</TEXTDECIMAL>
+			<TEXTFIELD w="75" title="Created On">approved_date</TEXTFIELD>
+			<ACTIONS>
+				<ACTION approval="1" fnct="upd_passenger">Cancel</ACTION>
+			</ACTIONS>
+			<JASPER reportfile="certificate.jasper" name="Emergency Card" linkfield="passenger_id"></JASPER>
+			<JASPER reportfile="letterToEmbassy.jasper" name="Letter To Embassy" linkfield="passenger_id"></JASPER>
+			<JASPER role="finance" reportfile="invoice.jasper" name="Invoice" linkfield="passenger_id"></JASPER>
+		</GRID>
+		<GRID noorg="true" role="admin" keyfield="passenger_id" name="Corporate Insurance Sold" orderby="passenger_id DESC" where="approved is true AND incountry is false AND customer_code is not null" tab.count="count(passenger_id)" table="vw_corporate_passengers">
+			<TEXTFIELD w="75" title="Policy Number">policy_number</TEXTFIELD>
+			<TEXTFIELD w="75" title="Agency Name">org_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Consultant Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Category Name">corporate_rate_category_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Plan Name">rate_plan_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date From">days_from</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date To">days_to</TEXTFIELD>
+			<TEXTFIELD w="75" title="Name">passenger_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Mobile Number">passenger_mobile</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passenger Email">passenger_email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passport Number">passport_num</TEXTFIELD>
+			<TEXTFIELD w="75" title="Destown">destown</TEXTFIELD>
+			<TEXTDECIMAL w="75" title="Total Amount Covered">totalamount_covered</TEXTDECIMAL>
+			<TEXTFIELD w="75" title="Created On">approved_date</TEXTFIELD>
+			<ACTIONS>
+				<ACTION approval="1" fnct="upd_passenger">Cancel</ACTION>
+			</ACTIONS>
+			<JASPER reportfile="corporate_certificate.jasper" name="Emergency Card" linkfield="passenger_id"></JASPER>
+			<JASPER reportfile="corporate_letterToEmbassy.jasper" name="Letter To Embassy" linkfield="passenger_id"></JASPER>
+			<JASPER reportfile="cop_invoice.jasper" name="Invoice" linkfield="passenger_id"></JASPER>
+		</GRID>
+		<GRID noorg="true" role="admin" keyfield="passenger_id" name="In Country Insurance Sold" orderby="passenger_id DESC" where="approved is true AND customer_code is  null AND incountry is true " tab.count="count(passenger_id)" table="vw_passengers">
+			<TEXTFIELD w="75" title="Policy Number">policy_number</TEXTFIELD>
+			<TEXTFIELD w="75" title="Agency Name">org_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Consultant Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Category Name">rate_category_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Plan Name">rate_plan_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date From">days_from</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date To">days_to</TEXTFIELD>
+			<TEXTFIELD w="75" title="Name">passenger_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Mobile Number">passenger_mobile</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passenger Email">passenger_email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passport Number">passport_num</TEXTFIELD>
+			<TEXTFIELD w="75" title="Destown">destown</TEXTFIELD>
+			<TEXTDECIMAL w="75" title="Totalamount Covered">totalamount_covered</TEXTDECIMAL>
+			<TEXTFIELD w="75" title="Created On">approved_date</TEXTFIELD>
+			<ACTIONS>
+				<ACTION approval="1" fnct="upd_passenger">Cancel</ACTION>
+			</ACTIONS>
+			<JASPER reportfile="certificate.jasper" name="Emergency Card" linkfield="passenger_id"></JASPER>
+		</GRID>
+		<GRID noorg="true" role="admin" keyfield="passenger_id" name="In Country Corporate Insurance" where="approved is true AND incountry is true AND customer_code is not null" tab.count="count(passenger_id)" table="vw_corporate_passengers">
+			<TEXTFIELD w="75" title="Policy Number">policy_number</TEXTFIELD>
+			<TEXTFIELD w="75" title="Agency Name">org_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Category Name">corporate_rate_category_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Plan Name">rate_plan_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date From">days_from</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date To">days_to</TEXTFIELD>
+			<TEXTFIELD w="75" title="Name">passenger_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Mobile Number">passenger_mobile</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passenger Email">passenger_email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passport Number">passport_num</TEXTFIELD>
+			<TEXTFIELD w="75" title="Destown">destown</TEXTFIELD>
+			<TEXTDECIMAL w="75" title="Total Amount Covered">totalamount_covered</TEXTDECIMAL>
+			<ACTIONS>
+				<ACTION approval="1" fnct="upd_passenger">Cancel</ACTION>
+			</ACTIONS>
+			<JASPER reportfile="corporate_certificate.jasper" name="Emergency Card" linkfield="passenger_id"></JASPER>
+			<JASPER reportfile="cop_invoice.jasper" name="Invoice" linkfield="passenger_id"></JASPER>
+		</GRID>
+		<GRID noorg="true" role="admin" keyfield="passenger_id" name="Insurance Canceled" where="approved is false" tab.count="count(passenger_id)" table="vw_allpassengers">
+			<TEXTFIELD w="75" title="Policy Number">policy_number</TEXTFIELD>
+			<TEXTFIELD w="75" title="Agency Name">org_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Category Name">rate_category_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Plan Name">rate_plan_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date From">days_from</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date To">days_to</TEXTFIELD>
+			<TEXTFIELD w="75" title="Name">passenger_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Mobile Number">passenger_mobile</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passenger Email">passenger_email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passport Number">passport_num</TEXTFIELD>
+			<TEXTFIELD w="75" title="Destown">destown</TEXTFIELD>
+			<TEXTDECIMAL w="75" title="Totalamount Covered">totalamount_covered</TEXTDECIMAL>
+			<ACTIONS>
+				<ACTION approval="2" fnct="upd_passenger">Revert</ACTION>
+			</ACTIONS>
+		</GRID>
+	</DESK>
+	<DESK w="700" h="500" name="EMails" key="60">
+		<GRID noorg="true" keyfield="sys_emailed_id" name="Email List" orderby="sys_email_id DESC" table="vw_sys_emailed">
+			<TEXTFIELD w="75" title="Email ID">sys_email_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Email Name">sys_email_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Emailed ID">sys_emailed_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Table ID">table_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Table Name">table_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Email Type">email_type</TEXTFIELD>
+			<CHECKBOX w="75" title="Emailed">emailed</CHECKBOX>
+			<TEXTFIELD w="75" title="Narrative">narrative</TEXTFIELD>
+		</GRID>
+		<GRID noorg="true" role="admin" keyfield="sys_email_id" name="EMails" table="sys_emails">
+			<TEXTFIELD w="75" title="Email ID">sys_email_id</TEXTFIELD>
+			<TEXTFIELD w="275" title="Email Name">sys_email_name</TEXTFIELD>
+			<TEXTFIELD w="275" title="Title">title</TEXTFIELD>
+			<FORM noorg="true" th="210" keyfield="sys_email_id" name="EMails" table="sys_emails">
+				<TEXTFIELD w="350" h="20" x="10" y="10" title="Email Name">sys_email_name</TEXTFIELD>
+				<TEXTFIELD w="430" h="20" x="10" y="30" title="Title">title</TEXTFIELD>
+				<EDITOR tab="Details" w="530" h="170" x="10" y="2">details</EDITOR>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" h="550" name="Sales Report" key="40">
+		<FILTER role="master" split="150" w="700" h="550" name="All Insurance Sales Report" type="vert" key="order_date">
+			<FILTERFORM name="All Insurance  Sales Report ">
+				<TEXTDATE w="150" h="10" x="10" y="50" title="Starting From" key="mindate">minDate</TEXTDATE>
+				<TEXTDATE w="150" h="20" x="290" y="50" title="Ending at" key="maxdate">maxDate</TEXTDATE>
+			</FILTERFORM>
+			<JASPER reportfile="vw_allpassengers.jasper" name="All Insurance Sales Report"></JASPER>
+		</FILTER>
+		<FILTER role="admin,director" split="150" w="700" h="550" name="Individual Sales Report" type="vert" key="order_date">
+			<FILTERFORM name="Individual Sales Report ">
+				<TEXTDATE w="150" h="10" x="10" y="50" title="Starting From" key="mindate">minDate</TEXTDATE>
+				<TEXTDATE w="150" h="20" x="290" y="50" title="Ending at" key="maxdate">maxDate</TEXTDATE>
+			</FILTERFORM>
+			<JASPER reportfile="vw_passengers.jasper" name="Individual Sales Report"></JASPER>
+		</FILTER>
+		<FILTER role="admin,director" split="150" w="700" h="550" name="Corporate Sales Report" type="vert" key="order_date">
+			<FILTERFORM name="Corporate Sales Report ">
+				<TEXTDATE w="150" h="10" x="10" y="50" title="Starting From" key="mindate">minDate</TEXTDATE>
+				<TEXTDATE w="150" h="20" x="290" y="50" title="Ending at" key="maxdate">maxDate</TEXTDATE>
+			</FILTERFORM>
+			<JASPER reportfile="vw_corporates.jasper" name="Corporate Sales Report"></JASPER>
+		</FILTER>
+		<FILTER role="admin,director" split="150" w="700" h="550" name="Agency Insurance Sales Report" type="vert" key="order_date">
+			<FILTERFORM name="Agency Insurance Sales Report ">
+				<TEXTDATE w="150" h="10" x="10" y="50" title="Starting From" key="mindate">minDate</TEXTDATE>
+				<TEXTDATE w="150" h="20" x="290" y="50" title="Ending at" key="maxdate">maxDate</TEXTDATE>
+				<COMBOBOX noorg="true" w="30" h="20" lpfield="org_name" x="10" y="10" lptable="orgs" title="Agency Name" lpkey="org_id">org_id</COMBOBOX>
+			</FILTERFORM>
+			<JASPER reportfile="vw_agency_insurance.jasper" name="Agency Insurance Sales"></JASPER>
+		</FILTER>
+		<FILTER role="admin,director" split="150" w="700" h="550" name="Agency Corporate Sales Report" type="vert" key="order_date">
+			<FILTERFORM name="Agency Corporate Sales Report ">
+				<TEXTDATE w="150" h="10" x="10" y="50" title="Starting From" key="mindate">minDate</TEXTDATE>
+				<TEXTDATE w="150" h="20" x="290" y="50" title="Ending at" key="maxdate">maxDate</TEXTDATE>
+				<COMBOBOX noorg="true" w="30" h="20" lpfield="org_name" x="10" y="10" lptable="orgs" title="Agency Name" lpkey="org_id">org_id</COMBOBOX>
+			</FILTERFORM>
+			<JASPER reportfile="vw_agency_corporate.jasper" name="Agency Corporate Sales"></JASPER>
+		</FILTER>
+		<JASPER role="master" reportfile="vw_summary.jasper" name="Summary Report"></JASPER>
+		<JASPER role="master" reportfile="vw_summary_period.jasper" name="Monthly Summary Report"></JASPER>
+	</DESK>
+	<DESK w="700" h="550" name="Agency Insurance Sold" key="36">
+		<GRID role="manager,finance" keyfield="passenger_id" name="Individual Insurance Sold" orderby="passenger_id DESC" where="approved is true AND incountry is false AND customer_code is  null " tab.count="count(passenger_id)" table="vw_passengers">
+			<TEXTFIELD w="75" title="Policy Number">policy_number</TEXTFIELD>
+			<TEXTFIELD w="75" title="Agency Name">org_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Consultant Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Category Name">rate_category_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Plan Name">rate_plan_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date From">days_from</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date To">days_to</TEXTFIELD>
+			<TEXTFIELD w="75" title="Name">passenger_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Mobile Number">passenger_mobile</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passenger Email">passenger_email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passport Number">passport_num</TEXTFIELD>
+			<TEXTFIELD w="75" title="Destown">destown</TEXTFIELD>
+			<TEXTDECIMAL w="75" title="Totalamount Covered">totalamount_covered</TEXTDECIMAL>
+			<TEXTFIELD w="75" title="Created On">approved_date</TEXTFIELD>
+			<JASPER reportfile="certificate.jasper" name="Emergency Card" linkfield="passenger_id"></JASPER>
+			<JASPER reportfile="letterToEmbassy.jasper" name="Letter To Embassy" linkfield="passenger_id"></JASPER>
+			<JASPER role="finance" reportfile="invoice.jasper" name="Invoice" linkfield="passenger_id"></JASPER>
+		</GRID>
+		<GRID role="manager,finance" keyfield="passenger_id" name="Corporate Insurance Sold" orderby="passenger_id DESC" where="approved is true AND incountry is false AND customer_code is not null" tab.count="count(passenger_id)" table="vw_corporate_passengers">
+			<TEXTFIELD w="75" title="Policy Number">policy_number</TEXTFIELD>
+			<TEXTFIELD w="75" title="Agency Name">org_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Consultant Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Category Name">corporate_rate_category_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Plan Name">rate_plan_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date From">days_from</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date To">days_to</TEXTFIELD>
+			<TEXTFIELD w="75" title="Name">passenger_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Mobile Number">passenger_mobile</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passenger Email">passenger_email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passport Number">passport_num</TEXTFIELD>
+			<TEXTFIELD w="75" title="Destown">destown</TEXTFIELD>
+			<TEXTDECIMAL w="75" title="Total Amount Covered">totalamount_covered</TEXTDECIMAL>
+			<TEXTFIELD w="75" title="Created On">approved_date</TEXTFIELD>
+			<JASPER reportfile="corporate_certificate.jasper" name="Emergency Card" linkfield="passenger_id"></JASPER>
+			<JASPER reportfile="corporate_letterToEmbassy.jasper" name="Letter To Embassy" linkfield="passenger_id"></JASPER>
+			<JASPER role="finance" reportfile="cop_invoice.jasper" name="Invoice" linkfield="passenger_id"></JASPER>
+		</GRID>
+		<GRID role="manager,finance" keyfield="passenger_id" name="In Country Insurance Sold" orderby="passenger_id DESC" where="approved is true AND customer_code is  null AND incountry is true " tab.count="count(passenger_id)" table="vw_passengers">
+			<TEXTFIELD w="75" title="Policy Number">policy_number</TEXTFIELD>
+			<TEXTFIELD w="75" title="Agency Name">org_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Consultant Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Category Name">rate_category_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Plan Name">rate_plan_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date From">days_from</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date To">days_to</TEXTFIELD>
+			<TEXTFIELD w="75" title="Name">passenger_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Mobile Number">passenger_mobile</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passenger Email">passenger_email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passport Number">passport_num</TEXTFIELD>
+			<TEXTFIELD w="75" title="Destown">destown</TEXTFIELD>
+			<TEXTDECIMAL w="75" title="Totalamount Covered">totalamount_covered</TEXTDECIMAL>
+			<TEXTFIELD w="75" title="Created On">approved_date</TEXTFIELD>
+			<JASPER reportfile="certificate.jasper" name="Emergency Card" linkfield="passenger_id"></JASPER>
+		</GRID>
+		<GRID role="manager,finance" keyfield="passenger_id" name="In Country Corporate Insurance" where="approved is true AND incountry is true AND customer_code is not null" tab.count="count(passenger_id)" table="vw_corporate_passengers">
+			<TEXTFIELD w="75" title="Policy Number">policy_number</TEXTFIELD>
+			<TEXTFIELD w="75" title="Agency Name">org_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Consultant Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Category Name">corporate_rate_category_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Plan Name">rate_plan_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date From">days_from</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date To">days_to</TEXTFIELD>
+			<TEXTFIELD w="75" title="Name">passenger_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Mobile Number">passenger_mobile</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passenger Email">passenger_email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passport Number">passport_num</TEXTFIELD>
+			<TEXTFIELD w="75" title="Destown">destown</TEXTFIELD>
+			<TEXTDECIMAL w="75" title="Total Amount Covered">totalamount_covered</TEXTDECIMAL>
+			<TEXTFIELD w="75" title="Created On">approved_date</TEXTFIELD>
+			<JASPER reportfile="corporate_certificate.jasper" name="Emergency Card" linkfield="passenger_id"></JASPER>
+			<JASPER role="finance" reportfile="cop_invoice.jasper" name="Invoice" linkfield="passenger_id"></JASPER>
+		</GRID>
+		<GRID role="manager,finance" keyfield="passenger_id" name="Insurance Canceled" where="approved is false" tab.count="count(passenger_id)" table="vw_passengers">
+			<TEXTFIELD w="75" title="Policy Number">policy_number</TEXTFIELD>
+			<TEXTFIELD w="75" title="Agency Name">org_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Category Name">rate_category_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Rate Plan Name">rate_plan_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date From">days_from</TEXTFIELD>
+			<TEXTFIELD w="75" title="Date To">days_to</TEXTFIELD>
+			<TEXTFIELD w="75" title="Name">passenger_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Mobile Number">passenger_mobile</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passenger Email">passenger_email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Passport Number">passport_num</TEXTFIELD>
+			<TEXTFIELD w="75" title="Destown">destown</TEXTFIELD>
+			<TEXTDECIMAL w="75" title="Totalamount Covered">totalamount_covered</TEXTDECIMAL>
+		</GRID>
+	</DESK>
+	<DESK w="700" h="550" name="Transaction Invoice" key="206">
+		<FILTER role="admin" split="150" w="700" h="550" name="Transaction Invoice" type="vert" key="order_date">
+			<FILTERFORM name="Transaction Invoice ">
+				<TEXTDATE w="150" h="10" x="10" y="50" title="Starting From" key="mindate">minDate</TEXTDATE>
+				<TEXTDATE w="150" h="20" x="290" y="50" title="Ending at" key="maxdate">maxDate</TEXTDATE>
+			</FILTERFORM>
+			<JASPER reportfile="vw_trans_invoice.jasper" name="Transaction Invoice"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" h="550" name="Travel Schedule" key="211">
+		<FILTER role="admin" split="150" w="700" h="550" name="Travel Schedule" type="vert" key="order_date">
+			<FILTERFORM name="Travel Schedule ">
+				<TEXTDATE w="150" h="10" x="10" y="50" title="Starting From" key="mindate">minDate</TEXTDATE>
+				<TEXTDATE w="150" h="20" x="290" y="50" title="Ending at" key="maxdate">maxDate</TEXTDATE>
+			</FILTERFORM>
+			<JASPER reportfile="travel_schedule.jasper" name="Travel Schedule"></JASPER>
+		</FILTER>
+	</DESK>
+</APP>

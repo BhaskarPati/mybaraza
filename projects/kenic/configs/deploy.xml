@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<DEPLOY dbclass="org.postgresql.Driver" dbpath="jdbc:postgresql://localhost/epp" username="root" password="invent"
+	namedvar="/var/named/chroot/var/named/" command="rndc reload" owner="named:named">
+	<INCREMENT table="automation" wheresql="(job_type = 'zone_generation')">delay</INCREMENT>
+	<ZONEDIR table="configuration" wheresql="(name = 'zoneFileDirectory')">value</ZONEDIR>
+	<GENERATION table="automation" wheresql="(job_type = 'zone_generation')" function="('root.zones.' || to_char(last_run, 'YYYY.MM.DD.HH24MI') || '.zip')">lastgeneration</GENERATION>
+</DEPLOY>

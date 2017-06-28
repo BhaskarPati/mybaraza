@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vw_expenditures" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="BlankPage" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e2d661e5-6880-43e6-bd5d-16570953f436">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="581"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="filterid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="orgid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="orgwhere" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="organd" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="strategy_name" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT vw_strategys.strategy_name, vw_expenditures.expenditure_name, vw_expenditures.amount, vw_expenditures.currency_symbol, vw_expenditures.pr_date, vw_expenditures.exchange_rate, vw_expenditures.base_amount
+FROM vw_strategys, vw_expenditures
+WHERE vw_strategys.strategy_id = vw_expenditures.expenditure_id AND vw_strategys.strategy_name=$P{strategy_name}
+ORDER BY vw_strategys.strategy_name, vw_expenditures.pr_date]]>
+	</queryString>
+	<field name="strategy_name" class="java.lang.String"/>
+	<field name="expenditure_name" class="java.lang.String"/>
+	<field name="amount" class="java.lang.Float"/>
+	<field name="currency_symbol" class="java.lang.String"/>
+	<field name="pr_date" class="java.sql.Date"/>
+	<field name="exchange_rate" class="java.lang.Float"/>
+	<field name="base_amount" class="java.lang.Float"/>
+	<variable name="amount_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{base_amount}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="1" y="0" width="446" height="24" uuid="c9e4b0e3-2aea-4406-aa4d-c2444544b69f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Expenditure]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="0" y="1" width="104" height="15" forecolor="#000000" uuid="8e36c0b3-2581-4d75-a527-da6b2a8d6afe"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Expenditure ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="258" y="1" width="154" height="15" forecolor="#000000" uuid="c269ebbd-94d5-4d5c-a226-0009da58aabb"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Currency ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="437" y="2" width="75" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="6bbee66c-1842-4a84-b418-11951cdd2df1"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Base Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="170" y="1" width="45" height="15" forecolor="#000000" uuid="efda2cae-4135-440a-9d1b-e39a3b111b17"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="567" y="1" width="154" height="15" forecolor="#000000" uuid="c59cfcd1-3bf7-4c48-abc4-710b9143a474"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Spend Date]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="802" height="15" uuid="725a63f6-a453-485a-8679-09c3a14fa400"/>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement style="Detail" x="0" y="0" width="104" height="15" uuid="df7265be-5ba7-4871-a369-5246822a6be9"/>
+					<textElement>
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{expenditure_name}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement style="Detail" x="258" y="0" width="154" height="15" uuid="2ae839dc-f077-4e76-98cb-a318998808a9"/>
+					<textElement>
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{currency_symbol}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="true">
+					<reportElement style="Detail" x="147" y="0" width="68" height="15" uuid="1795fa31-0d2c-4d1c-9e3b-2f9906ee4abc"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement style="Detail" x="567" y="0" width="154" height="15" uuid="8c9fd24e-631f-418d-bdb9-2e28004b12a7"/>
+					<textElement>
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{pr_date}.format("dd/MM/YYYY")]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="412" y="0" width="100" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="84eb2f2a-dd73-4a25-bc10-deb9d5da499f"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{base_amount}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="20" splitType="Stretch">
+			<textField pattern="#,##0">
+				<reportElement x="412" y="0" width="100" height="20" uuid="abddc491-644e-4732-b2e1-89da05e4f257"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{amount_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="5" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Unresolved proposals" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="BlankPage" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f3f8aa00-3892-4e2e-af55-68b5f13c6307">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="filterid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="orgid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="orgwhere" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="organd" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="project_name" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT vw_projects.project_id, vw_projects.project_name, vw_projects.project_start_date, vw_projects.project_ending_date, vw_projects.project_reference, vw_proposals.proposal_id, vw_proposals.project_name, vw_proposals.donor_name, vw_proposals.proposal_status_name, vw_proposals.start_date, vw_proposals.location, vw_proposals.proposal_submit_date, vw_proposals.approved, vw_proposals.dropped, vw_proposals.budget, vw_proposals.proposal, vw_proposal_followup.activity, vw_proposal_followup.date
+FROM vw_proposal_followup, vw_proposals, vw_projects
+WHERE vw_proposal_followup.proposal_id = vw_proposals.proposal_id AND vw_projects.project_id = vw_proposals.project_id AND (vw_proposals.approved=false AND vw_proposals.dropped=false)
+ORDER BY vw_projects.project_start_date, vw_proposals.proposal_submit_date, vw_proposal_followup.date]]>
+	</queryString>
+	<field name="project_id" class="java.lang.String"/>
+	<field name="project_name" class="java.lang.String"/>
+	<field name="project_start_date" class="java.sql.Date"/>
+	<field name="project_ending_date" class="java.sql.Date"/>
+	<field name="project_reference" class="java.lang.String"/>
+	<field name="proposal_id" class="java.lang.Integer"/>
+	<field name="donor_name" class="java.lang.String"/>
+	<field name="proposal_status_name" class="java.lang.String"/>
+	<field name="start_date" class="java.sql.Date"/>
+	<field name="location" class="java.lang.String"/>
+	<field name="proposal_submit_date" class="java.sql.Date"/>
+	<field name="approved" class="java.lang.Boolean"/>
+	<field name="dropped" class="java.lang.Boolean"/>
+	<field name="budget" class="java.lang.Float"/>
+	<field name="proposal" class="java.lang.String"/>
+	<field name="activity" class="java.lang.String"/>
+	<field name="date" class="java.sql.Date"/>
+	<group name="Projects">
+		<groupExpression><![CDATA[$F{project_id}]]></groupExpression>
+		<groupHeader>
+			<band height="64">
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement mode="Transparent" x="102" y="3" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="a15f70b2-7f92-4e33-a8ac-f71a4af3e827"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{project_id}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement mode="Transparent" x="102" y="23" width="301" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="9c175246-89dd-45df-b8ad-0eb6d22e3a93"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{project_name}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement mode="Transparent" x="102" y="43" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="e611686e-19c0-4f20-b8ab-1e0f9d02eb3b"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{project_start_date}.format("dd/MM/YYYY")]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement mode="Transparent" x="503" y="43" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="d9515cb1-af09-41a1-9b10-435a6c0af477"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{project_ending_date}.format("dd/MM/YYYY")]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement mode="Transparent" x="503" y="3" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="83e77f6d-daca-44d3-9922-85ed6528485f"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{project_reference}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Transparent" x="2" y="3" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="5ee1ef55-e054-49b4-bbd4-393ec420837f"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Project ID]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="2" y="23" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="c6f9520d-cd5b-44e6-b603-10897bd4faf1"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Project ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="3" y="43" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="b93e9a99-f935-4be1-9bb2-1f4b5ad03f16"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Project Start Date]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="408" y="43" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="779f9d82-0b30-442f-aa0c-380778ac87f5"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Project Ending Date]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="403" y="3" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="61b47e0c-b3f0-4aec-a1ed-4fd625d47a83"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Project Reference]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Proposal">
+		<groupExpression><![CDATA[$F{proposal_id}]]></groupExpression>
+		<groupHeader>
+			<band height="62">
+				<staticText>
+					<reportElement mode="Transparent" x="0" y="0" width="84" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="af437437-61a2-4c2f-b07a-25730714bf88"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Proposal ID]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" mode="Transparent" x="84" y="0" width="64" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="e9428ce3-af44-4d14-b3a9-2021c51bac36"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Donor Name]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" mode="Transparent" x="148" y="0" width="64" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="155ce1bf-d1e1-40fe-920f-d872a62b8e5f"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Proposal Status Name]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" mode="Transparent" x="216" y="0" width="64" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="0574f3be-2c6f-4501-a5b6-d8e298ca15dd"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Start Date]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" mode="Transparent" x="344" y="0" width="64" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="c2484f0f-88eb-41fc-9bca-d70e2296189a"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Proposal Submit Date]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" mode="Transparent" x="280" y="0" width="64" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="2dbada12-598d-4f10-b428-77e9292d0211"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Location]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" mode="Transparent" x="408" y="0" width="64" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="e15facc7-5f27-4cbd-83ac-e94482da4426"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Approved]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" mode="Transparent" x="472" y="0" width="64" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="d991b2ba-7982-406b-8f9c-663cb665f8c5"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Dropped]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" mode="Transparent" x="561" y="0" width="39" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="912bbed8-151f-4e72-91b1-81b332722685"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Budget]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" mode="Transparent" x="600" y="0" width="64" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="35f5ed69-f534-4150-82be-303c85e294e1"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Proposal]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="2" y="15" width="82" height="20" uuid="03331317-53f0-4f37-b77d-a79e2bd0b59b"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{proposal_id}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+					<reportElement mode="Transparent" x="84" y="16" width="64" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="09d0faa9-9bf9-44f9-8908-377a04cf34b5"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{donor_name}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+					<reportElement mode="Transparent" x="603" y="15" width="64" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="b29813fd-81ef-4205-b205-c65121f691f3"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{proposal}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement mode="Transparent" x="216" y="16" width="64" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="7cfc45c9-0a04-42ec-8579-8e5ffb0b172b"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{start_date}.format("dd/MM/YYYY")]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+					<reportElement mode="Transparent" x="148" y="16" width="64" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="c7c000ff-f317-41b6-9d7f-fcf4dc71728b"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{proposal_status_name}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+					<reportElement mode="Transparent" x="278" y="16" width="66" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="45396a6e-933c-4188-abfb-b2e9e54e7351"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{location}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement mode="Transparent" x="408" y="15" width="64" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="4d590793-9efc-4e93-9fe7-d2443827f7f0"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{approved}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement mode="Transparent" x="472" y="15" width="64" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="8a54b470-d868-4eba-9a88-305bc66d76ec"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dropped}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0" isBlankWhenNull="false">
+					<reportElement mode="Transparent" x="536" y="15" width="64" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="d999c0b0-f73b-4cca-8c2d-6cd382ee7933"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{budget}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement mode="Transparent" x="344" y="16" width="64" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="3decf212-9141-4a6c-aa59-35a9cc849419"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{proposal_submit_date}.format("dd/MM/YYYY")]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Transparent" x="85" y="42" width="66" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="24e0176f-8d42-45eb-9cbe-88bef6de1321"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Activity]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="151" y="42" width="64" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="9028b836-52e8-4b48-b169-64334ccf4980"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Date]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" mode="Transparent" x="2" y="0" width="446" height="21" forecolor="#000000" backcolor="#FFFFFF" uuid="1d3469cc-dcbb-4a80-bec4-47254406e360"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Unresolved proposals]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="15" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="802" height="15" uuid="697911b0-befc-450c-891b-231b09e12ab4"/>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+					<reportElement style="Detail" mode="Transparent" x="87" y="0" width="64" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="69d6c40f-4ca0-44bc-b08e-e30b46f04d86"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{activity}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+					<reportElement style="Detail" mode="Transparent" x="151" y="0" width="64" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="d9917ff9-9dcb-403b-9a43-6ae205f87e9c"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{date}.format("dd/MM/YYYY")]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

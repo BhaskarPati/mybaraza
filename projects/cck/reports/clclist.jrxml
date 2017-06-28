@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="10" bottomMargin="20">
+	<parameter name="filterid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="imagepath" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["../images/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reportpath" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/opt/tomcat/webapps/fsm/reports/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select distinct(clientname) as clientname, clientdetail, clientlicenseid, stations, vhfnetworklocation, clienttypename, to_char(secretariatremarks) as secretariatremarks, to_char(commiteeremarks) as commiteeremarks, clcdate, clcnumber
+from vwnetworkstations
+where clcid = '$P!{filterid}']]>
+	</queryString>
+	<field name="CLIENTNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CLIENTDETAIL" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CLIENTLICENSEID" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="STATIONS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VHFNETWORKLOCATION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CLIENTTYPENAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SECRETARIATREMARKS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COMMITEEREMARKS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CLCDATE" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CLCNUMBER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="19">
+			<staticText>
+				<reportElement x="0" y="0" width="230" height="15"/>
+				<textElement>
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[2. FREQUENCY LICENSING CASES]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="19" splitType="Stretch">
+			<staticText>
+				<reportElement x="33" y="0" width="142" height="15"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[APPLICANT'S NAME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="558" y="0" width="113" height="15"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SECRETARIAT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="176" y="0" width="100" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NETWORK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="353" y="0" width="75" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[LOCATION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="458" y="0" width="100" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[BUSINESS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="671" y="0" width="131" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMMITTEE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="33" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="71" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="802" height="71"/>
+			</rectangle>
+			<textField>
+				<reportElement x="176" y="1" width="176" height="70"/>
+				<textElement markup="html"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{STATIONS}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="353" y="0" width="105" height="71"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{VHFNETWORKLOCATION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="559" y="1" width="112" height="70"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{SECRETARIATREMARKS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="459" y="0" width="99" height="71"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CLIENTTYPENAME}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="175" y="1" width="1" height="70"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="33" y="0" width="142" height="71"/>
+				<textElement markup="html"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CLIENTDETAIL}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="352" y="1" width="1" height="70"/>
+			</line>
+			<line>
+				<reportElement x="458" y="1" width="1" height="70"/>
+			</line>
+			<line>
+				<reportElement x="558" y="1" width="1" height="70"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="671" y="1" width="131" height="70"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{COMMITEEREMARKS}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="671" y="1" width="1" height="70"/>
+			</line>
+			<line>
+				<reportElement x="32" y="1" width="1" height="70"/>
+			</line>
+			<textField>
+				<reportElement x="1" y="0" width="31" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="agency_active_bonus" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7bc605e9-dccf-42c1-a2cc-f36178355fbf">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT bonus.bonus_id,
+    bonus.entity_id,
+    bonus.percentage,
+    bonus.is_active,
+    bonus.amount,
+    bonus.period_id,
+    bonus.son,
+    bonus.pcc,
+    to_char(periods.start_date::timestamp with time zone, 'mmYYYY'::text) AS period
+   FROM bonus
+     JOIN periods ON bonus.period_id = periods.period_id
+     WHERE son is null AND is_active = true AND bonus.approve_status = 'Approved';]]>
+	</queryString>
+	<field name="bonus_id" class="java.lang.Integer"/>
+	<field name="entity_id" class="java.lang.Integer"/>
+	<field name="percentage" class="java.lang.Float"/>
+	<field name="is_active" class="java.lang.Boolean"/>
+	<field name="amount" class="java.lang.Float"/>
+	<field name="period_id" class="java.lang.Integer"/>
+	<field name="son" class="java.lang.String"/>
+	<field name="pcc" class="java.lang.String"/>
+	<field name="period" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="31" uuid="bf2dbbdd-435b-4daf-b457-d8465d819dd5"/>
+				<textElement textAlignment="Center">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AGENCY ACTIVE BONUS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="15" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="d9b54f72-fcdf-46e6-a934-3703a94e1387"/>
+				<text><![CDATA[Period]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="100" height="20" uuid="ba7b9258-c92f-4369-b17e-cdb9e8260e62"/>
+				<text><![CDATA[PCC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="100" height="20" uuid="7268e74a-40fc-46c7-81a6-4878db1476bf"/>
+				<text><![CDATA[Percentage]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="100" height="20" uuid="6a267f26-6421-45ff-84ac-b3dab35a909f"/>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="22" width="555" height="1" uuid="5cfbfbec-a7bd-49ef-a70b-2d9887b74fde"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="100" height="20" uuid="da31af0f-df76-4c79-9009-5d757b328b8c"/>
+				<textFieldExpression><![CDATA[$F{period}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="100" y="0" width="100" height="20" uuid="bcd94fad-9bf5-4bca-9881-9844c7403e0d"/>
+				<textFieldExpression><![CDATA[$F{pcc}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="200" y="0" width="100" height="20" uuid="5e6480cc-290c-43ff-ae26-f6003aeee958"/>
+				<textFieldExpression><![CDATA[$F{percentage}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="300" y="0" width="100" height="20" uuid="dc73cd76-0116-42f8-9a1d-ebd77336288c"/>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

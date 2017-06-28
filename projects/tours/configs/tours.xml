@@ -1,0 +1,256 @@
+<?xml version="1.0"?>
+<APP database="tours" name="Tours" reportpath="/root/baraza/projects/tours/reports/">
+	<TREE name="Tours">
+		<NODE name="Entries">
+			<NODE key="2" name="Clients"></NODE>
+			<NODE key="6" name="Groups"></NODE>
+			<NODE key="8" name="Packages"></NODE>
+			<NODE key="9" name="Users"></NODE>
+		</NODE>
+
+		<NODE name="Report">
+			<NODE key="102" name="Clients"></NODE>
+			<NODE key="106" name="Groups"></NODE>
+			<NODE key="101" name="Properties"></NODE>
+			<NODE key="105" name="Rates"></NODE>
+		</NODE>
+
+	</TREE>
+
+	<DESK h="800" key="2" name="Clients" splitloc="250" splittype="vert" w="685">
+		<GRID gridfilter="true" key="1" keyfield="clientid" name="Clients" pos="top" table="clients">
+			<TEXTFIELD title="Client Name" w="40">clientname</TEXTFIELD>
+			<TEXTFIELD title="Address" w="40">address</TEXTFIELD>
+			<TEXTFIELD title="City" w="40">city</TEXTFIELD>
+			<TEXTFIELD title="Premises" w="40">premises</TEXTFIELD>
+			<TEXTFIELD title="Tel No." w="40">telno</TEXTFIELD>
+			<TEXTFIELD title="Mobile" w="40">mobile</TEXTFIELD>
+			<TEXTFIELD title="Email" w="40">email</TEXTFIELD>
+		</GRID>
+
+		<FORM autofield="clientid" key="2" linkfield="clientid" linkkey="1" name="Clients" pos="bottom" table="clients">
+			<TEXTFIELD title="Client No." x="10" y="10" w="150" h="20">clientno</TEXTFIELD>
+			<TEXTFIELD h="20" title="Client Name" w="150" x="290" y="10">clientname</TEXTFIELD>
+			<TEXTFIELD h="20" title="Address" w="150" x="10" y="30">address</TEXTFIELD>
+			<TEXTFIELD h="20" title="Postal Code" w="150" x="290" y="30">postalcode</TEXTFIELD>
+			<TEXTFIELD h="20" title="Premises" w="430" x="10" y="50">premises</TEXTFIELD>
+			<TEXTFIELD h="20" title="Street" w="430" x="10" y="70">street</TEXTFIELD>
+			<TEXTFIELD h="20" title="City" w="150" x="10" y="90">city</TEXTFIELD>
+			<COMBOBOX h="20" lpfield="countryname" lptable="countrys" title="Country" w="150" x="290" y="90">countryid</COMBOBOX>
+			<TEXTFIELD h="20" title="Tel No." w="150" x="10" y="110">telno</TEXTFIELD>
+			<TEXTFIELD h="20" title="Mobile" w="150" x="290" y="110">mobile</TEXTFIELD>
+			<TEXTFIELD h="20" title="Email" w="430" x="10" y="130">email</TEXTFIELD>
+			<TEXTFIELD h="20" title="Fax No." w="150" x="10" y="150">faxno</TEXTFIELD>
+			<TEXTAREA h="70" title="Details" w="430" x="10" y="170">details</TEXTAREA>
+		</FORM>
+
+		<GRID gridfilter="true" key="3" keyfield="voucherid" linkfield="clientid" linkkey="1" name="Vouchers" pos="top" table="vwvouchers">
+			<TEXTFIELD title="Voucher" w="40">tourto</TEXTFIELD>
+			<TEXTFIELD title="Residents" w="40">residents</TEXTFIELD>
+			<TEXTFIELD title="Confirmationref" w="40">confirmationref</TEXTFIELD>
+		</GRID>
+
+		<REPORT filtered="true" jasperfile="vwvouchers.jasper" key="4" linkfield="clientid" linkkey="3" name="Vouchers" pos="bottom"></REPORT>
+		<GRID gridfilter="true" key="5" keyfield="priceid" linkfield="voucherid" linkkey="3" name="Price" pos="top" table="price">
+			<TEXTFIELD title="Voucher" w="40">voucherid</TEXTFIELD>
+			<TEXTFIELD title="Current Price" w="40">currentprice</TEXTFIELD>
+			<TEXTFIELD title="Vendordiscount" w="40">vendordiscount</TEXTFIELD>
+			<TEXTFIELD title="Clientdiscount" w="40">clientdiscount</TEXTFIELD>
+			<TEXTFIELD title="Commision" w="40">commision</TEXTFIELD>
+			<TEXTFIELD title="Net Price" w="40">netprice</TEXTFIELD>
+			<TEXTFIELD title="Final Price" w="40">finalprice</TEXTFIELD>
+		</GRID>
+
+		<FORM autofield="priceid" inputfield="voucherid" inputkey="3" key="6" linkfield="priceid" linkkey="5" name="Price" pos="bottom" table="price">
+			<TEXTDECIMAL h="20" title="Current Price" w="150" x="10" y="10">currentprice</TEXTDECIMAL>
+			<TEXTDECIMAL h="20" title="Vendordiscount" w="150" x="290" y="10">vendordiscount</TEXTDECIMAL>
+			<TEXTDECIMAL h="20" title="Clientdiscount" w="150" x="10" y="30">clientdiscount</TEXTDECIMAL>
+			<TEXTDECIMAL h="20" title="Commision" w="150" x="290" y="30">commision</TEXTDECIMAL>
+			<TEXTDECIMAL h="20" title="Markup" w="150" x="10" y="50">markup</TEXTDECIMAL>
+			<TEXTDECIMAL h="20" title="Commissiontrack" w="150" x="290" y="50">commissiontrack</TEXTDECIMAL>
+			<TEXTDECIMAL h="20" title="Net Price" w="150" x="10" y="70">netprice</TEXTDECIMAL>
+			<CHECKBOX h="20" title="Final Price" w="150" x="290" y="70">finalprice</CHECKBOX>
+			<TEXTAREA h="70" title="Details" w="430" x="10" y="90">details</TEXTAREA>
+		</FORM>
+
+	</DESK>
+
+	<DESK h="600" key="6" name="Vendors" splitloc="250" splittype="vert" w="685">
+		<GRID gridfilter="true" key="1" keyfield="vendorid" name="Group" pos="top" table="vwvendors">
+			<TEXTFIELD title="Vendor Name" w="40">vendorname</TEXTFIELD>
+			<TEXTFIELD title="City" w="40">city</TEXTFIELD>
+			<TEXTFIELD title="Premises" w="40">premises</TEXTFIELD>
+		</GRID>
+
+		<FORM autofield="vendorid" key="2" linkfield="vendorid" linkkey="1" name="Groups" pos="bottom" table="vendors">
+			<TEXTFIELD title="Vendor No." x="10" y="10" w="150" h="20">vendorno</TEXTFIELD>
+			<TEXTFIELD h="20" title="Vendor Name" w="150" x="290" y="10">vendorname</TEXTFIELD>
+			<TEXTFIELD h="20" title="Address" w="150" x="10" y="30">address</TEXTFIELD>
+			<TEXTFIELD h="20" title="City" w="150" x="290" y="30">city</TEXTFIELD>
+			<TEXTFIELD h="20" title="Premises" w="430" x="10" y="50">premises</TEXTFIELD>
+			<TEXTFIELD h="20" title="Street" w="430" x="10" y="70">street</TEXTFIELD>
+			<COMBOBOX h="20" lpfield="countryname" lptable="countrys" title="Country" w="150" x="10" y="90">countryid</COMBOBOX>
+			<TEXTFIELD h="20" title="Postal Code" w="150" x="290" y="90">postalcode</TEXTFIELD>
+			<TEXTFIELD h="20" title="Tel No." w="150" x="10" y="110">telno</TEXTFIELD>
+			<TEXTFIELD h="20" title="Fax No." w="150" x="290" y="110">faxno</TEXTFIELD>
+			<TEXTFIELD h="20" title="Web Site" w="430" x="10" y="130">website</TEXTFIELD>
+			<TEXTFIELD h="20" title="Email" w="430" x="10" y="150">email</TEXTFIELD>
+			<TEXTAREA h="70" title="Details" w="430" x="10" y="170">details</TEXTAREA>
+		</FORM>
+
+		<GRID gridfilter="true" key="3" keyfield="assetid" linkfield="vendorid" linkkey="1" name="Properties" pos="top" table="vwassets">
+			<TEXTFIELD title="Asset Name" w="40">assetname</TEXTFIELD>
+			<TEXTFIELD title="Contactperson" w="40">contactperson</TEXTFIELD>
+			<TEXTFIELD title="Email" w="40">email</TEXTFIELD>
+		</GRID>
+
+		<FORM autofield="assetid" inputfield="vendorid" inputkey="1" key="4" linkfield="assetid" linkkey="3" name="Properties" pos="bottom" table="assets">
+			<TEXTFIELD h="20" title="Asset Name" w="150" x="10" y="10">assetname</TEXTFIELD>
+			<TEXTFIELD h="20" title="Contactperson" w="150" x="290" y="10">contactperson</TEXTFIELD>
+			<COMBOBOX h="20" lpfield="countryname" lptable="countrys" title="Country" w="150" x="10" y="30">countryid</COMBOBOX>
+			<TEXTFIELD h="20" title="Location" w="150" x="290" y="30">location</TEXTFIELD>
+			<TEXTFIELD h="20" title="Tel No." w="150" x="10" y="50">telno</TEXTFIELD>
+			<TEXTFIELD h="20" title="Web Site" w="430" x="10" y="70">website</TEXTFIELD>
+			<TEXTFIELD h="20" title="Email" w="430" x="10" y="90">email</TEXTFIELD>
+			<TEXTAREA h="70" title="Details" w="430" x="10" y="110">details</TEXTAREA>
+		</FORM>
+
+		<GRID gridfilter="true" key="5" keyfield="rateid" linkfield="assetid" linkkey="3" name="Rates" pos="top" table="vwrates">
+			<TEXTFIELD title="Asset" w="40">assetname</TEXTFIELD>
+			<TEXTFIELD title="Package Rate" w="40">packagerate</TEXTFIELD>
+			<TEXTFIELD title="Current Rate" w="40">currentrate</TEXTFIELD>
+		</GRID>
+
+		<FORM autofield="rateid" inputfield="assetid" inputkey="3" key="6" linkfield="rateid" linkkey="5" name="Rates" pos="bottom" table="rates">
+			<TEXTDATE h="20" title="Start Date" w="150" x="10" y="10">startdate</TEXTDATE>
+			<TEXTDATE h="20" title="End Date" w="150" x="290" y="10">enddate</TEXTDATE>
+			<TEXTFIELD h="20" title="Room Type" w="150" x="10" y="30">roomtype</TEXTFIELD>
+			<TEXTFIELD h="20" title="Room Description" w="150" x="290" y="30">roomdescription</TEXTFIELD>
+			<TEXTFIELD h="20" title="Mealplan" w="150" x="10" y="50">mealplan</TEXTFIELD>
+			<CHECKBOX h="20" title="Package Rate" w="150" x="290" y="50">packagerate</CHECKBOX>
+			<TEXTFIELD h="20" title="Description" w="430" x="10" y="70">description</TEXTFIELD>
+			<TEXTDECIMAL h="20" title="Current Rate" w="150" x="10" y="90">currentrate</TEXTDECIMAL>
+			<TEXTDECIMAL h="20" title="Tax" w="150" x="290" y="90">tax</TEXTDECIMAL>
+			<TEXTDECIMAL h="20" title="Commission" w="150" x="10" y="110">commission</TEXTDECIMAL>
+			<TEXTDECIMAL h="20" title="Discount" w="150" x="290" y="110">discount</TEXTDECIMAL>
+			<TEXTAREA h="70" title="Details" w="430" x="10" y="130">details</TEXTAREA>
+		</FORM>
+
+	</DESK>
+
+	<DESK h="500" key="8" name="Packages" splitloc="250" splittype="vert" w="585">
+		<GRID gridfilter="true" key="1" keyfield="packageid" name="Package" pos="top" table="package">
+			<TEXTFIELD title="Package" w="40">packageid</TEXTFIELD>
+			<TEXTFIELD title="Package Name" w="40">packagename</TEXTFIELD>
+			<TEXTFIELD title="Seasons" w="40">seasons</TEXTFIELD>
+			<TEXTFIELD title="Quantity" w="40">quantity</TEXTFIELD>
+			<TEXTFIELD title="Price" w="40">price</TEXTFIELD>
+		</GRID>
+
+		<FORM autofield="packageid" key="2" linkfield="packageid" linkkey="1" name="Package" pos="bottom" table="package">
+			<TEXTFIELD h="20" title="Package Name" w="150" x="10" y="10">packagename</TEXTFIELD>
+			<TEXTFIELD h="20" title="Seasons" w="150" x="290" y="10">seasons</TEXTFIELD>
+			<TEXTFIELD h="20" title="Quantity" w="150" x="10" y="30">quantity</TEXTFIELD>
+			<TEXTDECIMAL h="20" title="Price" w="150" x="290" y="30">price</TEXTDECIMAL>
+			<TEXTAREA h="70" title="Details" w="430" x="10" y="50">details</TEXTAREA>
+		</FORM>
+
+		<GRID gridfilter="true" key="3" keyfield="rateid" name="Rates" pos="top" table="rates">
+			<TEXTFIELD title="Rate" w="40">rateid</TEXTFIELD>
+			<TEXTFIELD title="Package" w="40">packageid</TEXTFIELD>
+			<TEXTFIELD title="Asset" w="40">assetid</TEXTFIELD>
+			<TEXTFIELD title="Room Type" w="40">roomtype</TEXTFIELD>
+			<TEXTFIELD title="Package Rate" w="40">packagerate</TEXTFIELD>
+			<TEXTFIELD title="Description" w="40">description</TEXTFIELD>
+			<TEXTFIELD title="Current Rate" w="40">currentrate</TEXTFIELD>
+			<TEXTFIELD title="Tax" w="40">tax</TEXTFIELD>
+		</GRID>
+
+		<FORM autofield="rateid" key="4" linkfield="rateid" linkkey="3" name="Rates" pos="bottom" table="rates">
+			<COMBOBOX h="20" lpfield="packageid" lptable="package" title="Package" w="150" x="10" y="10">packageid</COMBOBOX>
+			<COMBOBOX h="20" lpfield="assetid" lptable="assets" title="Asset" w="150" x="290" y="10">assetid</COMBOBOX>
+			<TEXTFIELD h="20" title="Room Type" w="150" x="10" y="30">roomtype</TEXTFIELD>
+			<CHECKBOX h="20" title="Package Rate" w="150" x="290" y="30">packagerate</CHECKBOX>
+			<TEXTFIELD h="20" title="Description" w="430" x="10" y="50">description</TEXTFIELD>
+			<TEXTDECIMAL h="20" title="Current Rate" w="150" x="10" y="70">currentrate</TEXTDECIMAL>
+			<TEXTDECIMAL h="20" title="Tax" w="150" x="290" y="70">tax</TEXTDECIMAL>
+			<TEXTAREA h="70" title="Details" w="430" x="10" y="90">details</TEXTAREA>
+		</FORM>
+
+	</DESK>
+
+	<DESK h="500" key="9" name="Users" splitloc="250" splittype="vert" w="585">
+		<GRID gridfilter="true" key="1" keyfield="userid" name="Users" pos="top" table="users">
+			<TEXTFIELD title="User" w="40">userid</TEXTFIELD>
+			<TEXTFIELD title="Usergroup" w="40">usergroupid</TEXTFIELD>
+			<TEXTFIELD title="Superuser" w="40">superuser</TEXTFIELD>
+			<TEXTFIELD title="Role Name" w="40">rolename</TEXTFIELD>
+			<TEXTFIELD title="Function Name" w="40">functionname</TEXTFIELD>
+			<TEXTFIELD title="User Name" w="40">username</TEXTFIELD>
+			<TEXTFIELD title="Full Name" w="40">fullname</TEXTFIELD>
+			<TEXTFIELD title="Extension" w="40">extension</TEXTFIELD>
+			<TEXTFIELD title="Tel No." w="40">telno</TEXTFIELD>
+			<TEXTFIELD title="Email" w="40">email</TEXTFIELD>
+			<TEXTFIELD title="Accountmanager" w="40">accountmanager</TEXTFIELD>
+			<TEXTFIELD title="Groupleader" w="40">groupleader</TEXTFIELD>
+			<TEXTFIELD title="IsActive" w="40">isactive</TEXTFIELD>
+			<TEXTFIELD title="Groupuser" w="40">groupuser</TEXTFIELD>
+			<TEXTFIELD title="Userpasswd" w="40">userpasswd</TEXTFIELD>
+			<TEXTFIELD title="Firstpasswd" w="40">firstpasswd</TEXTFIELD>
+		</GRID>
+
+		<FORM autofield="userid" key="2" linkfield="userid" linkkey="1" name="Users" pos="bottom" table="users">
+			<COMBOBOX h="20" lpfield="usergroupid" lptable="usergroups" title="Usergroup" w="150" x="10" y="10">usergroupid</COMBOBOX>
+			<CHECKBOX h="20" title="Superuser" w="150" x="290" y="10">superuser</CHECKBOX>
+			<TEXTFIELD h="20" title="Role Name" w="150" x="10" y="30">rolename</TEXTFIELD>
+			<TEXTFIELD h="20" title="Function Name" w="150" x="290" y="30">functionname</TEXTFIELD>
+			<TEXTFIELD h="20" title="User Name" w="150" x="10" y="50">username</TEXTFIELD>
+			<TEXTFIELD h="20" title="Full Name" w="150" x="290" y="50">fullname</TEXTFIELD>
+			<TEXTFIELD h="20" title="Extension" w="150" x="10" y="70">extension</TEXTFIELD>
+			<TEXTFIELD h="20" title="Tel No." w="150" x="290" y="70">telno</TEXTFIELD>
+			<TEXTFIELD h="20" title="Email" w="430" x="10" y="90">email</TEXTFIELD>
+			<CHECKBOX h="20" title="Accountmanager" w="150" x="10" y="110">accountmanager</CHECKBOX>
+			<CHECKBOX h="20" title="Groupleader" w="150" x="290" y="110">groupleader</CHECKBOX>
+			<CHECKBOX h="20" title="IsActive" w="150" x="10" y="130">isactive</CHECKBOX>
+			<CHECKBOX h="20" title="Groupuser" w="150" x="290" y="130">groupuser</CHECKBOX>
+			<TEXTFIELD h="20" title="Userpasswd" w="150" x="10" y="150">userpasswd</TEXTFIELD>
+			<TEXTFIELD h="20" title="Firstpasswd" w="150" x="290" y="150">firstpasswd</TEXTFIELD>
+			<TEXTAREA h="70" title="Details" w="430" x="10" y="170">details</TEXTAREA>
+		</FORM>
+
+	</DESK>
+
+	<DESK h="500" key="101" name="Assets" splitloc="0" splittype="horl" w="700">
+		<REPORT jasperfile="vwassets.jasper" name="Assets" pos="bottom"></REPORT>
+	</DESK>
+
+	<DESK h="500" key="102" name="Clients" splitloc="0" splittype="horl" w="700">
+		<REPORT jasperfile="vwclients.jasper" name="Clients" pos="bottom"></REPORT>
+	</DESK>
+
+	<DESK h="500" key="103" name="Package" splitloc="0" splittype="horl" w="700">
+		<REPORT jasperfile="package.jasper" name="Package" pos="bottom"></REPORT>
+	</DESK>
+
+	<DESK h="500" key="104" name="Price" splitloc="0" splittype="horl" w="700">
+		<REPORT jasperfile="vwprice.jasper" key="5" name="Price" pos="bottom"></REPORT>
+	</DESK>
+
+	<DESK h="500" key="105" name="Rates" splitloc="0" splittype="horl" w="700">
+		<REPORT jasperfile="vwrates.jasper" name="Rates" pos="bottom"></REPORT>
+	</DESK>
+
+	<DESK h="500" key="106" name="Vendors" splitloc="0" splittype="horl" w="700">
+		<REPORT jasperfile="vwvendors.jasper" name="Vendors" pos="bottom"></REPORT>
+	</DESK>
+
+	<DESK h="500" key="108" name="Vouchers" splitloc="0" splittype="horl" w="700">
+		<REPORT jasperfile="vouchers.jasper" name="Vouchers" pos="bottom"></REPORT>
+	</DESK>
+
+	<DESK h="500" key="107" name="Vouchers" splitloc="0" splittype="horl" w="700">
+		<REPORT jasperfile="vwvouchers.jasper" name="Vouchers" pos="bottom"></REPORT>
+	</DESK>
+
+</APP>
+

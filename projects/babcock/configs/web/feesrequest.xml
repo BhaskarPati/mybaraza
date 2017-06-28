@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XMLTABLES name="UMIS" dbpath="jdbc:postgresql://umisdb/babcock" dbclass="org.postgresql.Driver" dbusername="root" dbpassword="invent2k">
+	<XMLTABLE name="FeeRequest" keyfield="applicationid" table="applicationview" key="1">
+		<TEXTFIELD w="75" xmlName="PayeeName" title="Applicationid">entity_name</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="Faculty" title="Faculty">selection_name</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="Department" title="Department">selection_name</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="Level" fnct="'100'::varchar" title="Level">Level</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="ProgrammeType" fnct="'BACHELOR'::varchar" title="ProgrammeType">ProgrammeType</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="StudyType" fnct="'Regular'::varchar" title="StudyType">StudyType</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="Session" title="Quarterid">quarterid</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="PayeeID" title="PayeeID">applicationid</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="Amount" title="Amount">amount</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="FeeStatus" title="Payment Status">paymentStatus</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="Semester" fnct="'FIRST'::varchar" title="Semester">Semester</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="PaymentType" fnct="'BABCOCK APPLICATION'::varchar" title="PaymentType">PaymentType</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="MatricNumber" title="MatricNumber">applicationid</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="Email" title="Email">primary_email</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="PhoneNumber" title="PhoneNumber">primary_telephone</TEXTFIELD>
+	</XMLTABLE>
+	<XMLTABLE name="FeeRequest" keyfield="registrationid" table="registrationview" key="2">
+		<TEXTFIELD w="75" xmlName="PayeeName" title="Applicationid">fullname</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="Faculty" title="Faculty">selection_name</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="Department" title="Department">selection_name</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="Level" fnct="'100'::varchar" title="Level">Level</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="ProgrammeType" fnct="'BACHELOR'::varchar" title="ProgrammeType">ProgrammeType</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="StudyType" fnct="'Regular'::varchar" title="StudyType">StudyType</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="Session" title="Quarterid">quarterid</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="PayeeID" title="PayeeID">applicationid</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="Amount" title="Amount">acceptance_fees</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="FeeStatus" title="Payment Status">paymentStatus</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="Semester" fnct="'FIRST'::varchar" title="Semester">Semester</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="PaymentType" fnct="'BABCOCK ACCEPTANCE'::varchar" title="PaymentType">PaymentType</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="MatricNumber" title="MatricNumber">applicationid</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="Email" title="Email">email</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="PhoneNumber" title="PhoneNumber">phonenumber</TEXTFIELD>
+	</XMLTABLE>
+	<XMLTABLE name="queryApplicantResponse" keyfield="applicationid" table="applicationview" key="100">
+		<TEXTFIELD w="75" xmlName="responseCode" fnct="'VALID'::varchar" title="responseCode">responsecode</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="email" title="email">primary_email</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="Amount" title="Amount">amount</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="applicantName" title="Applicant Name">entity_name</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="applicationId" title="applicationId">applicationid</TEXTFIELD>
+	</XMLTABLE>
+	<XMLTABLE name="queryApplicantResponse" keyfield="registrationid" table="registrationview" key="200">
+		<TEXTFIELD w="75" xmlName="responseCode" fnct="'VALID'::varchar" title="responseCode">responsecode</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="email" fnct="email" title="email">primary_email</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="Amount" fnct="acceptance_fees" title="Amount">amount</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="applicantName" fnct="fullname" title="Applicant Name">entity_name</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="applicationId" fnct="registrationid" title="applicationId">applicationid</TEXTFIELD>
+	</XMLTABLE>
+	<XMLTABLE name="queryApplicantResponse" keyfield="studentpaymentid" table="vwstudentpayments" key="300">
+		<TEXTFIELD w="75" xmlName="responseCode" fnct="'VALID'::varchar" title="responseCode">responsecode</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="email" fnct="student_email" title="email">primary_email</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="Amount" fnct="amount" title="Amount">amount</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="applicantName" fnct="studentname" title="Applicant Name">entity_name</TEXTFIELD>
+		<TEXTFIELD w="75" xmlName="applicationId" fnct="studentpaymentid" title="applicationId">applicationid</TEXTFIELD>
+	</XMLTABLE>
+</XMLTABLES>
+

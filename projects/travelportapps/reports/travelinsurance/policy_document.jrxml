@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="policy_document" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f5ead43e-a4a4-4680-919a-b92e0455416e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="filterid" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from  vw_passengers
+WHERE passenger_id = '$P!{filterid}']]>
+	</queryString>
+	<field name="org_id" class="java.lang.Integer"/>
+	<field name="org_name" class="java.lang.String"/>
+	<field name="rate_type_id" class="java.lang.Integer"/>
+	<field name="rate_plan_id" class="java.lang.Integer"/>
+	<field name="rate_category_name" class="java.lang.String"/>
+	<field name="rate_id" class="java.lang.Integer"/>
+	<field name="rate_plan_name" class="java.lang.String"/>
+	<field name="standard_rate" class="java.lang.Float"/>
+	<field name="north_america_rate" class="java.lang.Float"/>
+	<field name="days_from" class="java.lang.String"/>
+	<field name="days_to" class="java.lang.String"/>
+	<field name="corporate_rate_id" class="java.lang.Integer"/>
+	<field name="approved" class="java.lang.Boolean"/>
+	<field name="entity_id" class="java.lang.Integer"/>
+	<field name="countries" class="java.lang.String"/>
+	<field name="passenger_id" class="java.lang.Integer"/>
+	<field name="passenger_name" class="java.lang.String"/>
+	<field name="passenger_mobile" class="java.lang.String"/>
+	<field name="passenger_email" class="java.lang.String"/>
+	<field name="passenger_age" class="java.lang.Integer"/>
+	<field name="days_covered" class="java.lang.Integer"/>
+	<field name="nok_name" class="java.lang.String"/>
+	<field name="nok_mobile" class="java.lang.String"/>
+	<field name="passenger_id_no" class="java.lang.String"/>
+	<field name="nok_national_id" class="java.lang.String"/>
+	<field name="cover_amount" class="java.lang.Float"/>
+	<field name="totalamount_covered" class="java.lang.Float"/>
+	<field name="is_north_america" class="java.lang.Boolean"/>
+	<field name="details" class="java.lang.String"/>
+	<field name="passenger_dob" class="java.lang.String"/>
+	<field name="policy_number" class="java.lang.String"/>
+	<field name="entity_name" class="java.lang.String"/>
+	<field name="destown" class="java.lang.String"/>
+	<field name="sys_country_name" class="java.lang.String"/>
+	<field name="approved_date" class="java.sql.Timestamp"/>
+	<field name="corporate_id" class="java.lang.Integer"/>
+	<field name="pin_no" class="java.lang.String"/>
+	<field name="reason_for_travel" class="java.lang.String"/>
+	<field name="departure_country" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="34" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="32" uuid="80f0804c-f921-480f-b69e-51dc28545172"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="24"/>
+				</textElement>
+				<text><![CDATA[Policy Document]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField hyperlinkType="Reference" hyperlinkTarget="Blank">
+				<reportElement x="0" y="0" width="391" height="20" uuid="17ae2cd0-7da7-4c9c-a145-25ea67ba4f0e"/>
+				<textElement markup="none">
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["TO VIEW POLICY DOCUMENT CLICK HERE..."]]></textFieldExpression>
+				<hyperlinkReferenceExpression><![CDATA["http://apps.travelport.co.ke/travelportapps/docs/Policy_Document.pdf"]]></hyperlinkReferenceExpression>
+				<hyperlinkTooltipExpression><![CDATA["Policy Document"]]></hyperlinkTooltipExpression>
+				<hyperlinkParameter name="policy_number">
+					<hyperlinkParameterExpression><![CDATA[$F{policy_number}]]></hyperlinkParameterExpression>
+				</hyperlinkParameter>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

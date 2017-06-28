@@ -1,0 +1,400 @@
+<APP name="UMIS" org="org_id" password="change_password">
+	<MENU name="Students Dean" role="deans">
+		<MENU name="Students" role="deans,hostel">
+			<MENU name="Citizenship Types">1</MENU>
+			<MENU name="Residences" role="deans,hostel">2</MENU>
+			<MENU name="Students" role="deans">3</MENU>
+			<MENU name="Students Halls" role="hostel">4</MENU>
+			<MENU name="Students Details">5</MENU>
+		</MENU>
+		<MENU name="Semester" role="deans,hostel">
+			<MENU name="Semesters" role="deans">11</MENU>
+			<MENU name="Semesters Residence">12</MENU>
+			<MENU name="Off Campus Approval" role="deans">16</MENU>
+			<MENU name="Semesters Students">17</MENU>
+		</MENU>
+		<MENU name="Reports" role="deans,hostel">
+			<MENU name="Hostel Residence Students">214</MENU>
+			<MENU name="Residence Reports">225</MENU>
+			<MENU name="Off-Campus">215</MENU>
+			<MENU name="Semester Paid Students">551</MENU>
+			<MENU name="Students Audit">772</MENU>
+		</MENU>
+	</MENU>
+	<DESK w="705" name="Citizenship Types" type="vert" key="1" h="500">
+		<GRID name="Citizenship Types" keyfield="citizenshiptypeid" table="citizenshiptypes" noorg="true">
+			<TEXTFIELD w="40" title="Citizenship Type ID">citizenshiptypeid</TEXTFIELD>
+			<TEXTFIELD w="240" title="Citizenship Type Name">citizenshiptypename</TEXTFIELD>
+			<TEXTFIELD w="100" title="Demerits">demerits</TEXTFIELD>
+			<FORM name="Citizenship Types" keyfield="citizenshiptypeid" table="citizenshiptypes" noorg="true">
+				<TEXTFIELD w="150" title="Citizenship Type" y="10" h="20" x="10">citizenshiptypename</TEXTFIELD>
+				<TEXTFIELD w="150" title="Demerits" y="10" h="20" x="290">demerits</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="30" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="705" name="Residences" type="vert" key="2" h="500">
+		<GRID name="Residences" keyfield="residenceid" table="residences" noorg="true">
+			<TEXTFIELD w="40" title="Residence ID">residenceid</TEXTFIELD>
+			<TEXTFIELD w="140" title="Residence Name">residencename</TEXTFIELD>
+			<TEXTFIELD w="40" title="Sex">sex</TEXTFIELD>
+			<TEXTFIELD w="80" title="Residence Dean">residencedean</TEXTFIELD>
+			<TEXTFIELD w="75" title="Min Level">min_level</TEXTFIELD>
+			<TEXTFIELD w="75" title="Max Level">max_level</TEXTFIELD>
+			<FORM name="Residences" keyfield="residenceid" table="residences" noorg="true" th="170">
+				<TEXTFIELD w="50" title="Residence ID" y="10" h="20" x="10">residenceid</TEXTFIELD>
+				<TEXTFIELD w="250" title="Residence Name" y="10" h="20" x="190">residencename</TEXTFIELD>
+				<TEXTFIELD w="150" title="Residence Dean" y="30" h="20" x="10">residencedean</TEXTFIELD>
+				<CHECKBOX w="50" title="Off Campus" lw="90" y="30" h="20" x="290">offcampus</CHECKBOX>
+				<COMBOLIST w="50" title="Sex" lw="50" y="30" h="20" x="460">sex
+					<DATA>M</DATA>
+					<DATA>F</DATA>
+					<DATA>N</DATA>
+				</COMBOLIST>
+				<TEXTFIELD w="150" title="Min Level" y="50" h="20" x="10">min_level</TEXTFIELD>
+				<TEXTFIELD w="150" title="Max Level" y="50" h="20" x="290">max_level</TEXTFIELD>
+				<TEXTAREA w="430" tab="Majors" y="2" h="150" x="10">majors</TEXTAREA>
+				<TEXTAREA w="430" tab="Details" y="2" h="150" x="10">details</TEXTAREA>
+			</FORM>
+			<GRID name="Residence Capacity" keyfield="residencecapacityid" linkfield="residenceid" table="residencecapacityview" noorg="true">
+				<TEXTFIELD w="40" title="Residence ID">residenceid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Residence Name">residencename</TEXTFIELD>
+				<TEXTFIELD w="40" title="Block Name">blockname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Capacity">capacity</TEXTFIELD>
+				<TEXTFIELD w="40" title="Room Size">roomsize</TEXTFIELD>
+				<FORM name="Residence Capacity" keyfield="residencecapacityid" linkfield="residenceid" table="residenceCapacitys" noorg="true" inputkey="1">
+					<TEXTFIELD w="50" title="Block Name" y="10" h="20" x="10">blockname</TEXTFIELD>
+					<TEXTFIELD w="50" title="Capacity" y="10" h="20" x="190">capacity</TEXTFIELD>
+					<TEXTFIELD w="50" title="Roomsize" y="10" h="20" x="390">roomsize</TEXTFIELD>
+					<TEXTFIELD w="430" title="Narrative" y="30" h="20" x="10">narrative</TEXTFIELD>
+				</FORM>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Students" type="vert" key="3" h="560">
+		<GRID auditid="sys_audit_trail_id" name="Students" keyfield="studentid" updatetable="students" table="students" noorg="true">
+			<TEXTFIELD w="40" title="Student ID">studentid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Student Name">studentname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Off campus" edit="true">offcampus</TEXTFIELD>
+			<TEXTFIELD w="40" title="See Security" edit="true">seesecurity</TEXTFIELD>
+			<TEXTFIELD w="40" title="Student Support" edit="true">seesss</TEXTFIELD>
+			<TEXTFIELD w="40" title="See SDC" edit="true">seesdc</TEXTFIELD>
+			<TEXTFIELD w="40" title="Halls Probation" edit="true">seehalls</TEXTFIELD>
+			<TEXTFIELD w="40" title="See Chaplain">seechaplain</TEXTFIELD>
+			<TEXTFIELD w="40" title="On Probation">onprobation</TEXTFIELD>
+			<GRID name="Student's Degree" keyfield="studentdegreeid" linkfield="studentid" table="studentdegreeview" noorg="true">
+				<TEXTFIELD w="140" title="Degree">degreename</TEXTFIELD>
+				<TEXTFIELD w="140" title="Sub Level">sublevelname</TEXTFIELD>
+				<TEXTFIELD w="140" title="Student">studentname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Completed">completed</TEXTFIELD>
+				<GRID name="Student's Programme" keyfield="studentmajorid" linkfield="studentdegreeid" table="studentmajorview" noorg="true">
+					<TEXTFIELD w="40" title="Programme Id">majorid</TEXTFIELD>
+					<TEXTFIELD w="140" title="Programme Name">majorname</TEXTFIELD>
+					<TEXTFIELD w="40" title="Core Programme">major</TEXTFIELD>
+				</GRID>
+			</GRID>
+			<FORM name="Residence Allocation" keyfield="studentid" table="students" noorg="true">
+				<COMBOBOX w="430" title="Residence" lptable="residences" noorg="true" y="10" h="20" x="10" lpfield="residencename">residenceid</COMBOBOX>
+				<TEXTFIELD w="50" title="Block" y="30" h="20" x="10">blockname</TEXTFIELD>
+				<TEXTFIELD w="50" title="Room Number" y="30" h="20" x="290">roomnumber</TEXTFIELD>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Students Hall" type="vert" key="4" h="560">
+		<GRID auditid="sys_audit_trail_id" name="Students" keyfield="studentid" updatetable="students" table="students" noorg="true">
+			<TEXTFIELD w="40" title="Student ID">studentid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Student Name">studentname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Off campus" edit="false">offcampus</TEXTFIELD>
+			<TEXTFIELD w="40" title="See Security" edit="false">seesecurity</TEXTFIELD>
+			<TEXTFIELD w="40" title="Student Support" edit="false">seesss</TEXTFIELD>
+			<TEXTFIELD w="40" title="SDC" edit="false">seesdc</TEXTFIELD>
+			<TEXTFIELD w="40" title="Halls Probation" edit="true">seehalls</TEXTFIELD>
+			<TEXTFIELD w="40" title="See Chaplain">seechaplain</TEXTFIELD>
+			<TEXTFIELD w="40" title="On Probation">onprobation</TEXTFIELD>
+			<GRID name="Student's Degree" keyfield="studentdegreeid" linkfield="studentid" table="studentdegreeview" noorg="true">
+				<TEXTFIELD w="140" title="Degree">degreename</TEXTFIELD>
+				<TEXTFIELD w="140" title="Sub Level">sublevelname</TEXTFIELD>
+				<TEXTFIELD w="140" title="Student">studentname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Completed">completed</TEXTFIELD>
+				<GRID name="Student's Programme" keyfield="studentmajorid" linkfield="studentdegreeid" table="studentmajorview" noorg="true">
+					<TEXTFIELD w="40" title="Programme Id">majorid</TEXTFIELD>
+					<TEXTFIELD w="140" title="Programme Name">majorname</TEXTFIELD>
+					<TEXTFIELD w="40" title="Core Programme">major</TEXTFIELD>
+				</GRID>
+			</GRID>
+			<FORM name="Residence Allocation" keyfield="studentid" table="students" noorg="true">
+				<COMBOBOX w="430" title="Residence" lptable="residences" noorg="true" y="10" h="20" x="10" lpfield="residencename">residenceid</COMBOBOX>
+				<TEXTFIELD w="50" title="Block" y="30" h="20" x="10">blockname</TEXTFIELD>
+				<TEXTFIELD w="50" title="Room Number" y="30" h="20" x="290">roomnumber</TEXTFIELD>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Students Address" type="vert" key="5" h="560">
+		<GRID name="Students" keyfield="studentdegreeid" table="studentdegreeview" noorg="true">
+			<TEXTFIELD w="40" title="Student ID">studentid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Student Name">studentname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Guardian Address">guardianname</TEXTFIELD>
+			<TEXTFIELD w="40" title="Guardian Telephone">gtelno</TEXTFIELD>
+			<TEXTFIELD w="40" title="Student Number">telno</TEXTFIELD>
+			<TEXTFIELD w="40" title="Guardian Address">gaddress</TEXTFIELD>
+			<JASPER name="Students Details" keyfield="studentid" reportfile="vwwstudentdetails.jasper"></JASPER>
+			<GRID name="Student's Degree" keyfield="studentdegreeid" linkfield="studentid" table="studentdegreeview" noorg="true">
+				<TEXTFIELD w="140" title="Degree">degreename</TEXTFIELD>
+				<TEXTFIELD w="140" title="Sub Level">sublevelname</TEXTFIELD>
+				<TEXTFIELD w="140" title="Student">studentname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Completed">completed</TEXTFIELD>
+				<GRID name="Student's Programme" keyfield="studentmajorid" linkfield="studentdegreeid" table="studentmajorview" noorg="true">
+					<TEXTFIELD w="40" title="Programme Id">majorid</TEXTFIELD>
+					<TEXTFIELD w="140" title="Programme Name">majorname</TEXTFIELD>
+					<TEXTFIELD w="40" title="Core Programme">major</TEXTFIELD>
+				</GRID>
+			</GRID>
+			<FORM name="Residence Allocation" keyfield="studentid" table="students" noorg="true">
+				<COMBOBOX w="430" title="Residence" lptable="residences" noorg="true" y="10" h="20" x="10" lpfield="residencename">residenceid</COMBOBOX>
+				<TEXTFIELD w="50" title="Block" y="30" h="20" x="10">blockname</TEXTFIELD>
+				<TEXTFIELD w="50" title="Room Number" y="30" h="20" x="290">roomnumber</TEXTFIELD>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="705" name="Semesters" key="11" h="550">
+		<GRID name="Semesters" keyfield="quarterid" orderby="quarterid desc" table="quarterview" noorg="true">
+			<TEXTFIELD w="40" title="Quarter ID">quarterid</TEXTFIELD>
+			<TEXTFIELD w="40" title="Start">qstart</TEXTFIELD>
+			<TEXTFIELD w="40" title="Last Drop">qlastdrop</TEXTFIELD>
+			<TEXTFIELD w="40" title="End">qend</TEXTFIELD>
+			<TEXTFIELD w="40" title="Active">active</TEXTFIELD>
+			<GRID name="Semester Residences" keyfield="qresidenceid" linkfield="quarterid" table="qresidenceview" noorg="true">
+				<TEXTFIELD w="40" title="Residence ID">Residenceid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Residence Name">residencename</TEXTFIELD>
+				<TEXTFIELD w="40" title="Option">residenceoption</TEXTFIELD>
+				<TEXTFIELD w="40" title="Charges">charges</TEXTFIELD>
+				<FORM name="Semester Residences" keyfield="qresidenceid" linkfield="quarterid" table="qresidences" noorg="true">
+					<COMBOBOX w="350" title="Residence" lptable="residences" noorg="true" y="10" h="20" x="10" lpfield="residencename">residenceid</COMBOBOX>
+					<TEXTFIELD w="150" title="Charges" y="30" h="20" x="10">charges</TEXTFIELD>
+					<COMBOLIST w="150" title="Residence Option" y="30" h="20" editable="true" x="290">residenceoption
+						<DATA>Full</DATA>
+						<DATA>Group A</DATA>
+						<DATA>Group B</DATA>
+					</COMBOLIST>
+					<TEXTAREA w="430" title="Details" y="50" h="120" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Semesters Residence" type="vert" key="12" h="520">
+		<GRID name="Semesters" keyfield="quarterid" orderby="quarterid desc" table="quarterview" noorg="true" where="(active = true)">
+			<TEXTFIELD w="240" title="Quarter ID">quarterid</TEXTFIELD>
+			<TEXTFIELD w="240" title="Start">qstart</TEXTFIELD>
+			<TEXTFIELD w="240" title="End">qend</TEXTFIELD>
+			<GRID name="Q. Students" keyfield="qstudentid" updatetable="qstudents" linkfield="quarterid" table="qstudentview" noorg="true" where="(finaceapproval = true)">
+				<TEXTFIELD w="10" title="Student ID">studentid</TEXTFIELD>
+				<TEXTFIELD w="140" title="Student">studentname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Date of Birth">birthdate</TEXTFIELD>
+				<TEXTFIELD w="20" title="Sex">sex</TEXTFIELD>
+				<TEXTFIELD w="20" title="Marital Status">MaritalStatus</TEXTFIELD>
+				<TEXTFIELD w="20" title="Residence Name">residencename</TEXTFIELD>
+				<TEXTFIELD w="20" title="Block">blockname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Room Number" edit="true">roomnumber</TEXTFIELD>
+				<FORM name="Residence Allocation" keyfield="qstudentid" table="qstudents" noorg="true">
+					<GRIDBOX w="430" title="Residence" lptable="qresidenceview" lookupfield="quarterid" noorg="true" y="10" h="20" x="10" lpfield="residencename">qresidenceid
+						<GRID name="Semester Residences" keyfield="qresidenceid" linkfield="quarterid" table="qresidenceview" noorg="true">
+							<TEXTFIELD w="40" title="Residence ID">Residenceid</TEXTFIELD>
+							<TEXTFIELD w="40" title="Residence Name">residencename</TEXTFIELD>
+							<TEXTFIELD w="40" title="Quarterid">quarterid</TEXTFIELD>
+							<TEXTFIELD w="40" title="Option">residenceoption</TEXTFIELD>
+							<TEXTFIELD w="40" title="Charges">charges</TEXTFIELD>
+						</GRID>
+					</GRIDBOX>
+					<TEXTFIELD w="50" title="Block" y="30" h="20" x="10">blockname</TEXTFIELD>
+					<TEXTFIELD w="50" title="Room Number" y="30" h="20" x="290">roomnumber</TEXTFIELD>
+				</FORM>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="705" name="Semesters Off Campus Approval" type="vert" key="16" h="520">
+		<GRID name="Semesters" keyfield="quarterid" table="quarterview" noorg="true" where="(active = true)" key="1">
+			<TEXTFIELD w="240" title="Quarter ID">quarterid</TEXTFIELD>
+			<TEXTFIELD w="240" title="Start">qstart</TEXTFIELD>
+			<TEXTFIELD w="240" title="End">qend</TEXTFIELD>
+			<GRID name="Students List" keyfield="qstudentid" updatetable="qstudents" linkfield="quarterid" table="vwqstudentbalances" noorg="true" where="(offcampus = true) and (studentdeanapproval = false)">
+				<TEXTFIELD w="10" title="Student ID">studentid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Student">studentname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Account Number">accountnumber</TEXTFIELD>
+				<TEXTFIELD w="20" title="Off Campus">offcampus</TEXTFIELD>
+				<TEXTFIELD w="20" title="Date of Birth">birthdate</TEXTFIELD>
+				<TEXTFIELD w="20" title="Sex">Sex</TEXTFIELD>
+				<TEXTFIELD w="10" title="Marital Status">MaritalStatus</TEXTFIELD>
+				<TEXTFIELD w="10" title="Study Level">studylevel</TEXTFIELD>
+				<TEXTFIELD w="20" title="Major">majorname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Opening Balance">currbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Scholarship">scholarship</TEXTFIELD>
+				<TEXTFIELD w="20" title="Balance">finalbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Approval" edit="true">studentdeanapproval</TEXTFIELD>
+				<TEXTFIELD w="140" title="Not Approved" edit="true">noapproval</TEXTFIELD>
+			</GRID>
+			<GRID name="Approved" keyfield="qstudentid" updatetable="qstudents" linkfield="quarterid" table="vwqstudentbalances" noorg="true" where="(offcampus = true) and (studentdeanapproval = true)">
+				<TEXTFIELD w="10" title="Student ID">studentid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Student">studentname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Account Number">accountnumber</TEXTFIELD>
+				<TEXTFIELD w="20" title="Off Campus">offcampus</TEXTFIELD>
+				<TEXTFIELD w="20" title="Date of Birth">birthdate</TEXTFIELD>
+				<TEXTFIELD w="20" title="Sex">Sex</TEXTFIELD>
+				<TEXTFIELD w="10" title="Marital Status">MaritalStatus</TEXTFIELD>
+				<TEXTFIELD w="10" title="Study Level">studylevel</TEXTFIELD>
+				<TEXTFIELD w="20" title="Major">majorname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Opening Balance">currbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Scholarship">scholarship</TEXTFIELD>
+				<TEXTFIELD w="20" title="Balance">finalbalance</TEXTFIELD>
+				<TEXTFIELD w="20" title="Approval" edit="true">studentdeanapproval</TEXTFIELD>
+				<TEXTFIELD w="140" title="Not Approved" edit="true">noapproval</TEXTFIELD>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="705" name="Semesters Students" type="vert" key="17" h="520">
+		<GRID name="Semesters" keyfield="quarterid" orderby="quarterid desc" table="quarterview" noorg="true">
+			<TEXTFIELD w="240" title="Quarter ID">quarterid</TEXTFIELD>
+			<TEXTFIELD w="240" title="Start">qstart</TEXTFIELD>
+			<TEXTFIELD w="240" title="End">qend</TEXTFIELD>
+			<GRID name="Students List" keyfield="qstudentid" updatetable="qstudents" linkfield="quarterid" table="vwqstudentbalances" noorg="true" where="(approved = true)" key="2">
+				<TEXTFIELD w="10" title="Student ID">studentid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Student">studentname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Off Campus">offcampus</TEXTFIELD>
+				<TEXTFIELD w="20" title="Date of Birth">birthdate</TEXTFIELD>
+				<TEXTFIELD w="20" title="Sex">Sex</TEXTFIELD>
+				<TEXTFIELD w="10" title="Marital Status">MaritalStatus</TEXTFIELD>
+				<TEXTFIELD w="10" title="Study Level">studylevel</TEXTFIELD>
+				<TEXTFIELD w="20" title="Major">majorname</TEXTFIELD>
+				<TEXTFIELD w="40" title="Citizen Grade" edit="true">citizengrade</TEXTFIELD>
+				<TEXTFIELD w="40" title="Citizen Marks" edit="true">citizenmarks</TEXTFIELD>
+				<GRID name="Citizenships" keyfield="citizenshipid" linkfield="qstudentid" table="vwcitizenships" noorg="true" key="3">
+					<TEXTFIELD w="40" title="Citizenship Type">citizenshiptypename</TEXTFIELD>
+					<TEXTFIELD w="40" title="Student ID">studentid</TEXTFIELD>
+					<TEXTFIELD w="140" title="Student Name">studentname</TEXTFIELD>
+					<TEXTFIELD w="40" title="Entry Date">entrydate</TEXTFIELD>
+					<TEXTFIELD w="40" title="Narrative">narrative</TEXTFIELD>
+					<FORM name="Citizenships" keyfield="citizenshipid" linkfield="qstudentid" table="citizenships" noorg="true" key="4" inputkey="2">
+						<COMBOBOX w="150" title="Citizenship Type" lptable="citizenshiptypes" noorg="true" y="10" h="20" x="10" lpfield="citizenshiptypeid">citizenshiptypeid</COMBOBOX>
+						<TEXTDATE w="150" title="Entry Date" y="10" h="20" x="290">entrydate</TEXTDATE>
+						<TEXTFIELD w="430" title="Narrative" y="30" h="20" x="10">narrative</TEXTFIELD>
+						<TEXTAREA w="430" title="Details" y="50" h="70" x="10">details</TEXTAREA>
+					</FORM>
+				</GRID>
+				<GRID name="Student Exits" keyfield="studentexitid" linkfield="qstudentid" table="vwstudentexits" noorg="true" key="5">
+					<TEXTFIELD w="40" title="Student ID">studentid</TEXTFIELD>
+					<TEXTFIELD w="140" title="Student Name">studentname</TEXTFIELD>
+					<TEXTFIELD w="40" title="Exit Date">exitdate</TEXTFIELD>
+					<TEXTFIELD w="40" title="Entry Date">entrydate</TEXTFIELD>
+					<TEXTFIELD w="40" title="Request Exit">requestexit</TEXTFIELD>
+					<TEXTFIELD w="40" title="Request Entry">requestentry</TEXTFIELD>
+					<TEXTFIELD w="40" title="Reason">reason</TEXTFIELD>
+					<TEXTFIELD w="40" title="Long Exit">longexit</TEXTFIELD>
+					<TEXTFIELD w="40" title="Approved">approved</TEXTFIELD>
+					<FORM name="Student Exits" keyfield="studentexitid" linkfield="qstudentid" table="studentexits" noorg="true" key="6" inputkey="2">
+						<TEXTDATE w="150" title="Request Exit" y="10" h="20" x="10">requestexit</TEXTDATE>
+						<TEXTDATE w="150" title="Request Entry" y="10" h="20" x="290">requestentry</TEXTDATE>
+						<TEXTDATE w="150" title="Exit Date" y="30" h="20" x="10">exitdate</TEXTDATE>
+						<TEXTDATE w="150" title="Entry Date" y="30" h="20" x="290">entrydate</TEXTDATE>
+						<TEXTFIELD w="430" title="Reason" y="50" h="20" x="10">reason</TEXTFIELD>
+						<CHECKBOX w="50" title="Long Exit" y="70" h="20" x="10">longexit</CHECKBOX>
+						<CHECKBOX w="50" title="Approved" y="70" h="20" x="290">approved</CHECKBOX>
+						<TEXTAREA w="430" title="Details" y="90" h="70" x="10">details</TEXTAREA>
+					</FORM>
+				</GRID>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Enrolment by Residence" type="horl" key="214" h="500">
+		<GRID name="Semesters" keyfield="quarterid" orderby="quarterid desc" table="quarters" noorg="true">
+			<TEXTFIELD w="240" title="Quarter ID">quarterid</TEXTFIELD>
+			<TEXTFIELD w="240" title="Start">qstart</TEXTFIELD>
+			<GRID name="Q Residence" keyfield="qresidenceid" linkfield="quarterid" table="qresidenceview" noorg="true">
+				<TEXTFIELD w="40" title="Residence">residencename</TEXTFIELD>
+				<TEXTFIELD w="40" title="Off Campus">offcampus</TEXTFIELD>
+				<JASPER name="Students Order by Room" reportfile="qstudentviewrs2.jasper"></JASPER>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Label" type="horl" key="2115" h="500">
+		<FILTER location="250" name="Label" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Semesters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" noorg="true" listfield="quarter"></DRILLDOWN>
+			</DRILLDOWN>
+			<JASPER filtered="true" name="Student Labels" reportfile="studentlabel.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Off-Campus" type="horl" key="215" h="500">
+		<FILTER location="250" name="Off-Campus" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Quarters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" noorg="true" listfield="quarter"></DRILLDOWN>
+			</DRILLDOWN>
+			<JASPER filtered="true" name="All Off Campus" reportfile="offcampus.jasper"></JASPER>
+			<JASPER filtered="true" name="Female Offcampus" reportfile="offcampus1.jasper"></JASPER>
+			<JASPER filtered="true" name="Male Offcampus" reportfile="offcampus2.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Semester Paid Students" key="551" h="500">
+		<FILTER location="250" name="Semester Paid Students" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Semesters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" listfield="Quarter" pos="top"></DRILLDOWN>
+			</DRILLDOWN>
+			<DRILLDOWN name="Schools" keyfield="schoolid" table="schools" listfield="schoolname">
+				<DRILLDOWN name="Departments" keyfield="departmentid" wherefield="schoolid" table="departments" listfield="departmentname" pos="top">
+					<DRILLDOWN name="Majors" keyfield="majorid" wherefield="departmentid" table="majors" listfield="majorname" filtername="majorid" pos="top"></DRILLDOWN>
+				</DRILLDOWN>
+			</DRILLDOWN>
+			<JASPER filtered="true" name="Semester Programme Students" reportfile="wvqstudentchargesbb.jasper"></JASPER>
+			<JASPER filtered="true" name="Semester Students Tel Num" reportfile="wvqstudentfone.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="630" name="Students Audit" key="772" h="750">
+		<GRID name="Semester" keyfield="quarterid" orderby="quarterid desc" table="quarterview" noorg="true">
+			<TEXTFIELD w="240" title="Semester ID">quarterid</TEXTFIELD>
+			<TEXTFIELD w="240" title="Start">qstart</TEXTFIELD>
+			<TEXTFIELD w="240" title="End">qend</TEXTFIELD>
+			<GRID name="Q. Students" keyfield="qstudentid" updatetable="qstudents" linkfield="quarterid" table="vwqstudentbalances" noorg="true" where="(finaceapproval = true) AND (printed = true)">
+				<TEXTFIELD w="10" title="Matrix Num">studentid</TEXTFIELD>
+				<TEXTFIELD w="40" title="Student Name">studentname</TEXTFIELD>
+				<TEXTFIELD w="20" title="Account Number">accountnumber</TEXTFIELD>
+				<TEXTFIELD w="20" title="Study Level">studylevel</TEXTFIELD>
+				<TEXTFIELD w="20" title="Programme">majorname</TEXTFIELD>
+				<TEXTFIELD w="20" title="registered">approved</TEXTFIELD>
+				<GRID name="Registered Courses" keyfield="qgradeid" linkfield="qstudentid" table="studentgradeview" noorg="true">
+					<TEXTFIELD w="10" title="Matrix Num">studentid</TEXTFIELD>
+					<TEXTFIELD w="20" title="Student">studentname</TEXTFIELD>
+					<TEXTFIELD w="10" title="Course ID">courseid</TEXTFIELD>
+					<TEXTFIELD w="100" title="Course Title">coursetitle</TEXTFIELD>
+					<TEXTFIELD w="100" title="Lecturer">instructorname</TEXTFIELD>
+					<TEXTFIELD w="10" title="Units">chargehours</TEXTFIELD>
+					<TEXTFIELD w="5" title="Dropped">dropped</TEXTFIELD>
+				</GRID>
+				<GRID name="Approval Trail" keyfield="approvalid" linkfield="qstudentid" table="approvallist" noorg="true">
+					<TEXTFIELD w="40" title="Approval Type">approvaltype</TEXTFIELD>
+					<TEXTFIELD w="40" title="Approved By">approvedby</TEXTFIELD>
+					<TEXTFIELD w="40" title="Approve Date">approvedate</TEXTFIELD>
+					<TEXTFIELD w="40" title="Approval Computer">clientip</TEXTFIELD>
+				</GRID>
+			</GRID>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Residence Reports" type="horl" key="225" h="600">
+		<FILTER location="250" name="Full Residence List" type="horl">
+			<DRILLDOWN name="Year" keyfield="quarteryear" orderby="quarteryear desc" table="yearview" noorg="true" listfield="quarteryear">
+				<DRILLDOWN name="Semesters" keyfield="quarterid" wherefield="quarteryear" table="quarterview" noorg="true" listfield="quarter"></DRILLDOWN>
+			</DRILLDOWN>
+			<JASPER name="Residence Summary" reportfile="vw_qresidence_summary.jasper"></JASPER>
+			<JASPER name="Residence Charge" reportfile="qstudentviewrs4.jasper"></JASPER>
+			<JASPER name="Full Residence List" reportfile="qstudentviewrs3.jasper"></JASPER>
+		</FILTER>
+		<FILTER w="700" name="Residence Report" split="250" type="vert">
+			<FILTERGRID name="Semesters" keyfield="quarterid" orderby="quarterid desc" table="quarters" noorg="true">
+				<TEXTFIELD w="240" title="Quarter ID">quarterid</TEXTFIELD>
+				<TEXTFIELD w="240" title="Start">qstart</TEXTFIELD>
+				<FILTERGRID name="Q Residence" keyfield="qresidenceid" linkfield="quarterid" table="qresidenceview" noorg="true">
+					<TEXTFIELD w="40" title="Residence">residencename</TEXTFIELD>
+					<TEXTFIELD w="40" title="Off Campus">offcampus</TEXTFIELD>
+				</FILTERGRID>
+			</FILTERGRID>
+			<JASPER name="Residence Report" reportfile="qstudentviewrs2.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+</APP>

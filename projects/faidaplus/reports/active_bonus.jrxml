@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="active_bonus" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="49cb81b1-21fe-4f32-b26c-75a6526712f1">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT 	bonus_id, 	period_id, entity_id,bonus_org_name,
+ 	org_id,son, pcc, start_date, end_date, 	percentage ,
+ 	amount, is_active,	approve_status, workflow_table_id,
+ 	application_date, action_date, details,org_name,bonus_name,market_name,entity_pcc
+FROM vw_bonus
+WHERE is_active = true;]]>
+	</queryString>
+	<field name="bonus_id" class="java.lang.Integer"/>
+	<field name="period_id" class="java.lang.Integer"/>
+	<field name="entity_id" class="java.lang.Integer"/>
+	<field name="bonus_org_name" class="java.lang.String"/>
+	<field name="org_id" class="java.lang.Integer"/>
+	<field name="son" class="java.lang.String"/>
+	<field name="pcc" class="java.lang.String"/>
+	<field name="start_date" class="java.sql.Date"/>
+	<field name="end_date" class="java.sql.Date"/>
+	<field name="percentage" class="java.lang.Float"/>
+	<field name="amount" class="java.lang.Float"/>
+	<field name="is_active" class="java.lang.Boolean"/>
+	<field name="approve_status" class="java.lang.String"/>
+	<field name="workflow_table_id" class="java.lang.Integer"/>
+	<field name="application_date" class="java.sql.Timestamp"/>
+	<field name="action_date" class="java.sql.Timestamp"/>
+	<field name="details" class="java.lang.String"/>
+	<field name="org_name" class="java.lang.String"/>
+	<field name="bonus_name" class="java.lang.String"/>
+	<field name="market_name" class="java.lang.String"/>
+	<field name="entity_pcc" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="802" height="40" uuid="96b24438-37e9-46a2-907a-756dc0a227a9"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="24"/>
+				</textElement>
+				<text><![CDATA[ACTIVE BONUS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="15" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement x="126" y="0" width="42" height="20" uuid="dec4f4b2-db73-4555-aaa0-3768a13547d0"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true" isStrikeThrough="false"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<text><![CDATA[PCC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="269" y="0" width="42" height="20" uuid="487ab98a-0185-4ce4-8a7b-0e7a2fdcb7a0"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true" isStrikeThrough="false"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<text><![CDATA[SON]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="398" y="0" width="68" height="20" uuid="9a6c6927-6896-4b12-aaeb-fb6709277108"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true" isStrikeThrough="false"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<text><![CDATA[Start Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="466" y="0" width="75" height="20" uuid="72fbf14d-0c27-4868-8cdf-c6ddafdb72bc"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true" isStrikeThrough="false"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<text><![CDATA[End Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="541" y="0" width="67" height="20" uuid="36ca2f6e-6cfc-4d7a-8876-77aaf835ab34"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true" isStrikeThrough="false"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<text><![CDATA[Percentage	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="608" y="0" width="78" height="20" uuid="46a2a0d4-aa57-4c0a-90d5-a3593e199f82"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true" isStrikeThrough="false"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="686" y="0" width="53" height="20" uuid="d1292c62-1e1a-4146-aa33-604ea47e9147"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true" isStrikeThrough="false"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="739" y="0" width="63" height="20" uuid="796cfd21-87f8-4b48-8390-00a59127d1a2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true" isStrikeThrough="false"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<text><![CDATA[Approved Status]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="22" width="802" height="1" uuid="56c5be2f-6cbe-47f3-b2cb-69339fbf7cff"/>
+			</line>
+			<staticText>
+				<reportElement x="168" y="0" width="101" height="20" uuid="9f232d19-66bc-4bcd-9218-aa75106cab41"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Consultant Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="126" height="20" uuid="87d89dc7-8a1c-4842-a6ce-81eb682c87f2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Agency Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="311" y="0" width="87" height="20" uuid="51c06544-910a-4bfa-949b-e1b2c3ff3915"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Market Bonus]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="802" height="20" isPrintWhenDetailOverflows="true" backcolor="#E5E5E5" uuid="1135d1fb-9585-44b7-a2fb-90b4838bfda1">
+					<printWhenExpression><![CDATA[$V{REPORT_COUNT}%2==0]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="126" y="0" width="42" height="15" isPrintWhenDetailOverflows="true" uuid="e8cd0987-6d92-445f-8165-0fee4cdf0f90"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pcc}?$F{pcc}:$F{entity_pcc}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="398" y="0" width="68" height="15" isPrintWhenDetailOverflows="true" uuid="42d63e5e-e974-4c8b-b963-71bfe9227a99"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{start_date}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="466" y="0" width="75" height="15" isPrintWhenDetailOverflows="true" uuid="1bcb5b25-07a5-43a8-91bb-2b01bf40a352"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{end_date}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="686" y="0" width="53" height="15" isPrintWhenDetailOverflows="true" uuid="5f086bee-6174-42b4-af6d-458623d61148"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{is_active} ==true?"Active":"Inactive"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="541" y="0" width="67" height="15" isPrintWhenDetailOverflows="true" uuid="e19361c0-5d72-4749-b54b-f18d18e6f56c"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{percentage}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="739" y="0" width="63" height="15" isPrintWhenDetailOverflows="true" uuid="52bae040-4ea4-49d1-ae89-8d8cabee1b6f"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{approve_status}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="269" y="0" width="42" height="15" isPrintWhenDetailOverflows="true" uuid="62c89a0a-22c2-47bd-a7b7-63154704398e"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{son}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="608" y="0" width="78" height="15" isPrintWhenDetailOverflows="true" uuid="e24d2825-b5fb-46db-a539-d6e67cee58c1"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="168" y="2" width="101" height="13" isPrintWhenDetailOverflows="true" uuid="319feb1e-c8b9-4190-9de8-c76c38741584"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bonus_name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="126" height="16" isPrintWhenDetailOverflows="true" uuid="2c0a7232-ff6b-4034-9d3a-b48d0f71d891"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bonus_org_name}?$F{bonus_org_name}:$F{org_name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="311" y="0" width="87" height="16" isPrintWhenDetailOverflows="true" uuid="87977f12-934d-4b54-88de-a5ea83167192"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{market_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

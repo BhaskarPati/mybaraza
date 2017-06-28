@@ -1,0 +1,75 @@
+<APP name="VMS">
+	<MENU name="Voter Manager">
+		<MENU name="County">5</MENU>
+		<MENU name="Reports">
+			<MENU name="County">105</MENU>
+		</MENU>
+	</MENU>
+	<DESK w="700" name="County" key="5" h="500">
+		<GRID name="County" keyfield="county_id" table="county">
+			<TEXTFIELD w="75" title="County ID">county_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="County Name">county_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="County Code">county_code</TEXTFIELD>
+			<GRID name="Constituency" keyfield="constituency_id" linkfield="county_id" table="vw_constituency">
+				<TEXTFIELD w="75" title="Constituency ID">constituency_id</TEXTFIELD>
+				<TEXTFIELD w="75" title="Constituency Name">constituency_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Constituency Code">constituency_code</TEXTFIELD>
+				<GRID name="Wards" keyfield="ward_id" linkfield="constituency_id" table="vw_wards">
+					<TEXTFIELD w="75" title="Ward ID">ward_id</TEXTFIELD>
+					<TEXTFIELD w="75" title="Ward Name">ward_name</TEXTFIELD>
+					<TEXTFIELD w="75" title="Ward Code">ward_code</TEXTFIELD>
+					<GRID name="Polling Stations" keyfield="polling_station_id" linkfield="ward_id" table="vw_polling_stations">
+						<TEXTFIELD w="75" title="Polling Station ID">polling_station_id</TEXTFIELD>
+						<TEXTFIELD w="75" title="Polling Station Name">polling_station_name</TEXTFIELD>
+						<TEXTFIELD w="75" title="Polling Station Code">polling_station_code</TEXTFIELD>
+						<GRID name="Voters" keyfield="voter_id" linkfield="polling_station_id" table="vw_voters">
+							<TEXTFIELD w="75" title="Voter ID">voter_id</TEXTFIELD>
+							<TEXTFIELD w="75" title="ID Number">id_number</TEXTFIELD>
+							<TEXTFIELD w="75" title="Surname">surname</TEXTFIELD>
+							<TEXTFIELD w="75" title="Other Names">other_names</TEXTFIELD>
+							<TEXTFIELD w="75" title="Electers Number">electers_number</TEXTFIELD>
+							<TEXTDATE w="75" title="Date Of Birth">date_of_birth</TEXTDATE>
+							<CHECKBOX w="75" title="Gender">gender</CHECKBOX>
+							<TEXTFIELD w="75" title="Address">address</TEXTFIELD>
+							<TEXTFIELD w="75" title="Voter Status">voter_status</TEXTFIELD>
+							<FORM name="Voters" keyfield="voter_id" linkfield="polling_station_id" table="voters">
+								<TEXTFIELD w="150" title="ID Number" y="10" h="20" x="10">id_number</TEXTFIELD>
+								<TEXTFIELD w="150" title="Surname" y="10" h="20" x="290">surname</TEXTFIELD>
+								<TEXTFIELD w="150" title="Other Names" y="30" h="20" x="10">other_names</TEXTFIELD>
+								<TEXTFIELD w="150" title="Electers Number" y="30" h="20" x="290">electers_number</TEXTFIELD>
+								<TEXTDATE w="150" title="Date Of Birth" y="50" h="20" x="10">date_of_birth</TEXTDATE>
+								<CHECKBOX w="150" title="Gender" y="50" ischar="true" h="20" x="290">gender</CHECKBOX>
+								<TEXTFIELD w="150" title="Address" y="70" h="20" x="10">address</TEXTFIELD>
+								<TEXTFIELD w="150" title="Voter Status" y="70" h="20" x="290">voter_status</TEXTFIELD>
+								<TEXTAREA w="430" title="Details" y="90" h="70" x="10">details</TEXTAREA>
+							</FORM>
+						</GRID>
+						<FORM name="Polling Stations" keyfield="polling_station_id" linkfield="ward_id" table="polling_stations">
+							<TEXTFIELD w="430" title="Polling Station Name" y="10" h="20" x="10">polling_station_name</TEXTFIELD>
+							<TEXTFIELD w="150" title="Polling Station Code" y="30" h="20" x="10">polling_station_code</TEXTFIELD>
+							<TEXTAREA w="430" title="Details" y="50" h="70" x="10">details</TEXTAREA>
+						</FORM>
+					</GRID>
+					<FORM name="Wards" keyfield="ward_id" linkfield="constituency_id" table="wards">
+						<TEXTFIELD w="430" title="Ward Name" y="10" h="20" x="10">ward_name</TEXTFIELD>
+						<TEXTFIELD w="150" title="Ward Code" y="30" h="20" x="10">ward_code</TEXTFIELD>
+						<TEXTAREA w="430" title="Details" y="50" h="70" x="10">details</TEXTAREA>
+					</FORM>
+				</GRID>
+				<FORM name="Constituency" keyfield="constituency_id" linkfield="county_id" table="constituency">
+					<TEXTFIELD w="430" title="Constituency Name" y="10" h="20" x="10">constituency_name</TEXTFIELD>
+					<TEXTFIELD w="150" title="Constituency Code" y="30" h="20" x="10">constituency_code</TEXTFIELD>
+					<TEXTAREA w="430" title="Details" y="50" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<FORM name="County" keyfield="county_id" table="county">
+				<TEXTFIELD w="430" title="County Name" h="20" y="10" x="10">county_name</TEXTFIELD>
+				<TEXTFIELD w="150" title="County Code" h="20" y="30" x="10">county_code</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" h="70" y="50" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="County" key="105" h="550">
+		<JASPER name="County" reportfile="county.jasper"></JASPER>
+	</DESK>
+</APP>

@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="loan_report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<parameter name="reportpath" class="java.lang.String">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="filterid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT repayment_table.loan_period,repayment_table.loan_period_balance, repayment_table.interest_component,
+repayment_table.cheque_name, repayment_table.cheque_number, repayment_table.cheque_date, repayment_table.cheque_amount, repayment_table.principal_component, repayment_table.emi, repayment_table.is_paid, loans.loan_id, loantypes.loantype_id, loantypes.loantype_name, loantypes.default_interest,
+borrower.borrower_id, (COALESCE(borrower.sur_name,'') || ' ' || COALESCE(borrower.first_name,'') || ' ' || COALESCE(borrower.middle_name,'')) as borrower_name, 
+loans.principal, loans.loandate, loans.monthlyrepayment, loans.repaymentperiod, loans.loanapproved, loans.narrative as loans_narrative, loan_purpose.loan_purpose_id 
+FROM repayment_table 
+INNER JOIN loans ON repayment_table.loan_id = loans.loan_id
+INNER JOIN loantypes ON loans.loantype_id = loantypes.loantype_id
+INNER JOIN borrower ON loans.borrower_id = borrower.borrower_id
+LEFT JOIN loan_purpose ON loans.loan_purpose_id = loan_purpose.loan_purpose_id
+WHERE borrower.borrower_id = '$P!{filterid}'
+ORDER BY repayment_table.repayment_table_id]]>
+	</queryString>
+	<field name="loan_period" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="loan_period_balance" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="interest_component" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cheque_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cheque_number" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cheque_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cheque_amount" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="principal_component" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="emi" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="is_paid" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="loan_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="loantype_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="loantype_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="default_interest" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="borrower_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="borrower_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="principal" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="loandate" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="monthlyrepayment" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="repaymentperiod" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="loanapproved" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="loans_narrative" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="loan_purpose_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="journalno">
+		<groupExpression><![CDATA[]]></groupExpression>
+		<groupFooter>
+			<band height="20"/>
+		</groupFooter>
+	</group>
+	<group name="Loan Group">
+		<groupExpression><![CDATA[$F{loan_id}]]></groupExpression>
+		<groupHeader>
+			<band height="76">
+				<staticText>
+					<reportElement key="element-90" x="270" y="61" width="72" height="15" forecolor="#000000"/>
+					<box leftPadding="2" rightPadding="2"/>
+					<textElement>
+						<font fontName="Times New Roman" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Principal]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="111" y="61" width="70" height="15"/>
+					<box leftPadding="2" rightPadding="2"/>
+					<textElement>
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Installment]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="181" y="61" width="89" height="15"/>
+					<box leftPadding="2" rightPadding="2"/>
+					<textElement>
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Balance]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="342" y="61" width="72" height="15"/>
+					<box leftPadding="2" rightPadding="2"/>
+					<textElement>
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Interest]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="414" y="61" width="100" height="15"/>
+					<box leftPadding="2" rightPadding="2"/>
+					<textElement>
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Paid]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="56" y="61" width="55" height="15"/>
+					<box leftPadding="2" rightPadding="2"/>
+					<textElement>
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Period]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="44" y="15" width="67" height="15"/>
+					<box leftPadding="2" rightPadding="2"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Loan Amount]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="44" y="30" width="67" height="15"/>
+					<box leftPadding="2" rightPadding="2"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Loan Date]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="44" y="0" width="67" height="15"/>
+					<box leftPadding="2" rightPadding="2"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Loan ID]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="111" y="0" width="92" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$F{loan_id}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="111" y="15" width="92" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Float"><![CDATA[$F{principal}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd-MMM-yy">
+					<reportElement x="111" y="30" width="92" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8"/>
+					</textElement>
+					<textFieldExpression class="java.util.Date"><![CDATA[$F{loandate}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="257" y="0" width="85" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Loan Type]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="257" y="15" width="85" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Loan Interest (pm)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="257" y="30" width="95" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Monthly Repayment]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="342" y="0" width="174" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{loantype_name}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="342" y="15" width="174" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{default_interest}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="355" y="30" width="161" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Float"><![CDATA[$F{monthlyrepayment}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="44" y="54" width="470" height="1"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="23"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="104" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="45" width="555" height="38"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Borrower Loan Report]]></text>
+			</staticText>
+			<image>
+				<reportElement x="192" y="12" width="180" height="22"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{reportpath} + "meridian_logo.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="67" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Borrower]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="67" y="0" width="436" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{borrower_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="56" y="0" width="55" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{loan_period}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="111" y="0" width="70" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Float"><![CDATA[$F{emi}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="181" y="0" width="89" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Float"><![CDATA[$F{loan_period_balance}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="272" y="0" width="70" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Float"><![CDATA[$F{principal_component}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="342" y="0" width="72" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Float"><![CDATA[$F{interest_component}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="414" y="0" width="100" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Boolean"><![CDATA[$F{is_paid}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="435" y="0" width="80" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="0" width="40" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

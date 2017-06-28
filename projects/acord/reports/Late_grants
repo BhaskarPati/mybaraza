@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vw_grants" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="181ba427-bbb9-403c-8b60-16d7c0101800">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="1"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="filterid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="orgid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="orgwhere" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="organd" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/opt/baraza.2.7/projects/acord/reports/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="project_name" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT vw_projects.project_name, vw_contracts.donor_name, vw_contracts.contract_id, vw_contracts.start_of_grant, vw_contracts.end_of_grant, vw_grants.grant_id, vw_grants.grant_amount, vw_grants.currency_name, vw_grants.received, vw_grants.grant_pr_date
+FROM vw_projects, vw_grants, vw_contracts
+WHERE vw_contracts.project_id = vw_projects.project_id AND vw_grants.contract_id = vw_contracts.contract_id AND vw_projects.project_name = $P{project_name}
+ORDER BY vw_projects.project_name, vw_contracts.start_of_grant, vw_grants.received, vw_grants.grant_pr_date]]>
+	</queryString>
+	<field name="project_name" class="java.lang.String"/>
+	<field name="donor_name" class="java.lang.String"/>
+	<field name="contract_id" class="java.lang.String"/>
+	<field name="start_of_grant" class="java.sql.Date"/>
+	<field name="end_of_grant" class="java.sql.Date"/>
+	<field name="grant_id" class="java.lang.Integer"/>
+	<field name="grant_amount" class="java.lang.Float"/>
+	<field name="currency_name" class="java.lang.String"/>
+	<field name="received" class="java.lang.Boolean"/>
+	<field name="grant_pr_date" class="java.sql.Date"/>
+	<variable name="SUM" class="java.lang.Double" resetType="Group" resetGroup="Received" calculation="Sum">
+		<variableExpression><![CDATA[$F{grant_amount}]]></variableExpression>
+	</variable>
+	<group name="Contracts">
+		<groupExpression><![CDATA[$F{contract_id}]]></groupExpression>
+		<groupHeader>
+			<band height="39">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement style="Detail" isPrintRepeatedValues="false" x="2" y="20" width="65" height="15" uuid="6639e768-fe71-441c-a59d-121d8b01cfbf"/>
+					<textElement>
+						<font fontName="Times New Roman" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{donor_name}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="100" y="15" width="97" height="20" uuid="2327582e-5c47-4684-bc8c-ebb71b10fb0e"/>
+					<textElement>
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{contract_id}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="200" y="15" width="100" height="20" uuid="93f44ba6-c124-447a-888f-1458de807e38"/>
+					<textElement>
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{start_of_grant}.format("YYYY/MM/dd")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="300" y="15" width="100" height="20" uuid="91349679-9403-42bd-baf3-e9f90eac5827"/>
+					<textElement>
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{end_of_grant}.format("YYYY/MM/dd")]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="20" uuid="11151b14-9a85-437d-8d22-6f8178234b35"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Donor Name]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="100" y="0" width="100" height="20" uuid="adb7758d-d329-42b7-8115-f96dc2b76ab5"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Contract ID]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="197" y="0" width="100" height="20" uuid="66b4a352-253d-4eda-9143-1d4b58df60d1"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Start of Contract]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="300" y="0" width="100" height="20" uuid="a075f5e8-e4ea-423e-889f-40b6054ddab7"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[End of Contract]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="18"/>
+		</groupFooter>
+	</group>
+	<group name="Before">
+		<groupExpression><![CDATA[$F{grant_pr_date}.before(new Date())]]></groupExpression>
+		<groupHeader>
+			<band height="7"/>
+		</groupHeader>
+		<groupFooter>
+			<band height="17"/>
+		</groupFooter>
+	</group>
+	<group name="Received">
+		<groupExpression><![CDATA[$F{received}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<staticText>
+					<reportElement x="-1" y="0" width="67" height="20" uuid="3eae2360-0c07-466d-b397-078a9d30b625"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Grant ID]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="67" y="0" width="65" height="20" uuid="5d816526-2778-4c2e-9e0c-fd1ab2ce3c33"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Amount]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="132" y="0" width="65" height="20" uuid="7ee9b4eb-28db-4d57-9aea-2c8bedcc210f"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Currency]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="197" y="0" width="61" height="20" uuid="0738159f-e3f3-42f8-93ba-c08c1988d0fd"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Received]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="258" y="0" width="65" height="20" uuid="0e8b96df-8797-465a-b78c-583eab1d9d21"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Expected Date]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="15">
+				<textField>
+					<reportElement x="70" y="0" width="65" height="15" uuid="5931975f-1403-432a-ad24-dd6c066d5140"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SUM}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="29" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="2" y="2" width="446" height="27" uuid="966e6ce2-4760-441e-ac81-39eeedd17358"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Grants Report]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="18" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="15" uuid="249a540c-dbc6-4e66-99e2-9b1cb5db45d8"/>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement style="Detail" x="2" y="0" width="65" height="15" uuid="55042a18-a16c-470c-a89e-9b19ea616bf4"/>
+					<textElement>
+						<font fontName="Times New Roman" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{grant_id}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement style="Detail" x="67" y="0" width="65" height="15" uuid="dc56f4b8-7759-4f50-813a-e54041a6b8bf"/>
+					<textElement>
+						<font fontName="Times New Roman" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{grant_amount}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement style="Detail" x="135" y="0" width="65" height="15" uuid="5ac67cb7-8e87-42c3-8600-7a1178df42d4"/>
+					<textElement>
+						<font fontName="Times New Roman" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{currency_name}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement style="Detail" x="200" y="0" width="65" height="15" uuid="814d2f23-89ce-4814-a0bc-4c980c1dc09c"/>
+					<textElement>
+						<font fontName="Times New Roman" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{received}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement style="Detail" x="265" y="0" width="65" height="15" uuid="f0ddab39-a446-4f83-bf8d-f8db77c7c968"/>
+					<textElement>
+						<font fontName="Times New Roman" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{grant_pr_date}.format("YYYY/MM/dd")]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="15" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="2" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

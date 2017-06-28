@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<DATA dbclass="com.mysql.jdbc.Driver" dbpath="jdbc:mysql://localhost/kenic" dbusername="root" dbpassword="" noaudit="true">
+
+	<EXPORT name="Payroll Ledger" table="payroll_ledger" keyfield="payroll_ledger_id" marker="posted">
+		<TEXTFIELD w="75" title="Payroll Ledger ID">payroll_ledger_id</TEXTFIELD>
+		<TEXTFIELD w="75" title="Period ID">period_id</TEXTFIELD>
+		<TEXTFIELD w="75" title="Ledger ID" fnct="70000 + period_id">ledger_id</TEXTFIELD>
+		<TEXTDATE w="75" title="Posting Date">posting_date</TEXTDATE>
+		<TEXTFIELD w="75" title="Description">description</TEXTFIELD>
+		<TEXTFIELD w="75" title="Payroll Account">payroll_account</TEXTFIELD>
+		<TEXTDECIMAL w="75" title="Amount" fnct="(CASE WHEN dr_amt = 0 THEN -(cr_amt) ELSE dr_amt END)">amount</TEXTDECIMAL>
+		<INTO table="payroll_ledger" keyfield="payroll_ledger_id" noaudit="true">
+			<TEXTFIELD w="75" title="Payroll Ledger ID">payroll_ledger_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Period ID">period_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Ledger ID">ledger_id</TEXTFIELD>
+			<TEXTDATE w="75" title="Posting Date">posting_date</TEXTDATE>
+			<TEXTFIELD w="75" title="Description">description</TEXTFIELD>
+			<TEXTFIELD w="75" title="Payroll Account">payroll_account</TEXTFIELD>
+			<TEXTDECIMAL w="75" title="Amount">amount</TEXTDECIMAL>
+		</INTO>
+	</EXPORT>
+
+</DATA>

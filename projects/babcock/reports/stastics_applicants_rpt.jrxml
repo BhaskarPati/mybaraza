@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="allapplications" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4c97518a-b479-4188-a8f2-990f9a3f4bed">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="47"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#ECEAF2"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+(SELECT count(registrations.registrationid) FROM registrations INNER JOIN applications
+ON registrations.registrationid = applications.applicationid
+WHERE (registrations.submitapplication = false) AND (applications.paid = true)) as unsubmittedapplicants,
+
+(SELECT count(registrationid) FROM registrations WHERE (submitapplication = true))   as submittedapplicants,
+
+(SELECT count(registrationid) FROM registrations WHERE (existingid is not null))  as admittedapplicants,
+
+(SELECT count(registrationid) FROM registrations WHERE (isaccepted = true))  as acceptedapplicants,
+
+(SELECT count(applicationid) FROM applications ) as allapplicants,
+
+(SELECT count(applicationid) FROM applications WHERE paid=true) as paidapplicants
+
+
+;]]>
+	</queryString>
+	<field name="unsubmittedapplicants" class="java.lang.Long"/>
+	<field name="submittedapplicants" class="java.lang.Long"/>
+	<field name="admittedapplicants" class="java.lang.Long"/>
+	<field name="acceptedapplicants" class="java.lang.Long"/>
+	<field name="allapplicants" class="java.lang.Long"/>
+	<field name="paidapplicants" class="java.lang.Long"/>
+	<variable name="amount_1" class="java.lang.Float" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="255" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="1" y="0" width="552" height="62" uuid="7a2bdfba-51cb-4cfa-a049-91f13522a20e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="30" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Babcock University]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="-21" y="62" width="595" height="22" uuid="1a7fcf80-297c-465e-94eb-e761d78a0da4"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Summary Report]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="192" width="184" height="20" uuid="d91ed3ec-0626-4951-ba96-ef0677d9942a"/>
+				<box leftPadding="1">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Unsubmitted Applicants:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="132" width="184" height="20" uuid="62814853-bec8-4ccd-be3b-a5aeffe3624b"/>
+				<box leftPadding="1">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[All Applicants:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="172" width="184" height="20" uuid="76161395-1967-42fd-b185-378f1eac9dc9"/>
+				<box leftPadding="1">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Submitted Applicants:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="232" width="184" height="20" uuid="5ff77b87-a835-4fc1-9df7-01c4a72ef5e4"/>
+				<box leftPadding="1">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Admitted Applicants:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="184" y="192" width="369" height="20" uuid="77491125-0bf1-4743-b804-6af4f9283130"/>
+				<box leftPadding="1">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{unsubmittedapplicants}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="184" y="172" width="369" height="20" uuid="292a5570-7255-49ac-94b4-cbf7a2cfb3f1"/>
+				<box leftPadding="1">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{submittedapplicants}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="184" y="232" width="369" height="20" uuid="2976a262-6138-4388-b4eb-b3d399385be3"/>
+				<box leftPadding="1">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{admittedapplicants}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="184" y="132" width="369" height="20" uuid="b62775da-6d74-4944-ae51-3d2965692f04"/>
+				<box leftPadding="1">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{allapplicants}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="112" width="184" height="20" uuid="d5ae60e8-771c-4351-8363-d23530a7979d"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TITLE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="184" y="112" width="369" height="20" uuid="f20f2193-2739-4166-9bd0-81edddb27051"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DETAILS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="152" width="184" height="20" uuid="ce18a100-87db-4534-b32d-d4ab461f9fae"/>
+				<box leftPadding="1">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Applicants Who Have Paid:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="184" y="152" width="369" height="20" uuid="35303028-2301-4e8c-a92f-fc1b6a2ec9e2"/>
+				<box leftPadding="1">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{paidapplicants}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="212" width="184" height="20" uuid="2cca477d-10b9-4a0a-928e-73e5072b26ed"/>
+				<box leftPadding="1">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Accepted Applicants:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="184" y="212" width="369" height="20" uuid="0b13f9f0-f18d-4c8a-b54b-82a31047198d"/>
+				<box leftPadding="1">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{acceptedapplicants}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="9" splitType="Stretch"/>
+	</columnHeader>
+	<columnFooter>
+		<band height="8" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="1" width="555" height="23" forecolor="#D0B48E" backcolor="#BFDAE3" uuid="8f51257f-6ef5-4b21-90f1-d66966880b74"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="505" y="0" width="40" height="20" forecolor="#736343" uuid="dfafd08b-36f8-47fa-b0f5-2144ea34c090"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="424" y="0" width="80" height="20" forecolor="#736343" uuid="960fc721-05d3-4cd7-b056-6138b3529a5b"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="bb5ec754-f108-4753-a854-2b1783254532"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

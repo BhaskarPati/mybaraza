@@ -1,0 +1,85 @@
+<APP>
+	<MENU name="Chama">
+		<MENU name="Service Desk">
+			<MENU name="My account">null</MENU>
+			<MENU name="Loans">null</MENU>
+			<MENU name="Investments">null</MENU>
+			<MENU name="Borrowing">null</MENU>
+			<MENU name="Banks">null</MENU>
+			<MENU name="Drawings">null</MENU>
+		</MENU>
+		<MENU name="Operations" role="admin">
+			<MENU name="Locations">null</MENU>
+			<MENU name="Banks">null</MENU>
+			<MENU name="Members">null</MENU>
+			<MENU name="Contributions">null</MENU>
+			<MENU name="Transaction Ledger">null</MENU>
+			<MENU name="Investments">null</MENU>
+			<MENU name="Borrowing">null</MENU>
+			<MENU name="Penalty">null</MENU>
+			<MENU name="Loans">null</MENU>
+			<MENU name="Meetings">null</MENU>
+			<MENU name="Approvals" role="admin">null</MENU>
+			<MENU name="Files" role="admin">null</MENU>
+		</MENU>
+		<MENU name="Administration" role="admin">
+			<MENU name="Entitys" role="admin">null</MENU>
+			<MENU name="Organisation" role="admin">null</MENU>
+			<MENU name="Workflows" role="admin">null</MENU>
+			<MENU name="All Approvals" role="admin">null</MENU>
+			<MENU name="News" role="admin">null</MENU>
+			<MENU name="EMails" role="admin">null</MENU>
+			<MENU name="Error Messages">null</MENU>
+		</MENU>
+		<MENU name="Master" role="master">
+			<MENU name="Master Approvals">null</MENU>
+			<MENU name="Master All Approvals">null</MENU>
+			<MENU name="Organisation">null</MENU>
+			<MENU name="Subscriptions">null</MENU>
+			<MENU name="Master EMails">null</MENU>
+		</MENU>
+		<MENU name="Reports">
+			<MENU name=" Members" role="manager,admin">null</MENU>
+			<MENU name="Contributions" role="manager,admin">null</MENU>
+			<MENU name="Investments" role="manager,admin">null</MENU>
+			<MENU name="Borrowing" role="manager,admin">null</MENU>
+			<MENU name="Loans" role="manager,admin">null</MENU>
+			<MENU name="Penalty" role="manager,admin">null</MENU>
+			<MENU name="Member Statements">null</MENU>
+			<MENU name="My Statement">null</MENU>
+			<MENU name="My Contributions">null</MENU>
+			<MENU name="My Loans">null</MENU>
+			<MENU name="My Penalties">null</MENU>
+			<MENU name="Statement" role="manager,admin">null</MENU>
+		</MENU>
+	</MENU>
+	<DESK w="700" name="Dashboard" h="500">
+		<DASHBOARD w="700" name="Dashboard">
+			<TILE name="Total Contributions" noorg.query="true" table="Contributions">
+				<TEXTFIELD w="75" fnct="COALESCE(to_char(sum(investment_amount),'999,999,999,990D00'))" title="Total Deposits">Total_deposits</TEXTFIELD>
+			</TILE>
+			<TILE name="My Total Contributions" noorg.query="true" table="Contributions" user="entity_id">
+				<TEXTFIELD w="75" fnct="COALESCE(to_char(sum(investment_amount),'999,999,999,990D00'))" title="My Contributions">total_contribs</TEXTFIELD>
+			</TILE>
+			<TILE name="My Total Overpayments" noorg.query="true" table="Receipts" user="entity_id">
+				<TEXTFIELD w="75" fnct="COALESCE(to_char(sum(remaining_amount),'999,999,999,990D00'))" title="My Overpayments">total_overpayments</TEXTFIELD>
+			</TILE>
+			<TILE name="My Unpaid Contributions" noorg.query="true" table="Contributions" where="(paid= 'false')" user="entity_id">
+				<TEXTFIELD w="75" fnct="COALESCE(to_char(sum(investment_amount),'999,999,999,990D00'))" title="Total Deposits">total_ucontribs</TEXTFIELD>
+			</TILE>
+			<TILE name="Total Investments" noorg.query="true" table="investments">
+				<TEXTFIELD w="75" fnct="COALESCE(to_char(sum(principal), '999,999,999,990D00'))" title="Total Invested">Total_invested</TEXTFIELD>
+			</TILE>
+			<TILELIST name="News" noorg.query="true" table="sys_news" where="(publish= 'true')">
+				<TEXTFIELD w="75" title="News">sys_news_title</TEXTFIELD>
+				<TEXTFIELD w="75" title="Details">details</TEXTFIELD>
+			</TILELIST>
+			<TILELIST name="Investments" noorg.query="true" table="vw_investments" where="(investment_status= 'Committed')">
+				<TEXTFIELD w="75" title="Investment Name">investment_name</TEXTFIELD>
+				<TEXTDECIMAL w="75" title="Principal">principal</TEXTDECIMAL>
+				<TEXTDECIMAL w="75" title="Total Income">income</TEXTDECIMAL>
+				<TEXTDECIMAL w="75" title="Total Expenditure">expenditure</TEXTDECIMAL>
+			</TILELIST>
+		</DASHBOARD>
+	</DESK>
+</APP>

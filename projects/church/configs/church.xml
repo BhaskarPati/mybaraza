@@ -1,0 +1,377 @@
+<APP name="Church">
+	<MENU name="Church">
+		<MENU name="Memberships" role="admin">15</MENU>
+		<MENU name="Meetings">1</MENU>
+		<MENU name="Ministries">45</MENU>
+		<MENU name="Adminstration" role="admin">
+			<MENU name="Entity Types">35</MENU>
+			<MENU name="Entity Subscriptions">40</MENU>
+			<MENU name="Departments">55</MENU>
+			<MENU name="Orgs">50</MENU>
+		</MENU>
+		<MENU name="Reports">
+			<MENU name="Meetings" role="admin">25</MENU>
+			<MENU name="Attendance" role="admin">30</MENU>
+		</MENU>
+	</MENU>
+	<DESK w="700" name="Members" role="admin" key="15" h="500">
+		<GRID limit="70" name="Members" keyfield="entity_id" role="admin" table="vw_entitys" where="(entity_type_id=1)">
+			<TEXTFIELD w="75" title="Prefix">prefix</TEXTFIELD>
+			<TEXTFIELD w="140" title="Member Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="100" title="User Name">user_name</TEXTFIELD>
+			<TEXTFIELD w="100" title="Role">function_role</TEXTFIELD>
+			<CHECKBOX w="100" title="Super User" format="boolean">super_user</CHECKBOX>
+			<CHECKBOX w="75" title="Active" format="boolean">is_active</CHECKBOX>
+			<TEXTFIELD w="100" title="Type">entity_type_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Email">primary_email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Telephone">primary_telephone</TEXTFIELD>
+			<GRID name="Attendance" keyfield="attendance_id" linkfield="entity_id" table="vw_attendance">
+				<TEXTFIELD w="75" title="Meeting Type Name">meeting_type_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Meeting Name">meeting_name</TEXTFIELD>
+				<TEXTDATE w="75" title="Meeting Date">meeting_date</TEXTDATE>
+				<TEXTFIELD w="75" title="Meeting Venue">meeting_venue</TEXTFIELD>
+				<TEXTFIELD w="75" title="Attendance Status">attendance_status</TEXTFIELD>
+			</GRID>
+			<GRID name="Ministry Memberships" keyfield="ministry_membership_id" linkfield="entity_id" table="vw_ministry_memberships">
+				<TEXTFIELD w="75" title="Ministry Name">ministry_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Rank">rank</TEXTFIELD>
+				<CHECKBOX w="75" title="Active">is_active</CHECKBOX>
+				<FORM name="Ministry Memberships" keyfield="ministry_membership_id" linkfield="ministry_id" table="ministry_memberships">
+					<COMBOBOX w="430" title="Entity ID" lptable="entitys" y="10" h="20" x="10" lpfield="entity_name">entity_id</COMBOBOX>
+					<TEXTFIELD w="430" title="Rank" y="30" h="20" x="10">rank</TEXTFIELD>
+					<CHECKBOX w="150" title="Active" y="50" h="20" x="10">is_active</CHECKBOX>
+					<TEXTAREA w="430" title="Details" y="70" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<GRID name="Address" keyfield="address_id" linkfield="table_id" table="vw_address" where="table_name = 'entitys'">
+				<TEXTFIELD w="100" title="Country">sys_country_name</TEXTFIELD>
+				<TEXTFIELD w="100" title="Postal Code">postal_code</TEXTFIELD>
+				<TEXTFIELD w="100" title="Town">town</TEXTFIELD>
+				<TEXTFIELD w="100" title="Phone Number">phone_number</TEXTFIELD>
+				<TEXTFIELD w="100" title="Mobile">mobile</TEXTFIELD>
+				<TEXTFIELD w="140" title="Email">email</TEXTFIELD>
+				<TEXTFIELD w="140" title="Default">is_default</TEXTFIELD>
+				<FORM name="Address" keyfield="address_id" linkfield="table_id" table="address">
+					<DEFAULT default="entitys">table_name</DEFAULT>
+					<COMBOBOX w="430" title="Country" default="KE" lptable="sys_countrys" noorg="true" y="10" h="20" x="10" lpfield="sys_country_name">sys_country_id</COMBOBOX>
+					<TEXTFIELD w="150" title="Post Office Box" y="30" h="20" x="10">post_office_box</TEXTFIELD>
+					<TEXTFIELD w="150" title="Postal Code" y="30" h="20" x="290">postal_code</TEXTFIELD>
+					<TEXTFIELD w="150" title="Town" y="50" h="20" x="10">town</TEXTFIELD>
+					<TEXTFIELD w="430" title="Premises" y="70" h="20" x="10">premises</TEXTFIELD>
+					<TEXTFIELD w="430" title="Street" y="90" h="20" x="10">street</TEXTFIELD>
+					<TEXTFIELD w="430" title="Phone Number" y="110" h="20" x="10">phone_number</TEXTFIELD>
+					<TEXTFIELD w="150" title="Extension" y="130" h="20" x="10">extension</TEXTFIELD>
+					<TEXTFIELD w="430" title="Mobile" y="150" h="20" x="10">mobile</TEXTFIELD>
+					<TEXTFIELD w="430" title="Fax" y="170" h="20" x="10">fax</TEXTFIELD>
+					<TEXTFIELD w="430" title="Email" y="190" h="20" x="10">email</TEXTFIELD>
+					<CHECKBOX w="30" title="Default" y="210" h="20" x="10">is_default</CHECKBOX>
+					<TEXTAREA w="430" title="Details" y="230" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<GRID name="Subscriptions" keyfield="entity_subscription_id" linkfield="entity_id" table="vw_entity_subscriptions">
+				<TEXTFIELD w="75" title="Entity Type Name">entity_type_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Subscription Level Name">subscription_level_name</TEXTFIELD>
+				<FORM name="Subscriptions" keyfield="entity_subscription_id" linkfield="entity_id" table="entity_subscriptions">
+					<COMBOBOX w="430" title="Entity Type" lptable="entity_types" y="10" h="20" x="10" lpfield="entity_type_name">entity_type_id</COMBOBOX>
+					<COMBOBOX w="430" title="Subscription Level" lptable="subscription_levels" y="30" h="20" x="10" lpfield="subscription_level_name">subscription_level_id</COMBOBOX>
+					<TEXTAREA w="430" title="Details" y="50" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<GRID name="Reporting" keyfield="reporting_id" linkfield="entity_id" table="vw_reporting">
+				<TEXTFIELD w="75" title="Rpt Name">rpt_name</TEXTFIELD>
+				<TEXTDATE w="75" title="Date From">date_from</TEXTDATE>
+				<TEXTDATE w="75" title="Date To">date_to</TEXTDATE>
+				<CHECKBOX w="75" title="Primary Report">primary_report</CHECKBOX>
+				<CHECKBOX w="75" title="Active">is_active</CHECKBOX>
+				<TEXTDECIMAL w="75" title="% Reporting">ps_reporting</TEXTDECIMAL>
+				<FORM name="Reporting" keyfield="reporting_id" linkfield="entity_id" table="reporting">
+					<COMBOBOX w="430" title="Report To" lptable="entitys" lpkey="entity_id" y="10" h="20" x="10" lpfield="entity_name">report_to_id</COMBOBOX>
+					<TEXTDATE w="150" title="Date From" y="30" h="20" x="10">date_from</TEXTDATE>
+					<TEXTDATE w="150" title="Date To" y="30" h="20" x="290">date_to</TEXTDATE>
+					<CHECKBOX w="150" title="Primary Report" y="50" h="20" x="10">primary_report</CHECKBOX>
+					<CHECKBOX w="150" title="Active" y="50" h="20" x="290">is_active</CHECKBOX>
+					<TEXTDECIMAL w="150" title="% Reporting" y="70" h="20" x="10">ps_reporting</TEXTDECIMAL>
+					<TEXTAREA w="430" title="Details" y="90" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<FORM name="Members" keyfield="entity_id" table="entitys">
+				<COMBOBOX w="150" title="Church Branch" lptable="orgs" y="10" h="20" x="10" lpfield="org_name">org_id</COMBOBOX>
+				<TEXTFIELD w="150" title="Prefix" y="10" h="20" x="290">prefix</TEXTFIELD>
+				<DEFAULT default="1">entity_type_id</DEFAULT>
+				<TEXTFIELD w="150" title="Member Name" y="50" h="20" x="10">entity_name</TEXTFIELD>
+				<TEXTFIELD w="150" title="User Name" y="50" h="20" x="290">user_name</TEXTFIELD>
+				<TEXTFIELD w="430" title="Primary Email" y="70" h="20" x="10">primary_email</TEXTFIELD>
+				<TEXTFIELD w="250" title="Primary Telephone" y="90" h="20" x="10">primary_telephone</TEXTFIELD>
+				<CHECKBOX w="150" title="Super User" y="110" h="20" x="10">super_user</CHECKBOX>
+				<CHECKBOX w="150" title="Entity Leader" y="110" h="20" x="290">entity_leader</CHECKBOX>
+				<CHECKBOX w="150" title="No Org" y="130" h="20" x="10">no_org</CHECKBOX>
+				<DEFAULT default="user">function_role</DEFAULT>
+				<CHECKBOX w="150" title="Active" y="150" h="20" x="10">is_active</CHECKBOX>
+				<TEXTFIELD w="150" title="First Password" y="150" h="20" x="290">first_password</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="170" h="70" x="10">details</TEXTAREA>
+			</FORM>
+			<ACTIONS>
+				<ACTION fnct="change_password">Reset Password</ACTION>
+			</ACTIONS>
+		</GRID>
+		<GRID name="Admin" keyfield="entity_id" role="admin" table="vw_entitys" where="(entity_type_id=0)">
+			<TEXTFIELD w="75" title="Prefix">prefix</TEXTFIELD>
+			<TEXTFIELD w="140" title="Member Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="100" title="User Name">user_name</TEXTFIELD>
+			<TEXTFIELD w="100" title="Role">function_role</TEXTFIELD>
+			<CHECKBOX w="100" title="Super User" format="boolean">super_user</CHECKBOX>
+			<CHECKBOX w="75" title="Active" format="boolean">is_active</CHECKBOX>
+			<TEXTFIELD w="100" title="Type">entity_type_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Email">primary_email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Telephone">primary_telephone</TEXTFIELD>
+			<GRID name="Attendance" keyfield="attendance_id" linkfield="entity_id" table="vw_attendance">
+				<TEXTFIELD w="75" title="Meeting Type Name">meeting_type_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Meeting Name">meeting_name</TEXTFIELD>
+				<TEXTDATE w="75" title="Meeting Date">meeting_date</TEXTDATE>
+				<TEXTFIELD w="75" title="Meeting Venue">meeting_venue</TEXTFIELD>
+				<TEXTFIELD w="75" title="Attendance Status">attendance_status</TEXTFIELD>
+			</GRID>
+			<GRID name="Address" keyfield="address_id" linkfield="table_id" table="vw_address" where="table_name = 'entitys'">
+				<TEXTFIELD w="100" title="Country">sys_country_name</TEXTFIELD>
+				<TEXTFIELD w="100" title="Postal Code">postal_code</TEXTFIELD>
+				<TEXTFIELD w="100" title="Town">town</TEXTFIELD>
+				<TEXTFIELD w="100" title="Phone Number">phone_number</TEXTFIELD>
+				<TEXTFIELD w="100" title="Mobile">mobile</TEXTFIELD>
+				<TEXTFIELD w="140" title="Email">email</TEXTFIELD>
+				<TEXTFIELD w="140" title="Default">is_default</TEXTFIELD>
+				<FORM name="Address" keyfield="address_id" linkfield="table_id" table="address">
+					<DEFAULT default="entitys">table_name</DEFAULT>
+					<COMBOBOX w="430" title="Country" default="KE" lptable="sys_countrys" noorg="true" y="10" h="20" x="10" lpfield="sys_country_name">sys_country_id</COMBOBOX>
+					<TEXTFIELD w="150" title="Post Office Box" y="30" h="20" x="10">post_office_box</TEXTFIELD>
+					<TEXTFIELD w="150" title="Postal Code" y="30" h="20" x="290">postal_code</TEXTFIELD>
+					<TEXTFIELD w="150" title="Town" y="50" h="20" x="10">town</TEXTFIELD>
+					<TEXTFIELD w="430" title="Premises" y="70" h="20" x="10">premises</TEXTFIELD>
+					<TEXTFIELD w="430" title="Street" y="90" h="20" x="10">street</TEXTFIELD>
+					<TEXTFIELD w="430" title="Phone Number" y="110" h="20" x="10">phone_number</TEXTFIELD>
+					<TEXTFIELD w="150" title="Extension" y="130" h="20" x="10">extension</TEXTFIELD>
+					<TEXTFIELD w="430" title="Mobile" y="150" h="20" x="10">mobile</TEXTFIELD>
+					<TEXTFIELD w="430" title="Fax" y="170" h="20" x="10">fax</TEXTFIELD>
+					<TEXTFIELD w="430" title="Email" y="190" h="20" x="10">email</TEXTFIELD>
+					<CHECKBOX w="30" title="Default" y="210" h="20" x="10">is_default</CHECKBOX>
+					<TEXTAREA w="430" title="Details" y="230" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<FORM name="Leader" keyfield="entity_id" table="entitys">
+				<COMBOBOX w="430" title="Church Branch" lptable="orgs" y="10" h="20" x="10" lpfield="org_name">org_id</COMBOBOX>
+				<TEXTFIELD w="150" title="Prefix" y="10" h="20" x="290">prefix</TEXTFIELD>
+				<DEFAULT default="0">entity_type_id</DEFAULT>
+				<TEXTFIELD w="150" title="Member Name" y="50" h="20" x="10">entity_name</TEXTFIELD>
+				<TEXTFIELD w="150" title="User Name" y="50" h="20" x="290">user_name</TEXTFIELD>
+				<TEXTFIELD w="430" title="Primary Email" y="70" h="20" x="10">primary_email</TEXTFIELD>
+				<TEXTFIELD w="250" title="Primary Telephone" y="90" h="20" x="10">primary_telephone</TEXTFIELD>
+				<CHECKBOX w="150" title="Super User" y="110" h="20" x="10">super_user</CHECKBOX>
+				<CHECKBOX w="150" title="Entity Leader" y="110" h="20" x="290">entity_leader</CHECKBOX>
+				<CHECKBOX w="150" title="No Org" y="130" h="20" x="10">no_org</CHECKBOX>
+				<DEFAULT default="leader">function_role</DEFAULT>
+				<CHECKBOX w="150" title="Active" y="150" h="20" x="10">is_active</CHECKBOX>
+				<TEXTFIELD w="150" title="First Password" y="150" h="20" x="290">first_password</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="170" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Meetings" key="1" h="550">
+		<GRID name="Meetings" keyfield="meeting_id" table="vw_meetings">
+			<TEXTFIELD w="75" title="Meeting Type">meeting_type_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Meeting Name">meeting_name</TEXTFIELD>
+			<TEXTDATE w="75" title="Meeting Date">meeting_date</TEXTDATE>
+			<TEXTFIELD w="75" title="Meeting Venue">meeting_venue</TEXTFIELD>
+			<ACTIONS role="admin">
+				<ACTION fnct="manage_attendance" approval="4">Delete Meeting</ACTION>
+			</ACTIONS>
+			<GRID limit="70" name="Attendance" keyfield="attendance_id" linkfield="meeting_id" table="vw_attendance">
+				<TEXTFIELD w="75" title="Entity Name">entity_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Attendance Status">attendance_status</TEXTFIELD>
+				<ACTIONS>
+					<ACTION fnct="manage_attendance" approval="0">Remove</ACTION>
+					<ACTION fnct="manage_attendance" approval="2">Absent</ACTION>
+					<ACTION fnct="manage_attendance" approval="3">Present</ACTION>
+					<ACTION fnct="manage_attendance" approval="5">AWA</ACTION>
+				</ACTIONS>
+				<FORM name="Attendance" keyfield="attendance_id" linkfield="meeting_id" table="attendance">
+					<COMBOBOX w="430" title="Entity ID" lptable="entitys" y="10" h="20" x="10" lpfield="entity_name">entity_id</COMBOBOX>
+					<TEXTFIELD w="430" title="Attendance Status" y="50" h="20" x="10">attendance_status</TEXTFIELD>
+					<TEXTFIELD w="430" title="Narrative" y="50" h="20" x="10">narrative</TEXTFIELD>
+				</FORM>
+			</GRID>
+			<GRID limit="100" name="Add Members" keyfield="entity_id" table="vw_entitys" where="(is_active = true)">
+				<TEXTFIELD w="140" title="Member Name">entity_name</TEXTFIELD>
+				<TEXTFIELD w="100" title="Type">entity_type_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Email">primary_email</TEXTFIELD>
+				<TEXTFIELD w="75" title="Telephone">primary_telephone</TEXTFIELD>
+				<ACTIONS>
+					<ACTION fnct="manage_attendance" approval="1">Add to Meeting</ACTION>
+				</ACTIONS>
+			</GRID>
+			<FORM name="Meeting" keyfield="meeting_id" table="meetings">
+				<COMBOBOX w="430" title="Church Branch" lptable="orgs" y="10" h="20" x="10" lpfield="org_name">org_id</COMBOBOX>
+				<COMBOBOX w="430" title="Meeting Type ID" lptable="meeting_types" y="10" h="20" x="10" lpfield="meeting_type_name">meeting_type_id</COMBOBOX>
+				<TEXTFIELD w="430" title="Meeting Name" y="30" h="20" x="10">meeting_name</TEXTFIELD>
+				<TEXTDATE w="150" title="Meeting Date" y="50" h="20" x="10">meeting_date</TEXTDATE>
+				<TEXTFIELD w="430" title="Meeting Venue" y="70" h="20" x="10">meeting_venue</TEXTFIELD>
+				<TEXTAREA w="430" title="Meeting Agenda" y="90" h="70" x="10">meeting_agenda</TEXTAREA>
+				<TEXTAREA w="430" title="Details" y="160" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+		<GRID name="Meeting Types" keyfield="meeting_type_id" table="meeting_types">
+			<TEXTFIELD w="75" title="Meeting Type ID">meeting_type_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Meeting Type Name">meeting_type_name</TEXTFIELD>
+			<FORM name="Meeting Types" keyfield="meeting_type_id" table="meeting_types">
+				<COMBOBOX w="430" title="Church Branch" lptable="orgs" y="10" h="20" x="10" lpfield="org_name">org_id</COMBOBOX>
+				<TEXTFIELD w="430" title="Meeting Type Name" y="10" h="20" x="10">meeting_type_name</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" y="30" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Meeting Attendance" key="30" h="550">
+		<FILTER w="700" name="Meeting Reports" split="150" type="vert" h="550">
+			<FILTERFORM name="Select Meeting">
+				<COMBOBOX w="430" title="Meeting ID" lptable="meetings" noorg="true" lpkey="meeting_id" y="10" h="20" x="10" lpfield="meeting_name">meeting_id</COMBOBOX>
+			</FILTERFORM>
+			<JASPER name="meeting_attendance" reportfile="vw_meeting_attendance.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Meetings" key="25" h="550">
+		<FILTER w="700" name="Date Range Meetings Report" split="150" type="vert" h="550">
+			<FILTERFORM name="Date Range">
+				<TEXTDATE w="150" title="Starting From" y="10" h="20" x="10">start_date</TEXTDATE>
+				<TEXTDATE w="150" title="Ending At" y="10" h="20" x="290">end_date</TEXTDATE>
+			</FILTERFORM>
+			<JASPER name="All Meetings" reportfile="meetings.jasper"></JASPER>
+		</FILTER>
+	</DESK>
+	<DESK w="700" name="Entity Types" key="35" h="550">
+		<GRID name="Entity Types" keyfield="entity_type_id" table="entity_types">
+			<TEXTFIELD w="75" title="Entity Type ID">entity_type_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Branch">org_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Entity Type Name">entity_type_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Entity Role">entity_role</TEXTFIELD>
+			<TEXTFIELD w="75" title="Use Key">use_key</TEXTFIELD>
+			<TEXTFIELD w="75" title="Start View">start_view</TEXTFIELD>
+			<TEXTFIELD w="75" title="Group Email">group_email</TEXTFIELD>
+			<GRID name="Entitys" keyfield="entity_id" linkfield="entity_type_id" table="vw_entitys">
+				<TEXTFIELD w="75" title="Member ID">entity_id</TEXTFIELD>
+				<TEXTFIELD w="140" title="Member Name">entity_name</TEXTFIELD>
+				<TEXTFIELD w="100" title="User Name">user_name</TEXTFIELD>
+				<TEXTFIELD w="100" title="Role">function_role</TEXTFIELD>
+				<CHECKBOX w="100" title="Super User" format="boolean">super_user</CHECKBOX>
+				<CHECKBOX w="75" title="Active" format="boolean">is_active</CHECKBOX>
+				<TEXTFIELD w="100" title="Type">entity_type_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Email">primary_email</TEXTFIELD>
+				<TEXTFIELD w="75" title="Telephone">primary_telephone</TEXTFIELD>
+				<FORM name="Entitys" keyfield="entity_id" linkfield="entity_type_id" table="entitys">
+					<TEXTFIELD w="430" title="Entity Name" y="10" h="20" x="10">entity_name</TEXTFIELD>
+					<TEXTFIELD w="430" title="User Name" y="30" h="20" x="10">user_name</TEXTFIELD>
+					<TEXTFIELD w="430" title="Primary Email" y="50" h="20" x="10">primary_email</TEXTFIELD>
+					<TEXTFIELD w="150" title="Primary Telephone" y="70" h="20" x="10">primary_telephone</TEXTFIELD>
+					<CHECKBOX w="150" title="Super User" y="70" h="20" x="290">super_user</CHECKBOX>
+					<CHECKBOX w="150" title="Entity Leader" y="90" h="20" x="10">entity_leader</CHECKBOX>
+					<CHECKBOX w="150" title="No Org" y="90" h="20" x="290">no_org</CHECKBOX>
+					<TEXTFIELD w="430" title="Function Role" y="110" h="20" x="10">function_role</TEXTFIELD>
+					<TEXTTIMESTAMP w="150" title="Date Enroled" y="130" h="20" x="10">date_enroled</TEXTTIMESTAMP>
+					<CHECKBOX w="150" title="Active" y="130" h="20" x="290">is_active</CHECKBOX>
+					<TEXTFIELD w="150" title="Entity Password" y="150" h="20" x="10">entity_password</TEXTFIELD>
+					<TEXTFIELD w="150" title="First Password" y="150" h="20" x="290">first_password</TEXTFIELD>
+					<TEXTFIELD w="150" title="New Password" y="170" h="20" x="10">new_password</TEXTFIELD>
+					<TEXTFIELD w="150" title="Start Url" y="170" h="20" x="290">start_url</TEXTFIELD>
+					<CHECKBOX w="150" title="Picked" y="190" h="20" x="10">is_picked</CHECKBOX>
+					<TEXTAREA w="430" title="Details" y="210" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<FORM name="Entity Types" keyfield="entity_type_id" table="entity_types">
+				<TEXTFIELD w="150" title="Entity Type Name" y="10" h="20" x="10">entity_type_name</TEXTFIELD>
+				<TEXTFIELD w="430" title="Entity Role" y="30" h="20" x="10">entity_role</TEXTFIELD>
+				<TEXTFIELD w="150" title="Use Key" y="50" h="20" x="10">use_key</TEXTFIELD>
+				<TEXTFIELD w="430" title="Start View" y="70" h="20" x="10">start_view</TEXTFIELD>
+				<TEXTFIELD w="430" title="Group Email" y="90" h="20" x="10">group_email</TEXTFIELD>
+				<TEXTAREA w="430" title="Description" y="110" h="70" x="10">description</TEXTAREA>
+				<TEXTAREA w="430" title="Details" y="180" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Entity Subscriptions" key="40" h="550">
+		<GRID name="Entity Subscriptions" keyfield="entity_subscription_id" table="vw_entity_subscriptions">
+			<TEXTFIELD w="75" title="Entity Type Name">entity_type_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Entity Name">entity_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Subscription Level Name">subscription_level_name</TEXTFIELD>
+			<FORM name="Entity Subscriptions" keyfield="entity_subscription_id" table="entity_subscriptions">
+				<COMBOBOX w="430" title="Entity Type ID" lptable="entity_types" y="10" h="20" x="10" lpfield="entity_type_name">entity_type_id</COMBOBOX>
+				<COMBOBOX w="430" title="Entity ID" lptable="entitys" y="30" h="20" x="10" lpfield="entity_name">entity_id</COMBOBOX>
+				<COMBOBOX w="430" title="Subscription Level ID" lptable="subscription_levels" y="50" h="20" x="10" lpfield="subscription_level_name">subscription_level_id</COMBOBOX>
+				<TEXTAREA w="430" title="Details" y="70" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Ministries" key="45" h="550">
+		<GRID name="Ministries" keyfield="ministry_id" table="vw_ministries">
+			<TEXTFIELD w="75" title="Ministry Name">ministry_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Dept Name">dept_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Branch Name">org_name</TEXTFIELD>
+			<GRID name="Ministry Memberships" keyfield="ministry_membership_id" linkfield="ministry_id" table="vw_ministry_memberships">
+				<TEXTFIELD w="75" title="Member Name">entity_name</TEXTFIELD>
+				<TEXTFIELD w="75" title="Position">rank</TEXTFIELD>
+				<CHECKBOX w="75" title="Active">is_active</CHECKBOX>
+				<FORM name="Ministry Memberships" keyfield="ministry_membership_id" linkfield="ministry_id" table="ministry_memberships">
+					<COMBOBOX w="430" title="Entity ID" lptable="entitys" y="10" h="20" x="10" lpfield="entity_name">entity_id</COMBOBOX>
+					<TEXTFIELD w="430" title="Rank" y="30" h="20" x="10">rank</TEXTFIELD>
+					<CHECKBOX w="150" title="Active" y="50" h="20" x="10">is_active</CHECKBOX>
+					<TEXTAREA w="430" title="Details" y="70" h="70" x="10">details</TEXTAREA>
+				</FORM>
+			</GRID>
+			<FORM name="Ministries" keyfield="ministry_id" table="ministries">
+				<TEXTFIELD w="430" title="Ministry Name" y="10" h="20" x="10">ministry_name</TEXTFIELD>
+				<COMBOBOX w="430" title="Dept ID" lptable="departments" y="30" h="20" x="10" lpfield="dept_name">dept_id</COMBOBOX>
+				<TEXTAREA w="430" title="Details" y="50" h="70" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Orgs" key="50" h="550">
+		<GRID name="Orgs" keyfield="org_id" table="vw_orgs">
+			<TEXTFIELD w="75" title="Org ID">org_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Org Name">org_name</TEXTFIELD>
+			<CHECKBOX w="75" title="Default">is_default</CHECKBOX>
+			<CHECKBOX w="75" title="Active">is_active</CHECKBOX>
+			<TEXTFIELD w="75" title="Logo">logo</TEXTFIELD>
+			<TEXTFIELD w="75" title="Org Sys Country ID">org_sys_country_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Org Sys Country Name">org_sys_country_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Org Address ID">org_address_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Org Table Name">org_table_name</TEXTFIELD>
+			<TEXTFIELD w="75" title="Org Post Office Box">org_post_office_box</TEXTFIELD>
+			<TEXTFIELD w="75" title="Org Postal Code">org_postal_code</TEXTFIELD>
+			<TEXTFIELD w="75" title="Org Premises">org_premises</TEXTFIELD>
+			<TEXTFIELD w="75" title="Org Street">org_street</TEXTFIELD>
+			<TEXTFIELD w="75" title="Org Town">org_town</TEXTFIELD>
+			<TEXTFIELD w="75" title="Org Phone Number">org_phone_number</TEXTFIELD>
+			<TEXTFIELD w="75" title="Org Extension">org_extension</TEXTFIELD>
+			<TEXTFIELD w="75" title="Org Mobile">org_mobile</TEXTFIELD>
+			<TEXTFIELD w="75" title="Org Fax">org_fax</TEXTFIELD>
+			<TEXTFIELD w="75" title="Org Email">org_email</TEXTFIELD>
+			<TEXTFIELD w="75" title="Org Website">org_website</TEXTFIELD>
+			<FORM name="Orgs" keyfield="org_id" table="orgs">
+				<COMBOBOX w="430" title="Currency ID" lptable="currency" h="20" y="10" lpfield="currency_name" x="10">currency_id</COMBOBOX>
+				<COMBOBOX w="430" title="Parent Org ID" lptable="orgs" lpkey="org_id" h="20" y="30" lpfield="org_name" x="10">parent_org_id</COMBOBOX>
+				<TEXTFIELD w="150" title="Org Name" h="20" y="50" x="10">org_name</TEXTFIELD>
+				<TEXTFIELD w="150" title="Org Sufix" h="20" y="50" x="290">org_sufix</TEXTFIELD>
+				<CHECKBOX w="150" title="Default" h="20" y="70" x="10">is_default</CHECKBOX>
+				<CHECKBOX w="150" title="Active" h="20" y="70" x="290">is_active</CHECKBOX>
+				<TEXTFIELD w="150" title="Logo" h="20" y="90" x="10">logo</TEXTFIELD>
+				<TEXTFIELD w="150" title="Pin" h="20" y="90" x="290">pin</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" h="70" y="110" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+	<DESK w="700" name="Departments" key="55" h="550">
+		<GRID name="Departments" keyfield="dept_id" table="departments">
+			<TEXTFIELD w="75" title="Dept ID">dept_id</TEXTFIELD>
+			<TEXTFIELD w="75" title="Dept Name">dept_name</TEXTFIELD>
+			<FORM name="Departments" keyfield="dept_id" table="departments">
+				<TEXTFIELD w="430" title="Dept Name" h="20" y="10" x="10">dept_name</TEXTFIELD>
+				<TEXTAREA w="430" title="Details" h="70" y="30" x="10">details</TEXTAREA>
+			</FORM>
+		</GRID>
+	</DESK>
+</APP>

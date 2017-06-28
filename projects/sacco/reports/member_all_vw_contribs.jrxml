@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="member_all_vw_contribs" language="groovy" pageWidth="752" pageHeight="572" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="752" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="fd17a85e-1cf9-427a-91a5-ce4f5885cf72">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="entity_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="orgwhere" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select contribution_id, contribution_amount,contribution_type_name, deposit_amount,contribution_type_id,entry_date from vw_contributions
+
+$P!{orgwhere}]]>
+	</queryString>
+	<field name="contribution_id" class="java.lang.Integer"/>
+	<field name="contribution_amount" class="java.lang.Float"/>
+	<field name="contribution_type_name" class="java.lang.String"/>
+	<field name="deposit_amount" class="java.lang.Float"/>
+	<field name="contribution_type_id" class="java.lang.Integer"/>
+	<field name="entry_date" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="59" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="5cb2223a-cb50-450a-a007-b72456a5fad9"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contribution Type]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="135" y="0" width="100" height="20" uuid="8e970ccd-ac65-477e-8d99-458b1b784466"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{contribution_type_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="20" width="100" height="20" uuid="ca30abd7-f8fc-47a3-b6f6-93c0095cc4db"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Month]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="MMM">
+				<reportElement x="135" y="20" width="100" height="20" uuid="1c7e22ba-3584-4296-b79f-67d65d4e2f83"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entry_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="396" y="0" width="100" height="20" uuid="e8c0f82b-e9ed-424d-9bd9-3c47d57c83d0"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{contribution_amount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="261" y="0" width="100" height="20" uuid="47bd05ea-a54e-45b7-b7da-9dd3cb486a77"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contribution amount]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="396" y="21" width="100" height="20" uuid="1f2ccb10-3974-44eb-ae47-0d8a3ec3ec8e"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deposit_amount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="261" y="21" width="100" height="20" uuid="de8b94d8-5624-4007-bd44-0fe161efb250"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Actual Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="516" y="0" width="100" height="20" uuid="59dd3eb5-8e4a-4699-9a5b-c176a59e8347"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Year]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="yyyy" isBlankWhenNull="false">
+				<reportElement x="632" y="1" width="100" height="20" uuid="6cd39d0f-673f-4d49-9edb-bad9cb639a85"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entry_date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

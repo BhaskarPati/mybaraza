@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="numberingschedule" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<queryString>
+		<![CDATA[SELECT operatorsname , areaname , destinationcode , currentnumberseries, significantnumber
+FROM vwnumbersassigned]]>
+	</queryString>
+	<field name="OPERATORSNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AREANAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DESTINATIONCODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CURRENTNUMBERSERIES" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SIGNIFICANTNUMBER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="174" splitType="Stretch">
+			<staticText>
+				<reportElement x="11" y="9" width="314" height="23"/>
+				<textElement/>
+				<text><![CDATA[TELECOMMUNICATIONS » NUMBERING PLAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="32" width="308" height="142"/>
+				<textElement/>
+				<text><![CDATA[TELECOMMUNICATIONS NUMBERING PLAN FOR KENYA
+   •  COUNTRY CODE FOR KENYA IS +254
+   •  INTERNATIONAL DIALING PREFIX IS 000
+   •  REGIONAL( EAST AFRICA) DIALING PREFIX
+             005 TO KENYA
+             006 TO UGANDA
+             007 TO TANZANIA
+   •  NATIONAL DIALING PREFIX IS 0
+   •  EMERGENCY NUMBER IS 999, 112
+   •  CHILD HELP LINE 116
+   •  CARRIER SELECTION CODES 17X
+]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="102" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="9" width="194" height="20"/>
+				<textElement/>
+				<text><![CDATA[1) GEOGRAPHIC NUMBERS]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="1" y="34" width="554" height="66"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="6" y="78" width="80" height="20"/>
+				<textElement/>
+				<text><![CDATA[AREA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="101" y="59" width="121" height="41"/>
+				<textElement/>
+				<text><![CDATA[NATIONAL
+DESTINATION CODE
+(AREA CODE)
+]]></text>
+			</staticText>
+			<line>
+				<reportElement x="100" y="34" width="1" height="66"/>
+			</line>
+			<staticText>
+				<reportElement x="223" y="59" width="119" height="41"/>
+				<textElement/>
+				<text><![CDATA[CURRENT
+NUMBER
+SERIES
+]]></text>
+			</staticText>
+			<line>
+				<reportElement x="222" y="34" width="1" height="66"/>
+			</line>
+			<staticText>
+				<reportElement x="342" y="59" width="100" height="41"/>
+				<textElement/>
+				<text><![CDATA[NATIONAL
+SIGNIFICANT
+NUMBER (N (S) N)
+LENGTH
+]]></text>
+			</staticText>
+			<line>
+				<reportElement x="341" y="34" width="1" height="66"/>
+			</line>
+			<staticText>
+				<reportElement x="445" y="75" width="90" height="20"/>
+				<textElement/>
+				<text><![CDATA[OPERATOR]]></text>
+			</staticText>
+			<line>
+				<reportElement x="441" y="34" width="1" height="66"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement x="84" y="13" width="120" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DESTINATIONCODE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="204" y="13" width="134" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CURRENTNUMBERSERIES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="338" y="13" width="107" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{SIGNIFICANTNUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="6" y="13" width="80" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{AREANAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="445" y="13" width="110" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{OPERATORSNAME}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
