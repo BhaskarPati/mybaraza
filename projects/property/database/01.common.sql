@@ -1,5 +1,4 @@
 
-
 ALTER TABLE entitys ADD	attention		varchar(50);
 ALTER TABLE entitys ADD credit_limit real default 0;
 

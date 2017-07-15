@@ -244,6 +244,10 @@ INSERT INTO use_keys (use_key_id, use_key_name, use_function) VALUES (56, 'Suplu
 INSERT INTO use_keys (use_key_id, use_key_name, use_function) VALUES (57, 'Retained Earnings', 3);
 
 
+INSERT INTO use_keys (use_key_id, use_key_name, use_function) VALUES (101, 'Payment', 3);
+INSERT INTO use_keys (use_key_id, use_key_name, use_function) VALUES (102, 'Receipts/Remmitance', 3);
+INSERT INTO use_keys (use_key_id, use_key_name, use_function) VALUES (103, 'Penalty Payments', 3);
+
 INSERT INTO default_accounts (org_id, use_key_id, account_id) VALUES (0, 51, 30000);
 INSERT INTO default_accounts (org_id, use_key_id, account_id) VALUES (0, 52, 40000);
 INSERT INTO default_accounts (org_id, use_key_id, account_id) VALUES (0, 53, 70005);

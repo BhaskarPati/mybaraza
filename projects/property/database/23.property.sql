@@ -1,5 +1,6 @@
 ---Project Database File
 
+---Property tables
 CREATE TABLE property_types (
 	property_type_id		serial primary key,
 	org_id					integer references orgs,
@@ -37,6 +38,7 @@ ALTER TABLE helpdesk
 ADD property_id				integer references property;
 CREATE INDEX helpdesk_property_id ON helpdesk(property_id);
 
+---Property rentals table
 CREATE TABLE rentals (
 	rental_id				serial primary key,
 	property_id				integer references property,
@@ -61,10 +63,20 @@ CREATE INDEX rentals_property_id ON rentals (property_id);
 CREATE INDEX rentals_entity_id ON rentals (entity_id);
 CREATE INDEX rentals_org_id ON rentals (org_id);
 
+---Function to count occupied units
+CREATE OR REPLACE FUNCTION get_occupied(integer) RETURNS integer AS $$
+    SELECT COALESCE(count(rental_id), 0)::integer
+	FROM rentals
+	WHERE (is_active = true) AND (property_id = $1);
+$$ LANGUAGE SQL;
+
+---Property period rentals 
 CREATE TABLE period_rentals (
 	period_rental_id		serial primary key,
 	rental_id				integer references rentals,
 	period_id				integer references periods,
+	property_id				integer references property,
+	entity_id				integer references entitys,		--- Tenant
 	sys_audit_trail_id		integer references sys_audit_trail,
 	org_id					integer references orgs,
 	rental_amount			float not null,
@@ -72,10 +84,13 @@ CREATE TABLE period_rentals (
 	repair_amount			float default 0 not null,
 	commision				float not null,
 	commision_pct			float not null,
+	status					varchar(50) default 'Draft' not null,
 	narrative				varchar(240)
 );
 CREATE INDEX period_rentals_rental_id ON period_rentals (rental_id);
 CREATE INDEX period_rentals_period_id ON period_rentals (period_id);
+CREATE INDEX period_rentals_property_id ON period_rentals (property_id);
+CREATE INDEX period_rentals_entity_id ON period_rentals (entity_id);
 CREATE INDEX period_rentals_sys_audit_trail_id ON period_rentals (sys_audit_trail_id);
 CREATE INDEX period_rentals_org_id ON period_rentals (org_id);
 
@@ -91,61 +106,13 @@ CREATE TABLE log_period_rentals (
 	repair_amount			float,
 	commision				float,
 	commision_pct			float,
+	status					varchar(50),
 	narrative				varchar(240)
 );
 CREATE INDEX log_period_rentals_period_rental_id ON log_period_rentals (period_rental_id);
 CREATE INDEX log_period_rentals_sys_audit_trail_id ON log_period_rentals (sys_audit_trail_id);
 
-CREATE TABLE payments (
-	payment_id				serial primary key,
-	entity_id				integer references entitys,
-	bank_account_id			integer references bank_accounts,
-	journal_id				integer references journals,
-	currency_id				integer references currency,
-	sys_audit_trail_id		integer references sys_audit_trail,
-	org_id					integer references orgs,
-	receipt_number			varchar(50),
-	pay_date				date not null,
-	cleared					boolean default false not null,
-	tx_type					integer default 1 not null,
-	amount					float not null,
-	exchange_rate			real default 1 not null,
-	details					text
-);
-CREATE INDEX payments_entity_id ON payments (entity_id);
-CREATE INDEX payments_bank_account_id ON payments (bank_account_id);
-CREATE INDEX payments_journal_id ON payments (journal_id);
-CREATE INDEX payments_currency_id ON payments (currency_id);
-CREATE INDEX payments_sys_audit_trail_id ON payments (sys_audit_trail_id);
-CREATE INDEX payments_org_id ON payments (org_id);
-
-CREATE TABLE log_payments (
-	log_payment_id			serial primary key,
-	sys_audit_trail_id		integer references sys_audit_trail,
-	payment_id				integer,
-	entity_id				integer,
-	bank_account_id			integer,
-	journal_id				integer,
-	currency_id				integer,
-	org_id					integer,
-	receipt_number			varchar(50),
-	pay_date				date,
-	cleared					boolean,
-	tx_type					integer,
-	amount					float,
-	exchange_rate			real,
-	details					text
-);
-CREATE INDEX log_payments_payment_id ON log_payments (payment_id);
-CREATE INDEX log_payments_sys_audit_trail_id ON log_payments (sys_audit_trail_id);
-
-
-CREATE OR REPLACE FUNCTION get_occupied(integer) RETURNS integer AS $$
-    SELECT COALESCE(count(rental_id), 0)::integer
-	FROM rentals
-	WHERE (is_active = true) AND (property_id = $1);
-$$ LANGUAGE SQL;
-
+---Property,  Rentals and period rentals views 
 CREATE VIEW vw_property AS
 	SELECT entitys.entity_id as client_id, entitys.entity_name as client_name, 
 		property_types.property_type_id, property_types.property_type_name,
@@ -170,7 +137,7 @@ CREATE VIEW vw_rentals AS
 		INNER JOIN entitys ON rentals.entity_id = entitys.entity_id;
 
 CREATE VIEW vw_period_rentals AS
-	SELECT vw_rentals.client_id, vw_rentals.client_name, vw_rentals.property_type_id, vw_rentals.property_type_name,
+		SELECT vw_rentals.client_id, vw_rentals.client_name, vw_rentals.property_type_id, vw_rentals.property_type_name,
 		vw_rentals.property_id, vw_rentals.property_name, vw_rentals.estate, 
 		vw_rentals.plot_no, vw_rentals.units,
 		vw_rentals.tenant_id, vw_rentals.tenant_name, 
@@ -185,81 +152,38 @@ CREATE VIEW vw_period_rentals AS
 		vw_periods.month_id, vw_periods.period_year, vw_periods.period_month, vw_periods.quarter, vw_periods.semister,
 
 		period_rentals.org_id, period_rentals.period_rental_id, period_rentals.rental_amount, period_rentals.service_fees,
-		period_rentals.commision, period_rentals.commision_pct, period_rentals.repair_amount, period_rentals.narrative,
+		period_rentals.commision, period_rentals.commision_pct, period_rentals.repair_amount, period_rentals.narrative,period_rentals.status,
 		(period_rentals.rental_amount - period_rentals.commision) as rent_to_remit,
 		(period_rentals.rental_amount + period_rentals.service_fees + period_rentals.repair_amount) as rent_to_pay
 	FROM vw_rentals INNER JOIN period_rentals ON vw_rentals.rental_id = period_rentals.rental_id
 		INNER JOIN vw_periods ON period_rentals.period_id = vw_periods.period_id;
 
-CREATE VIEW vw_payments AS
-	SELECT entitys.entity_id, entitys.entity_name, entitys.account_id as entity_account_id, 
-		currency.currency_id, currency.currency_name, currency.currency_symbol,
-		vw_bank_accounts.bank_id, vw_bank_accounts.bank_name, vw_bank_accounts.bank_branch_name, vw_bank_accounts.account_id as gl_bank_account_id, 
-		vw_bank_accounts.bank_account_id, vw_bank_accounts.bank_account_name, vw_bank_accounts.bank_account_number, 
-		payments.journal_id, payments.org_id, 	
-		payments.payment_id, payments.receipt_number, payments.pay_date, payments.cleared, payments.tx_type, 
-		payments.amount, payments.exchange_rate, payments.details,
-		(payments.tx_type * payments.amount * payments.exchange_rate) as base_amount
-	FROM payments INNER JOIN entitys ON payments.entity_id = entitys.entity_id
-		INNER JOIN currency ON payments.currency_id = currency.currency_id
-		INNER JOIN vw_bank_accounts ON payments.bank_account_id = vw_bank_accounts.bank_account_id;
+
 	
-CREATE VIEW vw_client_statement AS
-	SELECT aa.org_id, aa.client_id, aa.client_name, aa.rent_details,
-		aa.start_date, aa.rent_to_remit, aa.amount_remited,
-		(aa.rent_to_remit - aa.amount_remited) as rent_balance
-	
-	FROM ((SELECT vw_period_rentals.org_id, vw_period_rentals.client_id, vw_period_rentals.client_name,
-		(vw_period_rentals.property_name || ', ' || vw_period_rentals.hse_no) as rent_details,
-		vw_period_rentals.start_date, vw_period_rentals.rent_to_remit, '0'::real as amount_remited
-	FROM vw_period_rentals
-	WHERE vw_period_rentals.rent_to_remit > 0)
-	UNION
-	(SELECT vw_payments.org_id, vw_payments.entity_id, vw_payments.entity_name,
-		'Amount remited', vw_payments.pay_date, '0'::real, vw_payments.amount
-	FROM vw_payments
-	WHERE vw_payments.tx_type = -1)) aa
-	
-	ORDER BY aa.start_date desc;
-	
-CREATE VIEW vw_tenant_statement AS
-	SELECT aa.org_id, aa.tenant_id, aa.tenant_name, aa.rent_details,
-		aa.start_date, aa.rent_to_pay, aa.rent_paid,
-		(aa.rent_to_pay - aa.rent_paid) as rent_balance
-	
-	FROM ((SELECT vw_period_rentals.org_id, vw_period_rentals.tenant_id, vw_period_rentals.tenant_name, 
-		(vw_period_rentals.property_name || ', ' || vw_period_rentals.hse_no) as rent_details,
-		vw_period_rentals.start_date, vw_period_rentals.rent_to_pay, '0'::real as rent_paid
-	FROM vw_period_rentals
-	WHERE vw_period_rentals.rent_to_remit > 0)
-	UNION
-	(SELECT vw_payments.org_id, vw_payments.entity_id, vw_payments.entity_name,
-		'Rent Paid', vw_payments.pay_date, '0'::real, vw_payments.amount
-	FROM vw_payments
-	WHERE (vw_payments.tx_type = 1) AND (vw_payments.cleared = true))) aa
-	
-	ORDER BY aa.start_date desc;
-	
+---FUNCTION to generate_rentals
 CREATE OR REPLACE FUNCTION generate_rentals(varchar(12), varchar(12), varchar(12), varchar(12), varchar(12)) RETURNS varchar(120) AS $$
 DECLARE
 	v_org_id			integer;
 	v_period_id			integer;
+	v_total_rent		float;
+	myrec				RECORD;
 	msg					varchar(120);
 BEGIN
-
 	IF ($3 = '1') THEN
-		INSERT INTO period_rentals (period_id, org_id, rental_id, rental_amount, service_fees, commision, commision_pct, sys_audit_trail_id)
-		SELECT $1::int, org_id, rental_id, rental_value, service_fees, commision_value, commision_pct, $5::int
-		FROM rentals 
-		WHERE is_active = true;
-		
-		msg := 'Rentals generated';
+	SELECT period_id INTO v_period_id FROM period_rentals WHERE period_id = $1::int AND rental_id = rental_id;
+		IF(v_period_id is NULL) THEN
+			INSERT INTO period_rentals (period_id, org_id, entity_id, property_id, rental_id, rental_amount, service_fees, commision, commision_pct, sys_audit_trail_id)
+			SELECT $1::int, org_id, entity_id, property_id,rental_id, rental_value, service_fees, commision_value, commision_pct, $5::int
+				FROM rentals 
+				WHERE is_active = true;
+			msg := 'Rentals generated';
+		ELSE 
+			msg := 'Rentals exists';
+		END IF;		
 	END IF;
-
 	return msg;
 END;
 $$ LANGUAGE plpgsql;
-
 
 CREATE OR REPLACE FUNCTION ins_property() RETURNS trigger AS $$
 BEGIN
@@ -274,6 +198,7 @@ $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER ins_property BEFORE INSERT OR UPDATE ON property
     FOR EACH ROW EXECUTE PROCEDURE ins_property();
+
 
 CREATE OR REPLACE FUNCTION ins_rentals() RETURNS trigger AS $$
 DECLARE
@@ -307,6 +232,7 @@ $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER ins_rentals BEFORE INSERT OR UPDATE ON rentals
     FOR EACH ROW EXECUTE PROCEDURE ins_rentals();
+
 
 CREATE OR REPLACE FUNCTION ins_period_rentals() RETURNS trigger AS $$
 DECLARE
@@ -346,10 +272,10 @@ BEGIN
 
 	INSERT INTO log_period_rentals (period_rental_id, rental_id, period_id, 
 		sys_audit_trail_id, org_id, rental_amount, service_fees,
-		repair_amount, commision, commision_pct, narrative)
+		repair_amount, status, commision, commision_pct, narrative)
 	VALUES (OLD.period_rental_id, OLD.rental_id, OLD.period_id, 
 		OLD.sys_audit_trail_id, OLD.org_id, OLD.rental_amount, OLD.service_fees,
-		OLD.repair_amount, OLD.commision, OLD.commision_pct, OLD.narrative);
+		OLD.repair_amount, OLD.status, OLD.commision, OLD.commision_pct, OLD.narrative);
 
 	RETURN NULL;
 END;
@@ -358,20 +284,55 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER aud_period_rentals AFTER UPDATE OR DELETE ON period_rentals
     FOR EACH ROW EXECUTE PROCEDURE aud_period_rentals();
 	
-CREATE OR REPLACE FUNCTION aud_payments() RETURNS trigger AS $$
-BEGIN
 
-	INSERT INTO log_payments (payment_id, entity_id, bank_account_id, journal_id,
-		currency_id, sys_audit_trail_id, org_id, receipt_number, pay_date,
-		cleared, tx_type, amount, exchange_rate, details)
-	VALUES (OLD.payment_id, OLD.entity_id, OLD.bank_account_id, OLD.journal_id,
-		OLD.currency_id, OLD.sys_audit_trail_id, OLD.org_id, OLD.receipt_number, OLD.pay_date,
-		OLD.cleared, OLD.tx_type, OLD.amount, OLD.exchange_rate, OLD.details);
+CREATE OR REPLACE FUNCTION get_total_remit(float) RETURNS float AS $$
+    SELECT COALESCE(SUM(rent_to_remit), 0)::float 
+	FROM vw_period_rentals
+	WHERE (is_active = true) AND (period_id = $1);
+$$ LANGUAGE SQL;
 
-	RETURN NULL;
-END;
+
+CREATE OR REPLACE FUNCTION post_period_rentals(varchar(12), varchar(12), varchar(12), varchar(12)) RETURNS varchar(120) AS $$
+	DECLARE
+		v_org_id			integer;
+		v_use_key_id		integer;
+		v_currency_id		integer;
+		v_status			varchar(50);
+		v_total_rent		float;
+		v_total_remmit		float;
+		myrec				RECORD;
+		msg					varchar(120);
+	BEGIN
+		IF ($3::int = 2) THEN
+			SELECT status INTO v_status FROM period_rentals WHERE period_rental_id = $1::int;
+			IF (v_status = 'Draft') THEN
+				SELECT currency_id INTO v_currency_id FROM orgs WHERE is_active = true;
+				--RAISE EXCEPTION '%',$1;
+
+				SELECT org_id,entity_id,property_id,rental_id,period_id,rental_amount,service_fees,
+				repair_amount,commision,commision_pct,status,narrative,sys_audit_trail_id INTO myrec FROM period_rentals
+				WHERE status = 'Draft' AND period_rental_id = $1::int;
+
+				SELECT use_key_id INTO v_use_key_id FROM entitys WHERE is_active = true AND entity_id = myrec.entity_id;
+
+				v_total_rent = myrec.rental_amount+myrec.service_fees+myrec.repair_amount;
+				v_total_remmit= myrec.rental_amount-myrec.commision;
+
+				---Debit all tenants rental accounts
+					INSERT INTO payments (payment_type_id,org_id,entity_id,property_id,rental_id,period_id,currency_id,tx_type,account_credit,account_debit,activity_name)
+					VALUES(5,myrec.org_id,myrec.entity_id,myrec.property_id,myrec.rental_id,myrec.period_id,v_currency_id,1,0,v_total_rent::float,'Peroid Rent');
+
+					INSERT INTO payments (payment_type_id,org_id,entity_id,property_id,rental_id,period_id,currency_id,tx_type,account_credit,account_debit,activity_name)
+					VALUES(5,myrec.org_id,myrec.entity_id,myrec.property_id,myrec.rental_id,myrec.period_id,v_currency_id,-1,v_total_remmit::float,0,'Peroid Rent');				
+					
+				UPDATE period_rentals SET status = 'Posted' WHERE period_rental_id = $1::int;
+				msg := 'Period Rental Posted';
+			ELSE
+				msg := 'Period Rental Already Posted';
+			END IF;
+		END IF;
+		return msg;
+	END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER aud_payments AFTER UPDATE OR DELETE ON payments
-    FOR EACH ROW EXECUTE PROCEDURE aud_payments();
-    
+
